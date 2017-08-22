@@ -56,5 +56,6 @@ install-*
 # Ignore QTCreator files
 dev-vlc.config
 dev-vlc.creator
+dev-vlc.creator.user
 dev-vlc.files
 dev-vlc.includes
