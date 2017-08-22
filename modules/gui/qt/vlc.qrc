@@ -159,11 +159,11 @@
         <file alias="help">qml/help.qml</file>
     </qresource>
     <qresource prefix="/playlist">
-        <file alias="iconview">qml/playlist/iconview.qml</file>
+        <file alias="iconview.qml">qml/playlist/iconview.qml</file>
         <file alias="InfoMovie.qml">qml/playlist/InfoMovie.qml</file>
-        <file alias="listview">qml/playlist/listview.qml</file>
-        <file alias="picflowview">qml/playlist/picflowview.qml</file>
-        <file alias="PLBannerSources">qml/playlist/PLBannerSources.qml</file>
-        <file alias="treeview">qml/playlist/treeview.qml</file>
+        <file alias="listview.qml">qml/playlist/listview.qml</file>
+        <file alias="picflowview.qml">qml/playlist/picflowview.qml</file>
+        <file alias="PLBannerSources.qml">qml/playlist/PLBannerSources.qml</file>
+        <file alias="treeview.qml">qml/playlist/treeview.qml</file>
     </qresource>
 </RCC>

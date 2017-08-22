@@ -609,7 +609,7 @@ void StandardPLPanel::showInfoMovie(PLItemMovie *item )
     rootCtx->setContextProperty( "pl_item", item );
     rootCtx->setContextProperty( "selector", p_selector);
 
-    infoView->setSource( QUrl::fromLocalFile(":/playlist/InfoMovie.qml") );
+    infoView->setSource( QUrl ( QStringLiteral("qrc:/playlist/InfoMovie.qml") ) );
     infoView->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
     viewStack->addWidget( infoView );
@@ -633,7 +633,7 @@ void StandardPLPanel::createIconView()
     QQmlContext *rootCtx = iconView->rootContext();
     rootCtx->setContextProperty( "m", model );
     rootCtx->setContextProperty( "selector", p_selector);
-    iconView->setSource( QUrl::fromLocalFile(":/playlist/iconview") );
+    iconView->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
     iconView->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
 /*    iconView = new PlIconView( model, this );
@@ -655,7 +655,7 @@ void StandardPLPanel::createListView()
     QQmlContext *rootCtx = listView->rootContext();
     rootCtx->setContextProperty( "m", model );
     listView->setResizeMode(QQuickWidget::SizeRootObjectToView);
-    listView->setSource( QUrl::fromLocalFile(":/playlist/listview") );
+    listView->setSource( QUrl ( QStringLiteral("qrc:/playlist/listview.qml") ) );
 
 
 /*    listView = new PlListView( model, this );
@@ -673,7 +673,7 @@ void StandardPLPanel::createCoverView()
 {
     picFlowView = new QQuickWidget();
 
-    picFlowView->setSource( QUrl::fromLocalFile(":/playlist/picflowview") );
+    picFlowView->setSource( QUrl ( QStringLiteral("qrc:/playlist/picflowview.qml") ) );
 
 /*    picFlowView = new PicFlowView( model, this );
  *    picFlowView->setContextMenuPolicy( Qt::CustomContextMenu );
@@ -690,7 +690,7 @@ void StandardPLPanel::createTreeView()
 {
     treeView = new QQuickWidget();
 
-    treeView->setSource( QUrl::fromLocalFile(":/playlist/treeview") );
+    treeView->setSource( QUrl ( QStringLiteral("qrc:/playlist/treeview.qml") ) );
 
 //    /* Create and configure the QTreeView */
 //    treeView = new PlTreeView( model, this );

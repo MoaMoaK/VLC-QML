@@ -414,7 +414,7 @@ QVariant PLModel::data( const QModelIndex &index, const int role ) const
             return getMeta(index, COLUMN_RATING);
 
         case COVER_ROLE:
-            return getMeta(index, COLUMN_COVER);
+            return input_item_GetArtworkURL(getItem(index)->inputItem());//getMeta(index, COLUMN_COVER);
 
         case DISC_NUMBER_ROLE:
             return getMeta(index, COLUMN_DISC_NUMBER);
