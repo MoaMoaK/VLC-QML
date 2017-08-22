@@ -57,9 +57,24 @@ public:
     virtual ~VLCModelSubInterface();
     enum nodeRole
     {
-      CURRENT_ITEM_ROLE = Qt::UserRole,
-      CURRENT_ITEM_CHILD_ROLE,
-      LEAF_NODE_ROLE, /* FIXME: same as index().child() ? */
+        CURRENT_ITEM_ROLE = Qt::UserRole,
+        CURRENT_ITEM_CHILD_ROLE,
+        LEAF_NODE_ROLE, /* FIXME: same as index().child() ? */
+        TITLE_ROLE,
+        DURATION_ROLE,
+        ARTIST_ROLE,
+        GENRE_ROLE,
+        ALBUM_ROLE,
+        TRACK_NUMBER_ROLE,
+        DESCRIPTION_ROLE,
+        URI_ROLE,
+        NUMBER_ROLE,
+        RATING_ROLE,
+        COVER_ROLE,
+        DISC_NUMBER_ROLE,
+        DATE_ROLE,
+        ACTIVATE_ITEM_ROLE,
+        DISPLAY_INFO_ROLE
     };
     virtual void rebuild( playlist_item_t * p = NULL ) = 0;
     virtual void doDelete( QModelIndexList ) = 0;
@@ -139,6 +154,7 @@ public:
     static int metaToColumn( int meta );
     static QString getMeta( const QModelIndex & index, int meta );
     static QPixmap getArtPixmap( const QModelIndex & index, const QSize & size );
+    static QString getArtUrl( const QModelIndex & index );
 
 public slots:
     /* slots handlers */

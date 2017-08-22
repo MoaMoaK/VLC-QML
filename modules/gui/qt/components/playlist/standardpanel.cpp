@@ -44,6 +44,9 @@
 #include <vlc_services_discovery.h>               /* SD_CMD_SEARCH */
 #include <vlc_intf_strings.h>                     /* POP_ */
 
+#include <QtQuickWidgets/QQuickWidget>
+
+
 #define I_NEW_DIR \
     I_DIR_OR_FOLDER( N_("Create Directory"), N_( "Create Folder" ) )
 #define I_NEW_DIR_NAME \
@@ -126,8 +129,8 @@ StandardPLPanel::StandardPLPanel( PlaylistWidget *_parent,
 StandardPLPanel::~StandardPLPanel()
 {
     getSettings()->beginGroup("Playlist");
-    if( treeView )
-        getSettings()->setValue( "headerStateV2", treeView->header()->saveState() );
+//    if( treeView )
+//        getSettings()->setValue( "headerStateV2", treeView->header()->saveState() );
     getSettings()->setValue( "view-mode", currentViewIndex() );
     getSettings()->setValue( "zoom",
                 model->data( QModelIndex(), Qt::FontRole ).value<QFont>().pointSize()
@@ -138,7 +141,8 @@ StandardPLPanel::~StandardPLPanel()
 /* Unused anymore, but might be useful, like in right-click menu */
 void StandardPLPanel::gotoPlayingItem()
 {
-    currentView->scrollTo( model->currentIndex() );
+//    if ( currentView != listView )
+//        currentView->scrollTo( model->currentIndex() );
 }
 
 void StandardPLPanel::handleExpansion( const QModelIndex& index )
@@ -146,30 +150,30 @@ void StandardPLPanel::handleExpansion( const QModelIndex& index )
     assert( currentView );
     if( currentRootIndexPLId != -1 && currentRootIndexPLId != model->itemId( index.parent() ) )
         browseInto( index.parent() );
-    currentView->scrollTo( index );
+    //currentView->scrollTo( index );
 }
 
 void StandardPLPanel::popupPlView( const QPoint &point )
 {
-    QPoint globalPoint = currentView->viewport()->mapToGlobal( point );
-    QModelIndex index = currentView->indexAt( point );
-    if ( !index.isValid() )
-    {
-        currentView->clearSelection();
-    }
-    else if ( ! currentView->selectionModel()->selectedIndexes().contains( index ) )
-    {
-        currentView->selectionModel()->select( index, QItemSelectionModel::Select );
-    }
+    //QPoint globalPoint = currentView->viewport()->mapToGlobal( point );
+    //QModelIndex index = currentView->indexAt( point );
+//    if ( !index.isValid() )
+//    {
+//        currentView->clearSelection();
+//    }
+//    else if ( ! currentView->selectionModel()->selectedIndexes().contains( index ) )
+//    {
+//        currentView->selectionModel()->select( index, QItemSelectionModel::Select );
+//    }
 
-    if( !popup( globalPoint ) ) THEDP->setPopupMenu();
+    //if( !popup( globalPoint ) ) THEDP->setPopupMenu();
 }
 
 /*********** Popup *********/
 bool StandardPLPanel::popup( const QPoint &point )
 {
-    QModelIndex index = popupIndex( currentView ); /* index for menu logic only. Do not store.*/
-    VLCModel *model = qobject_cast<VLCModel *>(currentView->model());
+//    QModelIndex index = popupIndex( currentView ); /* index for menu logic only. Do not store.*/
+//    VLCModel *model = qobject_cast<VLCModel *>(currentView->model());
 
 #define ADD_MENU_ENTRY( icon, title, act ) \
     if ( model->isSupportedAction( act, index ) )\
@@ -179,222 +183,222 @@ bool StandardPLPanel::popup( const QPoint &point )
     action->setData( QVariant::fromValue( container ) );\
     }
 
-    /* */
-    QMenu menu;
-    QAction *action;
-    VLCModelSubInterface::actionsContainerType container;
+//    /* */
+//    QMenu menu;
+//    QAction *action;
+//    VLCModelSubInterface::actionsContainerType container;
 
-    /* Play/Stream/Info static actions */
+//    /* Play/Stream/Info static actions */
 
-    ADD_MENU_ENTRY( QIcon( ":/toolbar/play_b" ), qtr(I_POP_PLAY),
-                    VLCModelSubInterface::ACTION_PLAY )
+//    ADD_MENU_ENTRY( QIcon( ":/menu/play" ), qtr(I_POP_PLAY),
+//                    VLCModelSubInterface::ACTION_PLAY )
 
-    ADD_MENU_ENTRY( QIcon( ":/toolbar/pause_b" ), qtr("Pause"),
-                    VLCModelSubInterface::ACTION_PAUSE )
+//    ADD_MENU_ENTRY( QIcon( ":/menu/pause" ), qtr("Pause"),
+//                    VLCModelSubInterface::ACTION_PAUSE )
 
-    ADD_MENU_ENTRY( QIcon( ":/menu/stream" ), qtr(I_POP_STREAM),
-                    VLCModelSubInterface::ACTION_STREAM )
+//    ADD_MENU_ENTRY( QIcon( ":/menu/stream" ), qtr(I_POP_STREAM),
+//                    VLCModelSubInterface::ACTION_STREAM )
 
-    ADD_MENU_ENTRY( QIcon(), qtr(I_POP_SAVE),
-                    VLCModelSubInterface::ACTION_SAVE );
+//    ADD_MENU_ENTRY( QIcon(), qtr(I_POP_SAVE),
+//                    VLCModelSubInterface::ACTION_SAVE );
 
-    ADD_MENU_ENTRY( QIcon( ":/menu/info" ), qtr(I_POP_INFO),
-                    VLCModelSubInterface::ACTION_INFO );
+//    ADD_MENU_ENTRY( QIcon( ":/menu/info" ), qtr(I_POP_INFO),
+//                    VLCModelSubInterface::ACTION_INFO );
 
-    menu.addSeparator();
+//    menu.addSeparator();
 
-    ADD_MENU_ENTRY( QIcon( ":/type/folder-grey" ), qtr(I_POP_EXPLORE),
-                    VLCModelSubInterface::ACTION_EXPLORE );
+//    ADD_MENU_ENTRY( QIcon( ":/type/folder-grey" ), qtr(I_POP_EXPLORE),
+//                    VLCModelSubInterface::ACTION_EXPLORE );
 
-    QIcon addIcon( ":/buttons/playlist/playlist_add" );
+//    QIcon addIcon( ":/buttons/playlist/playlist_add" );
 
-    ADD_MENU_ENTRY( addIcon, qtr(I_POP_NEWFOLDER),
-                    VLCModelSubInterface::ACTION_CREATENODE )
+//    ADD_MENU_ENTRY( addIcon, qtr(I_POP_NEWFOLDER),
+//                    VLCModelSubInterface::ACTION_CREATENODE )
 
-    ADD_MENU_ENTRY( QIcon(), qtr(I_POP_RENAMEFOLDER),
-                    VLCModelSubInterface::ACTION_RENAMENODE )
+//    ADD_MENU_ENTRY( QIcon(), qtr(I_POP_RENAMEFOLDER),
+//                    VLCModelSubInterface::ACTION_RENAMENODE )
 
-    menu.addSeparator();
-    /* In PL or ML, allow to add a file/folder */
-    ADD_MENU_ENTRY( addIcon, qtr(I_PL_ADDF),
-                    VLCModelSubInterface::ACTION_ENQUEUEFILE )
+//    menu.addSeparator();
+//    /* In PL or ML, allow to add a file/folder */
+//    ADD_MENU_ENTRY( addIcon, qtr(I_PL_ADDF),
+//                    VLCModelSubInterface::ACTION_ENQUEUEFILE )
 
-    ADD_MENU_ENTRY( addIcon, qtr(I_PL_ADDDIR),
-                    VLCModelSubInterface::ACTION_ENQUEUEDIR )
+//    ADD_MENU_ENTRY( addIcon, qtr(I_PL_ADDDIR),
+//                    VLCModelSubInterface::ACTION_ENQUEUEDIR )
 
-    ADD_MENU_ENTRY( addIcon, qtr(I_OP_ADVOP),
-                    VLCModelSubInterface::ACTION_ENQUEUEGENERIC )
+//    ADD_MENU_ENTRY( addIcon, qtr(I_OP_ADVOP),
+//                    VLCModelSubInterface::ACTION_ENQUEUEGENERIC )
 
-    ADD_MENU_ENTRY( QIcon(), qtr(I_PL_ADDPL),
-                    VLCModelSubInterface::ACTION_ADDTOPLAYLIST );
+//    ADD_MENU_ENTRY( QIcon(), qtr(I_PL_ADDPL),
+//                    VLCModelSubInterface::ACTION_ADDTOPLAYLIST );
 
-    menu.addSeparator();
-    ADD_MENU_ENTRY( QIcon(), qtr( I_PL_SAVE ),
-                    VLCModelSubInterface::ACTION_SAVETOPLAYLIST );
+//    menu.addSeparator();
+//    ADD_MENU_ENTRY( QIcon(), qtr( I_PL_SAVE ),
+//                    VLCModelSubInterface::ACTION_SAVETOPLAYLIST );
 
-    menu.addSeparator();
+//    menu.addSeparator();
 
-    /* Item removal */
+//    /* Item removal */
 
-    ADD_MENU_ENTRY( QIcon( ":/buttons/playlist/playlist_remove" ), qtr(I_POP_DEL),
-                    VLCModelSubInterface::ACTION_REMOVE );
+//    ADD_MENU_ENTRY( QIcon( ":/buttons/playlist/playlist_remove" ), qtr(I_POP_DEL),
+//                    VLCModelSubInterface::ACTION_REMOVE );
 
-    ADD_MENU_ENTRY( QIcon( ":/toolbar/clear" ), qtr("Clear the playlist"),
-                    VLCModelSubInterface::ACTION_CLEAR );
+//    ADD_MENU_ENTRY( QIcon( ":/toolbar/clear" ), qtr("Clear the playlist"),
+//                    VLCModelSubInterface::ACTION_CLEAR );
 
-    menu.addSeparator();
+//    menu.addSeparator();
 
-    /* Playlist sorting */
-    if ( model->isSupportedAction( VLCModelSubInterface::ACTION_SORT, index ) )
-    {
-        QMenu *sortingMenu = new QMenu( qtr( "Sort by" ), &menu );
-        /* Choose what columns to show in sorting menu, not sure if this should be configurable*/
-        QList<int> sortingColumns;
-        sortingColumns << COLUMN_TITLE << COLUMN_ARTIST << COLUMN_ALBUM << COLUMN_TRACK_NUMBER << COLUMN_URI << COLUMN_DISC_NUMBER;
-        container.action = VLCModelSubInterface::ACTION_SORT;
-        foreach( int Column, sortingColumns )
-        {
-            action = sortingMenu->addAction( qfu( psz_column_title( Column ) ) + " " + qtr("Ascending") );
-            container.column = model->columnFromMeta(Column) + 1;
-            action->setData( QVariant::fromValue( container ) );
+//    /* Playlist sorting */
+//    if ( model->isSupportedAction( VLCModelSubInterface::ACTION_SORT, index ) )
+//    {
+//        QMenu *sortingMenu = new QMenu( qtr( "Sort by" ), &menu );
+//        /* Choose what columns to show in sorting menu, not sure if this should be configurable*/
+//        QList<int> sortingColumns;
+//        sortingColumns << COLUMN_TITLE << COLUMN_ARTIST << COLUMN_ALBUM << COLUMN_TRACK_NUMBER << COLUMN_URI << COLUMN_DISC_NUMBER;
+//        container.action = VLCModelSubInterface::ACTION_SORT;
+//        foreach( int Column, sortingColumns )
+//        {
+//            action = sortingMenu->addAction( qfu( psz_column_title( Column ) ) + " " + qtr("Ascending") );
+//            container.column = model->columnFromMeta(Column) + 1;
+//            action->setData( QVariant::fromValue( container ) );
 
-            action = sortingMenu->addAction( qfu( psz_column_title( Column ) ) + " " + qtr("Descending") );
-            container.column = -1 * (model->columnFromMeta(Column)+1);
-            action->setData( QVariant::fromValue( container ) );
-        }
-        menu.addMenu( sortingMenu );
-    }
+//            action = sortingMenu->addAction( qfu( psz_column_title( Column ) ) + " " + qtr("Descending") );
+//            container.column = -1 * (model->columnFromMeta(Column)+1);
+//            action->setData( QVariant::fromValue( container ) );
+//        }
+//        menu.addMenu( sortingMenu );
+//    }
 
-    /* Zoom */
-    QMenu *zoomMenu = new QMenu( qtr( "Display size" ), &menu );
-    zoomMenu->addAction( qtr( "Increase" ), this, SLOT( increaseZoom() ) );
-    zoomMenu->addAction( qtr( "Decrease" ), this, SLOT( decreaseZoom() ) );
-    menu.addMenu( zoomMenu );
+//    /* Zoom */
+//    QMenu *zoomMenu = new QMenu( qtr( "Display size" ), &menu );
+//    zoomMenu->addAction( qtr( "Increase" ), this, SLOT( increaseZoom() ) );
+//    zoomMenu->addAction( qtr( "Decrease" ), this, SLOT( decreaseZoom() ) );
+//    menu.addMenu( zoomMenu );
 
-    CONNECT( &menu, triggered( QAction * ), this, popupAction( QAction * ) );
+//    CONNECT( &menu, triggered( QAction * ), this, popupAction( QAction * ) );
 
-    menu.addMenu( StandardPLPanel::viewSelectionMenu( this ) );
+//    menu.addMenu( StandardPLPanel::viewSelectionMenu( this ) );
 
-    /* Display and forward the result */
-    if( !menu.isEmpty() )
-    {
-        menu.exec( point ); return true;
-    }
-    else return false;
+//    /* Display and forward the result */
+//    if( !menu.isEmpty() )
+//    {
+//        menu.exec( point ); return true;
+//    }
+//    else return false;
 
 #undef ADD_MENU_ENTRY
 }
 
 void StandardPLPanel::popupAction( QAction *action )
 {
-    VLCModel *model = qobject_cast<VLCModel *>(currentView->model());
-    VLCModelSubInterface::actionsContainerType a =
-            action->data().value<VLCModelSubInterface::actionsContainerType>();
-    QModelIndexList list = currentView->selectionModel()->selectedRows();
-    QModelIndex index = popupIndex( currentView );
-    char *path = NULL;
-    OpenDialog *dialog;
-    QString temp;
-    QStringList uris;
-    bool ok;
+//    VLCModel *model = qobject_cast<VLCModel *>(currentView->model());
+//    VLCModelSubInterface::actionsContainerType a =
+//            action->data().value<VLCModelSubInterface::actionsContainerType>();
+//    QModelIndexList list = currentView->selectionModel()->selectedRows();
+//    QModelIndex index = popupIndex( currentView );
+//    char *path = NULL;
+//    OpenDialog *dialog;
+//    QString temp;
+//    QStringList uris;
+//    bool ok;
 
-    /* first try to complete actions requiring missing parameters thru UI dialogs */
-    switch( a.action )
-    {
-    case VLCModelSubInterface::ACTION_INFO:
-        /* locally handled only */
-        if( index.isValid() )
-        {
-            input_item_t* p_input = model->getInputItem( index );
-            MediaInfoDialog *mid = new MediaInfoDialog( p_intf, p_input );
-            mid->setParent( PlaylistDialog::getInstance( p_intf ),
-                            Qt::Dialog );
-            mid->show();
-        }
-        break;
+//    /* first try to complete actions requiring missing parameters thru UI dialogs */
+//    switch( a.action )
+//    {
+//    case VLCModelSubInterface::ACTION_INFO:
+//        /* locally handled only */
+//        if( index.isValid() )
+//        {
+//            input_item_t* p_input = model->getInputItem( index );
+//            MediaInfoDialog *mid = new MediaInfoDialog( p_intf, p_input );
+//            mid->setParent( PlaylistDialog::getInstance( p_intf ),
+//                            Qt::Dialog );
+//            mid->show();
+//        }
+//        break;
 
-    case VLCModelSubInterface::ACTION_EXPLORE:
-        /* locally handled only */
-        temp = model->getURI( index );
-        if( ! temp.isEmpty() ) path = vlc_uri2path( temp.toLatin1().constData() );
-        if( path == NULL ) return;
-        QDesktopServices::openUrl(
-                    QUrl::fromLocalFile( QFileInfo( qfu( path ) ).absolutePath() ) );
-        free( path );
-        break;
+//    case VLCModelSubInterface::ACTION_EXPLORE:
+//        /* locally handled only */
+//        temp = model->getURI( index );
+//        if( ! temp.isEmpty() ) path = vlc_uri2path( temp.toLatin1().constData() );
+//        if( path == NULL ) return;
+//        QDesktopServices::openUrl(
+//                    QUrl::fromLocalFile( QFileInfo( qfu( path ) ).absolutePath() ) );
+//        free( path );
+//        break;
 
-    case VLCModelSubInterface::ACTION_STREAM:
-        /* locally handled only */
-        temp = model->getURI( index );
-        if ( ! temp.isEmpty() )
-        {
-            QStringList tempList;
-            tempList.append(temp);
-            THEDP->streamingDialog( NULL, tempList, false );
-        }
-        break;
+//    case VLCModelSubInterface::ACTION_STREAM:
+//        /* locally handled only */
+//        temp = model->getURI( index );
+//        if ( ! temp.isEmpty() )
+//        {
+//            QStringList tempList;
+//            tempList.append(temp);
+//            THEDP->streamingDialog( NULL, tempList, false );
+//        }
+//        break;
 
-    case VLCModelSubInterface::ACTION_SAVE:
-        /* locally handled only */
-        temp = model->getURI( index );
-        if ( ! temp.isEmpty() )
-        {
-            QStringList tempList;
-            tempList.append(temp);
-            THEDP->streamingDialog( NULL, tempList );
-        }
-        break;
+//    case VLCModelSubInterface::ACTION_SAVE:
+//        /* locally handled only */
+//        temp = model->getURI( index );
+//        if ( ! temp.isEmpty() )
+//        {
+//            QStringList tempList;
+//            tempList.append(temp);
+//            THEDP->streamingDialog( NULL, tempList );
+//        }
+//        break;
 
-    case VLCModelSubInterface::ACTION_CREATENODE:
-        temp = QInputDialog::getText( PlaylistDialog::getInstance( p_intf ),
-            qtr( I_NEW_DIR ), qtr( I_NEW_DIR_NAME ),
-            QLineEdit::Normal, QString(), &ok);
-        if ( !ok ) return;
-        model->createNode( index, temp );
-        break;
+//    case VLCModelSubInterface::ACTION_CREATENODE:
+//        temp = QInputDialog::getText( PlaylistDialog::getInstance( p_intf ),
+//            qtr( I_NEW_DIR ), qtr( I_NEW_DIR_NAME ),
+//            QLineEdit::Normal, QString(), &ok);
+//        if ( !ok ) return;
+//        model->createNode( index, temp );
+//        break;
 
-    case VLCModelSubInterface::ACTION_RENAMENODE:
-        temp = QInputDialog::getText( PlaylistDialog::getInstance( p_intf ),
-            qtr( I_RENAME_DIR ), qtr( I_RENAME_DIR_NAME ),
-            QLineEdit::Normal, model->getTitle( index ), &ok);
-        if ( !ok ) return;
-        model->renameNode( index, temp );
-        break;
+//    case VLCModelSubInterface::ACTION_RENAMENODE:
+//        temp = QInputDialog::getText( PlaylistDialog::getInstance( p_intf ),
+//            qtr( I_RENAME_DIR ), qtr( I_RENAME_DIR_NAME ),
+//            QLineEdit::Normal, model->getTitle( index ), &ok);
+//        if ( !ok ) return;
+//        model->renameNode( index, temp );
+//        break;
 
-    case VLCModelSubInterface::ACTION_ENQUEUEFILE:
-        uris = THEDP->showSimpleOpen();
-        if ( uris.isEmpty() ) return;
-        uris.sort();
-        a.uris = uris;
-        action->setData( QVariant::fromValue( a ) );
-        model->action( action, list );
-        break;
+//    case VLCModelSubInterface::ACTION_ENQUEUEFILE:
+//        uris = THEDP->showSimpleOpen();
+//        if ( uris.isEmpty() ) return;
+//        uris.sort();
+//        a.uris = uris;
+//        action->setData( QVariant::fromValue( a ) );
+//        model->action( action, list );
+//        break;
 
-    case VLCModelSubInterface::ACTION_ENQUEUEDIR:
-        temp = DialogsProvider::getDirectoryDialog( p_intf );
-        if ( temp.isEmpty() ) return;
-        a.uris << temp;
-        action->setData( QVariant::fromValue( a ) );
-        model->action( action, list );
-        break;
+//    case VLCModelSubInterface::ACTION_ENQUEUEDIR:
+//        temp = DialogsProvider::getDirectoryDialog( p_intf );
+//        if ( temp.isEmpty() ) return;
+//        a.uris << temp;
+//        action->setData( QVariant::fromValue( a ) );
+//        model->action( action, list );
+//        break;
 
-    case VLCModelSubInterface::ACTION_ENQUEUEGENERIC:
-        dialog = OpenDialog::getInstance( this, p_intf, false, SELECT, true, true );
-        dialog->showTab( OPEN_FILE_TAB );
-        dialog->exec(); /* make it modal */
-        a.uris = dialog->getMRLs( false );
-        a.options = dialog->getOptions();
-        if ( a.uris.isEmpty() ) return;
-        action->setData( QVariant::fromValue( a ) );
-        model->action( action, list );
-        break;
+//    case VLCModelSubInterface::ACTION_ENQUEUEGENERIC:
+//        dialog = OpenDialog::getInstance( this, p_intf, false, SELECT, true, true );
+//        dialog->showTab( OPEN_FILE_TAB );
+//        dialog->exec(); /* make it modal */
+//        a.uris = dialog->getMRLs( false );
+//        a.options = dialog->getOptions();
+//        if ( a.uris.isEmpty() ) return;
+//        action->setData( QVariant::fromValue( a ) );
+//        model->action( action, list );
+//        break;
 
-    case VLCModelSubInterface::ACTION_SAVETOPLAYLIST:
-        THEDP->savePlayingToPlaylist();
-        break;
-    default:
-        model->action( action, list );
-    }
+//    case VLCModelSubInterface::ACTION_SAVETOPLAYLIST:
+//        THEDP->savePlayingToPlaylist();
+//        break;
+//    default:
+//        model->action( action, list );
+//    }
 }
 
 QMenu* StandardPLPanel::viewSelectionMenu( StandardPLPanel *panel )
@@ -438,7 +442,7 @@ void StandardPLPanel::popupSelectColumn( QPoint )
     {
         QAction* option = menu.addAction( qfu( psz_column_title( i ) ) );
         option->setCheckable( true );
-        option->setChecked( !treeView->isColumnHidden( j ) );
+       // option->setChecked( !treeView->isColumnHidden( j ) );
         selectColumnsSigMapper->setMapping( option, j );
         CONNECT( option, triggered(), selectColumnsSigMapper, map() );
     }
@@ -447,7 +451,7 @@ void StandardPLPanel::popupSelectColumn( QPoint )
 
 void StandardPLPanel::toggleColumnShown( int i )
 {
-    treeView->setColumnHidden( i, !treeView->isColumnHidden( i ) );
+    //treeView->setColumnHidden( i, !treeView->isColumnHidden( i ) );
 }
 
 /* Search in the playlist */
@@ -463,9 +467,9 @@ void StandardPLPanel::search( const QString& searchText )
         bool flat = ( currentView == iconView ||
                       currentView == listView ||
                       currentView == picFlowView );
-        model->filter( searchText,
-                       flat ? currentView->rootIndex() : QModelIndex(),
-                       !flat );
+//        model->filter( searchText,
+//                       flat ? currentView->rootIndex() : QModelIndex(),
+//                       !flat );
     }
 }
 
@@ -497,15 +501,15 @@ void StandardPLPanel::browseInto( const QModelIndex &index )
     if( currentView == iconView || currentView == listView || currentView == picFlowView )
     {
 
-        currentView->setRootIndex( index );
+        //currentView->setRootIndex( index );
 
         /* When going toward root in LocationBar, scroll to the item
            that was previously as root */
         QModelIndex newIndex = model->indexByPLID(currentRootIndexPLId,0);
         while( newIndex.isValid() && (newIndex.parent() != index) )
             newIndex = newIndex.parent();
-        if( newIndex.isValid() )
-            currentView->scrollTo( newIndex );
+        if( newIndex.isValid() ) { }
+            //currentView->scrollTo( newIndex );
 
         /* Store new rootindexid*/
         currentRootIndexPLId = model->itemId( index );
@@ -575,17 +579,17 @@ bool StandardPLPanel::eventFilter ( QObject *obj, QEvent * event )
         }
         else if ( spinnerAnimation->state() == PixmapAnimator::Running )
         {
-            if ( currentView->model()->rowCount() )
-                spinnerAnimation->stop(); /* Trick until SD emits events */
-            else
-            {
-                QWidget *viewport = qobject_cast<QWidget *>( obj );
-                QStylePainter painter( viewport );
-                QPixmap *spinner = spinnerAnimation->getPixmap();
-                QPoint point = viewport->geometry().center();
-                point -= QPoint( spinner->size().width() / 2, spinner->size().height() / 2 );
-                painter.drawPixmap( point, *spinner );
-            }
+//            if ( currentView->model()->rowCount() )
+//                spinnerAnimation->stop(); /* Trick until SD emits events */
+//            else
+//            {
+//                QWidget *viewport = qobject_cast<QWidget *>( obj );
+//                QStylePainter painter( viewport );
+//                QPixmap *spinner = spinnerAnimation->getPixmap();
+//                QPoint point = viewport->geometry().center();
+//                point -= QPoint( spinner->size().width() / 2, spinner->size().height() / 2 );
+//                painter.drawPixmap( point, *spinner );
+//            }
         }
     }
     return false;
@@ -593,69 +597,120 @@ bool StandardPLPanel::eventFilter ( QObject *obj, QEvent * event )
 
 void StandardPLPanel::deleteSelection()
 {
-    QModelIndexList list = currentView->selectionModel()->selectedIndexes();
-    model->doDelete( list );
+//    QModelIndexList list = currentView->selectionModel()->selectedIndexes();
+//    model->doDelete( list );
 }
+
+void StandardPLPanel::showInfoMovie(PLItemMovie *item )
+{
+    QQuickWidget *infoView = new QQuickWidget();
+
+    QQmlContext *rootCtx = infoView->rootContext();
+    rootCtx->setContextProperty( "pl_item", item );
+    rootCtx->setContextProperty( "selector", p_selector);
+
+    infoView->setSource( QUrl::fromLocalFile(":/playlist/InfoMovie.qml") );
+    infoView->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+    viewStack->addWidget( infoView );
+    viewStack->setCurrentWidget( infoView );
+
+}
+
+void StandardPLPanel::hideInfoMovie()
+{
+    viewStack->setCurrentWidget (currentView);
+
+}
+
+
+
+
 
 void StandardPLPanel::createIconView()
 {
-    iconView = new PlIconView( model, this );
-    iconView->setContextMenuPolicy( Qt::CustomContextMenu );
-    CONNECT( iconView, customContextMenuRequested( const QPoint & ),
-             this, popupPlView( const QPoint & ) );
-    CONNECT( iconView, activated( const QModelIndex & ),
-             this, activate( const QModelIndex & ) );
-    iconView->installEventFilter( this );
-    iconView->viewport()->installEventFilter( this );
+    iconView = new QQuickWidget();
+    QQmlContext *rootCtx = iconView->rootContext();
+    rootCtx->setContextProperty( "m", model );
+    rootCtx->setContextProperty( "selector", p_selector);
+    iconView->setSource( QUrl::fromLocalFile(":/playlist/iconview") );
+    iconView->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+/*    iconView = new PlIconView( model, this );
+ *    iconView->setContextMenuPolicy( Qt::CustomContextMenu );
+ *    CONNECT( iconView, customContextMenuRequested( const QPoint & ),
+ *             this, popupPlView( const QPoint & ) );
+ *    CONNECT( iconView, activated( const QModelIndex & ),
+ *             this, activate( const QModelIndex & ) );
+ *    iconView->installEventFilter( this );
+ *    iconView->viewport()->installEventFilter( this );*/
+
     viewStack->addWidget( iconView );
 }
 
 void StandardPLPanel::createListView()
 {
-    listView = new PlListView( model, this );
-    listView->setContextMenuPolicy( Qt::CustomContextMenu );
-    CONNECT( listView, customContextMenuRequested( const QPoint & ),
-             this, popupPlView( const QPoint & ) );
-    CONNECT( listView, activated( const QModelIndex & ),
-             this, activate( const QModelIndex & ) );
-    listView->installEventFilter( this );
-    listView->viewport()->installEventFilter( this );
+    listView = new QQuickWidget();
+
+    QQmlContext *rootCtx = listView->rootContext();
+    rootCtx->setContextProperty( "m", model );
+    listView->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    listView->setSource( QUrl::fromLocalFile(":/playlist/listview") );
+
+
+/*    listView = new PlListView( model, this );
+ *    listView->setContextMenuPolicy( Qt::CustomContextMenu );
+ *    CONNECT( listView, customContextMenuRequested( const QPoint & ),
+ *             this, popupPlView( const QPoint & ) );
+ *    CONNECT( listView, activated( const QModelIndex & ),
+ *             this, activate( const QModelIndex & ) );
+ *  listView->installEventFilter( this );
+ *    listView->viewport()->installEventFilter( this );*/
     viewStack->addWidget( listView );
 }
 
 void StandardPLPanel::createCoverView()
 {
-    picFlowView = new PicFlowView( model, this );
-    picFlowView->setContextMenuPolicy( Qt::CustomContextMenu );
-    CONNECT( picFlowView, customContextMenuRequested( const QPoint & ),
-             this, popupPlView( const QPoint & ) );
-    CONNECT( picFlowView, activated( const QModelIndex & ),
-             this, activate( const QModelIndex & ) );
+    picFlowView = new QQuickWidget();
+
+    picFlowView->setSource( QUrl::fromLocalFile(":/playlist/picflowview") );
+
+/*    picFlowView = new PicFlowView( model, this );
+ *    picFlowView->setContextMenuPolicy( Qt::CustomContextMenu );
+ *    CONNECT( picFlowView, customContextMenuRequested( const QPoint & ),
+ *             this, popupPlView( const QPoint & ) );
+ *    CONNECT( picFlowView, activated( const QModelIndex & ),
+ *             this, activate( const QModelIndex & ) );
+ *    picFlowView->installEventFilter( this );*/
+
     viewStack->addWidget( picFlowView );
-    picFlowView->installEventFilter( this );
 }
 
 void StandardPLPanel::createTreeView()
 {
-    /* Create and configure the QTreeView */
-    treeView = new PlTreeView( model, this );
+    treeView = new QQuickWidget();
 
-    /* setModel after setSortingEnabled(true), or the model will sort immediately! */
+    treeView->setSource( QUrl::fromLocalFile(":/playlist/treeview") );
 
-    /* Connections for the TreeView */
-    CONNECT( treeView, activated( const QModelIndex& ),
-             this, activate( const QModelIndex& ) );
-    CONNECT( treeView->header(), customContextMenuRequested( const QPoint & ),
-             this, popupSelectColumn( QPoint ) );
-    CONNECT( treeView, customContextMenuRequested( const QPoint & ),
-             this, popupPlView( const QPoint & ) );
-    treeView->installEventFilter( this );
-    treeView->viewport()->installEventFilter( this );
+//    /* Create and configure the QTreeView */
+//    treeView = new PlTreeView( model, this );
 
-    /* SignalMapper for columns */
-    selectColumnsSigMapper = new QSignalMapper( this );
-    CONNECT( selectColumnsSigMapper, mapped( int ),
-             this, toggleColumnShown( int ) );
+//    /* setModel after setSortingEnabled(true), or the model will sort immediately! */
+
+//    /* Connections for the TreeView */
+//    CONNECT( treeView, activated( const QModelIndex& ),
+//             this, activate( const QModelIndex& ) );
+//    CONNECT( treeView->header(), customContextMenuRequested( const QPoint & ),
+//             this, popupSelectColumn( QPoint ) );
+//    CONNECT( treeView, customContextMenuRequested( const QPoint & ),
+//             this, popupPlView( const QPoint & ) );
+//    treeView->installEventFilter( this );
+//    treeView->viewport()->installEventFilter( this );
+
+//    /* SignalMapper for columns */
+//    selectColumnsSigMapper = new QSignalMapper( this );
+//    CONNECT( selectColumnsSigMapper, mapped( int ),
+//             this, toggleColumnShown( int ) );
 
     viewStack->addWidget( treeView );
 }
@@ -678,39 +733,47 @@ void StandardPLPanel::showView( int i_view )
     {
     case ICON_VIEW:
     {
+        msg_Dbg(p_intf, "icon");
         if( iconView == NULL )
             createIconView();
         currentView = iconView;
+        //currentView->setModel( model );
         break;
     }
     case LIST_VIEW:
     {
+        msg_Dbg(p_intf, "list");
         if( listView == NULL )
             createListView();
         currentView = listView;
+        //currentView->setModel( model );
         break;
     }
     case PICTUREFLOW_VIEW:
     {
+        msg_Dbg(p_intf, "pic");
         if( picFlowView == NULL )
             createCoverView();
         currentView = picFlowView;
+        //currentView->setModel( model );
         break;
     }
     default:
     case TREE_VIEW:
     {
+        msg_Dbg(p_intf, "tree");
         if( treeView == NULL )
         {
             createTreeView();
             b_treeViewCreated = true;
         }
         currentView = treeView;
+        //currentView->setModel( model );
         break;
     }
     }
 
-    currentView->setModel( model );
+
 
     /* Restoring the header Columns must come after changeModel */
     if( b_treeViewCreated )
@@ -718,26 +781,25 @@ void StandardPLPanel::showView( int i_view )
         assert( treeView );
         if( getSettings()->contains( "Playlist/headerStateV2" ) )
         {
-            treeView->header()->restoreState(getSettings()
-                    ->value( "Playlist/headerStateV2" ).toByteArray() );
+            //treeView->header()->restoreState(getSettings()
+            //        ->value( "Playlist/headerStateV2" ).toByteArray() );
             /* if there is allready stuff in playlist, we don't sort it and we reset
                sorting */
             if( model->rowCount() )
             {
-                treeView->header()->setSortIndicator( -1 , Qt::AscendingOrder );
+                //treeView->header()->setSortIndicator( -1 , Qt::AscendingOrder );
             }
         }
         else
         {
             for( int m = 1, c = 0; m != COLUMN_END; m <<= 1, c++ )
             {
-                treeView->setColumnHidden( c, !( m & COLUMN_DEFAULT ) );
-                if( m == COLUMN_TITLE ) treeView->header()->resizeSection( c, 200 );
-                else if( m == COLUMN_DURATION ) treeView->header()->resizeSection( c, 80 );
+                //treeView->setColumnHidden( c, !( m & COLUMN_DEFAULT ) );
+                //if( m == COLUMN_TITLE ) treeView->header()->resizeSection( c, 200 );
+                //else if( m == COLUMN_DURATION ) treeView->header()->resizeSection( c, 80 );
             }
         }
     }
-
     viewStack->setCurrentWidget( currentView );
     browseInto();
     gotoPlayingItem();
@@ -757,7 +819,7 @@ void StandardPLPanel::setWaiting( bool b )
 void StandardPLPanel::updateViewport()
 {
     /* A single update on parent widget won't work */
-    currentView->viewport()->repaint();
+    //currentView->viewport()->repaint();
 }
 
 int StandardPLPanel::currentViewIndex() const
@@ -790,28 +852,28 @@ void StandardPLPanel::cycleViews()
 
 void StandardPLPanel::activate( const QModelIndex &index )
 {
-    if( currentView->model() == model )
-    {
-        /* If we are not a leaf node */
-        if( !index.data( VLCModelSubInterface::LEAF_NODE_ROLE ).toBool() )
-        {
-            if( currentView != treeView )
-                browseInto( index );
-        }
-        else
-        {
-            playlist_Lock( THEPL );
-            playlist_item_t *p_item = playlist_ItemGetById( THEPL, model->itemId( index ) );
-            if ( p_item )
-            {
-                p_item->i_flags |= PLAYLIST_SUBITEM_STOP_FLAG;
-                lastActivatedPLItemId = p_item->i_id;
-            }
-            playlist_Unlock( THEPL );
-            if ( p_item && index.isValid() )
-                model->activateItem( index );
-        }
-    }
+//    if( currentView->model() == model )
+//    {
+//        /* If we are not a leaf node */
+//        if( !index.data( VLCModelSubInterface::LEAF_NODE_ROLE ).toBool() )
+//        {
+//            if( currentView != treeView )
+//                browseInto( index );
+//        }
+//        else
+//        {
+//            playlist_Lock( THEPL );
+//            playlist_item_t *p_item = playlist_ItemGetById( THEPL, model->itemId( index ) );
+//            if ( p_item )
+//            {
+//                p_item->i_flags |= PLAYLIST_SUBITEM_STOP_FLAG;
+//                lastActivatedPLItemId = p_item->i_id;
+//            }
+//            playlist_Unlock( THEPL );
+//            if ( p_item && index.isValid() )
+//                model->activateItem( index );
+//        }
+//    }
 }
 
 void StandardPLPanel::browseInto( int i_pl_item_id )
@@ -820,8 +882,8 @@ void StandardPLPanel::browseInto( int i_pl_item_id )
 
     QModelIndex index = model->indexByPLID( i_pl_item_id, 0 );
 
-    if( currentView == treeView )
-        treeView->setExpanded( index, true );
+    if( currentView == treeView ) { }
+        //treeView->setExpanded( index, true );
     else
         browseInto( index );
 

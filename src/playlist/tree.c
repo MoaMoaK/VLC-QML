@@ -212,6 +212,7 @@ playlist_item_t *playlist_GetNextLeaf( playlist_t *p_playlist,
     PL_ASSERT_LOCKED;
     playlist_item_t *p_next;
 
+
     assert( p_root && p_root->i_children != -1 );
 
     PL_DEBUG2( "finding next of %s within %s",

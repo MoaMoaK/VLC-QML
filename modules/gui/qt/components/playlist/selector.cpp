@@ -641,6 +641,17 @@ int PLSelector::getCurrentItemCategory()
     return currentItem()->data( 0, SPECIAL_ROLE ).toInt();
 }
 
+// Trick : Will need to change this int later
+void PLSelector::setSourceFromName(const int item_num)
+{
+    QList<QTreeWidgetItem*> results = findItems("", Qt::MatchContains | Qt::MatchRecursive);
+    if (results.size() < item_num)
+        return;
+    QTreeWidgetItem *item = results.at(item_num);
+    setSource(item);
+}
+
+
 void PLSelector::wheelEvent( QWheelEvent *e )
 {
     if( verticalScrollBar()->isVisible() && (

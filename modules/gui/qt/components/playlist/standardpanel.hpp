@@ -31,16 +31,23 @@
 #include "qt.hpp"
 #include "components/playlist/playlist.hpp"
 #include "components/playlist/vlc_model.hpp"
+#include "components/playlist/plitemmovie.hpp"
 
 #include <QWidget>
 #include <QModelIndexList>
+#include <QQmlContext>
+#include <QtQuickWidgets/QQuickWidget>
+
 
 #include <vlc_playlist.h> /* playlist_item_t */
+
+#include <typeinfo>
 
 class QSignalMapper;
 class QWheelEvent;
 class QStackedLayout;
 class QModelIndex;
+
 
 class QAbstractItemView;
 class QTreeView;
@@ -71,6 +78,10 @@ public:
 
     static QMenu *viewSelectionMenu(StandardPLPanel *obj);
 
+    void showInfoMovie(PLItemMovie *item );
+    void hideInfoMovie();
+
+
 protected:
     VLCModel *model;
     void wheelEvent( QWheelEvent *e ) Q_DECL_OVERRIDE;
@@ -81,12 +92,12 @@ private:
 
     PLSelector  *p_selector;
 
-    QTreeView         *treeView;
-    PlIconView        *iconView;
-    PlListView        *listView;
-    PicFlowView       *picFlowView;
+    QQuickWidget  *treeView;
+    QQuickWidget  *iconView;
+    QQuickWidget  *listView;
+    QQuickWidget  *picFlowView;
 
-    QAbstractItemView *currentView;
+    QQuickWidget  *currentView;
 
     QStackedLayout    *viewStack;
 

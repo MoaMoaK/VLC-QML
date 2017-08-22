@@ -29,6 +29,8 @@
 # include "config.h"
 #endif
 
+#include <qt5/QtCore/Qt>
+
 #include "qt.hpp"
 #include "util/customwidgets.hpp" /* QFramelessButton */
 
@@ -121,6 +123,8 @@ public:
 
     void getCurrentItemInfos( int *type, bool *delayedSearch, QString *name );
     int getCurrentItemCategory();
+
+    Q_INVOKABLE void setSourceFromName(const int item_num);
 
 protected:
     void drawBranches ( QPainter *, const QRect &, const QModelIndex & ) const Q_DECL_OVERRIDE;

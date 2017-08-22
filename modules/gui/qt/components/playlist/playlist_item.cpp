@@ -55,27 +55,28 @@ void AbstractPLItem::removeChild( AbstractPLItem *item )
    PLItem have a parent, and id and a input Id
 */
 
-void PLItem::init( playlist_item_t *_playlist_item, PLItem *parent )
+void PLItem::init( intf_thread_t *_p_intf, playlist_item_t *_playlist_item, PLItem *parent )
 {
     parentItem = parent;          /* Can be NULL, but only for the rootItem */
     i_playlist_id = _playlist_item->i_id;           /* Playlist item specific id */
     p_input = _playlist_item->p_input;
     i_flags = _playlist_item->i_flags;
     input_item_Hold( p_input );
+    p_intf = _p_intf;
 }
 
 /*
    Constructors
    Call the above function init
    */
-PLItem::PLItem( playlist_item_t *p_item, PLItem *parent )
+PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t *p_item, PLItem *parent )
 {
-    init( p_item, parent );
+    init(_p_intf, p_item, parent );
 }
 
-PLItem::PLItem( playlist_item_t * p_item )
+PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t * p_item )
 {
-    init( p_item, NULL );
+    init( _p_intf, p_item, NULL );
 }
 
 PLItem::~PLItem()
