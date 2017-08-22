@@ -527,11 +527,11 @@ static void *ThreadPlatform( void *obj, char *platform_name )
         fprintf(stderr, "[H4CK QMLJSDEBUG]: add QApp param : %s \n", qmlJsDebugOpt);
         argv[argc++] = qmlJsDebugOpt;
     }
-    else
-    {
-        fprintf(stderr, "[H4CK QMLJSDEBUG]: add QApp param : %s \n", "-qmljsdebugger=port:55000,block,services:DebugMessages,QmlDebugger,V8Debugger,QmlInspector");
-        argv[argc++] = "-qmljsdebugger=port:55000,block,services:DebugMessages,QmlDebugger,V8Debugger,QmlInspector";
-    }
+//    else
+//    {
+//        fprintf(stderr, "[H4CK QMLJSDEBUG]: add QApp param : %s \n", "-qmljsdebugger=port:55000,block,services:DebugMessages,QmlDebugger,V8Debugger,QmlInspector");
+//        argv[argc++] = "-qmljsdebugger=port:55000,block,services:DebugMessages,QmlDebugger,V8Debugger,QmlInspector";
+//    }
 
     if( platform_name != NULL )
     {
