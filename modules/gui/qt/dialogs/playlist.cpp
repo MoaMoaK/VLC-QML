@@ -50,8 +50,8 @@ PlaylistWidget *PlaylistDialog::exportPlaylistWidget()
 {
     Q_ASSERT( playlistWidget );
     PlaylistWidget *widget = playlistWidget;
-    layout()->removeWidget( playlistWidget );
-    playlistWidget = NULL;
+//    layout()->removeWidget( playlistWidget );
+//    playlistWidget = NULL;
     return widget;
 }
 

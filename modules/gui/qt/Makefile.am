@@ -13,7 +13,7 @@ SUFFIXES += .ui .h .hpp .moc.cpp
 
 libqt_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
 	-I$(srcdir)/gui/qt -I$(builddir)/gui/qt
-libqt_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt)
+libqt_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt) -DQT_QML_DEBUG
 libqt_plugin_la_LIBADD = $(QT_LIBS) $(LIBS_qt) $(LIBM)
 libqt_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(guidir)'
 if HAVE_DARWIN
@@ -65,6 +65,7 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/dialogs/sout.cpp gui/qt/dialogs/sout.hpp \
 	gui/qt/dialogs/convert.cpp gui/qt/dialogs/convert.hpp \
 	gui/qt/dialogs/help.cpp gui/qt/dialogs/help.hpp \
+	gui/qt/dialogs/about.cpp gui/qt/dialogs/about.hpp \
 	gui/qt/dialogs/gototime.cpp gui/qt/dialogs/gototime.hpp \
 	gui/qt/dialogs/toolbar.cpp gui/qt/dialogs/toolbar.hpp \
 	gui/qt/dialogs/open.cpp gui/qt/dialogs/open.hpp \
@@ -117,6 +118,12 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/playlist/selector.cpp \
 	gui/qt/components/playlist/selector.hpp \
 	gui/qt/components/playlist/sorting.h \
+	gui/qt/components/playlist/plitemmovie.cpp \
+	gui/qt/components/playlist/plitemmovie.hpp \
+	gui/qt/components/playlist/plitemaudio.cpp \
+	gui/qt/components/playlist/plitemaudio.hpp \
+	gui/qt/components/playlist/plitemother.cpp \
+	gui/qt/components/playlist/plitemother.hpp \
 	gui/qt/components/sout/profile_selector.cpp \
 	gui/qt/components/sout/profile_selector.hpp \
 	gui/qt/components/sout/sout_widgets.cpp \
@@ -185,6 +192,7 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/dialogs/sout.moc.cpp \
 	gui/qt/dialogs/convert.moc.cpp \
 	gui/qt/dialogs/help.moc.cpp \
+	gui/qt/dialogs/about.moc.cpp \
 	gui/qt/dialogs/gototime.moc.cpp \
 	gui/qt/dialogs/toolbar.moc.cpp \
 	gui/qt/dialogs/open.moc.cpp \
@@ -215,6 +223,7 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/components/playlist/playlist.moc.cpp \
 	gui/qt/components/playlist/standardpanel.moc.cpp \
 	gui/qt/components/playlist/selector.moc.cpp \
+	gui/qt/components/playlist/plitemmovie.moc.cpp \
 	gui/qt/components/sout/profile_selector.moc.cpp \
 	gui/qt/components/sout/sout_widgets.moc.cpp \
 	gui/qt/util/animators.moc.cpp \
@@ -254,6 +263,7 @@ nodist_libqt_plugin_la_SOURCES += \
 	gui/qt/ui/streampanel.h \
 	gui/qt/ui/messages_panel.h \
 	gui/qt/ui/about.h \
+	gui/qt/ui/help.h \
 	gui/qt/ui/update.h \
 	gui/qt/ui/fingerprintdialog.h \
 	gui/qt/ui/sout.h
@@ -293,6 +303,7 @@ libqt_plugin_la_UI = \
 	gui/qt/ui/streampanel.ui \
 	gui/qt/ui/messages_panel.ui \
 	gui/qt/ui/about.ui \
+	gui/qt/ui/help.ui \
 	gui/qt/ui/update.ui \
 	gui/qt/ui/sout.ui \
 	gui/qt/ui/vlm.ui \
@@ -317,6 +328,12 @@ libqt_plugin_la_RES = \
 	gui/qt/pixmaps/go-next.png \
 	gui/qt/pixmaps/addons/addon.png \
 	gui/qt/pixmaps/addons/addon_broken.png \
+	gui/qt/pixmaps/addons/addon_blue.png \
+	gui/qt/pixmaps/addons/addon_cyan.png \
+	gui/qt/pixmaps/addons/addon_green.png \
+	gui/qt/pixmaps/addons/addon_magenta.png \
+	gui/qt/pixmaps/addons/addon_red.png \
+	gui/qt/pixmaps/addons/addon_yellow.png \
 	gui/qt/pixmaps/addons/score.png \
 	gui/qt/pixmaps/menus/exit_16px.png \
 	gui/qt/pixmaps/menus/help_16px.png \
@@ -433,7 +450,15 @@ libqt_plugin_la_RES = \
 	gui/qt/pixmaps/update.png \
 	gui/qt/pixmaps/valid.png \
 	gui/qt/pixmaps/search_clear.png \
-	gui/qt/pixmaps/lock.png
+	gui/qt/pixmaps/lock.png \
+	gui/qt/qml/help.qml \
+	gui/qt/qml/about.qml \
+	gui/qt/qml/playlist/iconview.qml \
+	gui/qt/qml/playlist/InfoMovie.qml \
+	gui/qt/qml/playlist/treeview.qml \
+	gui/qt/qml/playlist/picflowview.qml \
+	gui/qt/qml/playlist/listview.qml \
+	gui/qt/qml/playlist/PLBannerSources.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 
 nodist_libqt_plugin_la_SOURCES += gui/qt/resources.cpp

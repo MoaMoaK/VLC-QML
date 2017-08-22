@@ -262,10 +262,8 @@ void PLModel::dropMove( const PlMimeData * plMimeData, PLItem *target, int row )
     free( pp_items );
 }
 
-void PLModel::activateItem( const QModelIndex &index )
+void PLModel::activateItem( PLItem* item )
 {
-    assert( index.isValid() );
-    const PLItem *item = getItem( index );
     assert( item );
 
     vlc_playlist_locker pl_lock( THEPL );
@@ -289,6 +287,16 @@ void PLModel::activateItem( playlist_item_t *p_item )
         playlist_ViewPlay( p_playlist, p_parent, p_item );
 }
 
+
+void PLModel::displayInfo( PLItem* item )
+{
+    assert( item );
+    item->displayInfo();
+}
+
+void PLModel::activateItem( const QModelIndex &index )
+{ }
+
 /****************** Base model mandatory implementations *****************/
 QVariant PLModel::data( const QModelIndex &index, const int role ) const
 {
@@ -297,7 +305,6 @@ QVariant PLModel::data( const QModelIndex &index, const int role ) const
 
     switch( role )
     {
-
         case Qt::FontRole:
             return customFont;
 
@@ -344,17 +351,18 @@ QVariant PLModel::data( const QModelIndex &index, const int role ) const
             {
                 case COLUMN_TITLE:
                 {
-                    PLItem *item = getItem( index );
+                    //PLItem *item = getItem( index );
                     /* Used to segfault here because i_type wasn't always initialized */
-                    int idx = item->inputItem()->i_type;
-                    if( item->inputItem()->b_net && item->inputItem()->i_type == ITEM_TYPE_FILE )
-                        idx = ITEM_TYPE_STREAM;
-                    return QVariant( icons[idx] );
+                    //return QVariant( icons[item->inputItem()->i_type] );
+                    return getArtUrl(index);
                 }
                 case COLUMN_COVER:
+                {
                     /* !warn: changes tree item line height. Otherwise, override
                      * delegate's sizehint */
-                    return getArtPixmap( index, QSize(16,16) );
+                    //return getArtPixmap( index, QSize(16,16) );
+                    return getArtUrl(index);
+                }
                 default:
                     break;
             }
@@ -375,11 +383,112 @@ QVariant PLModel::data( const QModelIndex &index, const int role ) const
         case LEAF_NODE_ROLE:
             return QVariant( isLeaf( index ) );
 
+        case TITLE_ROLE:
+            return getMeta(index, COLUMN_TITLE);
+
+        case DURATION_ROLE:
+            return getMeta(index, COLUMN_DURATION);
+
+        case ARTIST_ROLE:
+            return getMeta(index, COLUMN_ARTIST);
+
+        case GENRE_ROLE:
+            return getMeta(index, COLUMN_GENRE);
+
+        case ALBUM_ROLE:
+            return getMeta(index, COLUMN_ALBUM);
+
+        case TRACK_NUMBER_ROLE:
+            return getMeta(index, COLUMN_TRACK_NUMBER);
+
+        case DESCRIPTION_ROLE:
+            return getMeta(index, COLUMN_DESCRIPTION);
+
+        case URI_ROLE:
+            return getMeta(index, COLUMN_URI);
+
+        case NUMBER_ROLE:
+            return getMeta(index, COLUMN_NUMBER);
+
+        case RATING_ROLE:
+            return getMeta(index, COLUMN_RATING);
+
+        case COVER_ROLE:
+            return getMeta(index, COLUMN_COVER);
+
+        case DISC_NUMBER_ROLE:
+            return getMeta(index, COLUMN_DISC_NUMBER);
+
+        case DATE_ROLE:
+            return getMeta(index, COLUMN_DATE);
+
         default:
             break;
     }
 
     return QVariant();
+}
+
+es_format_category_e PLModel::getMainCategory (input_item_t *input) const
+{
+    es_format_category_e res = UNKNOWN_ES;
+    if (input)
+    {
+        es_format_t **es = input->es;
+        int nb_es = input->i_es;
+        if (es)
+        {
+            for (int i=0 ; i<nb_es ; i++)
+            {
+                es_format_category_e cat = es[i]->i_cat;
+                if (cat == VIDEO_ES)
+                {
+                    res = VIDEO_ES;
+                }
+                else if (cat == AUDIO_ES && res != VIDEO_ES)
+                {
+                    res = AUDIO_ES;
+                }
+                else if (cat == SPU_ES && res != AUDIO_ES && res != VIDEO_ES)
+                {
+                    res = SPU_ES;
+                }
+                else if (cat == NAV_ES && res != SPU_ES && res != AUDIO_ES && res != VIDEO_ES)
+                {
+                    res = NAV_ES;
+                }
+            }
+        }
+    }
+
+    return res;
+}
+
+QHash<int, QByteArray> PLModel::roleNames() const {
+    QHash<int, QByteArray> roles;
+    roles[Qt::FontRole] = "font";
+    roles[Qt::DisplayRole] = "display";
+    roles[Qt::DecorationRole] = "decoration";
+    roles[Qt::BackgroundRole] = "background";
+    roles[CURRENT_ITEM_ROLE] = "current_item";
+    roles[CURRENT_ITEM_CHILD_ROLE] = "current_item_child";
+    roles[LEAF_NODE_ROLE] = "leaf_node";
+    roles[TITLE_ROLE] = "title";
+    roles[DURATION_ROLE] = "duration";
+    roles[ARTIST_ROLE] = "artist";
+    roles[GENRE_ROLE] = "genre";
+    roles[ALBUM_ROLE] = "album";
+    roles[TRACK_NUMBER_ROLE] = "track_number";
+    roles[DESCRIPTION_ROLE] = "description";
+    roles[URI_ROLE] = "uri";
+    roles[NUMBER_ROLE] = "number";
+    roles[RATING_ROLE] = "rating";
+    roles[COVER_ROLE] = "cover";
+    roles[DISC_NUMBER_ROLE] = "disc_number";
+    roles[DATE_ROLE] = "date";
+    roles[ACTIVATE_ITEM_ROLE] = "activate_item";
+    roles[DISPLAY_INFO_ROLE] = "display_info";
+    return roles;
 }
 
 bool PLModel::setData( const QModelIndex &index, const QVariant & value, int role )
@@ -388,6 +497,14 @@ bool PLModel::setData( const QModelIndex &index, const QVariant & value, int rol
     {
     case Qt::FontRole:
         customFont = value.value<QFont>();
+        return true;
+    // Trick to trigger activateItem()
+    case ACTIVATE_ITEM_ROLE :
+        activateItem(getItem(index));
+        return true;
+    // Trick to trigger displayInfo()
+    case DISPLAY_INFO_ROLE :
+        displayInfo(getItem(index));
         return true;
     default:
         return VLCModel::setData( index, value, role );
@@ -637,7 +754,13 @@ void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
         for( pos = p_item->p_parent->i_children - 1; pos >= 0; pos-- )
             if( p_item->p_parent->pp_children[pos] == p_item ) break;
 
-        newItem = new PLItem( p_item, nodeParentItem );
+        es_format_category_e cat = getMainCategory(p_item->p_input);
+        if( cat==VIDEO_ES )
+            newItem = new PLItemMovie( p_intf, p_item, nodeParentItem );
+        else if ( cat==AUDIO_ES )
+            newItem = new PLItemAudio( p_intf, p_item, nodeParentItem );
+        else
+            newItem = new PLItemOther( p_intf, p_item, nodeParentItem );
     }
 
     /* We insert the newItem (children) inside the parent */
@@ -666,7 +789,13 @@ void PLModel::rebuild( playlist_item_t *p_root )
         if( p_root ) // Can be NULL
         {
             if ( rootItem ) delete rootItem;
-            rootItem = new PLItem( p_root );
+            es_format_category_e cat = getMainCategory(p_root->p_input);
+            if( cat==VIDEO_ES )
+                rootItem = new PLItemMovie( p_intf, p_root, NULL );
+            else if (cat==AUDIO_ES)
+                rootItem = new PLItemAudio( p_intf, p_root, NULL );
+            else
+                rootItem = new PLItemOther( p_intf, p_root, NULL );
         }
         assert( rootItem );
         /* Recreate from root */
@@ -737,7 +866,15 @@ void PLModel::updateChildren( playlist_item_t *p_node, PLItem *root )
     for( int i = 0; i < p_node->i_children ; i++ )
     {
         if( p_node->pp_children[i]->i_flags & PLAYLIST_DBL_FLAG ) continue;
-        PLItem *newItem =  new PLItem( p_node->pp_children[i], root );
+
+        PLItem *newItem;
+        es_format_category_e cat = getMainCategory(p_node->pp_children[i]->p_input);
+        if( cat==VIDEO_ES )
+            newItem = new PLItemMovie( p_intf, p_node->pp_children[i], root );
+        else if (cat==AUDIO_ES )
+            newItem = new PLItemAudio( p_intf, p_node->pp_children[i], root );
+        else
+            newItem = new PLItemOther( p_intf, p_node->pp_children[i], root );
         root->appendChild( newItem );
         if( p_node->pp_children[i]->i_children != -1 )
             updateChildren( p_node->pp_children[i], newItem );

@@ -492,8 +492,11 @@ QMenu *VLCMenuBar::ViewMenu( intf_thread_t *p_intf, QMenu *current, MainInterfac
     action->setChecked( mi->isPlDocked() );
     CONNECT( action, triggered( bool ), mi, dockPlaylist( bool ) );
 
+    /* add menu to change view */
     if( mi->getPlaylistView() )
+    {
         menu->addMenu( StandardPLPanel::viewSelectionMenu( mi->getPlaylistView() ) );
+    }
 
     menu->addSeparator();
 
@@ -562,6 +565,7 @@ QMenu *VLCMenuBar::InterfacesMenu( intf_thread_t *p_intf, QMenu *current )
  **/
 void VLCMenuBar::ExtensionsMenu( intf_thread_t *p_intf, QMenu *extMenu )
 {
+
     /* Get ExtensionsManager and load extensions if needed */
     ExtensionsManager *extMgr = ExtensionsManager::getInstance( p_intf );
 
@@ -811,19 +815,19 @@ void VLCMenuBar::PopupMenuPlaylistEntries( QMenu *menu,
         action = menu->addAction( qtr( "&Play" ),
                 ActionsManager::getInstance( p_intf ), SLOT( play() ) );
 #ifndef __APPLE__ /* No icons in menus in Mac */
-        action->setIcon( QIcon( ":/toolbar/play_b" ) );
+        action->setIcon( QIcon( ":/menu/play" ) );
 #endif
     }
     else
     {
         action = addMIMStaticEntry( p_intf, menu, qtr( "Pause" ),
-                ":/toolbar/pause_b", SLOT( togglePlayPause() ) );
+                ":/menu/pause", SLOT( togglePlayPause() ) );
     }
     action->setData( ACTION_DELETE_ON_REBUILD );
 
     /* Stop */
     action = addMIMStaticEntry( p_intf, menu, qtr( "&Stop" ),
-            ":/toolbar/stop_b", SLOT( stop() ), true );
+            ":/menu/stop", SLOT( stop() ), true );
     if( !p_input )
         action->setEnabled( false );
     action->setData( ACTION_DELETE_ON_REBUILD );
@@ -831,13 +835,13 @@ void VLCMenuBar::PopupMenuPlaylistEntries( QMenu *menu,
     /* Next / Previous */
     bool bPlaylistEmpty = THEMIM->hasEmptyPlaylist();
     action = addMIMStaticEntry( p_intf, menu, qtr( "Pre&vious" ),
-            ":/toolbar/previous_b", SLOT( prev() ), true );
+            ":/menu/previous", SLOT( prev() ), true );
     action->setEnabled( !bPlaylistEmpty );
     action->setData( ACTION_NO_CLEANUP + ACTION_DELETE_ON_REBUILD );
     CONNECT( THEMIM, playlistNotEmpty(bool), action, setEnabled(bool) );
 
     action = addMIMStaticEntry( p_intf, menu, qtr( "Ne&xt" ),
-            ":/toolbar/next_b", SLOT( next() ), true );
+            ":/menu/next", SLOT( next() ), true );
     action->setEnabled( !bPlaylistEmpty );
     action->setData( ACTION_NO_CLEANUP + ACTION_DELETE_ON_REBUILD );
     CONNECT( THEMIM, playlistNotEmpty(bool), action, setEnabled(bool) );

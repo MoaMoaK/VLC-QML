@@ -49,11 +49,17 @@
 PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
                : QWidget( _par ), p_intf ( _p_i )
 {
-
-    setContentsMargins( 0, 3, 0, 3 );
-
+    /* Setup of the window */
     QGridLayout *layout = new QGridLayout( this );
     layout->setMargin( 0 ); layout->setSpacing( 0 );
+
+
+//    view->setResizeMode( QQuickView::SizeRootObjectToView );
+//    view->setTitle( qtr( "Playlist" ) );
+
+
+//    setContentsMargins( 0, 3, 0, 3 );
+
 
     /*******************
      * Left            *
@@ -142,6 +148,7 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
 
     /* Add the two sides of the QSplitter */
     split->addWidget( leftSplitter );
+    //split->addWidget( container );
     split->addWidget( mainView );
 
     QList<int> sizeList;
@@ -223,11 +230,13 @@ void PlaylistWidget::forceShow()
 void PlaylistWidget::changeView( const QModelIndex& index )
 {
     locationBar->setIndex( index );
+
 }
 
 void PlaylistWidget::setSearchFieldFocus()
 {
     searchEdit->setFocus();
+
 }
 
 #include <QSignalMapper>

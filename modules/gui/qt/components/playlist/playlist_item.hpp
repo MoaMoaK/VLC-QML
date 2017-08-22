@@ -30,8 +30,9 @@
 
 #include "qt.hpp"
 
-#include <QList>
-#include <QString>
+#include <qt5/QtCore/QList>
+#include <qt5/QtCore/QString>
+#include <qt5/QtCore/QObject>
 
 class AbstractPLItem
 {
@@ -73,23 +74,33 @@ public:
     bool hasSameParent( PLItem *other ) { return parent() == other->parent(); }
     bool operator< ( AbstractPLItem& );
 
+    PLItem(intf_thread_t *_p_intf, playlist_item_t *, PLItem *parent );
+
+protected:
+    input_item_t *inputItem() Q_DECL_OVERRIDE { return p_input; }
+
+    virtual void displayInfo()=0;
+    Q_INVOKABLE virtual QString getTitle() const Q_DECL_OVERRIDE;
+
+
+    intf_thread_t *p_intf;
+    int i_playlist_id;
+
 private:
     /* AbstractPLItem */
     int id() const Q_DECL_OVERRIDE;
-    input_item_t *inputItem() Q_DECL_OVERRIDE { return p_input; }
     AbstractPLItem *child( int id ) const Q_DECL_OVERRIDE { return children.value( id ); };
     virtual QString getURI() const Q_DECL_OVERRIDE;
-    virtual QString getTitle() const Q_DECL_OVERRIDE;
     virtual bool readOnly() const Q_DECL_OVERRIDE;
 
+
     /* Local */
-    PLItem( playlist_item_t *, PLItem *parent );
+
     int row();
     void takeChildAt( int );
 
-    PLItem( playlist_item_t * );
-    void init( playlist_item_t *, PLItem * );
-    int i_playlist_id;
+    PLItem( intf_thread_t *intf, playlist_item_t * );
+    void init( intf_thread_t *intf, playlist_item_t *, PLItem * );
     int i_flags;
     input_item_t *p_input;
 };
