@@ -642,7 +642,7 @@ int PLSelector::getCurrentItemCategory()
 }
 
 // Trick : Will need to change this int later
-void PLSelector::setSourceFromName(const int item_num)
+void PLSelector::setSourceFromNum(const int item_num)
 {
     QList<QTreeWidgetItem*> results = findItems("", Qt::MatchContains | Qt::MatchRecursive);
     if (results.size() < item_num)

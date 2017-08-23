@@ -20,7 +20,7 @@ Rectangle {
             font.pixelSize: 12
             MouseArea {
                 anchors.fill: parent
-                onClicked: selector.setSourceFromName(2)
+                onClicked: selector.setSourceFromNum(2)
             }
         }
 
@@ -32,7 +32,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             MouseArea {
                 anchors.fill: parent
-                onClicked: selector.setSourceFromName(3)
+                onClicked: selector.setSourceFromNum(3)
             }
         }
 
@@ -44,7 +44,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             MouseArea {
                 anchors.fill: parent
-                onClicked: selector.setSourceFromName(4)
+                onClicked: selector.setSourceFromNum(4)
             }
         }
     }

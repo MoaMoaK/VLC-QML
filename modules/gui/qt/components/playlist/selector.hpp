@@ -124,7 +124,7 @@ public:
     void getCurrentItemInfos( int *type, bool *delayedSearch, QString *name );
     int getCurrentItemCategory();
 
-    Q_INVOKABLE void setSourceFromName(const int item_num);
+    Q_INVOKABLE void setSourceFromNum(const int item_num);
 
 protected:
     void drawBranches ( QPainter *, const QRect &, const QModelIndex & ) const Q_DECL_OVERRIDE;
