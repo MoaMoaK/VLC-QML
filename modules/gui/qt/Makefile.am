@@ -458,7 +458,8 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/playlist/treeview.qml \
 	gui/qt/qml/playlist/picflowview.qml \
 	gui/qt/qml/playlist/listview.qml \
-	gui/qt/qml/playlist/PLBannerSources.qml
+	gui/qt/qml/playlist/PLBannerSources.qml \
+    gui/qt/qml/playlist/GridViewDelegate.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 
 nodist_libqt_plugin_la_SOURCES += gui/qt/resources.cpp

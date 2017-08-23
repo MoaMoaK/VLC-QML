@@ -165,5 +165,6 @@
         <file alias="picflowview.qml">qml/playlist/picflowview.qml</file>
         <file alias="PLBannerSources.qml">qml/playlist/PLBannerSources.qml</file>
         <file alias="treeview.qml">qml/playlist/treeview.qml</file>
+        <file alias="GridViewDelegate.qml">qml/playlist/GridViewDelegate.qml</file>
     </qresource>
 </RCC>
