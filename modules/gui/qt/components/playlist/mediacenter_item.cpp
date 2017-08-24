@@ -30,7 +30,7 @@
 
 #include "qt.hpp"
 #include "vlc_es.h"
-#include "playlist_item.hpp"
+#include "mediacenter_item.hpp"
 #include "standardpanel.hpp"
 #include "dialogs/playlist.hpp"
 #include <vlc_input_item.h>
@@ -39,32 +39,32 @@
  * Playlist item implementation
  *************************************************************************/
 
-void PLItem::clearChildren()
+void MCItem::clearChildren()
 {
     qDeleteAll( plitem_children );
     plitem_children.clear();
 }
 
-void PLItem::removeChild( PLItem *item )
+void MCItem::removeChild( MCItem *item )
 {
     plitem_children.removeOne( item );
     delete item;
 }
 
-void PLItem::updateType()
+void MCItem::updateType()
 {
     itemType = guessItemType();
 }
 
-void PLItem::staticUpdateType(const vlc_event_t *p_event,
+void MCItem::staticUpdateType(const vlc_event_t *p_event,
                               void *user_data)
 {
-    PLItem * item = reinterpret_cast<PLItem*> (user_data) ;
+    MCItem * item = reinterpret_cast<MCItem*> (user_data) ;
     if (item)
         item->updateType();
 }
 
-playlist_item_type PLItem::guessItemType()
+playlist_item_type MCItem::guessItemType()
 {
     input_item_t *input = inputItem();
     playlist_item_type res = OTHER;
@@ -95,7 +95,7 @@ playlist_item_type PLItem::guessItemType()
    PLItem have a parent, and id and a input Id
 */
 
-void PLItem::init( intf_thread_t *_p_intf, playlist_item_t *_playlist_item, PLItem *p_parent )
+void MCItem::init( intf_thread_t *_p_intf, playlist_item_t *_playlist_item, MCItem *p_parent )
 {
     parentItem = p_parent;          /* Can be NULL, but only for the rootItem */
     i_playlist_id = _playlist_item->i_id;           /* Playlist item specific id */
@@ -113,17 +113,17 @@ void PLItem::init( intf_thread_t *_p_intf, playlist_item_t *_playlist_item, PLIt
    Constructors
    Call the above function init
    */
-PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t *p_item, PLItem *p_parent )
+MCItem::MCItem( intf_thread_t *_p_intf, playlist_item_t *p_item, MCItem *p_parent )
 {
     init(_p_intf, p_item, p_parent );
 }
 
-PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t * p_item )
+MCItem::MCItem( intf_thread_t *_p_intf, playlist_item_t * p_item )
 {
     init( _p_intf, p_item, NULL );
 }
 
-PLItem::~PLItem()
+MCItem::~MCItem()
 {
     input_item_Release( p_input );
     qDeleteAll( plitem_children );
@@ -134,32 +134,32 @@ PLItem::~PLItem()
                      staticUpdateType, this);
 }
 
-int PLItem::id() const
+int MCItem::id() const
 {
     return i_playlist_id;
 }
 
-void PLItem::takeChildAt( int index )
+void MCItem::takeChildAt( int index )
 {
-    PLItem *child = plitem_children[index];
+    MCItem *child = plitem_children[index];
     child->parentItem = NULL;
     plitem_children.removeAt( index );
 }
 
 /* This function is used to get one's parent's row number in the model */
-int PLItem::row()
+int MCItem::row()
 {
     if( parentItem )
         return parentItem->indexOf( this );
     return 0;
 }
 
-bool PLItem::operator< ( PLItem& other )
+bool MCItem::operator< ( MCItem& other )
 {
-    PLItem *item1 = this;
+    MCItem *item1 = this;
     while( item1->parentItem )
     {
-        PLItem *item2 = &other;
+        MCItem *item2 = &other;
         while( item2->parentItem )
         {
             if( item1 == item2->parentItem ) return true;
@@ -174,7 +174,7 @@ bool PLItem::operator< ( PLItem& other )
     return false;
 }
 
-QString PLItem::getURI() const
+QString MCItem::getURI() const
 {
     QString uri;
     vlc_mutex_lock( &p_input->lock );
@@ -183,7 +183,7 @@ QString PLItem::getURI() const
     return uri;
 }
 
-QString PLItem::getTitle() const
+QString MCItem::getTitle() const
 {
     QString title;
     char *fb_name = input_item_GetTitle( p_input );
@@ -197,12 +197,12 @@ QString PLItem::getTitle() const
     return title;
 }
 
-bool PLItem::readOnly() const
+bool MCItem::readOnly() const
 {
     return i_flags & PLAYLIST_RO_FLAG;
 }
 
-void PLItem::displayInfo()
+void MCItem::displayInfo()
 {
     switch (itemType)
     {
@@ -231,12 +231,12 @@ void PLItem::displayInfo()
     }
 }
 
-QString PLItem::getArtworkURL()
+QString MCItem::getArtworkURL()
 {
     return input_item_GetArtworkURL(inputItem());
 }
 
-void PLItem::back()
+void MCItem::back()
 {
    StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
    mv->hideInfoMovie();

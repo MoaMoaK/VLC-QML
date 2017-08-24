@@ -29,7 +29,7 @@
 #include "components/playlist/standardpanel.hpp"
 
 #include "components/playlist/vlc_model.hpp"      /* VLCModel */
-#include "components/playlist/playlist_model.hpp" /* PLModel */
+#include "components/playlist/mediacenter_model.hpp" /* PLModel */
 #include "components/playlist/views.hpp"          /* 3 views */
 #include "components/playlist/selector.hpp"       /* PLSelector */
 #include "util/animators.hpp"                     /* PixmapAnimator */
@@ -601,7 +601,7 @@ void StandardPLPanel::deleteSelection()
 //    model->doDelete( list );
 }
 
-void StandardPLPanel::showInfoMovie(PLItem *item )
+void StandardPLPanel::showInfoMovie(MCItem *item )
 {
     QQuickWidget *infoView = new QQuickWidget();
 
@@ -632,7 +632,6 @@ void StandardPLPanel::createIconView()
     iconView = new QQuickWidget();
     QQmlContext *rootCtx = iconView->rootContext();
     rootCtx->setContextProperty( "m", model );
-    rootCtx->setContextProperty( "playlist_items")
     rootCtx->setContextProperty( "selector", p_selector);
     iconView->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
     iconView->setResizeMode(QQuickWidget::SizeRootObjectToView);

@@ -77,7 +77,7 @@ public:
 
     static QMenu *viewSelectionMenu(StandardPLPanel *obj);
 
-    void showInfoMovie(PLItem *item );
+    void showInfoMovie(MCItem *item );
     void hideInfoMovie();
 
 

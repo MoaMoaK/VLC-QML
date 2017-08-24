@@ -40,22 +40,22 @@ enum playlist_item_type {
     OTHER
 };
 
-class PLItem : public QObject
+class MCItem : public QObject
 {
     Q_OBJECT
 
-    friend class PLItem; /* super ugly glue stuff */
+    friend class MCItem; /* super ugly glue stuff */
     friend class MLItem;
     friend class VLCModel;
-    friend class PLModel;
+    friend class MCModel;
     friend class MLModel;
 
 public:
-    virtual ~PLItem();
-    bool hasSameParent( PLItem *other ) { return plitem_parent() == other->plitem_parent(); }
-    bool operator< ( PLItem& );
+    virtual ~MCItem();
+    bool hasSameParent( MCItem *other ) { return plitem_parent() == other->plitem_parent(); }
+    bool operator< ( MCItem& );
 
-    PLItem(intf_thread_t *_p_intf, playlist_item_t *, PLItem *p_parent );
+    MCItem(intf_thread_t *_p_intf, playlist_item_t *, MCItem *p_parent );
 
     void displayInfo();
 
@@ -70,20 +70,20 @@ public:
 protected:
     int id() const;
     int childCount() const { return plitem_children.count(); }
-    int indexOf( PLItem *item ) const { return plitem_children.indexOf( item ); }
-    int lastIndexOf( PLItem *item ) const { return plitem_children.lastIndexOf( item ); }
+    int indexOf( MCItem *item ) const { return plitem_children.indexOf( item ); }
+    int lastIndexOf( MCItem *item ) const { return plitem_children.lastIndexOf( item ); }
     input_item_t *inputItem() { return p_input; }
-    PLItem *plitem_parent() { return parentItem; }
-    void insertChild( PLItem *item, int pos = -1 ) { plitem_children.insert( pos, item ); }
-    void appendChild( PLItem *item ) { insertChild( item, plitem_children.count() ); }
-    void removeChild( PLItem *item );
-    PLItem *child( int id ) const { return plitem_children.value( id ); }
+    MCItem *plitem_parent() { return parentItem; }
+    void insertChild( MCItem *item, int pos = -1 ) { plitem_children.insert( pos, item ); }
+    void appendChild( MCItem *item ) { insertChild( item, plitem_children.count() ); }
+    void removeChild( MCItem *item );
+    MCItem *child( int id ) const { return plitem_children.value( id ); }
     void clearChildren();
     QString getURI() const;
     bool readOnly() const;
 
-    QList<PLItem *> plitem_children;
-    PLItem *parentItem;
+    QList<MCItem *> plitem_children;
+    MCItem *parentItem;
 
     playlist_item_type itemType;
 
@@ -94,8 +94,8 @@ private:
     int row();
     void takeChildAt( int );
 
-    PLItem( intf_thread_t *intf, playlist_item_t * );
-    void init( intf_thread_t *intf, playlist_item_t *, PLItem * );
+    MCItem( intf_thread_t *intf, playlist_item_t * );
+    void init( intf_thread_t *intf, playlist_item_t *, MCItem * );
     playlist_item_type guessItemType();
     int i_flags;
     input_item_t *p_input;
