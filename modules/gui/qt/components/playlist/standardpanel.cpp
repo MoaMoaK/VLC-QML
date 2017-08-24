@@ -601,7 +601,7 @@ void StandardPLPanel::deleteSelection()
 //    model->doDelete( list );
 }
 
-void StandardPLPanel::showInfoMovie(PLItemMovie *item )
+void StandardPLPanel::showInfoMovie(PLItem *item )
 {
     QQuickWidget *infoView = new QQuickWidget();
 
@@ -632,6 +632,7 @@ void StandardPLPanel::createIconView()
     iconView = new QQuickWidget();
     QQmlContext *rootCtx = iconView->rootContext();
     rootCtx->setContextProperty( "m", model );
+    rootCtx->setContextProperty( "playlist_items")
     rootCtx->setContextProperty( "selector", p_selector);
     iconView->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
     iconView->setResizeMode(QQuickWidget::SizeRootObjectToView);

@@ -29,23 +29,63 @@
 #include <assert.h>
 
 #include "qt.hpp"
+#include "vlc_es.h"
 #include "playlist_item.hpp"
+#include "standardpanel.hpp"
+#include "dialogs/playlist.hpp"
 #include <vlc_input_item.h>
 
 /*************************************************************************
  * Playlist item implementation
  *************************************************************************/
 
-void AbstractPLItem::clearChildren()
+void PLItem::clearChildren()
 {
-    qDeleteAll( children );
-    children.clear();
+    qDeleteAll( plitem_children );
+    plitem_children.clear();
 }
 
-void AbstractPLItem::removeChild( AbstractPLItem *item )
+void PLItem::removeChild( PLItem *item )
 {
-    children.removeOne( item );
+    plitem_children.removeOne( item );
     delete item;
+}
+
+void PLItem::updateType()
+{
+    itemType = guessItemType();
+}
+
+void PLItem::staticUpdateType(const vlc_event_t *p_event,
+                              void *user_data)
+{
+    PLItem * item = reinterpret_cast<PLItem*> (user_data) ;
+    if (item)
+        item->updateType();
+}
+
+playlist_item_type PLItem::guessItemType()
+{
+    input_item_t *input = inputItem();
+    playlist_item_type res = OTHER;
+    if (input)
+    {
+        es_format_t **es = input->es;
+        int nb_es = input->i_es;
+        if (es)
+        {
+            for (int i=0 ; i<nb_es ; i++)
+            {
+                es_format_category_e cat = es[i]->i_cat;
+                if (cat == VIDEO_ES)
+                    res = MOVIE;
+                else if (cat == AUDIO_ES && res != MOVIE)
+                    res = MUSIC;
+            }
+        }
+    }
+
+    return res;
 }
 
 /*
@@ -55,23 +95,27 @@ void AbstractPLItem::removeChild( AbstractPLItem *item )
    PLItem have a parent, and id and a input Id
 */
 
-void PLItem::init( intf_thread_t *_p_intf, playlist_item_t *_playlist_item, PLItem *parent )
+void PLItem::init( intf_thread_t *_p_intf, playlist_item_t *_playlist_item, PLItem *p_parent )
 {
-    parentItem = parent;          /* Can be NULL, but only for the rootItem */
+    parentItem = p_parent;          /* Can be NULL, but only for the rootItem */
     i_playlist_id = _playlist_item->i_id;           /* Playlist item specific id */
     p_input = _playlist_item->p_input;
     i_flags = _playlist_item->i_flags;
     input_item_Hold( p_input );
     p_intf = _p_intf;
+    updateType();
+    vlc_event_attach(&(inputItem()->event_manager),
+                     vlc_InputItemPreparseEnded,
+                     staticUpdateType, this);
 }
 
 /*
    Constructors
    Call the above function init
    */
-PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t *p_item, PLItem *parent )
+PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t *p_item, PLItem *p_parent )
 {
-    init(_p_intf, p_item, parent );
+    init(_p_intf, p_item, p_parent );
 }
 
 PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t * p_item )
@@ -82,8 +126,12 @@ PLItem::PLItem( intf_thread_t *_p_intf, playlist_item_t * p_item )
 PLItem::~PLItem()
 {
     input_item_Release( p_input );
-    qDeleteAll( children );
-    children.clear();
+    qDeleteAll( plitem_children );
+    plitem_children.clear();
+
+    vlc_event_detach(&(inputItem()->event_manager),
+                     vlc_InputItemPreparseEnded,
+                     staticUpdateType, this);
 }
 
 int PLItem::id() const
@@ -93,9 +141,9 @@ int PLItem::id() const
 
 void PLItem::takeChildAt( int index )
 {
-    AbstractPLItem *child = children[index];
+    PLItem *child = plitem_children[index];
     child->parentItem = NULL;
-    children.removeAt( index );
+    plitem_children.removeAt( index );
 }
 
 /* This function is used to get one's parent's row number in the model */
@@ -106,12 +154,12 @@ int PLItem::row()
     return 0;
 }
 
-bool PLItem::operator< ( AbstractPLItem& other )
+bool PLItem::operator< ( PLItem& other )
 {
-    AbstractPLItem *item1 = this;
+    PLItem *item1 = this;
     while( item1->parentItem )
     {
-        AbstractPLItem *item2 = &other;
+        PLItem *item2 = &other;
         while( item2->parentItem )
         {
             if( item1 == item2->parentItem ) return true;
@@ -152,4 +200,44 @@ QString PLItem::getTitle() const
 bool PLItem::readOnly() const
 {
     return i_flags & PLAYLIST_RO_FLAG;
+}
+
+void PLItem::displayInfo()
+{
+    switch (itemType)
+    {
+    case (MOVIE):
+    {
+        msg_Info(p_intf, "Ceci est un MOVIE");
+        StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
+        mv->showInfoMovie(this);
+        break;
+    }
+    case (MUSIC):
+    {
+        msg_Info(p_intf, "Ceci est un MUSIC");
+        break;
+    }
+    default:
+    {
+        msg_Info(p_intf, "Ceci est un OTHER");
+        break;
+    }
+    }
+
+    if (itemType == MOVIE)
+    {
+
+    }
+}
+
+QString PLItem::getArtworkURL()
+{
+    return input_item_GetArtworkURL(inputItem());
+}
+
+void PLItem::back()
+{
+   StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
+   mv->hideInfoMovie();
 }

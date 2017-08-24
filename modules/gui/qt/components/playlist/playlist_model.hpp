@@ -33,9 +33,6 @@
 #include <vlc_playlist.h>
 #include "vlc_model.hpp"
 #include "playlist_item.hpp"
-#include "plitemmovie.hpp"
-#include "plitemaudio.hpp"
-#include "plitemother.hpp"
 #include "dialogs/playlist.hpp"
 #include "standardpanel.hpp"
 
@@ -143,7 +140,7 @@ private:
     /* Shallow actions (do not affect core playlist) */
     void updateTreeItem( PLItem * );
     void removeItem ( PLItem * );
-    void recurseDelete( QList<AbstractPLItem*> children, QModelIndexList *fullList );
+    void recurseDelete( QList<PLItem*> children, QModelIndexList *fullList );
     void takeItem( PLItem * ); //will not delete item
     void insertChildren( PLItem *node, QList<PLItem*>& items, int i_pos );
     /* ...of which  the following will not update the views */
@@ -172,9 +169,6 @@ private:
     /* */
     QString latestSearch;
     QFont   customFont;
-
-
-    es_format_category_e getMainCategory (input_item_t *input) const;
 
 
 private slots:

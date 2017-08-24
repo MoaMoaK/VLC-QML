@@ -169,7 +169,7 @@ protected:
     virtual bool isCurrent( const QModelIndex &index ) const;
     virtual bool isParent( const QModelIndex &index, const QModelIndex &current ) const = 0;
     virtual bool isLeaf( const QModelIndex &index ) const = 0;
-    virtual AbstractPLItem *getItem( const QModelIndex & index ) const;
+    virtual PLItem *getItem( const QModelIndex & index ) const;
 
     QIcon icons[ITEM_TYPE_NUMBER];
 

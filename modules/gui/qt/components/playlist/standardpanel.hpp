@@ -31,7 +31,6 @@
 #include "qt.hpp"
 #include "components/playlist/playlist.hpp"
 #include "components/playlist/vlc_model.hpp"
-#include "components/playlist/plitemmovie.hpp"
 
 #include <QWidget>
 #include <QModelIndexList>
@@ -78,7 +77,7 @@ public:
 
     static QMenu *viewSelectionMenu(StandardPLPanel *obj);
 
-    void showInfoMovie(PLItemMovie *item );
+    void showInfoMovie(PLItem *item );
     void hideInfoMovie();
 
 

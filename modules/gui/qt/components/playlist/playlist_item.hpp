@@ -34,8 +34,16 @@
 #include <qt5/QtCore/QString>
 #include <qt5/QtCore/QObject>
 
-class AbstractPLItem
+enum playlist_item_type {
+    MOVIE,
+    MUSIC,
+    OTHER
+};
+
+class PLItem : public QObject
 {
+    Q_OBJECT
+
     friend class PLItem; /* super ugly glue stuff */
     friend class MLItem;
     friend class VLCModel;
@@ -43,64 +51,52 @@ class AbstractPLItem
     friend class MLModel;
 
 public:
-    virtual ~AbstractPLItem() {}
-
-protected:
-    virtual int id( ) const = 0;
-    int childCount() const { return children.count(); }
-    int indexOf( AbstractPLItem *item ) const { return children.indexOf( item ); };
-    int lastIndexOf( AbstractPLItem *item ) const { return children.lastIndexOf( item ); };
-    AbstractPLItem *parent() { return parentItem; }
-    virtual input_item_t *inputItem() = 0;
-    void insertChild( AbstractPLItem *item, int pos = -1 ) { children.insert( pos, item ); }
-    void appendChild( AbstractPLItem *item ) { insertChild( item, children.count() ); } ;
-    virtual AbstractPLItem *child( int id ) const = 0;
-    void removeChild( AbstractPLItem *item );
-    void clearChildren();
-    virtual QString getURI() const = 0;
-    virtual QString getTitle() const = 0;
-    virtual bool readOnly() const = 0;
-
-    QList<AbstractPLItem *> children;
-    AbstractPLItem *parentItem;
-};
-
-class PLItem : public AbstractPLItem
-{
-    friend class PLModel;
-
-public:
     virtual ~PLItem();
-    bool hasSameParent( PLItem *other ) { return parent() == other->parent(); }
-    bool operator< ( AbstractPLItem& );
+    bool hasSameParent( PLItem *other ) { return plitem_parent() == other->plitem_parent(); }
+    bool operator< ( PLItem& );
 
-    PLItem(intf_thread_t *_p_intf, playlist_item_t *, PLItem *parent );
+    PLItem(intf_thread_t *_p_intf, playlist_item_t *, PLItem *p_parent );
+
+    void displayInfo();
+
+    Q_INVOKABLE QString getTitle() const;
+    Q_INVOKABLE QString getArtworkURL();
+    Q_INVOKABLE void back();
+
+    static void staticUpdateType(vlc_event_t const *p_event, void *user_data);
+    void updateType();
+
 
 protected:
-    input_item_t *inputItem() Q_DECL_OVERRIDE { return p_input; }
+    int id() const;
+    int childCount() const { return plitem_children.count(); }
+    int indexOf( PLItem *item ) const { return plitem_children.indexOf( item ); }
+    int lastIndexOf( PLItem *item ) const { return plitem_children.lastIndexOf( item ); }
+    input_item_t *inputItem() { return p_input; }
+    PLItem *plitem_parent() { return parentItem; }
+    void insertChild( PLItem *item, int pos = -1 ) { plitem_children.insert( pos, item ); }
+    void appendChild( PLItem *item ) { insertChild( item, plitem_children.count() ); }
+    void removeChild( PLItem *item );
+    PLItem *child( int id ) const { return plitem_children.value( id ); }
+    void clearChildren();
+    QString getURI() const;
+    bool readOnly() const;
 
-    virtual void displayInfo()=0;
-    Q_INVOKABLE virtual QString getTitle() const Q_DECL_OVERRIDE;
+    QList<PLItem *> plitem_children;
+    PLItem *parentItem;
 
+    playlist_item_type itemType;
 
     intf_thread_t *p_intf;
     int i_playlist_id;
 
 private:
-    /* AbstractPLItem */
-    int id() const Q_DECL_OVERRIDE;
-    AbstractPLItem *child( int id ) const Q_DECL_OVERRIDE { return children.value( id ); };
-    virtual QString getURI() const Q_DECL_OVERRIDE;
-    virtual bool readOnly() const Q_DECL_OVERRIDE;
-
-
-    /* Local */
-
     int row();
     void takeChildAt( int );
 
     PLItem( intf_thread_t *intf, playlist_item_t * );
     void init( intf_thread_t *intf, playlist_item_t *, PLItem * );
+    playlist_item_type guessItemType();
     int i_flags;
     input_item_t *p_input;
 };

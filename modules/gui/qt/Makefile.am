@@ -118,12 +118,6 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/playlist/selector.cpp \
 	gui/qt/components/playlist/selector.hpp \
 	gui/qt/components/playlist/sorting.h \
-	gui/qt/components/playlist/plitemmovie.cpp \
-	gui/qt/components/playlist/plitemmovie.hpp \
-	gui/qt/components/playlist/plitemaudio.cpp \
-	gui/qt/components/playlist/plitemaudio.hpp \
-	gui/qt/components/playlist/plitemother.cpp \
-	gui/qt/components/playlist/plitemother.hpp \
 	gui/qt/components/sout/profile_selector.cpp \
 	gui/qt/components/sout/profile_selector.hpp \
 	gui/qt/components/sout/sout_widgets.cpp \
@@ -220,10 +214,10 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/components/playlist/views.moc.cpp \
 	gui/qt/components/playlist/vlc_model.moc.cpp \
 	gui/qt/components/playlist/playlist_model.moc.cpp \
+	gui/qt/components/playlist/playlist_item.moc.cpp \
 	gui/qt/components/playlist/playlist.moc.cpp \
 	gui/qt/components/playlist/standardpanel.moc.cpp \
 	gui/qt/components/playlist/selector.moc.cpp \
-	gui/qt/components/playlist/plitemmovie.moc.cpp \
 	gui/qt/components/sout/profile_selector.moc.cpp \
 	gui/qt/components/sout/sout_widgets.moc.cpp \
 	gui/qt/util/animators.moc.cpp \
@@ -459,7 +453,7 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/playlist/picflowview.qml \
 	gui/qt/qml/playlist/listview.qml \
 	gui/qt/qml/playlist/PLBannerSources.qml \
-    gui/qt/qml/playlist/GridViewDelegate.qml
+	gui/qt/qml/playlist/GridViewDelegate.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 
 nodist_libqt_plugin_la_SOURCES += gui/qt/resources.cpp
