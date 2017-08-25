@@ -8,6 +8,7 @@
 #include <qt5/QtCore/QByteArray>
 
 #include "qt.hpp"
+#include "input_manager.hpp"
 
 enum PLModelRoles {
     TITLE_ROLE = Qt::UserRole + 1,
@@ -33,6 +34,11 @@ public:
 
 private:
     intf_thread_t *p_intf;
+
+private slots:
+    void processInputItemUpdate();
+    void processItemRemoval(  );
+    void processItemAppend(int i_pl_itemid, int i_pl_itemidparent);
 
 };
 

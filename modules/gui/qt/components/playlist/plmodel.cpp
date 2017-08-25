@@ -10,6 +10,13 @@ PLModel::PLModel(intf_thread_t *_p_intf, QObject *parent)
     : QAbstractListModel(parent)
 {
     p_intf = _p_intf;
+
+    DCONNECT( THEMIM->getIM(), metaChanged( input_item_t *),
+              this, processInputItemUpdate( ) );
+    CONNECT( THEMIM, playlistItemAppended( int, int ),
+             this, processItemAppend( int, int) );
+    CONNECT( THEMIM, playlistItemRemoved( int ),
+             this, processItemRemoval( ) );
 }
 
 QVariant PLModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -59,4 +66,22 @@ QHash<int, QByteArray> PLModel::roleNames() const
     roles[TITLE_ROLE] = "title";
     roles[DURATION_ROLE] = "duration";
     return roles;
+}
+
+/**** Events processing ****/
+
+void PLModel::processInputItemUpdate( )
+{
+    emit dataChanged(index(0, 0), index(rowCount(), 10));
+}
+
+void PLModel::processItemRemoval( )
+{
+    emit dataChanged(index(0, 0), index(rowCount(), 10));
+}
+
+void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
+{
+    beginInsertRows(QModelIndex(), i_pl_itemid-2, i_pl_itemid-2);
+    endInsertRows();
 }
