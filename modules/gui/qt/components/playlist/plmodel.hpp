@@ -12,7 +12,8 @@
 
 enum PLModelRoles {
     TITLE_ROLE = Qt::UserRole + 1,
-    DURATION_ROLE
+    DURATION_ROLE,
+    CURRENT_ROLE
 };
 
 class PLModel : public QAbstractListModel

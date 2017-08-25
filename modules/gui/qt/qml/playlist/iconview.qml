@@ -50,7 +50,17 @@ Item {
             anchors.bottom: parent.bottom
             width: 300
             model: playlist
-            delegate: Text { text: '[' + model.duration + '] ' + model.display }
+            delegate: Rectangle {
+                color: model.current ? "#CCCCCC" : "#FFFFFF"
+                width : 300
+                height:  textInfo.implicitHeight
+                Text { id: textInfo ; text: '[' + model.duration + '] ' + model.title }
+
+                Component.onCompleted: { console.log(model.index) ; console.log(model.current); }
+
+            }
+
+
         }
     }
 

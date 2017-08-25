@@ -51,6 +51,8 @@ QVariant PLModel::data(const QModelIndex &index, int role) const
         secstotimestr( psz_secs, secs);
         return QVariant( QString( psz_secs ) );
     }
+    case CURRENT_ROLE :
+        return QVariant( THEPL->i_current_index == index.row() );
     default:
         return QVariant(QString("Ceci est un item"));
     }
@@ -65,6 +67,7 @@ QHash<int, QByteArray> PLModel::roleNames() const
     roles[Qt::BackgroundRole] = "background";
     roles[TITLE_ROLE] = "title";
     roles[DURATION_ROLE] = "duration";
+    roles[CURRENT_ROLE] = "current";
     return roles;
 }
 
