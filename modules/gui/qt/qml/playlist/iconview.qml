@@ -5,39 +5,56 @@ Item {
     width: 1000
     height: 1000
 
-    Column {
-        id: column
+    Row {
         anchors.fill: parent
 
-        PLBannerSources {
-            id: sourcesBanner
-        }
-
-        GridView {
-            id: gridView
-            z : 1
+        Column {
+            id: column
+            anchors.top: parent.top
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.top: sourcesBanner.bottom
-            anchors.topMargin: 0
-            anchors.right: parent.right
-            anchors.left: parent.left
-            cellWidth: 150
-            cellHeight: 150
-            model: m
-            delegate: GridViewDelegate {
-                cover: model.cover
-                title: model.title
-                album: model.album
-                artist: model.artist
-                uri: model.uri
-                duration: model.duration
+            width: parent.width-300
 
-                function singleClick() { model.display_info = 1}
-                function doubleClick() { model.activate_item = 1}
+            PLBannerSources {
+                id: sourcesBanner
+                z : 2
+            }
+
+            GridView {
+                id: gridView
+                z : 1
+                height : parent.height - sourcesBanner.height
+                anchors.right: parent.right
+                anchors.left: parent.left
+                cellWidth: 150
+                cellHeight: 150
+                model: m
+                delegate: GridViewDelegate {
+                    cover: model.cover
+                    title: model.title
+                    album: model.album
+                    artist: model.artist
+                    uri: model.uri
+                    duration: model.duration
+
+                    function singleClick() { model.display_info = 1}
+                    function doubleClick() { model.activate_item = 1}
+                }
             }
         }
+
+        ListView
+        {
+            id: listview
+            z: 3
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 300
+            model: playlist
+            delegate: Text { text: '[' + model.duration + '] ' + model.display }
+        }
     }
+
+
 
 
 }

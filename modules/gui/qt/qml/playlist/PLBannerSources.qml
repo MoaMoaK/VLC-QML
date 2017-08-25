@@ -2,7 +2,6 @@ import QtQuick 2.0
 
 Rectangle {
     id: pLBannerSources
-    z : 2
     height: 32
     color: "#e6e6e6"
     anchors.left: parent.left

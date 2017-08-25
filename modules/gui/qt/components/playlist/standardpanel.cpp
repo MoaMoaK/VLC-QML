@@ -40,11 +40,12 @@
 #include "dialogs/playlist.hpp"                   /* Playlist Dialog */
 #include "dialogs/mediainfo.hpp"                  /* MediaInfoDialog */
 #include "util/qt_dirs.hpp"
+#include "components/playlist/plmodel.hpp"
 
 #include <vlc_services_discovery.h>               /* SD_CMD_SEARCH */
 #include <vlc_intf_strings.h>                     /* POP_ */
 
-#include <QtQuickWidgets/QQuickWidget>
+#include <qt5/QtQuickWidgets/QQuickWidget>
 
 
 #define I_NEW_DIR \
@@ -633,6 +634,8 @@ void StandardPLPanel::createIconView()
     QQmlContext *rootCtx = iconView->rootContext();
     rootCtx->setContextProperty( "m", model );
     rootCtx->setContextProperty( "selector", p_selector);
+    PLModel* plmodel = new PLModel(p_intf);
+    rootCtx->setContextProperty( "playlist", plmodel);
     iconView->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
     iconView->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
