@@ -34,6 +34,7 @@ public:
     QHash<int, QByteArray> roleNames() const;
 
 private:
+    playlist_item_t* getItem(const QModelIndex &index ) const;
     intf_thread_t *p_intf;
 
 private slots:

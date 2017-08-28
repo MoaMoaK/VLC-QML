@@ -42,10 +42,19 @@ QVariant PLModel::data(const QModelIndex &index, int role) const
     switch (role)
     {
     case TITLE_ROLE :
-        return QVariant( QString( THEPL->items.p_elems[index.row()]->p_input->psz_name ) );
+    {
+        playlist_item_t *plitem = getItem(index);
+
+        if (!plitem) return QVariant();
+        return QVariant( QString( plitem->p_input->psz_name ) );
+    }
     case DURATION_ROLE :
     {
-        mtime_t duration = THEPL->items.p_elems[index.row()]->p_input->i_duration;
+        playlist_item_t *plitem = getItem(index);
+
+        if (!plitem) return QVariant();
+
+        mtime_t duration = plitem->p_input->i_duration;
         int secs = duration / 1000000;
         char psz_secs[MSTRTIME_MAX_SIZE];
         secstotimestr( psz_secs, secs);
@@ -91,4 +100,13 @@ void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
 {
     beginInsertRows(QModelIndex(), i_pl_itemid-2, i_pl_itemid-2);
     endInsertRows();
+}
+
+playlist_item_t* PLModel::getItem( const QModelIndex & index ) const
+{
+    if (index.isValid() && index.row() >= 0 && index.row() < rowCount())
+        return THEPL->items.p_elems[index.row()];
+    else
+        return NULL;
+
 }
