@@ -208,7 +208,6 @@ void MCItem::displayInfo()
     {
     case (MOVIE):
     {
-        msg_Info(p_intf, "Ceci est un MOVIE");
         StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
         mv->showInfoMovie(this);
         break;
