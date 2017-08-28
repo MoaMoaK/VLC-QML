@@ -1,8 +1,6 @@
 import QtQuick 2.0
 
 Item {
-    width: 1000
-    height: 1000
 
     function decideCover (cover) {
         if (cover)
@@ -24,8 +22,6 @@ Item {
             height: 32
             z : 2
             color: "#eeeeee"
-            anchors.top: sourcesBanner.bottom
-            anchors.topMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
@@ -57,10 +53,7 @@ Item {
         }
 
         Rectangle {
-            height: 1000-32
-            color: "#ffffff"
-            anchors.top: navbar.bottom
-            anchors.topMargin: 0
+            height: parent.height - sourcesBanner.height - navbar.height
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
@@ -74,8 +67,6 @@ Item {
                     x: 10
                     anchors.top: parent.top
                     anchors.topMargin: 100
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 400
                     height: 350; width:200
                     fillMode: Image.PreserveAspectFit
                     source: decideCover(pl_item.getArtworkURL())

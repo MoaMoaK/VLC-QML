@@ -7,7 +7,7 @@ Rectangle {
     property string duration
 
     color: cur ? "#CCCCCC" : "#FFFFFF"
-    width : 300
+    width : parent.width
     height:  textInfo.implicitHeight
     Text {
         id: textInfo
