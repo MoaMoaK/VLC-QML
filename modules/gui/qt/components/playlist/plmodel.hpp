@@ -38,7 +38,7 @@ private:
 
 private slots:
     void processInputItemUpdate();
-    void processItemRemoval(  );
+    void processItemRemoval(int i_pl_itemid);
     void processItemAppend(int i_pl_itemid, int i_pl_itemidparent);
 
 };

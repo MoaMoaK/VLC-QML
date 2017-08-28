@@ -16,7 +16,7 @@ PLModel::PLModel(intf_thread_t *_p_intf, QObject *parent)
     CONNECT( THEMIM, playlistItemAppended( int, int ),
              this, processItemAppend( int, int) );
     CONNECT( THEMIM, playlistItemRemoved( int ),
-             this, processItemRemoval( ) );
+             this, processItemRemoval( int ) );
 }
 
 QVariant PLModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -75,12 +75,16 @@ QHash<int, QByteArray> PLModel::roleNames() const
 
 void PLModel::processInputItemUpdate( )
 {
+    beginResetModel();
     emit dataChanged(index(0, 0), index(rowCount(), 10));
+    endResetModel();
 }
 
-void PLModel::processItemRemoval( )
+void PLModel::processItemRemoval( int i_pl_itemid )
 {
-    emit dataChanged(index(0, 0), index(rowCount(), 10));
+    if( i_pl_itemid <= 0 ) return;
+    beginRemoveRows(QModelIndex(), i_pl_itemid-2, i_pl_itemid-2);
+    endRemoveRows();
 }
 
 void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
