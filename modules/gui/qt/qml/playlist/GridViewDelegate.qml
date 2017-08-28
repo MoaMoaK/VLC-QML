@@ -8,8 +8,6 @@ Item {
     property string artist
     property string uri
     property string duration
-    property var click1
-    property var click2
 
     function decideTitle (title, uri, duration) {
         var ret = ""
