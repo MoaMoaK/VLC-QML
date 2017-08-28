@@ -1,70 +1,43 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 1.4
 
 Item {
     width: 1000
     height: 1000
 
-    Row {
+    SplitView {
         anchors.fill: parent
+        orientation: Qt.Horizontal
 
         Column {
             id: column
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: parent.width-300
+            Layout.fillWidth: true
+            Layout.minimumWidth: 500
 
-            PLBannerSources {
+            BannerSources {
                 id: sourcesBanner
                 z : 2
             }
 
-            GridView {
-                id: gridView
+            MCDisplay {
+                media : m
                 z: 1
                 height : parent.height - sourcesBanner.height
                 anchors.right: parent.right
                 anchors.left: parent.left
-                model: m
-
-                cellWidth: 150
-                cellHeight: 150
-
-                delegate: GridViewDelegate {
-                    cover: model.cover
-                    title: model.title
-                    album: model.album
-                    artist: model.artist
-                    uri: model.uri
-                    duration: model.duration
-
-                    function singleClick() { model.display_info = 1}
-                    function doubleClick() { model.activate_item = 1}
-
-                }
-
-
             }
 
         }
 
-        ListView
-        {
-            id: listview
+        PLDisplay {
+            pl: playlist
             z: 3
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: 300
-            model: playlist
-            delegate: MCListViewDelegate {
-                cur: model.current
-                title: model.title
-                duration: model.duration
-
-                function singleClick() { }
-                function doubleClick() { model.activate_item = 1 }
-            }
-
+            Layout.maximumWidth: 400
         }
     }
 

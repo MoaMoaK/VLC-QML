@@ -163,9 +163,11 @@
         <file alias="InfoMovie.qml">qml/playlist/InfoMovie.qml</file>
         <file alias="listview.qml">qml/playlist/listview.qml</file>
         <file alias="picflowview.qml">qml/playlist/picflowview.qml</file>
-        <file alias="PLBannerSources.qml">qml/playlist/PLBannerSources.qml</file>
+        <file alias="BannerSources.qml">qml/playlist/BannerSources.qml</file>
         <file alias="treeview.qml">qml/playlist/treeview.qml</file>
-        <file alias="GridViewDelegate.qml">qml/playlist/GridViewDelegate.qml</file>
-        <file alias="MCListViewDelegate.qml">qml/playlist/MCListViewDelegate.qml</file>
+        <file alias="MCGridViewDelegate.qml">qml/playlist/MCGridViewDelegate.qml</file>
+        <file alias="PLDisplay.qml">qml/playlist/PLDisplay.qml</file>
+        <file alias="PLListViewDelegate.qml">qml/playlist/PLListViewDelegate.qml</file>
+        <file alias="MCDisplay.qml">qml/playlist/MCDisplay.qml</file>
     </qresource>
 </RCC>

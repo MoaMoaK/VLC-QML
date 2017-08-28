@@ -13,7 +13,7 @@ Item {
         id: column
         anchors.fill: parent
 
-        PLBannerSources {
+        BannerSources {
             id : sourcesBanner
         }
 
