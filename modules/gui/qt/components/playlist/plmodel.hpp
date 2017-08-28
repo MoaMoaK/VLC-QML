@@ -13,7 +13,8 @@
 enum PLModelRoles {
     TITLE_ROLE = Qt::UserRole + 1,
     DURATION_ROLE,
-    CURRENT_ROLE
+    CURRENT_ROLE,
+    ACTIVATE_ROLE
 };
 
 class PLModel : public QAbstractListModel
@@ -28,10 +29,10 @@ public:
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-
+    bool setData( const QModelIndex &index, const QVariant & value, int role = Qt::EditRole ) override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
     QHash<int, QByteArray> roleNames() const;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 private:
     playlist_item_t* getItem(const QModelIndex &index ) const;

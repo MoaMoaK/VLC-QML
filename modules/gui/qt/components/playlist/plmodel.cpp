@@ -34,6 +34,38 @@ int PLModel::rowCount(const QModelIndex &parent) const
     return THEPL->items.i_size;
 }
 
+bool PLModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    msg_Info(p_intf, "plop1");
+    if (!index.isValid())
+        return false;
+    msg_Info(p_intf, "plop2");
+
+    switch (role) {
+    case ACTIVATE_ROLE:
+    {
+        msg_Info(p_intf, "plop3");
+
+        playlist_item_t *plitem = getItem(index);
+        if (!plitem) return false;
+        playlist_item_t *p_parent = plitem;
+        while( p_parent )
+        {
+            if( p_parent->i_id == THEPL->root.i_id ) break;
+            p_parent = p_parent->p_parent;
+        }
+        if( p_parent )
+            playlist_ViewPlay( THEPL, p_parent, plitem );
+
+        return true;
+    }
+    default:
+        return false;
+    }
+
+}
+
+
 QVariant PLModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
@@ -77,7 +109,14 @@ QHash<int, QByteArray> PLModel::roleNames() const
     roles[TITLE_ROLE] = "title";
     roles[DURATION_ROLE] = "duration";
     roles[CURRENT_ROLE] = "current";
+    roles[ACTIVATE_ROLE] = "activate_item";
     return roles;
+}
+
+Qt::ItemFlags PLModel::flags(const QModelIndex &index) const
+{
+    if (!index.isValid()) return Qt::NoItemFlags;
+    return Qt::ItemIsEditable | Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled;
 }
 
 /**** Events processing ****/
