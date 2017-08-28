@@ -21,13 +21,15 @@ Item {
 
             GridView {
                 id: gridView
-                z : 1
+                z: 1
                 height : parent.height - sourcesBanner.height
                 anchors.right: parent.right
                 anchors.left: parent.left
+                model: m
+
                 cellWidth: 150
                 cellHeight: 150
-                model: m
+
                 delegate: GridViewDelegate {
                     cover: model.cover
                     title: model.title
@@ -38,8 +40,12 @@ Item {
 
                     function singleClick() { model.display_info = 1}
                     function doubleClick() { model.activate_item = 1}
+
                 }
+
+
             }
+
         }
 
         ListView
