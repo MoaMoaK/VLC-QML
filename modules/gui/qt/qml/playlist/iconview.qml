@@ -56,16 +56,14 @@ Item {
             anchors.bottom: parent.bottom
             width: 300
             model: playlist
-            delegate: Rectangle {
-                color: model.current ? "#CCCCCC" : "#FFFFFF"
-                width : 300
-                height:  textInfo.implicitHeight
-                Text { id: textInfo ; text: '[' + model.duration + '] ' + model.title }
+            delegate: MCListViewDelegate {
+                cur: model.current
+                title: model.title
+                duration: model.duration
 
-                Component.onCompleted: { console.log(model.index) ; console.log(model.current); }
-
+                function singleClick() { }
+                function doubleClick() { model.activate_item = 1 }
             }
-
 
         }
     }

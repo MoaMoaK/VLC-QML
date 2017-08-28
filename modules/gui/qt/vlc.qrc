@@ -166,5 +166,6 @@
         <file alias="PLBannerSources.qml">qml/playlist/PLBannerSources.qml</file>
         <file alias="treeview.qml">qml/playlist/treeview.qml</file>
         <file alias="GridViewDelegate.qml">qml/playlist/GridViewDelegate.qml</file>
+        <file alias="MCListViewDelegate.qml">qml/playlist/MCListViewDelegate.qml</file>
     </qresource>
 </RCC>
