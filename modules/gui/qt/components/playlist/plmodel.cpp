@@ -65,27 +65,22 @@ QVariant PLModel::data(const QModelIndex &index, int role) const
     {
     case TITLE_ROLE :
     {
-        playlist_item_t *plitem = getItem(index);
+        PLItem *item = getItem(index);
 
-        if (!plitem) return QVariant();
-        return QVariant( QString( plitem->p_input->psz_name ) );
+        if (!item) return QVariant();
+        return QVariant( item->getTitle() );
     }
     case DURATION_ROLE :
     {
-        playlist_item_t *plitem = getItem(index);
+        PLItem *item = getItem(index);
 
-        if (!plitem) return QVariant();
-
-        mtime_t duration = plitem->p_input->i_duration;
-        int secs = duration / 1000000;
-        char psz_secs[MSTRTIME_MAX_SIZE];
-        secstotimestr( psz_secs, secs);
-        return QVariant( QString( psz_secs ) );
+        if (!item) return QVariant();
+        return QVariant( item->getDuration() );
     }
     case CURRENT_ROLE :
-        return QVariant( THEPL->i_current_index == index.row() );
+        return QVariant( false );
     default:
-        return QVariant(QString("Ceci est un item"));
+        return QVariant();
     }
 }
 
@@ -131,11 +126,23 @@ void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
     endInsertRows();
 }
 
-playlist_item_t* PLModel::getItem( const QModelIndex & index ) const
+PLItem* PLModel::getItem( const QModelIndex & index ) const
 {
-    if (index.isValid() && index.row() >= 0 && index.row() < rowCount())
-        return THEPL->items.p_elems[index.row()];
+    int r = index.row();
+    if (index.isValid() && r >= 0 && r < rowCount())
+        return plitems.at(r);
     else
         return NULL;
-
 }
+
+int PLModel::getItemIndexFromPLId( int id )
+{
+    for (int i=0 ; i<plitems.size() ; i++)
+    {
+        if ( plitems.at(i)->getId() == id )
+            return i;
+    }
+    return -1;
+}
+
+

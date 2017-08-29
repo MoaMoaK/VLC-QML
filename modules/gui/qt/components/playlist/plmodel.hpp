@@ -37,8 +37,8 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 private:
-    playlist_item_t* getItem(const QModelIndex &index ) const;
-    intf_thread_t *p_intf;
+    PLItem* getItem(const QModelIndex &index ) const;
+    int getItemIndexFromPLId( int id );
 
 private slots:
     void processInputItemUpdate();
