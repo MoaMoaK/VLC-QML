@@ -6,9 +6,11 @@
 #include <qt5/QtCore/QVariant>
 #include <qt5/QtCore/QHash>
 #include <qt5/QtCore/QByteArray>
+#include <qt5/QtCore/QList>
 
 #include "qt.hpp"
 #include "input_manager.hpp"
+#include "plitem.hpp"
 
 enum PLModelRoles {
     TITLE_ROLE = Qt::UserRole + 1,
@@ -42,6 +44,8 @@ private slots:
     void processInputItemUpdate();
     void processItemRemoval(int i_pl_itemid);
     void processItemAppend(int i_pl_itemid, int i_pl_itemidparent);
+    intf_thread_t *p_intf;
+    QList<PLItem*> plitems;
 
 };
 
