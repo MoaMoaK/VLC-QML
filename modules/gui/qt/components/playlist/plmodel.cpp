@@ -30,16 +30,12 @@ int PLModel::rowCount(const QModelIndex &parent) const
 
 bool PLModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    msg_Info(p_intf, "plop1");
     if (!index.isValid())
         return false;
-    msg_Info(p_intf, "plop2");
 
     switch (role) {
     case ACTIVATE_ROLE:
     {
-        msg_Info(p_intf, "plop3");
-
         playlist_item_t *plitem = getItem(index);
         if (!plitem) return false;
         playlist_item_t *p_parent = plitem;
