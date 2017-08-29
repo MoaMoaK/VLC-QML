@@ -62,7 +62,7 @@ public:
     virtual ~MCModel();
 
     /* Qt main PLModel */
-    static MCModel* getPLModel( intf_thread_t *p_intf )
+    static MCModel* getMCModel( intf_thread_t *p_intf )
     {
         if(!p_intf->p_sys->pl_model )
         {

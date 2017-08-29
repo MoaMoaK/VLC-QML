@@ -1110,7 +1110,7 @@ QMenu* VLCMenuBar::PopupMenu( intf_thread_t *p_intf, bool show )
     /* */
     QMenuView *plMenu = new QMenuView( menu, 25 );
     plMenu->setTitle( qtr("Playlist") );
-    MCModel *model = MCModel::getPLModel( p_intf );
+    MCModel *model = MCModel::getMCModel( p_intf );
     plMenu->setModel( model );
     CONNECT( plMenu, activated(const QModelIndex&),
              model, activateItem(const QModelIndex&));
