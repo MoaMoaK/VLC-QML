@@ -19,6 +19,13 @@ Item {
 
             BannerSources {
                 id: sourcesBanner
+
+                // Custom properties
+                banner_color: "#e6e6e6"
+                hover_color: "#d6d6d6"
+                banner_height: 32
+
+                // Basic properties
                 z : 2
             }
 
