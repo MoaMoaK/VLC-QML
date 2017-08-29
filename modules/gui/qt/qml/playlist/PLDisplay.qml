@@ -34,6 +34,7 @@ Item {
 
             function singleClick() { }
             function doubleClick() { model.activate_item = 1 }
+            function remove() { model.remove_item = 1 }
         }
 
         ScrollBar.vertical: ScrollBar { }

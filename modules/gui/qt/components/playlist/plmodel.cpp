@@ -43,6 +43,12 @@ bool PLModel::setData(const QModelIndex &index, const QVariant &value, int role)
 
         return true;
     }
+    case REMOVE_ROLE:
+    {
+        if( !index.isValid() ) return false;
+        removeItem( index.row() );
+        return true;
+    }
     default:
         return false;
     }
@@ -89,6 +95,7 @@ QHash<int, QByteArray> PLModel::roleNames() const
     roles[DURATION_ROLE] = "duration";
     roles[CURRENT_ROLE] = "current";
     roles[ACTIVATE_ROLE] = "activate_item";
+    roles[REMOVE_ROLE] = "remove_item";
     return roles;
 }
 
@@ -98,19 +105,16 @@ Qt::ItemFlags PLModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable | Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled;
 }
 
-/**** Add items to the playlist ****/
+/**** Add and remove items to the playlist ****/
 
-void PLModel::processInputItemUpdate( )
+void PLModel::removeItem( int index )
 {
-    beginResetModel();
-    emit dataChanged(index(0, 0), index(rowCount(), 10));
-    endResetModel();
-}
+    if( index < 0 || index > rowCount() ) return;
 
-void PLModel::processItemRemoval( int i_pl_itemid )
-{
-    if( i_pl_itemid <= 0 ) return;
-    beginRemoveRows(QModelIndex(), i_pl_itemid-2, i_pl_itemid-2);
+    beginRemoveRows(QModelIndex(), index, index);
+    {
+        plitems.removeAt(index);
+    }
     endRemoveRows();
 }
 

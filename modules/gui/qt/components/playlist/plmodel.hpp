@@ -16,7 +16,8 @@ enum PLModelRoles {
     TITLE_ROLE = Qt::UserRole + 1,
     DURATION_ROLE,
     CURRENT_ROLE,
-    ACTIVATE_ROLE
+    ACTIVATE_ROLE,
+    REMOVE_ROLE
 };
 
 class PLModel : public QAbstractListModel
@@ -35,13 +36,13 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     /* Handling the playlist items */
+    void removeItem(int index);
     void appendItem(playlist_item_t *item, int i_pl_itemid);
 
 private:
     PLItem* getItem(const QModelIndex &index ) const;
     int getItemIndexFromPLId( int id );
 
-    void processItemAppend(int i_pl_itemid, int i_pl_itemidparent);
     intf_thread_t *p_intf;
     QList<PLItem*> plitems;
 
