@@ -635,6 +635,7 @@ void StandardPLPanel::createIconView()
     rootCtx->setContextProperty( "m", model );
     rootCtx->setContextProperty( "selector", p_selector);
     PLModel* plmodel = new PLModel(p_intf);
+    model->setPLModel(plmodel);
     rootCtx->setContextProperty( "playlist", plmodel);
     iconView->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
     iconView->setResizeMode(QQuickWidget::SizeRootObjectToView);
