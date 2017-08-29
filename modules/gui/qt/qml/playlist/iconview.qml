@@ -30,7 +30,10 @@ Item {
             }
 
             MCDisplay {
+                // Custom properties
                 media : m
+
+                // Basic properties
                 z: 1
                 height : parent.height - sourcesBanner.height
                 anchors.right: parent.right
@@ -40,7 +43,11 @@ Item {
         }
 
         PLDisplay {
+            // Custom properties
             pl: playlist
+            default_width: 300
+
+            // Basic properties
             z: 3
             anchors.top: parent.top
             anchors.bottom: parent.bottom

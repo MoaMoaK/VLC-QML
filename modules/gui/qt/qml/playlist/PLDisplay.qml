@@ -1,10 +1,13 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 
 Item {
     id: plDisplay
 
-
+    property int default_width: 300
     property alias pl: listView.model
+
+    width: default_width
 
     Rectangle {
         id: toogleBar
@@ -15,8 +18,7 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-
-            onClicked: { plDisplay.state = plDisplay.state == "" ? "hidden" : "" ; }
+            onClicked: { plDisplay.width <= 20 ? openAnimation.running = true : closeAnimation.running = true }
         }
     }
 
@@ -34,27 +36,27 @@ Item {
             function doubleClick() { model.activate_item = 1 }
         }
 
+        ScrollBar.vertical: ScrollBar { }
+
     }
 
-    states: [State {
-            name: "hidden"
-            PropertyChanges { target: plDisplay ; width: 0 }
-        }
-    ]
+    PropertyAnimation {
+        id: closeAnimation
+        target: plDisplay
+        properties: "width"
+        duration: 1000
+        to: 0
+        easing.type: Easing.InOutCubic
+    }
 
-    transitions: [
-        Transition {
-            from: ""
-            to: "hidden"
-            reversible: true
-            PropertyAnimation {
-                properties: "width"
-                duration: 1000
-                easing.type: Easing.InOutCubic
-            }
-        }
-
-    ]
+    PropertyAnimation {
+        id: openAnimation
+        target: plDisplay
+        properties: "width"
+        duration: 1000
+        to: default_width
+        easing.type: Easing.InOutCubic
+    }
 
 }
 

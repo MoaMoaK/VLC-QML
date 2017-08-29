@@ -1,4 +1,6 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.0
+
 
 GridView {
     id: mcDisplay
@@ -20,6 +22,8 @@ GridView {
         function doubleClick() { model.activate_item = 1}
 
     }
+
+    ScrollBar.vertical: ScrollBar { }
 
 
 }
