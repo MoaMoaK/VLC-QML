@@ -26,23 +26,21 @@ class PLModel : public QAbstractListModel
 public:
     PLModel(intf_thread_t *_p_intf, QObject *parent = nullptr);
 
-    // Header:
+    /* Subclassing QAbstractListModel */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-
-    // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     bool setData( const QModelIndex &index, const QVariant & value, int role = Qt::EditRole ) override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
+    /* Handling the playlist items */
+    void appendItem(playlist_item_t *item, int i_pl_itemid);
+
 private:
     PLItem* getItem(const QModelIndex &index ) const;
     int getItemIndexFromPLId( int id );
 
-private slots:
-    void processInputItemUpdate();
-    void processItemRemoval(int i_pl_itemid);
     void processItemAppend(int i_pl_itemid, int i_pl_itemidparent);
     intf_thread_t *p_intf;
     QList<PLItem*> plitems;

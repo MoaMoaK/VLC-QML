@@ -269,22 +269,22 @@ void MCModel::activateItem( MCItem* item )
     vlc_playlist_locker pl_lock( THEPL );
 
     playlist_item_t *p_item = playlist_ItemGetById( p_playlist, item->i_playlist_id );
-    activateItem( p_item );
+    getPLModel()->appendItem(p_item, item->i_playlist_id);
 }
 
 /* Convenient overloaded private version of activateItem
  * Must be entered with PL lock */
 void MCModel::activateItem( playlist_item_t *p_item )
 {
-    if( !p_item ) return;
-    playlist_item_t *p_parent = p_item;
-    while( p_parent )
-    {
-        if( p_parent->i_id == rootItem->id() ) break;
-        p_parent = p_parent->p_parent;
-    }
-    if( p_parent )
-        playlist_ViewPlay( p_playlist, p_parent, p_item );
+//    if( !p_item ) return;
+//    playlist_item_t *p_parent = p_item;
+//    while( p_parent )
+//    {
+//        if( p_parent->i_id == rootItem->id() ) break;
+//        p_parent = p_parent->p_parent;
+//    }
+//    if( p_parent )
+//        playlist_ViewPlay( p_playlist, p_parent, p_item );
 }
 
 

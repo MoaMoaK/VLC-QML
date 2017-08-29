@@ -36,16 +36,10 @@ bool PLModel::setData(const QModelIndex &index, const QVariant &value, int role)
     switch (role) {
     case ACTIVATE_ROLE:
     {
-        playlist_item_t *plitem = getItem(index);
+        PLItem *plitem = getItem(index);
         if (!plitem) return false;
-        playlist_item_t *p_parent = plitem;
-        while( p_parent )
-        {
-            if( p_parent->i_id == THEPL->root.i_id ) break;
-            p_parent = p_parent->p_parent;
-        }
-        if( p_parent )
-            playlist_ViewPlay( THEPL, p_parent, plitem );
+
+        plitem->activate( THEPL );
 
         return true;
     }
@@ -104,7 +98,7 @@ Qt::ItemFlags PLModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable | Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled;
 }
 
-/**** Events processing ****/
+/**** Add items to the playlist ****/
 
 void PLModel::processInputItemUpdate( )
 {
@@ -120,9 +114,14 @@ void PLModel::processItemRemoval( int i_pl_itemid )
     endRemoveRows();
 }
 
-void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
+void PLModel::appendItem( playlist_item_t *item, int i_pl_itemid )
 {
-    beginInsertRows(QModelIndex(), i_pl_itemid-2, i_pl_itemid-2);
+    if( !item ) return;
+
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    {
+        plitems.append( new PLItem(item, i_pl_itemid) );
+    }
     endInsertRows();
 }
 
