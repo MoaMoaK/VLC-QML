@@ -18,8 +18,8 @@ GridView {
         uri: model.uri
         duration: model.duration
 
-        function singleClick() { model.display_info = 1}
-        function doubleClick() { model.activate_item = 1}
+        function singleClick() { model.display_info = 1 }
+        function doubleClick() { model.activate_item = 1 }
 
     }
 

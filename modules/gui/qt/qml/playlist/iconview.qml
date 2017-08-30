@@ -38,6 +38,8 @@ Item {
                 height : parent.height - sourcesBanner.height
                 anchors.right: parent.right
                 anchors.left: parent.left
+
+
             }
 
         }
@@ -52,6 +54,7 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Layout.maximumWidth: 400
+
         }
     }
 
