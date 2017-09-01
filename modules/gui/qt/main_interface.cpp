@@ -93,6 +93,7 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     sysTray              = NULL;
     fullscreenControls   = NULL;
     cryptedLabel         = NULL;
+    controlBar           = NULL;
 //    controls             = NULL;
 //    inputC               = NULL;
 
