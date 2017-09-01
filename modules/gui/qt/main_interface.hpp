@@ -140,8 +140,8 @@ protected:
 
     QString              input_name;
     QVBoxLayout         *mainLayout;
-    ControlsWidget      *controls;
-    InputControlsWidget *inputC;
+//    ControlsWidget      *controls;
+//    InputControlsWidget *inputC;
     FullscreenControllerWidget *fullscreenControls;
 
     /* Widgets */
@@ -158,7 +158,7 @@ protected:
     int64_t             i_resumeTime;
 
     /* Status Bar */
-    QLabel              *nameLabel;
+//    QLabel              *nameLabel;
     QLabel              *cryptedLabel;
 
     /* Status and flags */
@@ -186,7 +186,7 @@ protected:
     bool                 b_plDocked;            ///< Is the playlist docked ?
 
     bool                 b_hasPausedWhenMinimized;
-    bool                 b_statusbarVisible;
+//    bool                 b_statusbarVisible;
 
     static const Qt::Key kc[10]; /* easter eggs */
     int i_kc_offset;

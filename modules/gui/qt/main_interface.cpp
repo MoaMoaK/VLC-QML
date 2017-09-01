@@ -93,8 +93,8 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     sysTray              = NULL;
     fullscreenControls   = NULL;
     cryptedLabel         = NULL;
-    controls             = NULL;
-    inputC               = NULL;
+//    controls             = NULL;
+//    inputC               = NULL;
 
     b_hideAfterCreation  = false; // --qt-start-minimized
     playlistVisible      = false;
@@ -160,8 +160,8 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     /**************
      * Status Bar *
      **************/
-    createStatusBar();
-    setStatusBarVisibility( getSettings()->value( "MainWindow/status-bar-visible", false ).toBool() );
+//    createStatusBar();
+//    setStatusBarVisibility( getSettings()->value( "MainWindow/status-bar-visible", false ).toBool() );
 
     /*********************************
      * Create the Systray Management *
@@ -279,7 +279,7 @@ MainInterface::~MainInterface()
 
     settings->setValue( "adv-controls",
                         getControlsVisibilityStatus() & CONTROLS_ADVANCED );
-    settings->setValue( "status-bar-visible", b_statusbarVisible );
+//    settings->setValue( "status-bar-visible", b_statusbarVisible );
 
     /* Save the stackCentralW sizes */
     settings->setValue( "bgSize", stackWidgetsSizes[bgWidget] );
@@ -301,8 +301,8 @@ MainInterface::~MainInterface()
 void MainInterface::computeMinimumSize()
 {
     int minWidth = 80;
-    if( menuBar()->isVisible() )
-        minWidth += controls->sizeHint().width();
+//    if( menuBar()->isVisible() )
+//        minWidth += controls->sizeHint().width();
 
     setMinimumWidth( minWidth );
 }
@@ -314,14 +314,15 @@ void MainInterface::recreateToolbars()
 {
     bool b_adv = getControlsVisibilityStatus() & CONTROLS_ADVANCED;
 
-    delete controls;
-    delete inputC;
+    //delete controls;
+//    delete inputC;
 
-    controls = new ControlsWidget( p_intf, b_adv, this );
-    inputC = new InputControlsWidget( p_intf, this );
-    mainLayout->insertWidget( 2, inputC );
-    mainLayout->insertWidget( settings->value( "MainWindow/ToolbarPos", 0 ).toInt() ? 0: 3,
-                              controls );
+
+//    controls = new ControlsWidget( p_intf, b_adv, this );
+//    inputC = new InputControlsWidget( p_intf, this );
+//    mainLayout->insertWidget( 2, inputC );
+    //mainLayout->insertWidget( settings->value( "MainWindow/ToolbarPos", 0 ).toInt() ? 0: 3,
+    //                          controls );
 
     if( fullscreenControls )
     {
@@ -482,14 +483,14 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
     resizeStack( stackWidgetsSizes[bgWidget].width(), stackWidgetsSizes[bgWidget].height() );
 
     /* Create the CONTROLS Widget */
-    controls = new ControlsWidget( p_intf,
-        creationSettings->value( "MainWindow/adv-controls", false ).toBool(), this );
-    inputC = new InputControlsWidget( p_intf, this );
+//    controls = new ControlsWidget( p_intf,
+//        creationSettings->value( "MainWindow/adv-controls", false ).toBool(), this );
+//    inputC = new InputControlsWidget( p_intf, this );
 
-    mainLayout->insertWidget( 2, inputC );
-    mainLayout->insertWidget(
-        creationSettings->value( "MainWindow/ToolbarPos", 0 ).toInt() ? 0: 3,
-        controls );
+//    mainLayout->insertWidget( 2, inputC );
+    //mainLayout->insertWidget(
+    //    creationSettings->value( "MainWindow/ToolbarPos", 0 ).toInt() ? 0: 3,
+    //    controls );
 
     /* Visualisation, disabled for now, they SUCK */
     #if 0
@@ -540,31 +541,31 @@ inline void MainInterface::createStatusBar()
      *  Status Bar  *
      ****************/
     /* Widgets Creation*/
-    QStatusBar *statusBarr = statusBar();
+//    QStatusBar *statusBarr = statusBar();
 
     TimeLabel *timeLabel = new TimeLabel( p_intf );
-    nameLabel = new ClickableQLabel();
-    nameLabel->setTextInteractionFlags( Qt::TextSelectableByMouse
-                                      | Qt::TextSelectableByKeyboard );
+//    nameLabel = new ClickableQLabel();
+//    nameLabel->setTextInteractionFlags( Qt::TextSelectableByMouse
+//                                      | Qt::TextSelectableByKeyboard );
     SpeedLabel *speedLabel = new SpeedLabel( p_intf, this );
 
     /* Styling those labels */
     timeLabel->setFrameStyle( QFrame::Sunken | QFrame::Panel );
     speedLabel->setFrameStyle( QFrame::Sunken | QFrame::Panel );
-    nameLabel->setFrameStyle( QFrame::Sunken | QFrame::StyledPanel);
+//    nameLabel->setFrameStyle( QFrame::Sunken | QFrame::StyledPanel);
     timeLabel->setStyleSheet(
             "QLabel:hover { background-color: rgba(255, 255, 255, 50%) }" );
     speedLabel->setStyleSheet(
             "QLabel:hover { background-color: rgba(255, 255, 255, 50%) }" );
     /* pad both label and its tooltip */
-    nameLabel->setStyleSheet( "padding-left: 5px; padding-right: 5px;" );
+//    nameLabel->setStyleSheet( "padding-left: 5px; padding-right: 5px;" );
 
     /* and adding those */
-    statusBarr->addWidget( nameLabel, 8 );
-    statusBarr->addPermanentWidget( speedLabel, 0 );
-    statusBarr->addPermanentWidget( timeLabel, 0 );
+//    statusBarr->addWidget( nameLabel, 8 );
+//    statusBarr->addPermanentWidget( speedLabel, 0 );
+//    statusBarr->addPermanentWidget( timeLabel, 0 );
 
-    CONNECT( nameLabel, doubleClicked(), THEDP, epgDialog() );
+//    CONNECT( nameLabel, doubleClicked(), THEDP, epgDialog() );
     /* timeLabel behaviour:
        - double clicking opens the goto time dialog
        - right-clicking and clicking just toggle between remaining and
@@ -583,7 +584,7 @@ inline void MainInterface::createStatusBar()
        geometry, we need to force a height. If you have a better idea, please
        tell me -- jb
      */
-    statusBarr->setFixedHeight( statusBarr->sizeHint().height() + 2 );
+//    statusBarr->setFixedHeight( statusBarr->sizeHint().height() + 2 );
 }
 
 /**********************************************************************
@@ -804,12 +805,12 @@ void MainInterface::setVideoSize( unsigned int w, unsigned int h )
                 {
                     if( menuBar()->isVisible() )
                         h -= menuBar()->height();
-                    if( controls->isVisible() )
-                        h -= controls->height();
-                    if( statusBar()->isVisible() )
-                        h -= statusBar()->height();
-                    if( inputC->isVisible() )
-                        h -= inputC->height();
+//                    if( controls->isVisible() )
+//                        h -= controls->height();
+//                    if( statusBar()->isVisible() )
+//                        h -= statusBar()->height();
+//                    if( inputC->isVisible() )
+//                        h -= inputC->height();
                 }
                 h -= style()->pixelMetric(QStyle::PM_TitleBarHeight);
                 h -= style()->pixelMetric(QStyle::PM_LayoutBottomMargin);
@@ -1049,9 +1050,9 @@ void MainInterface::dockPlaylist( bool p_docked )
 void MainInterface::displayNormalView()
 {
     menuBar()->setVisible( false );
-    controls->setVisible( false );
-    statusBar()->setVisible( false );
-    inputC->setVisible( false );
+//    controls->setVisible( false );
+//    statusBar()->setVisible( false );
+//    inputC->setVisible( false );
 }
 
 /*
@@ -1061,9 +1062,9 @@ void MainInterface::displayNormalView()
 void MainInterface::setMinimalView( bool b_minimal )
 {
     bool b_menuBarVisible = menuBar()->isVisible();
-    bool b_controlsVisible = controls->isVisible();
-    bool b_statusBarVisible = statusBar()->isVisible();
-    bool b_inputCVisible = inputC->isVisible();
+//    bool b_controlsVisible = controls->isVisible();
+//    bool b_statusBarVisible = statusBar()->isVisible();
+//    bool b_inputCVisible = inputC->isVisible();
 
     if( !isFullScreen() && !isMaximized() && b_minimal )
     {
@@ -1071,21 +1072,21 @@ void MainInterface::setMinimalView( bool b_minimal )
 
         if( b_menuBarVisible )
             i_heightChange += menuBar()->height();
-        if( b_controlsVisible )
-            i_heightChange += controls->height();
-        if( b_statusBarVisible )
-            i_heightChange += statusBar()->height();
-        if( b_inputCVisible )
-            i_heightChange += inputC->height();
+//        if( b_controlsVisible )
+//            i_heightChange += controls->height();
+//        if( b_statusBarVisible )
+//            i_heightChange += statusBar()->height();
+//        if( b_inputCVisible )
+//            i_heightChange += inputC->height();
 
         if( i_heightChange != 0 )
             resize( width(), height() - i_heightChange );
     }
 
     menuBar()->setVisible( !b_minimal );
-    controls->setVisible( !b_minimal );
-    statusBar()->setVisible( !b_minimal && b_statusbarVisible );
-    inputC->setVisible( !b_minimal );
+//    controls->setVisible( !b_minimal );
+//    statusBar()->setVisible( !b_minimal && b_statusbarVisible );
+//    inputC->setVisible( !b_minimal );
 
     if( !isFullScreen() && !isMaximized() && !b_minimal )
     {
@@ -1093,12 +1094,12 @@ void MainInterface::setMinimalView( bool b_minimal )
 
         if( !b_menuBarVisible && menuBar()->isVisible() )
             i_heightChange += menuBar()->height();
-        if( !b_controlsVisible && controls->isVisible() )
-            i_heightChange += controls->height();
-        if( !b_statusBarVisible && statusBar()->isVisible() )
-            i_heightChange += statusBar()->height();
-        if( !b_inputCVisible && inputC->isVisible() )
-            i_heightChange += inputC->height();
+//        if( !b_controlsVisible && controls->isVisible() )
+//            i_heightChange += controls->height();
+//        if( !b_statusBarVisible && statusBar()->isVisible() )
+//            i_heightChange += statusBar()->height();
+//        if( !b_inputCVisible && inputC->isVisible() )
+//            i_heightChange += inputC->height();
 
         if( i_heightChange != 0 )
             resize( width(), height() + i_heightChange );
@@ -1135,16 +1136,17 @@ void MainInterface::toggleMinimalView( bool b_minimal )
 /* toggling advanced controls buttons */
 void MainInterface::toggleAdvancedButtons()
 {
-    controls->toggleAdvanced();
+//    controls->toggleAdvanced();
 //    if( fullscreenControls ) fullscreenControls->toggleAdvanced();
 }
 
 /* Get the visibility status of the controls (hidden or not, advanced or not) */
 int MainInterface::getControlsVisibilityStatus()
 {
-    if( !controls ) return 0;
-    return( (controls->isVisible() ? CONTROLS_VISIBLE : CONTROLS_HIDDEN )
-            + CONTROLS_ADVANCED * controls->b_advancedVisible );
+//    if( !controls ) return 0;
+//    return( (controls->isVisible() ? CONTROLS_VISIBLE : CONTROLS_HIDDEN )
+//            + CONTROLS_ADVANCED * controls->b_advancedVisible );
+    return 0;
 }
 
 StandardPLPanel *MainInterface::getPlaylistView()
@@ -1161,9 +1163,9 @@ StandardPLPanel *MainInterface::getPlaylistView()
 
 void MainInterface::setStatusBarVisibility( bool b_visible )
 {
-    statusBar()->setVisible( b_visible );
-    b_statusbarVisible = b_visible;
-    if( controls ) controls->setGripVisible( !b_statusbarVisible );
+//    statusBar()->setVisible( b_visible );
+//    b_statusbarVisible = b_visible;
+//    if( controls ) controls->setGripVisible( !b_statusbarVisible );
 }
 
 
@@ -1183,8 +1185,8 @@ void MainInterface::setName( const QString& name )
     input_name = name; /* store it for the QSystray use */
     /* Display it in the status bar, but also as a Tooltip in case it doesn't
        fit in the label */
-    nameLabel->setText( name );
-    nameLabel->setToolTip( name );
+//    nameLabel->setText( name );
+//    nameLabel->setToolTip( name );
 }
 
 /**
@@ -1211,7 +1213,7 @@ void MainInterface::showCryptedLabel( bool b_show )
         // The lock icon is not the right one for DRM protection/scrambled.
         //cryptedLabel->setPixmap( QPixmap( ":/lock" ) );
         cryptedLabel->setText( "DRM" );
-        statusBar()->addWidget( cryptedLabel );
+//        statusBar()->addWidget( cryptedLabel );
     }
 
     cryptedLabel->setVisible( b_show );
@@ -1220,7 +1222,7 @@ void MainInterface::showCryptedLabel( bool b_show )
 void MainInterface::showBuffering( float f_cache )
 {
     QString amount = QString("Buffering: %1%").arg( (int)(100*f_cache) );
-    statusBar()->showMessage( amount, 1000 );
+//    statusBar()->showMessage( amount, 1000 );
 }
 
 /*****************************************************************************
