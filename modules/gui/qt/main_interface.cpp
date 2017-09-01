@@ -151,9 +151,9 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     /************
      * Menu Bar *
      ************/
-    VLCMenuBar::createMenuBar( this, p_intf );
-    CONNECT( THEMIM->getIM(), voutListChanged( vout_thread_t **, int ),
-             THEDP, destroyPopupMenu() );
+//    VLCMenuBar::createMenuBar( this, p_intf );
+//    CONNECT( THEMIM->getIM(), voutListChanged( vout_thread_t **, int ),
+//             THEDP, destroyPopupMenu() );
 
     createMainWidget( settings );
 
@@ -825,8 +825,8 @@ void MainInterface::setVideoSize( unsigned int w, unsigned int h )
                 h = screen.height();
                 if( !b_minimalView )
                 {
-                    if( menuBar()->isVisible() )
-                        h -= menuBar()->height();
+//                    if( menuBar()->isVisible() )
+//                        h -= menuBar()->height();
 //                    if( controls->isVisible() )
 //                        h -= controls->height();
 //                    if( statusBar()->isVisible() )
@@ -1071,7 +1071,7 @@ void MainInterface::dockPlaylist( bool p_docked )
  */
 void MainInterface::displayNormalView()
 {
-    menuBar()->setVisible( false );
+//    menuBar()->setVisible( false );
 //    controls->setVisible( false );
 //    statusBar()->setVisible( false );
 //    inputC->setVisible( false );
@@ -1083,7 +1083,7 @@ void MainInterface::displayNormalView()
  */
 void MainInterface::setMinimalView( bool b_minimal )
 {
-    bool b_menuBarVisible = menuBar()->isVisible();
+//    bool b_menuBarVisible = menuBar()->isVisible();
 //    bool b_controlsVisible = controls->isVisible();
 //    bool b_statusBarVisible = statusBar()->isVisible();
 //    bool b_inputCVisible = inputC->isVisible();
@@ -1092,8 +1092,8 @@ void MainInterface::setMinimalView( bool b_minimal )
     {
         int i_heightChange = 0;
 
-        if( b_menuBarVisible )
-            i_heightChange += menuBar()->height();
+//        if( b_menuBarVisible )
+//            i_heightChange += menuBar()->height();
 //        if( b_controlsVisible )
 //            i_heightChange += controls->height();
 //        if( b_statusBarVisible )
@@ -1105,7 +1105,7 @@ void MainInterface::setMinimalView( bool b_minimal )
             resize( width(), height() - i_heightChange );
     }
 
-    menuBar()->setVisible( !b_minimal );
+//    menuBar()->setVisible( !b_minimal );
 //    controls->setVisible( !b_minimal );
 //    statusBar()->setVisible( !b_minimal && b_statusbarVisible );
 //    inputC->setVisible( !b_minimal );
@@ -1114,8 +1114,8 @@ void MainInterface::setMinimalView( bool b_minimal )
     {
         int i_heightChange = 0;
 
-        if( !b_menuBarVisible && menuBar()->isVisible() )
-            i_heightChange += menuBar()->height();
+//        if( !b_menuBarVisible && menuBar()->isVisible() )
+//            i_heightChange += menuBar()->height();
 //        if( !b_controlsVisible && controls->isVisible() )
 //            i_heightChange += controls->height();
 //        if( !b_statusBarVisible && statusBar()->isVisible() )
@@ -1267,8 +1267,8 @@ void MainInterface::createSystray()
     systrayMenu = new QMenu( qtr( "VLC media player" ), this );
     systrayMenu->setIcon( iconVLC );
 
-    VLCMenuBar::updateSystrayMenu( this, p_intf, true );
-    sysTray->show();
+//    VLCMenuBar::updateSystrayMenu( this, p_intf, true );
+//    sysTray->show();
 
     CONNECT( sysTray, activated( QSystemTrayIcon::ActivationReason ),
              this, handleSystrayClick( QSystemTrayIcon::ActivationReason ) );
@@ -1308,8 +1308,8 @@ void MainInterface::toggleUpdateSystrayMenu()
         /* Visible (possibly under other windows) */
         toggleUpdateSystrayMenuWhenVisible();
     }
-    if( sysTray )
-        VLCMenuBar::updateSystrayMenu( this, p_intf );
+//    if( sysTray )
+//        VLCMenuBar::updateSystrayMenu( this, p_intf );
 }
 
 /* First Item of the systray menu */
@@ -1321,14 +1321,14 @@ void MainInterface::showUpdateSystrayMenu()
         showNormal();
     activateWindow();
 
-    VLCMenuBar::updateSystrayMenu( this, p_intf );
+//    VLCMenuBar::updateSystrayMenu( this, p_intf );
 }
 
 /* First Item of the systray menu */
 void MainInterface::hideUpdateSystrayMenu()
 {
     hide();
-    VLCMenuBar::updateSystrayMenu( this, p_intf );
+//    VLCMenuBar::updateSystrayMenu( this, p_intf );
 }
 
 /* Click on systray Icon */
@@ -1376,7 +1376,7 @@ void MainInterface::updateSystrayTooltipName( const QString& name )
         }
     }
 
-    VLCMenuBar::updateSystrayMenu( this, p_intf );
+//    VLCMenuBar::updateSystrayMenu( this, p_intf );
 }
 
 /**
@@ -1397,7 +1397,7 @@ void MainInterface::updateSystrayTooltipStatus( int i_status )
         sysTray->setToolTip( qtr( "VLC media player" ) );
         break;
     }
-    VLCMenuBar::updateSystrayMenu( this, p_intf );
+//    VLCMenuBar::updateSystrayMenu( this, p_intf );
 }
 
 void MainInterface::changeEvent(QEvent *event)
