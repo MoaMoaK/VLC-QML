@@ -549,6 +549,7 @@ static void *ThreadPlatform( void *obj, char *platform_name )
 
     /* Start the QApplication here */
     QVLCApp app( argc, argv );
+    app.setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 
     /* Set application direction to locale direction,
      * necessary for  RTL locales */

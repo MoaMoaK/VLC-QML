@@ -314,8 +314,11 @@ void MainInterface::recreateToolbars()
 {
     bool b_adv = getControlsVisibilityStatus() & CONTROLS_ADVANCED;
 
+    rebuildControlBar();
+
     //delete controls;
 //    delete inputC;
+
 
 
 //    controls = new ControlsWidget( p_intf, b_adv, this );
@@ -483,6 +486,8 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
     resizeStack( stackWidgetsSizes[bgWidget].width(), stackWidgetsSizes[bgWidget].height() );
 
     /* Create the CONTROLS Widget */
+    rebuildControlBar();
+
 //    controls = new ControlsWidget( p_intf,
 //        creationSettings->value( "MainWindow/adv-controls", false ).toBool(), this );
 //    inputC = new InputControlsWidget( p_intf, this );
@@ -514,6 +519,23 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
                      this, handleKeyPress( QKeyEvent * ) );
         }
 }
+
+void MainInterface::rebuildControlBar(){
+    if (controlBar) delete controlBar;
+
+    controlBar = new QQuickWidget();
+
+    QQmlContext *rootContext = controlBar->rootContext();
+    rootContext->setContextProperty("test", "plop");
+
+    controlBar->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
+    controlBar->setMaximumHeight( 100 );
+    controlBar->resize( controlBar->size().width(), 100 );
+    controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
+
+    mainLayout->insertWidget(3, controlBar);
+}
+
 
 inline void MainInterface::initSystray()
 {

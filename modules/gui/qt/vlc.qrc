@@ -170,4 +170,7 @@
         <file alias="PLListViewDelegate.qml">qml/playlist/PLListViewDelegate.qml</file>
         <file alias="MCDisplay.qml">qml/playlist/MCDisplay.qml</file>
     </qresource>
+    <qresource prefix="/player">
+        <file alias="ControlBar.qml">qml/player/ControlBar.qml</file>
+    </qresource>
 </RCC>

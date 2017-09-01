@@ -31,6 +31,10 @@
 
 #include <QSystemTrayIcon>
 #include <QStackedWidget>
+#include <qt5/QtQuickWidgets/QQuickWidget>
+#include <qt5/QtQml/QQmlContext>
+#include <qt5/QtCore/QUrl>
+#include <qt5/QtCore/QString>
 
 #ifdef _WIN32
 # include <shobjidl.h>
@@ -109,6 +113,7 @@ protected:
     void wheelEvent( QWheelEvent * ) Q_DECL_OVERRIDE;
     bool eventFilter(QObject *, QEvent *) Q_DECL_OVERRIDE;
     virtual void toggleUpdateSystrayMenuWhenVisible();
+    void rebuildControlBar();
 
 protected:
     /* Main Widgets Creation */
@@ -140,6 +145,8 @@ protected:
 
     QString              input_name;
     QVBoxLayout         *mainLayout;
+    // QML
+    QQuickWidget        *controlBar;
 //    ControlsWidget      *controls;
 //    InputControlsWidget *inputC;
     FullscreenControllerWidget *fullscreenControls;
