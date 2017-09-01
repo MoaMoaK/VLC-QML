@@ -118,6 +118,7 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     setWindowRole( "vlc-main" );
     setWindowIcon( QApplication::windowIcon() );
     setWindowOpacity( var_InheritFloat( p_intf, "qt-opacity" ) );
+//    setMouseTracking( true );
 #ifdef Q_OS_MAC
     setAttribute( Qt::WA_MacBrushedMetal );
 #endif
@@ -217,7 +218,7 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     }
 
     CONNECT( THEDP, toolBarConfUpdated(), this, toolBarConfUpdated() );
-    installEventFilter( this );
+    qApp->installEventFilter( this );
 
     CONNECT( this, askToQuit(), THEDP, quit() );
 
