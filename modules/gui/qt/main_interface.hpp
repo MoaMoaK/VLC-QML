@@ -35,6 +35,7 @@
 #include <qt5/QtQml/QQmlContext>
 #include <qt5/QtCore/QUrl>
 #include <qt5/QtCore/QString>
+#include <qt5/QtCore/QPropertyAnimation>
 
 #ifdef _WIN32
 # include <shobjidl.h>
@@ -113,9 +114,16 @@ protected:
     void wheelEvent( QWheelEvent * ) Q_DECL_OVERRIDE;
     bool eventFilter(QObject *, QEvent *) Q_DECL_OVERRIDE;
     virtual void toggleUpdateSystrayMenuWhenVisible();
-    void rebuildControlBar();
+
 
 protected:
+    /* QML control bar related */
+    void rebuildControlBar();
+    QQuickWidget *controlBar;
+    QTimer *timer;
+    bool b_isexpanded;
+//    QPropertyAnimation *animation;
+
     /* Main Widgets Creation */
     void createMainWidget( QSettings* );
     void createStatusBar();
@@ -145,8 +153,6 @@ protected:
 
     QString              input_name;
     QVBoxLayout         *mainLayout;
-    // QML
-    QQuickWidget        *controlBar;
 //    ControlsWidget      *controls;
 //    InputControlsWidget *inputC;
     FullscreenControllerWidget *fullscreenControls;
@@ -224,6 +230,10 @@ public slots:
     void toolBarConfUpdated();
 
 protected slots:
+    /* QML control Bar related */
+    void expandControlBar();
+    void collapseControlBar();
+
     void debug();
     void recreateToolbars();
     void setName( const QString& );

@@ -254,6 +254,18 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
         toggleMinimalView( true );
 
     computeMinimumSize();
+
+    /* QML control bar related */
+    b_isexpanded = false;
+
+    timer = new QTimer();
+    timer->setInterval(5000);
+    connect( timer, SIGNAL(timeout()), this, SLOT(collapseControlBar()) );
+
+//    animation = new QPropertyAnimation(this, "size");
+//    animation->setDuration(300);
+
+    statusBar()->hide();
 }
 
 MainInterface::~MainInterface()
@@ -535,7 +547,35 @@ void MainInterface::rebuildControlBar(){
     controlBar->resize( controlBar->size().width(), 100 );
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
-    mainLayout->insertWidget(3, controlBar);
+    mainLayout->insertWidget(2, controlBar);
+}
+
+void MainInterface::collapseControlBar()
+{
+    resize(size().width(), videoWidget->size().height());
+    b_isexpanded = false;
+    controlBar->resize( controlBar->size().width(), 0 );
+}
+
+void MainInterface::expandControlBar()
+{
+    if (b_isexpanded)
+    {
+        timer->stop();
+        timer->start();
+    }
+    else
+    {
+//        animation->setStartValue( size() );
+//        animation->setEndValue( QSize( size().width(), videoWidget->size().height() + 100 ) );
+//        animation->start();
+
+        resize(size().width(), videoWidget->size().height() + 100);
+
+        timer->start();
+        b_isexpanded = true;
+        controlBar->resize( controlBar->size().width(), 100 );
+    }
 }
 
 
@@ -1612,7 +1652,11 @@ void MainInterface::closeEvent( QCloseEvent *e )
 
 bool MainInterface::eventFilter( QObject *obj, QEvent *event )
 {
-    if ( event->type() == MainInterface::ToolbarsNeedRebuild ) {
+    if ( event->type() == QEvent::MouseMove )
+    {
+        expandControlBar();
+    }
+    else if ( event->type() == MainInterface::ToolbarsNeedRebuild ) {
         event->accept();
         recreateToolbars();
         return true;
