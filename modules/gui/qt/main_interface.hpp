@@ -122,7 +122,9 @@ protected:
     QQuickWidget *controlBar;
     QTimer *timer;
     bool b_isexpanded;
-//    QPropertyAnimation *animation;
+//    QPropertyAnimation *animationWindow;
+//    QPropertyAnimation *animationMaxHeight;
+//    QPropertyAnimation *animationBarHeight;
 
     /* Main Widgets Creation */
     void createMainWidget( QSettings* );

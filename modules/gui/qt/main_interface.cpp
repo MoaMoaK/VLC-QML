@@ -262,8 +262,13 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     timer->setInterval(5000);
     connect( timer, SIGNAL(timeout()), this, SLOT(collapseControlBar()) );
 
-//    animation = new QPropertyAnimation(this, "size");
-//    animation->setDuration(300);
+//    animationWindow = new QPropertyAnimation(this, "size");
+//    animationMaxHeight = new QPropertyAnimation(controlBar, "maximunHeight");
+//    animationBarHeight = new QPropertyAnimation(controlBar, "size");
+//    animationWindow->setDuration(300);
+//    animationMaxHeight->setDuration(300);
+//    animationBarHeight->setDuration(300);
+
 
     statusBar()->hide();
 }
@@ -543,8 +548,8 @@ void MainInterface::rebuildControlBar(){
     rootContext->setContextProperty("test", "plop");
 
     controlBar->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
-    controlBar->setMaximumHeight( 100 );
-    controlBar->resize( controlBar->size().width(), 100 );
+    controlBar->setMaximumHeight( 42 );
+    controlBar->resize( controlBar->size().width(), 42);
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
     mainLayout->insertWidget(2, controlBar);
@@ -568,16 +573,21 @@ void MainInterface::expandControlBar()
     }
     else
     {
-//        animation->setStartValue( size() );
-//        animation->setEndValue( QSize( size().width(), videoWidget->size().height() + 100 ) );
-//        animation->start();
-
+//        animationWindow->setStartValue( size() );
+//        animationWindow->setEndValue( QSize( size().width(), videoWidget->size().height() + 100 ) );
+//        animationMaxHeight->setStartValue( controlBar->maximumHeight() );
+//        animationMaxHeight->setEndValue( 100 );
+//        animationBarHeight->setStartValue( controlBar->size() );
+//        animationBarHeight->setEndValue( QSize( controlBar->size().width(), 100 ) );
+//        animationMaxHeight->start();
+//        animationBarHeight->start();
+//        animationWindow->start();
 
         timer->start();
         b_isexpanded = true;
-        controlBar->setMaximumHeight( 100 );
-        controlBar->resize( controlBar->size().width(), 100 );
-        resize(size().width(), videoWidget->size().height() + 100);
+        controlBar->setMaximumHeight( 42 );
+        controlBar->resize( controlBar->size().width(), 42 );
+        resize(size().width(), videoWidget->size().height() + 42);
     }
 }
 
