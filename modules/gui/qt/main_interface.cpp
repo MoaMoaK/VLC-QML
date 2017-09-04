@@ -552,9 +552,11 @@ void MainInterface::rebuildControlBar(){
 
 void MainInterface::collapseControlBar()
 {
+    controlBar->setMaximumHeight( 0 );
+    controlBar->resize( controlBar->size().width(), 0 );
     resize(size().width(), videoWidget->size().height());
     b_isexpanded = false;
-    controlBar->resize( controlBar->size().width(), 0 );
+
 }
 
 void MainInterface::expandControlBar()
@@ -570,11 +572,12 @@ void MainInterface::expandControlBar()
 //        animation->setEndValue( QSize( size().width(), videoWidget->size().height() + 100 ) );
 //        animation->start();
 
-        resize(size().width(), videoWidget->size().height() + 100);
 
         timer->start();
         b_isexpanded = true;
+        controlBar->setMaximumHeight( 100 );
         controlBar->resize( controlBar->size().width(), 100 );
+        resize(size().width(), videoWidget->size().height() + 100);
     }
 }
 

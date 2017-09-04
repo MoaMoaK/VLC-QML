@@ -81,7 +81,6 @@ Rectangle {
             onTriggered: singleClick() // Single click
         }
         onClicked: {
-            console.log('plop')
             if(timerMouse.running)
             {
                 doubleClick() // Double click
