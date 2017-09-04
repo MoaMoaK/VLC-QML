@@ -2,16 +2,16 @@ import QtQuick 2.0
 
 Rectangle {
 
-    property string buttonText: "button"
-    property int h: 20
-    property int w: 70
+    property int size: 32
+    property string iconURL: "qrc:///noart.png"
     property color buttonColor: "#eeeeee"
-    property color borderColor: "#000000"
-    property color textColor: "#000000"
+    property color borderColor: "#bbbbbb"
+    property bool isbig: false
+    property string name: "noname"
 
     color: borderColor
-    height: h
-    width: w
+    height: size
+    width: size
     radius: 5
 
     Rectangle {
@@ -29,10 +29,11 @@ Rectangle {
 
         color: buttonColor
 
-        Text {
+        Image {
+            height: size-8; width: size-8
             anchors.centerIn: parent
-            text: buttonText
-            color: textColor
+            fillMode: Image.PreserveAspectFit
+            source: iconURL
         }
     }
 
@@ -42,7 +43,7 @@ Rectangle {
         onDoubleClicked: doubleClick()
     }
 
-    function singleClick() { console.log("p"); }
-    function doubleClick() { console.log("q"); }
+    function singleClick() { console.log("Clicked on "+name); }
+    function doubleClick() { console.log("Double clicked on "+name); }
 
 }

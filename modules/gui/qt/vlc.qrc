@@ -173,5 +173,6 @@
     <qresource prefix="/player">
         <file alias="ControlBar.qml">qml/player/ControlBar.qml</file>
         <file alias="ControlButton.qml">qml/player/ControlButton.qml</file>
+        <file alias="Spacer.qml">qml/player/Spacer.qml</file>
     </qresource>
 </RCC>
