@@ -6,7 +6,7 @@ Item {
         color: "#ffffff"
 
         ListView {
-            spacing: 0
+            spacing: 5
             anchors.fill: parent
             anchors.margins: 5
             orientation: ListView.Horizontal
@@ -15,25 +15,12 @@ Item {
             model: buttonList
             delegate: ControlButton {
 
-                iconURL: model.iconURL
-                name: model.name
-            }
-        }
-    }
+                iconURL: model.icon
+                name: model.text
 
-    ListModel {
-        id: buttonList
-        ListElement {
-            name: "Play"
-            iconURL: "qrc:///toolbar/play_b"
-        }
-        ListElement {
-            name: "Previous"
-            iconURL: "qrc:///toolbar/previous_b"
-        }
-        ListElement {
-            name: "Next"
-            iconURL: "qrc:///toolbar/next_b"
+                function singleClick() { model.single_click = 1; }
+                function doubleClick() { model.double_click = 2; }
+            }
         }
     }
 }

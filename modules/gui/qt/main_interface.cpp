@@ -544,8 +544,9 @@ void MainInterface::rebuildControlBar(){
 
     controlBar = new QQuickWidget();
 
+    ControlButtonModel *cb_model = new ControlButtonModel(p_intf);
     QQmlContext *rootContext = controlBar->rootContext();
-    rootContext->setContextProperty("test", "plop");
+    rootContext->setContextProperty("buttonList", cb_model);
 
     controlBar->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
     controlBar->setMaximumHeight( 42 );

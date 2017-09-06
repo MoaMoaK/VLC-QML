@@ -28,6 +28,7 @@
 #include "qt.hpp"
 
 #include "util/qvlcframe.hpp"
+#include "components/player/controlbuttonmodel.hpp"
 
 #include <QSystemTrayIcon>
 #include <QStackedWidget>
