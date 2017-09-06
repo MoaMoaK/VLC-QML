@@ -5,9 +5,9 @@ ControlButtonModel::ControlButtonModel(intf_thread_t *_p_intf, QObject *parent) 
     p_intf(_p_intf)
 {
     buttonList = QList<ControlButtonItem*>();
-    buttonList.append( new ControlButtonItem(PLAY_BUTTON, WIDGET_NORMAL) );
-    buttonList.append( new ControlButtonItem(PREVIOUS_BUTTON, WIDGET_NORMAL) );
-    buttonList.append( new ControlButtonItem(NEXT_BUTTON, WIDGET_NORMAL) );
+    buttonList.append( new ControlButtonItem(p_intf, PLAY_BUTTON, WIDGET_NORMAL) );
+    buttonList.append( new ControlButtonItem(p_intf, PREVIOUS_BUTTON, WIDGET_NORMAL) );
+    buttonList.append( new ControlButtonItem(p_intf, NEXT_BUTTON, WIDGET_NORMAL) );
 }
 
 QVariant ControlButtonModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -65,14 +65,14 @@ QVariant ControlButtonModel::data(const QModelIndex &index, int role) const
         ControlButtonItem *item = getItem(index);
 
         if (!item) return QVariant();
-        return QVariant( item->getButtonText() );
+        return QVariant( item->getText() );
     }
     case ICON_ROLE :
     {
         ControlButtonItem *item = getItem(index);
 
         if (!item) return QVariant();
-        return QVariant( item->getButtonIcon() );
+        return QVariant( item->getIcon() );
     }
     default:
         return QVariant();

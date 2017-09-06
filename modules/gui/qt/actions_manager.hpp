@@ -94,13 +94,13 @@ public slots:
     void ScanRendererAction( bool );
     void RendererSelected( QAction * );
 
+    virtual void doAction( int );
+
 protected slots:
     void fullscreen();
     void snapshot();
     void playlist();
     void frame();
-
-    virtual void doAction( int );
 };
 
 #endif
