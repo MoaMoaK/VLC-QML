@@ -37,6 +37,7 @@ bool ControlButtonModel::setData(const QModelIndex &index, const QVariant &value
         if (!item) return false;
 
         item->singleClick();
+        emit dataChanged(index, index);
         return true;
     }
     case DOUBLE_CLICK_ROLE:
@@ -45,6 +46,7 @@ bool ControlButtonModel::setData(const QModelIndex &index, const QVariant &value
         if (!item) return false;
 
         item->doubleClick();
+        emit dataChanged(index, index);
         return true;
     }
     default:

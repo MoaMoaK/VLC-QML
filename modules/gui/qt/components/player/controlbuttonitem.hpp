@@ -23,6 +23,8 @@ private:
     buttonType_e type;
     actionType_e action;
     int designOption;
+
+    int state; // For buttons with multiple states
 };
 
 

@@ -4,7 +4,8 @@
 ControlButtonItem::ControlButtonItem(intf_thread_t *_p_intf, buttonType_e type, int opt) :
     p_intf( _p_intf ),
     type( type ),
-    designOption( opt )
+    designOption( opt ),
+    state( 0 )
 {
     switch (type) {
     case PLAY_BUTTON:
@@ -100,7 +101,9 @@ QString ControlButtonItem::getText() {
 }
 
 QString ControlButtonItem::getIcon() {
-    if ( type < BUTTON_MAX )
+    if ( type == PLAY_BUTTON )
+        return QString( state == 0 ? "qrc:///toolbar/pause_b" : "qrc:///toolbar/play_b" );
+    else if ( type < BUTTON_MAX )
     {
         QString copy = iconL[type];
         return QString( "qrc://" ).append( copy.remove(0,1) );
@@ -112,6 +115,8 @@ QString ControlButtonItem::getIcon() {
 void ControlButtonItem::singleClick()
 {
     ActionsManager::getInstance( p_intf )->doAction( (int) action );
+    if ( type == PLAY_BUTTON )
+        state = state == 0 ? 1 : 0;
 }
 
 void ControlButtonItem::doubleClick()
