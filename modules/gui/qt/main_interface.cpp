@@ -549,8 +549,7 @@ void MainInterface::rebuildControlBar(){
     rootContext->setContextProperty("buttonList", cb_model);
 
     controlBar->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
-    controlBar->setMaximumHeight( 42 );
-    controlBar->resize( controlBar->size().width(), 42);
+    controlBar->setFixedHeight( 42 );
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
     mainLayout->insertWidget(2, controlBar);
@@ -558,8 +557,7 @@ void MainInterface::rebuildControlBar(){
 
 void MainInterface::collapseControlBar()
 {
-    controlBar->setMaximumHeight( 0 );
-    controlBar->resize( controlBar->size().width(), 0 );
+    controlBar->setFixedHeight( 0 );
     resize(size().width(), videoWidget->size().height());
     b_isexpanded = false;
 
@@ -586,8 +584,7 @@ void MainInterface::expandControlBar()
 
         timer->start();
         b_isexpanded = true;
-        controlBar->setMaximumHeight( 42 );
-        controlBar->resize( controlBar->size().width(), 42 );
+        controlBar->setFixedHeight( 42 );
         resize(size().width(), videoWidget->size().height() + 42);
     }
 }
