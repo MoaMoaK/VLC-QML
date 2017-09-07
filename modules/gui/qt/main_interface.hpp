@@ -30,6 +30,9 @@
 #include "util/qvlcframe.hpp"
 #include "components/player/controlbuttonmodel.hpp"
 
+#include "util/input_slider.hpp"
+#include "adapters/seekpoints.hpp"
+
 #include <QSystemTrayIcon>
 #include <QStackedWidget>
 #include <qt5/QtQuickWidgets/QQuickWidget>
@@ -126,6 +129,10 @@ protected:
 //    QPropertyAnimation *animationWindow;
 //    QPropertyAnimation *animationMaxHeight;
 //    QPropertyAnimation *animationBarHeight;
+
+    /* QML seek bar */
+    void rebuildSeekBar();
+    QQuickWidget *seekBar;
 
     /* Main Widgets Creation */
     void createMainWidget( QSettings* );

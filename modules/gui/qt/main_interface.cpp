@@ -94,6 +94,7 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     fullscreenControls   = NULL;
     cryptedLabel         = NULL;
     controlBar           = NULL;
+    seekBar              = NULL;
 //    controls             = NULL;
 //    inputC               = NULL;
 
@@ -334,6 +335,7 @@ void MainInterface::recreateToolbars()
     bool b_adv = getControlsVisibilityStatus() & CONTROLS_ADVANCED;
 
     rebuildControlBar();
+    rebuildSeekBar();
 
     //delete controls;
 //    delete inputC;
@@ -506,6 +508,7 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
 
     /* Create the CONTROLS Widget */
     rebuildControlBar();
+    rebuildSeekBar();
 
 //    controls = new ControlsWidget( p_intf,
 //        creationSettings->value( "MainWindow/adv-controls", false ).toBool(), this );
@@ -544,7 +547,9 @@ void MainInterface::rebuildControlBar(){
 
     controlBar = new QQuickWidget();
 
+    // Create the buttons
     ControlButtonModel *cb_model = new ControlButtonModel(p_intf);
+
     QQmlContext *rootContext = controlBar->rootContext();
     rootContext->setContextProperty("buttonList", cb_model);
 
@@ -552,12 +557,46 @@ void MainInterface::rebuildControlBar(){
     controlBar->setFixedHeight( 42 );
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
-    mainLayout->insertWidget(2, controlBar);
+    mainLayout->insertWidget(3, controlBar);
+}
+
+void MainInterface::rebuildSeekBar(){
+    if (seekBar) delete seekBar;
+
+    seekBar = new QQuickWidget();
+
+    // Create the slider
+    SeekSlider *slider = new SeekSlider( Qt::Horizontal, NULL);
+    SeekPoints *chapters = new SeekPoints( this, p_intf );
+    CONNECT( THEMIM->getIM(), chapterChanged( bool ), chapters, update() );
+    slider->setChapters( chapters );
+
+    /* Update the position when the IM has changed */
+    CONNECT( THEMIM->getIM(), positionUpdated( float, int64_t, int ),
+            slider, setPosition( float, int64_t, int ) );
+    /* And update the IM, when the position has changed */
+    CONNECT( slider, sliderDragged( float ),
+             THEMIM->getIM(), sliderUpdate( float ) );
+    CONNECT( THEMIM->getIM(), cachingChanged( float ),
+             slider, updateBuffering( float ) );
+    /* Give hint to disable slider's interactivity when useless */
+    CONNECT( THEMIM->getIM(), inputCanSeek( bool ),
+             slider, setSeekable( bool ) );
+
+    QQmlContext *rootContext = seekBar->rootContext();
+    rootContext->setContextProperty("seekBar", slider);
+
+    seekBar->setSource( QUrl( QStringLiteral( "qrc:/player/SeekBar.qml" ) ) );
+    seekBar->setFixedHeight( 42 );
+    seekBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
+
+    mainLayout->insertWidget(2, seekBar);
 }
 
 void MainInterface::collapseControlBar()
 {
     controlBar->setFixedHeight( 0 );
+    seekBar->setFixedHeight( 0 );
     resize(size().width(), videoWidget->size().height());
     b_isexpanded = false;
 
@@ -585,7 +624,8 @@ void MainInterface::expandControlBar()
         timer->start();
         b_isexpanded = true;
         controlBar->setFixedHeight( 42 );
-        resize(size().width(), videoWidget->size().height() + 42);
+        seekBar->setFixedHeight( 42 );
+        resize(size().width(), videoWidget->size().height() + 84);
     }
 }
 
