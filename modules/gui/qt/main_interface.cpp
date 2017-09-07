@@ -1666,6 +1666,7 @@ bool MainInterface::eventFilter( QObject *obj, QEvent *event )
     if ( event->type() == QEvent::MouseMove )
     {
         expandControlBar();
+        return false;
     }
     else if ( event->type() == MainInterface::ToolbarsNeedRebuild ) {
         event->accept();

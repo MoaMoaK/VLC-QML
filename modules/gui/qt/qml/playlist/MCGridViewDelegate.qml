@@ -89,8 +89,6 @@ Rectangle {
             else
                 timerMouse.restart()
         }
-
-
     }
 
 }

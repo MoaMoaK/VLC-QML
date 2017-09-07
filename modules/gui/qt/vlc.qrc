@@ -157,6 +157,8 @@
     <qresource prefix="/qml">
         <file alias="about">qml/about.qml</file>
         <file alias="help">qml/help.qml</file>
+        <file alias="ToolTip.qml">qml/utils/ToolTip.qml</file>
+        <file alias="ToolTipArea.qml">qml/utils/ToolTipArea.qml</file>
     </qresource>
     <qresource prefix="/playlist">
         <file alias="iconview.qml">qml/playlist/iconview.qml</file>

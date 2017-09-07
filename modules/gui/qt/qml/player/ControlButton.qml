@@ -1,5 +1,8 @@
 import QtQuick 2.0
 
+import "qrc:///qml/"
+//import "../utils/"
+
 Rectangle {
 
     property int size: 32
@@ -41,6 +44,11 @@ Rectangle {
         anchors.fill: parent
         onClicked: singleClick()
         onDoubleClicked: doubleClick()
+        propagateComposedEvents: true
+    }
+
+    ToolTipArea {
+        text: name
     }
 
     function singleClick() { console.log("Clicked on "+name); }
