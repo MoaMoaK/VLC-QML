@@ -8,6 +8,7 @@ ControlButtonModel::ControlButtonModel(intf_thread_t *_p_intf, QObject *parent) 
     buttonList.append( new ControlButtonItem(p_intf, PLAY_BUTTON, WIDGET_NORMAL) );
     buttonList.append( new ControlButtonItem(p_intf, PREVIOUS_BUTTON, WIDGET_NORMAL) );
     buttonList.append( new ControlButtonItem(p_intf, NEXT_BUTTON, WIDGET_NORMAL) );
+//    buttonList.append( new ControlButtonItem(p_intf, INPUT_SLIDER, WIDGET_NORMAL) );
 }
 
 QVariant ControlButtonModel::headerData(int section, Qt::Orientation orientation, int role) const
