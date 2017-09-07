@@ -59,3 +59,10 @@ dev-vlc.creator
 dev-vlc.creator.user
 dev-vlc.files
 dev-vlc.includes
+
+# Ignore QMLC
+*.qmlc
+
+# Ignore autosave
+.*.swp
+*.autosave
