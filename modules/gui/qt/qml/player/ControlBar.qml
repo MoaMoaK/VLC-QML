@@ -1,5 +1,4 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.4
 
 Item {
 
@@ -10,14 +9,7 @@ Item {
             width: parent.width
             color: "#ffffff"
 
-            Slider {
-                anchors {
-                    fill: parent
-                    margins: 10;
-                }
-            id: slider
-            value: 0.5
-            }
+            SeekBar { }
         }
 
         Rectangle {

@@ -1,16 +1,16 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.2
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 
-Item {
-    Rectangle {
-        anchors.fill: parent
-        color: "#ffffff"
+Slider {
 
-        Slider {
-            anchors {
-                fill: parent
-                margins: 10;
-            }
+    anchors {
+        fill: parent
+        margins: 10;
+    }
+    id: slider
+    value: 0.5
+
 
             id: slider
             x: 51
