@@ -1,26 +1,48 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.4
 
 Item {
-    Rectangle {
+
+    Column {
         anchors.fill: parent
-        color: "#ffffff"
+        Rectangle {
+            height: 42
+            width: parent.width
+            color: "#ffffff"
 
-        ListView {
-            spacing: 5
-            anchors.fill: parent
-            anchors.margins: 5
-            orientation: ListView.Horizontal
-            interactive: false
+            Slider {
+                anchors {
+                    fill: parent
+                    margins: 10;
+                }
+            id: slider
+            value: 0.5
+            }
+        }
 
-            model: buttonList
-            delegate: ControlButton {
+        Rectangle {
+            height: 42
+            width: parent.width
+            color: "#ffffff"
 
-                iconURL: model.icon
-                name: model.text
+            ListView {
+                spacing: 5
+                anchors.fill: parent
+                anchors.margins: 5
+                orientation: ListView.Horizontal
+                interactive: false
 
-                function singleClick() { model.single_click = 1; }
-                function doubleClick() { model.double_click = 2; }
+                model: buttonList
+                delegate: ControlButton {
+
+                    iconURL: model.icon
+                    name: model.text
+
+                    function singleClick() { model.single_click = 1; }
+                    function doubleClick() { model.double_click = 2; }
+                }
             }
         }
     }
+
 }

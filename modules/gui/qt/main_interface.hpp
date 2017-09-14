@@ -130,10 +130,6 @@ protected:
 //    QPropertyAnimation *animationMaxHeight;
 //    QPropertyAnimation *animationBarHeight;
 
-    /* QML seek bar */
-    void rebuildSeekBar();
-    QQuickWidget *seekBar;
-
     /* Main Widgets Creation */
     void createMainWidget( QSettings* );
     void createStatusBar();
