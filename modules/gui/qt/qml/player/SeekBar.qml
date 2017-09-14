@@ -55,7 +55,19 @@ Slider {
         }
     }
 
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onEntered: { slider.state = "hovered" }
+        onExited: { slider.state = "" }
     }
+
+    states: [
+        State {
+            name: "hovered"
+            PropertyChanges { target: handle ; opacity: 0.0 }
+        }
+    ]
 
 }
 
