@@ -86,6 +86,7 @@ const QEvent::Type MainInterface::ToolbarsNeedRebuild =
 MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
 {
     /* Variables initialisation */
+    mainWidget           = NULL;
     bgWidget             = NULL;
     videoWidget          = NULL;
     playlistWidget       = NULL;
@@ -260,7 +261,7 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     b_isexpanded = false;
 
     timer = new QTimer();
-    timer->setInterval(5000);
+    timer->setInterval(1000);
     connect( timer, SIGNAL(timeout()), this, SLOT(collapseControlBar()) );
 
 //    animationWindow = new QPropertyAnimation(this, "size");
@@ -335,7 +336,7 @@ void MainInterface::recreateToolbars()
     bool b_adv = getControlsVisibilityStatus() & CONTROLS_ADVANCED;
 
     rebuildControlBar();
-    rebuildSeekBar();
+//    rebuildSeekBar();
 
     //delete controls;
 //    delete inputC;
@@ -466,15 +467,17 @@ void MainInterface::onInputChanged( bool hasInput )
 void MainInterface::createMainWidget( QSettings *creationSettings )
 {
     /* Create the main Widget and the mainLayout */
-    QWidget *main = new QWidget;
-    setCentralWidget( main );
-    mainLayout = new QVBoxLayout( main );
-    main->setContentsMargins( 0, 0, 0, 0 );
+    mainWidget = new QWidget;
+//    mainWidget->setWindowFlags( Qt::SubWindow );
+    setCentralWidget( mainWidget );
+    mainLayout = new QVBoxLayout( mainWidget );
+    mainWidget->setContentsMargins( 0, 0, 0, 0 );
     mainLayout->setSpacing( 0 ); mainLayout->setMargin( 0 );
 
-    createResumePanel( main );
+    createResumePanel( mainWidget );
     /* */
-    stackCentralW = new QVLCStackedWidget( main );
+    stackCentralW = new QVLCStackedWidget( mainWidget );
+//    stackCentralW->setWindowFlags( Qt::SubWindow );
 
     /* Bg Cone */
     if ( QDate::currentDate().dayOfYear() >= QT_XMAS_JOKE_DAY
@@ -497,6 +500,7 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
     if( b_videoEmbedded )
     {
         videoWidget = new VideoWidget( p_intf, stackCentralW );
+//        videoWidget->setWindowFlags( Qt::SubWindow );
         stackCentralW->addWidget( videoWidget );
     }
     mainLayout->insertWidget( 1, stackCentralW );
@@ -508,14 +512,14 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
 
     /* Create the CONTROLS Widget */
     rebuildControlBar();
-    rebuildSeekBar();
+//    rebuildSeekBar();
 
 //    controls = new ControlsWidget( p_intf,
 //        creationSettings->value( "MainWindow/adv-controls", false ).toBool(), this );
 //    inputC = new InputControlsWidget( p_intf, this );
 
 //    mainLayout->insertWidget( 2, inputC );
-    //mainLayout->insertWidget(
+//    mainLayout->insertWidget(
     //    creationSettings->value( "MainWindow/ToolbarPos", 0 ).toInt() ? 0: 3,
     //    controls );
 
@@ -528,8 +532,8 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
 
 
     /* Enable the popup menu in the MI */
-    main->setContextMenuPolicy( Qt::CustomContextMenu );
-    CONNECT( main, customContextMenuRequested( const QPoint& ),
+    mainWidget->setContextMenuPolicy( Qt::CustomContextMenu );
+    CONNECT( mainWidget, customContextMenuRequested( const QPoint& ),
              THEDP, setPopupMenu() );
 
     if ( depth() > 8 ) /* 8bit depth has too many issues with opacity */
@@ -545,7 +549,8 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
 void MainInterface::rebuildControlBar(){
     if (controlBar) delete controlBar;
 
-    controlBar = new QQuickWidget();
+    controlBar = new QQuickWidget( this );
+    controlBar->setWindowFlags( Qt::ToolTip );
 
     // Create the buttons
     ControlButtonModel *cb_model = new ControlButtonModel(p_intf);
@@ -557,47 +562,60 @@ void MainInterface::rebuildControlBar(){
     controlBar->setFixedHeight( 42 );
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
-    mainLayout->insertWidget(3, controlBar);
+    controlBar->move( 0, 500);
+
+
+    controlBar->show();
+
+//    mainLayout->insertWidget(3, controlBar);
 }
 
 void MainInterface::rebuildSeekBar(){
     if (seekBar) delete seekBar;
 
-    seekBar = new QQuickWidget();
+//    seekBar = new QQuickWidget( );
 
     // Create the slider
-    SeekSlider *slider = new SeekSlider( Qt::Horizontal, NULL);
-    SeekPoints *chapters = new SeekPoints( this, p_intf );
-    CONNECT( THEMIM->getIM(), chapterChanged( bool ), chapters, update() );
-    slider->setChapters( chapters );
 
-    /* Update the position when the IM has changed */
-    CONNECT( THEMIM->getIM(), positionUpdated( float, int64_t, int ),
-            slider, setPosition( float, int64_t, int ) );
-    /* And update the IM, when the position has changed */
-    CONNECT( slider, sliderDragged( float ),
-             THEMIM->getIM(), sliderUpdate( float ) );
-    CONNECT( THEMIM->getIM(), cachingChanged( float ),
-             slider, updateBuffering( float ) );
-    /* Give hint to disable slider's interactivity when useless */
-    CONNECT( THEMIM->getIM(), inputCanSeek( bool ),
-             slider, setSeekable( bool ) );
+//    SeekSlider *slider = new SeekSlider(p_intf, Qt::Horizontal, NULL);
+//    SeekPoints *chapters = new SeekPoints( this, p_intf );
+//    CONNECT( THEMIM->getIM(), chapterChanged( bool ), chapters, update() );
+//    slider->setChapters( chapters );
 
-    QQmlContext *rootContext = seekBar->rootContext();
-    rootContext->setContextProperty("seekBar", slider);
+//    /* Update the position when the IM has changed */
+//    CONNECT( THEMIM->getIM(), positionUpdated( float, int64_t, int ),
+//            slider, setPosition( float, int64_t, int ) );
+//    /* And update the IM, when the position has changed */
+//    CONNECT( slider, sliderDragged( float ),
+//             THEMIM->getIM(), sliderUpdate( float ) );
+//    CONNECT( THEMIM->getIM(), cachingChanged( float ),
+//             slider, updateBuffering( float ) );
+//    /* Give hint to disable slider's interactivity when useless */
+//    CONNECT( THEMIM->getIM(), inputCanSeek( bool ),
+//             slider, setSeekable( bool ) );
 
-    seekBar->setSource( QUrl( QStringLiteral( "qrc:/player/SeekBar.qml" ) ) );
-    seekBar->setFixedHeight( 42 );
-    seekBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
+//    QQmlContext *rootContext = seekBar->rootContext();
+//    rootContext->setContextProperty( "seekBar", slider );
+//    rootContext->setContextProperty( "THEMIM", THEMIM->getIM() );
 
-    mainLayout->insertWidget(2, seekBar);
+//    seekBar->setSource( QUrl( QStringLiteral( "qrc:/player/SeekBar.qml" ) ) );
+//    seekBar->setFixedHeight( 42 );
+//    seekBar->setFixedWidth( 200 );
+//    seekBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
+
+//    //seekBar->show();
+////    seekBar->move( 0, size().height() - 48 );
+
+
+//    mainLayout->insertWidget(2, seekBar);
 }
 
 void MainInterface::collapseControlBar()
 {
-    controlBar->setFixedHeight( 0 );
-    seekBar->setFixedHeight( 0 );
-    resize(size().width(), videoWidget->size().height());
+//    controlBar->setFixedHeight( 0 );
+//    seekBar->setFixedHeight( 0 );
+//    resize(size().width(), videoWidget->size().height());
+    controlBar->setVisible(false);
     b_isexpanded = false;
 
 }
@@ -623,9 +641,13 @@ void MainInterface::expandControlBar()
 
         timer->start();
         b_isexpanded = true;
-        controlBar->setFixedHeight( 42 );
-        seekBar->setFixedHeight( 42 );
-        resize(size().width(), videoWidget->size().height() + 84);
+        controlBar->setVisible(true);
+//        controlBar->setFixedHeight( 42 );
+//        seekBar->setFixedHeight( 42 );
+//        resize(size().width(), videoWidget->size().height() + 84);
+//        controlBar->move( 300, size().height() );
+//        controlBar->raise();
+
     }
 }
 

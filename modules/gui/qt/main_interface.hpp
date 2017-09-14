@@ -40,6 +40,7 @@
 #include <qt5/QtCore/QUrl>
 #include <qt5/QtCore/QString>
 #include <qt5/QtCore/QPropertyAnimation>
+#include <qt5/QtWidgets/QGraphicsOpacityEffect>
 
 #ifdef _WIN32
 # include <shobjidl.h>
@@ -105,6 +106,25 @@ public:
     bool isInterfaceFullScreen() { return b_interfaceFullScreen; }
     StandardPLPanel* getPlaylistView();
 
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result) Q_DECL_OVERRIDE
+    {
+        if (eventType == "xcb_generic_event_t") {
+            QStyle * wStyle = this->style();
+            int titleBarHeight = wStyle->pixelMetric(QStyle::PM_TitleBarHeight);
+            controlBar->move( pos().x(), pos().y() + titleBarHeight + size().height() - 30);
+            controlBar->setFixedWidth ( size().width() );
+            msg_Info( p_intf, std::to_string(pos().y() + titleBarHeight + size().height() - 30).c_str() );
+            msg_Info( p_intf, std::to_string(pos().x()).c_str() );
+        } else if (eventType == "windows_generic_MSG") {
+            msg_Info( p_intf, "Windaube" );
+        } else if (eventType == "mac_generic_NSEvent") {
+            msg_Info( p_intf, "arMac");
+        } else {
+
+        }
+        return false;
+    }
+
 protected:
     void dropEventPlay( QDropEvent* event, bool b_play ) { dropEventPlay(event, b_play, true); }
     void dropEventPlay( QDropEvent *, bool, bool );
@@ -155,6 +175,9 @@ protected:
     void setMinimalView( bool );
     void setInterfaceFullScreen( bool );
     void computeMinimumSize();
+
+
+    QWidget             *mainWidget;
 
     /* */
     QSettings           *settings;

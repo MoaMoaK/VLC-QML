@@ -55,9 +55,11 @@ class SeekSlider : public QSlider
     Q_PROPERTY(qreal handleOpacity READ handleOpacity WRITE setHandleOpacity)
     Q_PROPERTY(qreal loadingProperty READ loading WRITE setLoading)
 public:
-    SeekSlider( Qt::Orientation q, QWidget *_parent = 0, bool _classic = false );
+    SeekSlider(intf_thread_t *_p_intf, Qt::Orientation q, QWidget *_parent = 0, bool _classic = false );
     virtual ~SeekSlider();
     void setChapters( SeekPoints * );
+
+    Q_INVOKABLE float getValueRatio();
 
 protected:
     void mouseMoveEvent( QMouseEvent *event ) Q_DECL_OVERRIDE;
@@ -114,6 +116,8 @@ private:
     QSequentialAnimationGroup *animLoading;
     QTimer *hideHandleTimer;
     QTimer *startAnimLoadingTimer;
+
+    intf_thread_t *p_intf;
 
 public slots:
     void setPosition( float, int64_t, int );

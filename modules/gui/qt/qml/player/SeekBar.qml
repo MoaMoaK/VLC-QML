@@ -1,7 +1,9 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.0
 
 Item {
+//    height: 42
+//    width: 200
     Rectangle {
         anchors.fill: parent
         color: "#ffffff"
@@ -13,11 +15,7 @@ Item {
             }
 
             id: slider
-            x: 51
-            y: 104
-            value: 0.5
+            value: seekBar.getValueRatio()
         }
-
-
     }
 }

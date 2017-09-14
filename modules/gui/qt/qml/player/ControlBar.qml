@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 Item {
+//    height: 42
+//    width: 200
     Rectangle {
         anchors.fill: parent
         color: "#ffffff"

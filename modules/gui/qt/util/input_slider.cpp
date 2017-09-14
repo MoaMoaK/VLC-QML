@@ -61,8 +61,8 @@ namespace {
     int const FADEOUT_DELAY = 2000;
 }
 
-SeekSlider::SeekSlider( Qt::Orientation q, QWidget *_parent, bool _static )
-          : QSlider( q, _parent ), b_classic( _static ), animLoading( NULL )
+SeekSlider::SeekSlider( intf_thread_t *_p_intf, Qt::Orientation q, QWidget *_parent, bool _static )
+          : p_intf( _p_intf ), QSlider( q, _parent ), b_classic( _static ), animLoading( NULL )
 {
     isSliding = false;
     isJumping = false;
@@ -176,6 +176,16 @@ SeekSlider::~SeekSlider()
         delete alternativeStyle;
     delete mTimeTooltip;
 }
+
+/***
+ * For QML accessibility
+ ***/
+float SeekSlider::getValueRatio()
+{
+    msg_Info( p_intf, "plop");
+    return value() / static_cast<float>( maximum() );
+}
+
 
 /***
  * \brief Sets the chapters seekpoints adapter
