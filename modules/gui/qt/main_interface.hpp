@@ -113,8 +113,6 @@ public:
             int titleBarHeight = wStyle->pixelMetric(QStyle::PM_TitleBarHeight);
             controlBar->move( pos().x(), pos().y() + titleBarHeight + size().height() - 30);
             controlBar->setFixedWidth ( size().width() );
-            msg_Info( p_intf, std::to_string(pos().y() + titleBarHeight + size().height() - 30).c_str() );
-            msg_Info( p_intf, std::to_string(pos().x()).c_str() );
         } else if (eventType == "windows_generic_MSG") {
             msg_Info( p_intf, "Windaube" );
         } else if (eventType == "mac_generic_NSEvent") {

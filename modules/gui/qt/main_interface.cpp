@@ -551,6 +551,7 @@ void MainInterface::rebuildControlBar(){
 
     controlBar = new QQuickWidget( this );
     controlBar->setWindowFlags( Qt::ToolTip );
+//    controlBar->setAttribute(Qt::WA_AlwaysStackOnTop);
 
     // Create the buttons
     ControlButtonModel *cb_model = new ControlButtonModel(p_intf);
@@ -560,6 +561,7 @@ void MainInterface::rebuildControlBar(){
 
     controlBar->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
     controlBar->setFixedHeight( 42 );
+    controlBar->setFixedWidth( 300 );
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
     controlBar->move( 0, 500);
@@ -615,7 +617,7 @@ void MainInterface::collapseControlBar()
 //    controlBar->setFixedHeight( 0 );
 //    seekBar->setFixedHeight( 0 );
 //    resize(size().width(), videoWidget->size().height());
-    controlBar->setVisible(false);
+//    controlBar->setVisible(false);
     b_isexpanded = false;
 
 }
@@ -642,10 +644,10 @@ void MainInterface::expandControlBar()
         timer->start();
         b_isexpanded = true;
         controlBar->setVisible(true);
-//        controlBar->setFixedHeight( 42 );
+        controlBar->setFixedHeight( 42 );
 //        seekBar->setFixedHeight( 42 );
 //        resize(size().width(), videoWidget->size().height() + 84);
-//        controlBar->move( 300, size().height() );
+        controlBar->move( 0, 500 );
 //        controlBar->raise();
 
     }
