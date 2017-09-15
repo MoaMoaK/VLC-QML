@@ -5,22 +5,27 @@ import QtQuick.Controls.Styles 1.4
 import "qrc:///qml/"
 //import "../utils/"
 
+//Item {
+//    height: 500
+//    width: 1000
+
 Slider {
     anchors {
         left: parent.left
         right: parent.right
         margins: 10;
     }
+    y: parent.height/2 - height/2
     id: slider
     value: 0.5
 
     style : SliderStyle {
 
         groove: Item{
-            id: background
             implicitWidth: 200
             implicitHeight: 10
             Rectangle {
+                id: background
                 width: parent.width
                 height: parent.height
                 gradient: Gradient {
@@ -76,10 +81,10 @@ Slider {
 
     TimeDisplayTip {
         id: timeDisplayTip
-        text: "yolo"
+        text: (positionX/slider.width).toFixed(10).toString()
         opacity: 0.0
-        x: 0
-        y: slider.height/2 - height - 12
+        x: Math.max( 0, Math.min( positionX - timeDisplayTip.width/2, parent.width - timeDisplayTip.width ) )
+        y: 0 - height
     }
 
     states: [
@@ -106,7 +111,7 @@ Slider {
         onEntered: { slider.state = "hovered" }
         onExited: { slider.state = "" }
         onMouseXChanged: {
-            timeDisplayTip.x = mouseX - (timeDisplayTip.width/2)
+            timeDisplayTip.positionX = mouseX
             if (sliderMouseArea.pressed) { slider.value = mouseX / slider.width }
         }
         onPressed: slider.value = mouseX / slider.width
@@ -114,3 +119,4 @@ Slider {
     }
 
 }
+//}
