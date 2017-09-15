@@ -159,6 +159,8 @@
         <file alias="help">qml/help.qml</file>
         <file alias="ToolTip.qml">qml/utils/ToolTip.qml</file>
         <file alias="ToolTipArea.qml">qml/utils/ToolTipArea.qml</file>
+        <file alias="TimeDisplayTip.qml">qml/utils/TimeDisplayTip.qml</file>
+        <file alias="Triangle.qml">qml/utils/Triangle.qml</file>
     </qresource>
     <qresource prefix="/playlist">
         <file alias="iconview.qml">qml/playlist/iconview.qml</file>
