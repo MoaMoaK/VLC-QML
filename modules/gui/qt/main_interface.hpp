@@ -106,22 +106,22 @@ public:
     bool isInterfaceFullScreen() { return b_interfaceFullScreen; }
     StandardPLPanel* getPlaylistView();
 
-    bool nativeEvent(const QByteArray &eventType, void *message, long *result) Q_DECL_OVERRIDE
-    {
-        if (eventType == "xcb_generic_event_t") {
-            QStyle * wStyle = this->style();
-            int titleBarHeight = wStyle->pixelMetric(QStyle::PM_TitleBarHeight);
-            controlBar->move( pos().x(), pos().y() + titleBarHeight + size().height() - 30);
-            controlBar->setFixedWidth ( size().width() );
-        } else if (eventType == "windows_generic_MSG") {
-            msg_Info( p_intf, "Windaube" );
-        } else if (eventType == "mac_generic_NSEvent") {
-            msg_Info( p_intf, "arMac");
-        } else {
+//    bool nativeEvent(const QByteArray &eventType, void *message, long *result) Q_DECL_OVERRIDE
+//    {
+//        if (eventType == "xcb_generic_event_t") {
+//            QStyle * wStyle = this->style();
+//            int titleBarHeight = wStyle->pixelMetric(QStyle::PM_TitleBarHeight);
+//            controlBar->move( pos().x(), pos().y() + titleBarHeight + size().height() - 30);
+//            controlBar->setFixedWidth ( size().width() );
+//        } else if (eventType == "windows_generic_MSG") {
+//            msg_Info( p_intf, "Windaube" );
+//        } else if (eventType == "mac_generic_NSEvent") {
+//            msg_Info( p_intf, "arMac");
+//        } else {
 
-        }
-        return false;
-    }
+//        }
+//        return false;
+//    }
 
 protected:
     void dropEventPlay( QDropEvent* event, bool b_play ) { dropEventPlay(event, b_play, true); }
@@ -141,7 +141,8 @@ protected:
 protected:
     /* QML control bar related */
     void rebuildControlBar();
-    QQuickWidget *controlBar;
+    QQuickWidget *controlBarQML;
+    QWidget *controlBar;
     QTimer *timer;
     bool b_isexpanded;
 //    QPropertyAnimation *animationWindow;

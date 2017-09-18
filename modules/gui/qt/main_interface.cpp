@@ -94,6 +94,7 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     sysTray              = NULL;
     fullscreenControls   = NULL;
     cryptedLabel         = NULL;
+    controlBarQML        = NULL;
     controlBar           = NULL;
     seekBar              = NULL;
 //    controls             = NULL;
@@ -547,26 +548,33 @@ void MainInterface::createMainWidget( QSettings *creationSettings )
 }
 
 void MainInterface::rebuildControlBar(){
+    if (controlBarQML) delete controlBarQML;
     if (controlBar) delete controlBar;
 
-    controlBar = new QQuickWidget( this );
-    controlBar->setWindowFlags( Qt::ToolTip );
+    controlBar = new QWidget( this );
+    controlBarQML = new QQuickWidget( );
+    QCoreApplication::setAttribute( Qt::AA_DontCreateNativeWidgetSiblings );
+    controlBar->setAttribute( Qt::WA_NativeWindow );
+    controlBar->winId();
+//    controlBar->setWindowFlags( Qt::ToolTip );
 //    controlBar->setAttribute(Qt::WA_AlwaysStackOnTop);
 
     // Create the buttons
     ControlButtonModel *cb_model = new ControlButtonModel(p_intf);
 
-    QQmlContext *rootContext = controlBar->rootContext();
+    QQmlContext *rootContext = controlBarQML->rootContext();
     rootContext->setContextProperty("buttonList", cb_model);
 
-    controlBar->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
+    controlBarQML->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
     controlBar->setFixedHeight( 42 );
     controlBar->setFixedWidth( 300 );
-    controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
+    controlBarQML->setFixedHeight( 42 );
+    controlBarQML->setFixedWidth( 300 );
+    controlBarQML->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
-    controlBar->move( 0, 500);
+    controlBar->move( 100, 100);
 
-
+    controlBarQML->setParent( controlBar );
     controlBar->show();
 
 //    mainLayout->insertWidget(3, controlBar);
@@ -643,11 +651,11 @@ void MainInterface::expandControlBar()
 
         timer->start();
         b_isexpanded = true;
-        controlBar->setVisible(true);
-        controlBar->setFixedHeight( 42 );
+        controlBarQML->setVisible(true);
+        controlBarQML->setFixedHeight( 42 );
 //        seekBar->setFixedHeight( 42 );
 //        resize(size().width(), videoWidget->size().height() + 84);
-        controlBar->move( 0, 500 );
+//        controlBarQML->move( 500, 500 );
 //        controlBar->raise();
 
     }
