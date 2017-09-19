@@ -78,7 +78,8 @@ Slider {
         }
         handle: Rectangle {
             id: handle
-            anchors.centerIn: parent
+            x: parent.width*getRatio() - handle.width/2;
+            anchors.verticalCenter: parent.verticalCenter;
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "#E1E0DF"; }
                 GradientStop { position: 1.0; color: "#C4C1BD"; }
