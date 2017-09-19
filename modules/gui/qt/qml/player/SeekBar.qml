@@ -10,6 +10,11 @@ import "qrc:///qml/"
 //    width: 1000
 
 Slider {
+
+    function getRatio( ) {
+        return slider.value / (slider.maximumValue-slider.minimumValue);
+    }
+
     anchors {
         left: parent.left
         right: parent.right
@@ -17,7 +22,8 @@ Slider {
     }
     y: parent.height/2 - height/2
     id: slider
-    value: 0.5
+
+    value: seekBar.value
 
     style : SliderStyle {
 
@@ -36,7 +42,7 @@ Slider {
             }
             Rectangle {
                 id: foreground
-                width: parent.width*slider.value
+                width: parent.width*getRatio( );
                 height: parent.height
                 gradient: Gradient {
                     GradientStop { position: 0.0; color: "#2B85DA"; }

@@ -567,7 +567,7 @@ void MainInterface::rebuildControlBar(){
 
     QQmlContext *rootContext = controlBar->rootContext();
     rootContext->setContextProperty("buttonList", cb_model);
-//    rootContext->setContextProperty("seekBar", slider);
+    rootContext->setContextProperty("seekBar", slider);
 
     controlBar->setSource( QUrl( QStringLiteral( "qrc:/player/ControlBar.qml" ) ) );
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
