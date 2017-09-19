@@ -11,6 +11,11 @@ import "qrc:///qml/"
 
 Slider {
 
+
+    function getValueFromPosX( posX ) {
+        return ( posX/slider.width ) * ( slider.maximumValue-slider.minimumValue )
+    }
+
     function getRatio( ) {
         return slider.value / (slider.maximumValue-slider.minimumValue);
     }
@@ -117,11 +122,16 @@ Slider {
         onEntered: { slider.state = "hovered" }
         onExited: { slider.state = "" }
         onMouseXChanged: {
-            timeDisplayTip.positionX = mouseX
-            if (sliderMouseArea.pressed) { slider.value = mouseX / slider.width }
+            timeDisplayTip.positionX = mouseX;
+            if (sliderMouseArea.pressed) {
+                seekBar.value = getValueFromPosX(mouseX);
+                seekBar.updatePos();
+            }
         }
-        onPressed: slider.value = mouseX / slider.width
-
+        onPressed: {
+            seekBar.value = getValueFromPosX(mouseX);
+            seekBar.updatePos();
+        }
     }
 
 }

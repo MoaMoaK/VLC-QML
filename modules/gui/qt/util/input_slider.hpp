@@ -120,10 +120,10 @@ public slots:
     void setSeekable( bool b ) { b_seekable = b ; }
     void updateBuffering( float );
     void hideHandle();
+    Q_INVOKABLE void updatePos();
 
 private slots:
     void startSeekTimer();
-    void updatePos();
     void inputUpdated( bool );
     void startAnimLoading();
 
