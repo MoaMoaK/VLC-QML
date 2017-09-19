@@ -115,7 +115,7 @@ Slider {
         id: timeDisplayTip
         opacity: 0.0
         x: Math.max( 0, Math.min( positionX - timeDisplayTip.width/2, parent.width - timeDisplayTip.width ) )
-        y: 0 - height
+        y: 0 - height+7
     }
 
     states: [
