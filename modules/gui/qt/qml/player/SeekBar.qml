@@ -11,9 +11,27 @@ import "qrc:///qml/"
 
 Slider {
 
+    function getTimeDispFromSec( sec ) {
+        var min = Math.floor( sec/60 );
+        sec = sec%60;
+        var h = Math.floor( min/60 );
+        min = min%60;
+        var time = sec.toString();
+        time = min.toString() + ":" + time;
+        time = h.toString() + ":" + time;
+        return time;
+    }
+
+    function getSecFromValue( val ) {
+        return Math.floor( val * seekBar.getInputLength() / 10000 );
+    }
 
     function getValueFromPosX( posX ) {
         return ( posX/slider.width ) * ( slider.maximumValue-slider.minimumValue )
+    }
+
+    function getTimeDispFromPosX( posX ) {
+        return getTimeDispFromSec(getSecFromValue(getValueFromPosX(posX)));
     }
 
     function getRatio( ) {
@@ -28,6 +46,8 @@ Slider {
     y: parent.height/2 - height/2
     id: slider
 
+    maximumValue: seekBar.maximum
+    minimumValue: seekBar.minimum
     value: seekBar.value
 
     style : SliderStyle {
@@ -92,7 +112,6 @@ Slider {
 
     TimeDisplayTip {
         id: timeDisplayTip
-        text: (positionX/slider.width).toFixed(10).toString()
         opacity: 0.0
         x: Math.max( 0, Math.min( positionX - timeDisplayTip.width/2, parent.width - timeDisplayTip.width ) )
         y: 0 - height
@@ -123,6 +142,7 @@ Slider {
         onExited: { slider.state = "" }
         onMouseXChanged: {
             timeDisplayTip.positionX = mouseX;
+            timeDisplayTip.text = getTimeDispFromPosX(mouseX);
             if (sliderMouseArea.pressed) {
                 seekBar.value = getValueFromPosX(mouseX);
                 seekBar.updatePos();

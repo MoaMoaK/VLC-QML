@@ -58,6 +58,7 @@ public:
     SeekSlider( Qt::Orientation q, QWidget *_parent = 0, bool _classic = false );
     virtual ~SeekSlider();
     void setChapters( SeekPoints * );
+    Q_INVOKABLE int getInputLength() { return inputLength; }
 
 protected:
     void mouseMoveEvent( QMouseEvent *event ) Q_DECL_OVERRIDE;
