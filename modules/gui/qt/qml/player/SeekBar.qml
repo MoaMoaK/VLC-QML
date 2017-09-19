@@ -100,11 +100,14 @@ Slider {
             ]
 
             transitions: Transition {
-                from: ""; to: "hovered"; reversible: true
-                NumberAnimation {
-                    properties: "opacity"
-                    duration: 200
-                    easing.type: Easing.InOutQuad
+                from: ""; to: "hovered"; reversible: true;
+                SequentialAnimation {
+                    NumberAnimation {
+                        properties: "opacity";
+                        duration: 500;
+                        easing.type: Easing.OutQuart;
+                    }
+                    NumberAnimation { duration: 1500; }
                 }
             }
 
