@@ -96,6 +96,8 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     controlBar           = NULL;
 //    controls             = NULL;
 //    inputC               = NULL;
+    slider               = NULL;
+    chapters             = NULL;
 
     b_hideAfterCreation  = false; // --qt-start-minimized
     playlistVisible      = false;
@@ -548,9 +550,11 @@ void MainInterface::rebuildControlBar(){
     ControlButtonModel *cb_model = new ControlButtonModel(p_intf);
 
     // Create the slider
-    SeekSlider *slider = new SeekSlider( Qt::Horizontal, NULL);
-    SeekPoints *chapters = new SeekPoints( this, p_intf );
-    CONNECT( THEMIM->getIM(), chapterChanged( bool ), chapters, update() );
+    if (slider) delete slider;
+    slider = new SeekSlider( Qt::Horizontal, NULL);
+    if (chapters) delete chapters;
+    chapters = new SeekPoints( this, p_intf );
+    CONNECT( THEMIM->getIM(), chapterChanged( bool ), this, reloadChapters() );
     slider->setChapters( chapters );
 
     /* Update the position when the IM has changed */
@@ -573,6 +577,13 @@ void MainInterface::rebuildControlBar(){
     controlBar->setResizeMode( QQuickWidget::SizeRootObjectToView );
 
     mainLayout->insertWidget(2, controlBar);
+}
+
+void MainInterface::reloadChapters()
+{
+    chapters->update();
+    QQmlContext *rootContext = controlBar->rootContext();
+    rootContext->setContextProperty("seekBar", slider);
 }
 
 void MainInterface::collapseControlBar()

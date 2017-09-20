@@ -130,6 +130,9 @@ protected:
 //    QPropertyAnimation *animationMaxHeight;
 //    QPropertyAnimation *animationBarHeight;
 
+    SeekSlider *slider;
+    SeekPoints *chapters;
+
     /* Main Widgets Creation */
     void createMainWidget( QSettings* );
     void createStatusBar();
@@ -234,6 +237,8 @@ public slots:
 
     virtual void reloadPrefs();
     void toolBarConfUpdated();
+
+    void reloadChapters();
 
 protected slots:
     /* QML control Bar related */
