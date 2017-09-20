@@ -23,7 +23,7 @@ Slider {
     }
 
     function getSecFromValue( val ) {
-        return Math.floor( val * seekBar.getInputLength() / 10000 );
+        return Math.floor( val * seekBar.getInputLength() / ( slider.maximumValue-slider.minimumValue ) );
     }
 
     function getValueFromPosX( posX ) {
@@ -38,12 +38,7 @@ Slider {
         return slider.value / (slider.maximumValue-slider.minimumValue);
     }
 
-    anchors {
-        left: parent.left
-        right: parent.right
-        margins: 10;
-    }
-    y: parent.height/2 - height/2
+
     id: slider
 
     maximumValue: seekBar.maximum

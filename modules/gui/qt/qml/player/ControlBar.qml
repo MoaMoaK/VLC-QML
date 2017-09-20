@@ -9,7 +9,15 @@ Item {
             width: parent.width
             color: "#ffffff"
 
-            SeekBar { }
+            SeekBar {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: 10;
+                }
+                height: 24
+                y: parent.height/2 - height/2
+            }
         }
 
         Rectangle {

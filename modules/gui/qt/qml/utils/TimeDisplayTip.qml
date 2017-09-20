@@ -29,7 +29,6 @@ Canvas {
         ctx.clearRect(0,0,bubble.width, bubble.height);
 
         ctx.strokeStyle = "#000000";
-        ctx.fillStyle =
         ctx.lineWidth = 1;
 
         ctx.beginPath();
