@@ -31,10 +31,13 @@
 #endif
 
 #include "styles/seekstyle.hpp"
+#include "adapters/seekpoints.hpp"
 
 #include <QSlider>
 #include <QPainter>
 #include <QTime>
+#include <qt5/QtCore/QStringList>
+#include <qt5/QtCore/QList>
 
 #define MSTRTIME_MAX_SIZE 22
 
@@ -59,6 +62,18 @@ public:
     virtual ~SeekSlider();
     void setChapters( SeekPoints * );
     Q_INVOKABLE int getInputLength() { return inputLength; }
+    Q_INVOKABLE QList<QVariant> getSeekPointsTime() {
+        QList<QVariant> times;
+        if ( chapters ) foreach ( const SeekPoint &point, chapters->getPoints() )
+            times.append( QVariant::fromValue ( point.time ) );
+        return times;
+    }
+    Q_INVOKABLE QStringList getSeekPointsName() {
+        QStringList names;
+        if ( chapters ) foreach ( const SeekPoint &point, chapters->getPoints() )
+            names.append( point.name );
+        return names;
+    }
 
 protected:
     void mouseMoveEvent( QMouseEvent *event ) Q_DECL_OVERRIDE;
