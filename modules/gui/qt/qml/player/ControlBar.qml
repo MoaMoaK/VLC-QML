@@ -4,10 +4,8 @@ Item {
 
     Column {
         anchors.fill: parent
-        Rectangle {
-            height: 42
+        Column {
             width: parent.width
-            color: "#ffffff"
 
             SeekBar {
                 anchors {
@@ -18,6 +16,16 @@ Item {
                 height: 24
                 y: parent.height/2 - height/2
             }
+            Chapters {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: 10;
+                }
+                y: parent.height/2 - height/2
+                height: 24
+            }
+
         }
 
         Rectangle {
