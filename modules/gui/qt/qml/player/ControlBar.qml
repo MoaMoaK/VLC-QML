@@ -11,6 +11,7 @@ Item {
                 margins: 10;
             }
             height: 42
+            seekable: seekBar.seekable
         }
 
         Rectangle {

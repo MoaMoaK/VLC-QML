@@ -13,6 +13,7 @@ Canvas {
     onPositionXChanged: requestPaint()
     onTip_heightChanged: requestPaint()
     onTip_widthChanged: requestPaint()
+    onVisibleChanged: requestPaint()
 
     onPaint: {
         var top = 0;
@@ -30,18 +31,18 @@ Canvas {
 
         ctx.strokeStyle = "#000000";
         ctx.lineWidth = 1;
-
-        ctx.beginPath();
-        ctx.moveTo( left, top );
-        ctx.lineTo( right, top );
-        ctx.lineTo( right, bot1 );
-        ctx.lineTo( post_tipX, bot1 );
-        ctx.lineTo( tipX, bot2);
-        ctx.lineTo( pre_tipX, bot1 );
-        ctx.lineTo( left, bot1 );
-        ctx.closePath();
-
-        ctx.stroke();
+        if (bubble.visible) {
+            ctx.beginPath();
+            ctx.moveTo( left, top );
+            ctx.lineTo( right, top );
+            ctx.lineTo( right, bot1 );
+            ctx.lineTo( post_tipX, bot1 );
+            ctx.lineTo( tipX, bot2);
+            ctx.lineTo( pre_tipX, bot1 );
+            ctx.lineTo( left, bot1 );
+            ctx.closePath();
+            ctx.stroke();
+        }
 
         ctx.restore();
     }

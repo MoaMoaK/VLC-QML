@@ -70,7 +70,7 @@ SeekSlider::SeekSlider( Qt::Orientation q, QWidget *_parent, bool _static )
     mLoading = 0.0;
     chapters = NULL;
     mHandleLength = -1;
-    b_seekable = true;
+    this->setSeekable(true);
     alternativeStyle = NULL;
 
     // prepare some static colors
@@ -205,7 +205,7 @@ void SeekSlider::setPosition( float pos, int64_t time, int length )
         isSliding = false;
     }
     else
-        setEnabled( b_seekable );
+        setEnabled( seekable() );
 
     if( !isSliding )
     {

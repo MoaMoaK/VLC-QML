@@ -38,6 +38,8 @@ Slider {
         return slider.value / (slider.maximumValue-slider.minimumValue);
     }
 
+    property bool seekable: false
+
 
     id: slider
 
@@ -143,7 +145,8 @@ Slider {
         id: timeDisplayTip
         opacity: 0.0
         x: Math.max( 0, Math.min( positionX - timeDisplayTip.width/2, parent.width - timeDisplayTip.width ) )
-        y: 0 - height+7
+        y: 0 - height+15
+        visible: slider.seekable
     }
 
     states: [
@@ -172,14 +175,17 @@ Slider {
         onMouseXChanged: {
             timeDisplayTip.positionX = mouseX;
             timeDisplayTip.text = getTimeDispFromPosX(mouseX);
-            if (sliderMouseArea.pressed) {
+            if (slider.seekable && sliderMouseArea.pressed) {
                 seekBar.value = getValueFromPosX(mouseX);
                 seekBar.updatePos();
             }
         }
         onPressed: {
-            seekBar.value = getValueFromPosX(mouseX);
-            seekBar.updatePos();
+            if (slider.seekable)
+            {
+                seekBar.value = getValueFromPosX(mouseX);
+                seekBar.updatePos();
+            }
         }
     }
 

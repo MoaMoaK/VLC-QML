@@ -57,6 +57,7 @@ class SeekSlider : public QSlider
     Q_OBJECT
     Q_PROPERTY(qreal handleOpacity READ handleOpacity WRITE setHandleOpacity)
     Q_PROPERTY(qreal loadingProperty READ loading WRITE setLoading)
+    Q_PROPERTY(bool seekable READ seekable WRITE setSeekable NOTIFY seekableChanged)
 public:
     SeekSlider( Qt::Orientation q, QWidget *_parent = 0, bool _classic = false );
     virtual ~SeekSlider();
@@ -74,6 +75,7 @@ public:
             names.append( point.name );
         return names;
     }
+    bool seekable() const { return b_seekable; }
 
 protected:
     void mouseMoveEvent( QMouseEvent *event ) Q_DECL_OVERRIDE;
@@ -133,7 +135,7 @@ private:
 
 public slots:
     void setPosition( float, int64_t, int );
-    void setSeekable( bool b ) { b_seekable = b ; }
+    void setSeekable( bool b ) { b_seekable = b ; emit seekableChanged(b); }
     void updateBuffering( float );
     void hideHandle();
     Q_INVOKABLE void updatePos();
@@ -145,6 +147,7 @@ private slots:
 
 signals:
     void sliderDragged( float );
+    void seekableChanged( bool );
 
 };
 
