@@ -38,6 +38,32 @@ Slider {
         return slider.value / (slider.maximumValue-slider.minimumValue);
     }
 
+    function hasChapters( ) {
+        return seekBar.getSeekPointsTime().length > 0;
+    }
+
+    function getChapterNameFromSec( sec ) {
+        var i = 0;
+        var times = seekBar.getSeekPointsTime();
+        while (i < times.length && times[i]/1000000 < sec) {
+            i++;
+        }
+        return i>0 ? seekBar.getSeekPointsName()[i-1] : ""
+    }
+
+    function getChapterNameFromPosX( posX ) {
+        return getChapterNameFromSec(getSecFromValue(getValueFromPosX(posX)))
+    }
+
+    function getDisplayFromPosX( posX )  {
+        if (hasChapters()) {
+            return getTimeDispFromPosX(posX)+" - "+getChapterNameFromPosX(posX);
+        } else {
+            return getTimeDispFromPosX(posX)
+        }
+
+    }
+
     property bool seekable: false
 
 
@@ -174,7 +200,7 @@ Slider {
         onExited: { slider.state = "" }
         onMouseXChanged: {
             timeDisplayTip.positionX = mouseX;
-            timeDisplayTip.text = getTimeDispFromPosX(mouseX);
+            timeDisplayTip.text = getDisplayFromPosX(mouseX);
             if (slider.seekable && sliderMouseArea.pressed) {
                 seekBar.value = getValueFromPosX(mouseX);
                 seekBar.updatePos();
