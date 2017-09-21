@@ -8,6 +8,8 @@ Canvas {
 
     id: chap
 
+    onOpacityChanged: chap.requestPaint()
+
     onPaint: {
         var points_time = seek_bar.getSeekPointsTime();
         var total_time = seek_bar.getInputLength();
@@ -22,6 +24,7 @@ Canvas {
 
         ctx.strokeStyle = lineColor;
         ctx.lineWidth = lineWidth;
+        ctx.globalAlpha = chap.opacity;
 
         ctx.beginPath();
         points_px.forEach( function(item, index, array) {

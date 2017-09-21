@@ -79,6 +79,25 @@ Slider {
                 }
                 height: 5
                 seek_bar: seekBar
+                opacity: 0.0
+                state: slider.state == "hovered" ? "hovered" : ""
+
+                states: [
+                    State {
+                        name: "hovered"
+                        PropertyChanges { target: chap ; opacity: 1.0 }
+                    }
+                ]
+
+                transitions: Transition {
+                    from: ""; to: "hovered"; reversible: true;
+                    NumberAnimation {
+                        properties: "opacity";
+                        duration: 200;
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+
             }
 
         }
