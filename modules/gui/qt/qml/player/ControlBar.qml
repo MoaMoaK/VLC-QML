@@ -4,28 +4,13 @@ Item {
 
     Column {
         anchors.fill: parent
-        Column {
-            width: parent.width
-
-            SeekBar {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    margins: 10;
-                }
-                height: 24
-                y: parent.height/2 - height/2
+        SeekBar {
+            anchors {
+                left: parent.left
+                right: parent.right
+                margins: 10;
             }
-            Chapters {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    margins: 10;
-                }
-                y: parent.height/2 - height/2
-                height: 24
-            }
-
+            height: 42
         }
 
         Rectangle {

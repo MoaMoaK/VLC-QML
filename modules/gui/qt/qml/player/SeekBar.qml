@@ -70,6 +70,17 @@ Slider {
                 }
                 radius: 3
             }
+            Chapters {
+                id: chap
+                anchors {
+                    left: background.left
+                    right: background.right
+                    top: background.bottom
+                }
+                height: 5
+                seek_bar: seekBar
+            }
+
         }
         handle: Rectangle {
             id: handle
