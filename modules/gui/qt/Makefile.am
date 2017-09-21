@@ -472,6 +472,7 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/player/Spacer.qml \
 	gui/qt/qml/player/SeekBar.qml \
 	gui/qt/qml/player/Chapters.qml \
+	gui/qt/qml/player/SeekBarStyle.qml \
 	gui/qt/qml/utils/ToolTip.qml \
 	gui/qt/qml/utils/ToolTipArea.qml \
 	gui/qt/qml/utils/TimeDisplayTip.qml

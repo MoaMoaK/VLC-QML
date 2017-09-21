@@ -10,7 +10,7 @@ Item {
                 right: parent.right
                 margins: 10;
             }
-            height: 42
+            height: 24
             seekable: seekBar.seekable
         }
 

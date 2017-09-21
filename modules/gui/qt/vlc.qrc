@@ -179,5 +179,6 @@
         <file alias="Spacer.qml">qml/player/Spacer.qml</file>
         <file alias="SeekBar.qml">qml/player/SeekBar.qml</file>
         <file alias="Chapters.qml">qml/player/Chapters.qml</file>
+        <file alias="SeekBarStyle.qml">qml/player/SeekBarStyle.qml</file>
     </qresource>
 </RCC>
