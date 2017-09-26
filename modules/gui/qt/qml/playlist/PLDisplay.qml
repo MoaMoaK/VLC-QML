@@ -9,12 +9,13 @@ Item {
 
     width: default_width
 
-    Rectangle {
+    Image {
         id: toogleBar
-        color: "#00FF00"
         x: -20
         width: 20
         height: 20
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:///toolbar/playlist"
 
         MouseArea {
             anchors.fill: parent
