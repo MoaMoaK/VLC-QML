@@ -2,9 +2,14 @@ import QtQuick 2.0
 
 Rectangle {
 
+    function toggleView () {
+        return;
+    }
+
     property int banner_height: 32
     property string banner_color: "#e6e6e6"
     property string hover_color: "#d6d6d6"
+    property bool need_toggleView_button: false
 
     id: pLBannerSources
     height: banner_height
@@ -21,6 +26,27 @@ Rectangle {
         model: buttonModel
         delegate: buttonView
 
+    }
+
+    Image {
+        height: parent.height - 10
+        width: parent.height - 10
+        anchors {
+            top: parent.top
+            right: parent.right
+            topMargin: 5
+            rightMargin: 20
+        }
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:///toolbar/tv"
+        enabled: need_toggleView_button
+        visible: need_toggleView_button
+
+        MouseArea {
+            anchors.fill: parent
+            enabled: need_toggleView_button
+            onClicked: toggleView()
+        }
     }
 
 

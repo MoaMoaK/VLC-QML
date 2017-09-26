@@ -24,12 +24,19 @@ Item {
                 banner_color: "#e6e6e6"
                 hover_color: "#d6d6d6"
                 banner_height: 32
+                need_toggleView_button: true
 
                 // Basic properties
                 z : 2
+
+                function toggleView () {
+                    mcDisplay.toggleView();
+                }
             }
 
             MCDisplay {
+                id: mcDisplay
+
                 // Custom properties
                 media : m
 

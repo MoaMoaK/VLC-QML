@@ -15,6 +15,7 @@ Item {
 
         BannerSources {
             id : sourcesBanner
+            need_toggleView_button: false
         }
 
         Rectangle {

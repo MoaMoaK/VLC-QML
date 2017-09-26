@@ -2,28 +2,71 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 
 
-GridView {
-    id: mcDisplay
+StackView {
+    id: stack
 
-    property alias media: mcDisplay.model
+    property var media
+    property int viewDisplayed: 0
 
-    cellWidth: 150
-    cellHeight: 150
+    initialItem: viewDisplayed == 0 ? gridView : listView
 
-    delegate: MCGridViewDelegate {
-        cover: model.cover
-        title: model.title
-        album: model.album
-        artist: model.artist
-        uri: model.uri
-        duration: model.duration
-
-        function singleClick() { model.display_info = 1 }
-        function doubleClick() { model.activate_item = 1 }
-
+    replaceEnter: Transition {
+        PropertyAnimation {
+            property: "opacity"
+            from: 0
+            to: 1
+            duration: 200
+        }
+    }
+    replaceExit: Transition {
+        PropertyAnimation {
+            property: "opacity"
+            from: 1
+            to: 0
+            duration: 200
+        }
     }
 
-    ScrollBar.vertical: ScrollBar { }
+    function toggleView () {
+        viewDisplayed = viewDisplayed == 0 ? 1 : 0
+        stack.replace(viewDisplayed == 0 ? gridView : listView)
+    }
 
+    Component {
+        id: gridView
+
+        GridView {
+            model: media
+            cellWidth: 150
+            cellHeight: 150
+
+            delegate: MCGridViewDelegate {
+                cover: model.cover
+                title: model.title
+                album: model.album
+                artist: model.artist
+                uri: model.uri
+                duration: model.duration
+
+                function singleClick() { model.display_info = 1 }
+                function doubleClick() { model.activate_item = 1 }
+           }
+
+            ScrollBar.vertical: ScrollBar { }
+        }
+    }
+
+    Component {
+        id: listView
+
+        ListView {
+            model: media
+
+            delegate: Text {
+                text: "popo"
+            }
+        }
+    }
 
 }
+
