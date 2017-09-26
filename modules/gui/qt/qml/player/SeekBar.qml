@@ -33,10 +33,6 @@ Slider {
         return getTimeDispFromSec(getSecFromValue(getValueFromPosX(posX)));
     }
 
-    function getRatio( ) {
-        return slider.value / (slider.maximumValue-slider.minimumValue);
-    }
-
     function hasChapters( ) {
         return seekBar.getSeekPointsTime().length > 0;
     }

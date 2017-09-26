@@ -4,6 +4,10 @@ import QtQuick.Controls.Styles 1.4
 SliderStyle {
     id: style
 
+    function getRatio( ) {
+        return parent.value / (parent.maximumValue-parent.minimumValue);
+    }
+
     property bool hovered : false
     property var seek_bar
 
