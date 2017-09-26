@@ -45,8 +45,6 @@ Item {
                 height : parent.height - sourcesBanner.height
                 anchors.right: parent.right
                 anchors.left: parent.left
-
-
             }
 
         }

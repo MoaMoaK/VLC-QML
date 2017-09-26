@@ -17,6 +17,8 @@ Item {
         fillMode: Image.PreserveAspectFit
         source: "qrc:///toolbar/playlist"
 
+        mirror: plDisplay.width <= 20 ? true : false
+
         MouseArea {
             anchors.fill: parent
             onClicked: { plDisplay.width <= 20 ? openAnimation.running = true : closeAnimation.running = true }
