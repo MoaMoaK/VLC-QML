@@ -169,5 +169,6 @@
         <file alias="PLDisplay.qml">qml/playlist/PLDisplay.qml</file>
         <file alias="PLListViewDelegate.qml">qml/playlist/PLListViewDelegate.qml</file>
         <file alias="MCDisplay.qml">qml/playlist/MCDisplay.qml</file>
+        <file alias="MCListViewDelegate.qml">qml/playlist/MCListViewDelegate.qml</file>
     </qresource>
 </RCC>

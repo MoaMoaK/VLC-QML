@@ -50,7 +50,7 @@ StackView {
 
                 function singleClick() { model.display_info = 1 }
                 function doubleClick() { model.activate_item = 1 }
-           }
+            }
 
             ScrollBar.vertical: ScrollBar { }
         }
@@ -62,9 +62,19 @@ StackView {
         ListView {
             model: media
 
-            delegate: Text {
-                text: "popo"
-            }
+            delegate: MCListViewDelegate {
+                cover: model.cover
+                title: model.title
+                album: model.album
+                artist: model.artist
+                uri: model.uri
+                duration: model.duration
+
+                function singleClick() { model.display_info = 1 }
+                function doubleClick() { model.activate_item = 1 }
+           }
+
+            ScrollBar.vertical: ScrollBar { }
         }
     }
 

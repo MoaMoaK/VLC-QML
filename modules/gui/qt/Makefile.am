@@ -461,7 +461,8 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/playlist/MCGridViewDelegate.qml \
 	gui/qt/qml/playlist/PLListViewDelegate.qml \
 	gui/qt/qml/playlist/PLDisplay.qml \
-	gui/qt/qml/playlist/MCDisplay.qml
+	gui/qt/qml/playlist/MCDisplay.qml \
+	gui/qt/qml/playlist/MCListViewDelegate.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 
 nodist_libqt_plugin_la_SOURCES += gui/qt/resources.cpp
