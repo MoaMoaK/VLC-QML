@@ -25,6 +25,13 @@ SliderStyle {
             radius: 3
         }
         Rectangle {
+            id: loading
+            width: parent.width*seek_bar.loading
+            height: parent.height
+            color:"#00FF00"
+            radius: 3
+        }
+        Rectangle {
             id: foreground
             width: parent.width*getRatio( );
             height: parent.height
