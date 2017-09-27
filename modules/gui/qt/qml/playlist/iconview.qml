@@ -30,7 +30,7 @@ Item {
                 z : 2
 
                 function toggleView () {
-                    mcDisplay.toggleView();
+                    mcDisplay.viewDisplayed = mcDisplay.viewDisplayed == 0 ? 1 : 0
                 }
             }
 

@@ -27,8 +27,7 @@ StackView {
         }
     }
 
-    function toggleView () {
-        viewDisplayed = viewDisplayed == 0 ? 1 : 0
+    onViewDisplayedChanged: {
         stack.replace(viewDisplayed == 0 ? gridView : listView)
     }
 
