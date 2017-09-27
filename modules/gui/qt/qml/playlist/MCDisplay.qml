@@ -46,6 +46,7 @@ StackView {
                 artist: model.artist
                 uri: model.uri
                 duration: model.duration
+                is_leaf: model.leaf_node
 
                 function singleClick() { model.display_info = 1 }
                 function doubleClick() { model.activate_item = 1 }
@@ -68,6 +69,7 @@ StackView {
                 artist: model.artist
                 uri: model.uri
                 duration: model.duration
+                is_leaf: model.leaf_node
 
                 function singleClick() { model.display_info = 1 }
                 function doubleClick() { model.activate_item = 1 }

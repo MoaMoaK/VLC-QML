@@ -8,6 +8,7 @@ Rectangle {
     property string artist
     property string uri
     property string duration
+    property bool is_leaf
 
     function decideTitle (title, uri, duration) {
         var ret = ""
@@ -46,12 +47,52 @@ Rectangle {
         id: row
         spacing: 5
 
-        Image {
+        Loader {
             id: image
-            width: 32
-            height: 32
-            y: parent.height/2 - height/2
-            source: decideCover(cover)
+            sourceComponent: is_leaf ? leaf : dir
+        }
+
+        Component {
+            id:leaf
+
+            Image {
+                id: main_leaf_img
+                y: parent.height/2 - height/2
+                width: 32
+                height: 32
+                source: decideCover(cover)
+            }
+        }
+
+        Component {
+            id: dir
+
+            Item {
+                width: main_dir_img.width
+                height: main_dir_img.height
+                y: parent.height/2 - height/2
+
+                Image {
+                    id: main_dir_img
+                    width: 32
+                    height: 32
+                    source: decideCover(cover)
+                }
+
+                Image {
+                    id: sub_dir_img
+                    anchors {
+                        bottom: main_dir_img.bottom
+                        right: main_dir_img.right
+                        margins: 0
+                    }
+                    width: 12
+                    height: 12
+                    source: "qrc:///type/folder-grey"
+                }
+
+            }
+
         }
 
         Text {
