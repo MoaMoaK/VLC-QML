@@ -11,20 +11,30 @@ Row {
     height: 15
     width: parent.width
 
-    Rectangle {
+    Image {
         id: removeButton
-        color: "#FF0000"
         height: parent.height
         width: parent.height
+        source: "qrc:///toolbar/clear"
+        fillMode: Image.PreserveAspectFit
 
         MouseArea {
             anchors.fill: parent
             onClicked: { remove(); }
+            hoverEnabled: true
+            onEntered: {
+                bg.color = "#CC0000"
+                textInfo.color = "#FFFFFF"
+            }
+            onExited: {
+                bg.color = cur ? "#CCCCCC" : "#FFFFFF"
+                textInfo.color = "#000000"
+            }
         }
     }
 
     Rectangle {
-
+        id: bg
         color: cur ? "#CCCCCC" : "#FFFFFF"
         width : parent.width - removeButton.width
         height:  textInfo.implicitHeight
