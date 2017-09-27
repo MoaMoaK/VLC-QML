@@ -50,6 +50,7 @@ Rectangle {
         Loader {
             id: image
             sourceComponent: is_leaf ? leaf : dir
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         Component {
@@ -57,7 +58,6 @@ Rectangle {
 
             Image {
                 id: main_leaf_img
-                anchors.horizontalCenter: parent.horizontalCenter
                 width: 100
                 height: 100
                 source: decideCover(cover)
@@ -68,7 +68,6 @@ Rectangle {
             id: dir
 
             Item {
-                anchors.horizontalCenter: parent.horizontalCenter
                 width: main_dir_img.width
                 height: main_dir_img.height
 
