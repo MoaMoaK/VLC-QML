@@ -44,8 +44,7 @@ class MCItem : public QObject
 {
     Q_OBJECT
 
-    friend class MCItem; /* super ugly glue stuff */
-    friend class MLItem;
+    friend class MLItem; /* super ugly glue stuff */
     friend class VLCModel;
     friend class MCModel;
     friend class MLModel;
