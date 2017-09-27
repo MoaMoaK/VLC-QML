@@ -1,6 +1,6 @@
 import QtQuick 2.0
 
-Rectangle {
+Item {
 
     property string cover
     property string title
@@ -37,99 +37,104 @@ Rectangle {
         return cover ? cover : "qrc:///noart.png"
     }
 
-    id: root
+    Rectangle {
+        id: root
 
-    height: column.implicitHeight +10
-    width: column.implicitWidth +20
-    Column {
-        x: 10
-        y: 5
-        id: column
-        spacing: 5
+        anchors.centerIn: parent
 
-        Loader {
-            id: image
-            sourceComponent: is_leaf ? leaf : dir
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
+        height: column.implicitHeight +10
+        width: column.implicitWidth +20
+        Column {
+            x: 10
+            y: 5
+            id: column
+            spacing: 5
 
-        Component {
-            id:leaf
-
-            Image {
-                id: main_leaf_img
-                width: 100
-                height: 100
-                source: decideCover(cover)
+            Loader {
+                id: image
+                sourceComponent: is_leaf ? leaf : dir
+                anchors.horizontalCenter: parent.horizontalCenter
             }
-        }
 
-        Component {
-            id: dir
-
-            Item {
-                width: main_dir_img.width
-                height: main_dir_img.height
+            Component {
+                id:leaf
 
                 Image {
-                    id: main_dir_img
+                    id: main_leaf_img
                     width: 100
                     height: 100
                     source: decideCover(cover)
                 }
+            }
 
-                Image {
-                    id: sub_dir_img
-                    anchors {
-                        bottom: main_dir_img.bottom
-                        right: main_dir_img.right
-                        margins: 0
+            Component {
+                id: dir
+
+                Item {
+                    width: main_dir_img.width
+                    height: main_dir_img.height
+
+                    Image {
+                        id: main_dir_img
+                        width: 100
+                        height: 100
+                        source: decideCover(cover)
                     }
-                    width: 48
-                    height: 48
-                    source: "qrc:///type/folder-grey"
+
+                    Image {
+                        id: sub_dir_img
+                        anchors {
+                            bottom: main_dir_img.bottom
+                            right: main_dir_img.right
+                            margins: 0
+                        }
+                        width: 48
+                        height: 48
+                        source: "qrc:///type/folder-grey"
+                    }
+
                 }
 
             }
 
-        }
-
-        Text {
-            text : decideTitle(title, uri, duration)
-            anchors.horizontalCenter: parent.horizontalCenter
-            font: model.font
-        }
-
-        Text {
-            text: decideInfo (album, artist)
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: 8
-        }
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: root
-
-        hoverEnabled: true
-        onEntered: { root.color = "#f0f0f0" }
-        onExited: { root.color = "#ffffff" }
-
-        Timer{
-            id: timerMouse
-            interval: 200
-            onTriggered: singleClick() // Single click
-        }
-        onClicked: {
-            if(timerMouse.running)
-            {
-                doubleClick() // Double click
-                timerMouse.stop()
+            Text {
+                text : decideTitle(title, uri, duration)
+                anchors.horizontalCenter: parent.horizontalCenter
+                font: model.font
             }
-            else
-                timerMouse.restart()
+
+            Text {
+                text: decideInfo (album, artist)
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 8
+            }
         }
 
+        MouseArea {
+            id: mouseArea
+            anchors.fill: root
+
+            hoverEnabled: true
+            onEntered: { root.color = "#f0f0f0" }
+            onExited: { root.color = "#ffffff" }
+
+            Timer{
+                id: timerMouse
+                interval: 200
+                onTriggered: singleClick() // Single click
+            }
+            onClicked: {
+                if(timerMouse.running)
+                {
+                    doubleClick() // Double click
+                    timerMouse.stop()
+                }
+                else
+                    timerMouse.restart()
+            }
+
+
+        }
 
     }
 

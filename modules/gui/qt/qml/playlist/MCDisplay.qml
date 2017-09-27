@@ -35,6 +35,7 @@ StackView {
         id: gridView
 
         GridView {
+            id: sub_gridView
             model: media
             cellWidth: 150
             cellHeight: 150
@@ -47,6 +48,9 @@ StackView {
                 uri: model.uri
                 duration: model.duration
                 is_leaf: model.leaf_node
+
+                width: sub_gridView.cellWidth
+                height: sub_gridView.cellHeight
 
                 function singleClick() { model.single_click = 1 }
                 function doubleClick() { model.double_click = 1 }
