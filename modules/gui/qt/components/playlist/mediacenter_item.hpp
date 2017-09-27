@@ -57,6 +57,7 @@ public:
     MCItem(intf_thread_t *_p_intf, playlist_item_t *, MCItem *p_parent );
 
     void displayInfo();
+    void exploreDir();
 
     Q_INVOKABLE QString getTitle() const;
     Q_INVOKABLE QString getArtworkURL();
@@ -98,6 +99,7 @@ private:
     playlist_item_type guessItemType();
     int i_flags;
     input_item_t *p_input;
+    playlist_item_t *plitem;
 };
 
 #endif

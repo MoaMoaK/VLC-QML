@@ -98,6 +98,7 @@ playlist_item_type MCItem::guessItemType()
 void MCItem::init( intf_thread_t *_p_intf, playlist_item_t *_playlist_item, MCItem *p_parent )
 {
     parentItem = p_parent;          /* Can be NULL, but only for the rootItem */
+    plitem = _playlist_item;
     i_playlist_id = _playlist_item->i_id;           /* Playlist item specific id */
     p_input = _playlist_item->p_input;
     i_flags = _playlist_item->i_flags;
@@ -223,11 +224,12 @@ void MCItem::displayInfo()
         break;
     }
     }
+}
 
-    if (itemType == MOVIE)
-    {
-
-    }
+void MCItem::exploreDir()
+{
+    StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
+    mv->setRootItem(this->plitem, true);
 }
 
 QString MCItem::getArtworkURL()

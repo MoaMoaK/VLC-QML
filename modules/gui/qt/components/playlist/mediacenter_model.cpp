@@ -294,6 +294,12 @@ void MCModel::displayInfo(MCItem *item)
     item->displayInfo();
 }
 
+void MCModel::exploreDir(MCItem *item)
+{
+    assert( item );
+    item->exploreDir();
+}
+
 void MCModel::activateItem( const QModelIndex &index )
 { }
 
@@ -451,8 +457,8 @@ QHash<int, QByteArray> MCModel::roleNames() const {
     roles[COVER_ROLE] = "cover";
     roles[DISC_NUMBER_ROLE] = "disc_number";
     roles[DATE_ROLE] = "date";
-    roles[ACTIVATE_ITEM_ROLE] = "activate_item";
-    roles[DISPLAY_INFO_ROLE] = "display_info";
+    roles[DOUBLE_CLICK] = "double_click";
+    roles[SINGLE_CLICK] = "single_click";
     return roles;
 }
 
@@ -464,12 +470,20 @@ bool MCModel::setData( const QModelIndex &index, const QVariant & value, int rol
         customFont = value.value<QFont>();
         return true;
     // Trick to trigger activateItem()
-    case ACTIVATE_ITEM_ROLE :
+    case DOUBLE_CLICK :
         activateItem(getItem(index));
         return true;
     // Trick to trigger displayInfo()
-    case DISPLAY_INFO_ROLE :
-        displayInfo(getItem(index));
+    case SINGLE_CLICK :
+        if ( isLeaf( index ) )
+        {
+            displayInfo(getItem(index));
+        }
+        else
+        {
+            exploreDir(getItem(index));
+        }
+
         return true;
     default:
         return VLCModel::setData( index, value, role );

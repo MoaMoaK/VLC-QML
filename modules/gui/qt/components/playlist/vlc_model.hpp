@@ -74,8 +74,8 @@ public:
         COVER_ROLE,
         DISC_NUMBER_ROLE,
         DATE_ROLE,
-        ACTIVATE_ITEM_ROLE,
-        DISPLAY_INFO_ROLE
+        DOUBLE_CLICK,
+        SINGLE_CLICK
     };
     virtual void rebuild( playlist_item_t * p = NULL ) = 0;
     virtual void doDelete( QModelIndexList ) = 0;

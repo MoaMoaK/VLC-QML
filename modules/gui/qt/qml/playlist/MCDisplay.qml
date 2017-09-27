@@ -48,8 +48,8 @@ StackView {
                 duration: model.duration
                 is_leaf: model.leaf_node
 
-                function singleClick() { model.display_info = 1 }
-                function doubleClick() { model.activate_item = 1 }
+                function singleClick() { model.single_click = 1 }
+                function doubleClick() { model.double_click = 1 }
             }
 
             ScrollBar.vertical: ScrollBar { }
@@ -71,8 +71,8 @@ StackView {
                 duration: model.duration
                 is_leaf: model.leaf_node
 
-                function singleClick() { model.display_info = 1 }
-                function doubleClick() { model.activate_item = 1 }
+                function singleClick() { model.single_click = 1 }
+                function doubleClick() { model.double_click = 1 }
            }
 
             ScrollBar.vertical: ScrollBar { }

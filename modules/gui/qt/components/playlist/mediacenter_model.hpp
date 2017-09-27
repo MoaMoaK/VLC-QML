@@ -117,6 +117,7 @@ public:
     void activateItem( MCItem *item );
     void activateItem( playlist_item_t *p_item ) ;
     void displayInfo( MCItem *item );
+    void exploreDir( MCItem *item );
 
 
 protected:
