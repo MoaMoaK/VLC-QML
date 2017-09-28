@@ -95,14 +95,20 @@ Rectangle {
         }
 
         Text {
+            id: title_txt
             text : decideTitle(title, uri, duration)
             y: parent.height/2 - height/2
+            width: Math.min( ( parent.width-image.width-parent.spacing )*2/3 , implicitWidth )
+            elide: Text.ElideRight
             font: model.font
         }
 
         Text {
+            id: info_txt
             text: decideInfo (album, artist)
             y: parent.height/2 - height/2
+            width: Math.min( parent.width-parent.spacing-image.width-parent.spacing-title_txt.width , implicitWidth )
+            elide: Text.ElideRight
             font.pixelSize: 8
         }
     }
