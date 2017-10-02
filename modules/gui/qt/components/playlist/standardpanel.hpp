@@ -32,7 +32,11 @@
 #include "components/playlist/playlist.hpp"
 #include "components/playlist/vlc_model.hpp"
 
-#include <QWidget>
+#include "components/interface_widgets.hpp"
+
+#include <qt5/QtWidgets/QWidget>
+#include <qt5/QtWidgets/QFrame>
+#include <qt5/QtWidgets/QHBoxLayout>
 #include <QModelIndexList>
 #include <QQmlContext>
 #include <QtQuickWidgets/QQuickWidget>
@@ -92,11 +96,11 @@ private:
     PLSelector  *p_selector;
 
     QQuickWidget  *treeView;
-    QQuickWidget  *iconView;
+    QWidget  *iconView;
     QQuickWidget  *listView;
     QQuickWidget  *picFlowView;
 
-    QQuickWidget  *currentView;
+    QWidget  *currentView;
 
     QStackedLayout    *viewStack;
 

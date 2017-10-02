@@ -34,6 +34,8 @@
 
 //#include <vlc_playlist.h>
 
+#include <qt5/QtWidgets/QStackedWidget>
+
 #include <QSplitter>
 
 #include <QPushButton>

@@ -604,14 +604,22 @@ void StandardPLPanel::deleteSelection()
 
 void StandardPLPanel::showInfoMovie(MCItem *item )
 {
-    QQuickWidget *infoView = new QQuickWidget();
+    QWidget *infoView = new QWidget();
 
-    QQmlContext *rootCtx = infoView->rootContext();
+    QHBoxLayout* infoViewLayout = new QHBoxLayout(infoView);
+    infoViewLayout->setSpacing(0);
+    infoViewLayout->setMargin(0);
+
+    QQuickWidget* infoViewQuick = new QQuickWidget();
+
+    QQmlContext *rootCtx = infoViewQuick->rootContext();
     rootCtx->setContextProperty( "pl_item", item );
     rootCtx->setContextProperty( "selector", p_selector);
 
-    infoView->setSource( QUrl ( QStringLiteral("qrc:/playlist/InfoMovie.qml") ) );
-    infoView->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    infoViewQuick->setSource( QUrl ( QStringLiteral("qrc:/playlist/InfoMovie.qml") ) );
+    infoViewQuick->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+    infoViewLayout->addWidget(infoViewQuick);
 
     viewStack->addWidget( infoView );
     viewStack->setCurrentWidget( infoView );
@@ -630,15 +638,28 @@ void StandardPLPanel::hideInfoMovie()
 
 void StandardPLPanel::createIconView()
 {
-    iconView = new QQuickWidget();
-    QQmlContext *rootCtx = iconView->rootContext();
+    iconView = new QWidget();
+
+    QHBoxLayout* iconViewLayout = new QHBoxLayout(iconView);
+    iconViewLayout->setSpacing(0);
+    iconViewLayout->setMargin(0);
+
+    QQuickWidget* iconViewQuick = new QQuickWidget();
+
+    QQmlContext *rootCtx = iconViewQuick->rootContext();
     rootCtx->setContextProperty( "m", model );
     rootCtx->setContextProperty( "selector", p_selector);
+
     PLModel* plmodel = new PLModel(p_intf);
     model->setPLModel(plmodel);
     rootCtx->setContextProperty( "playlist", plmodel);
-    iconView->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
-    iconView->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+    iconViewQuick->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
+    iconViewQuick->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+    iconViewLayout->addWidget(iconViewQuick);
+
+    viewStack->addWidget( iconView );
 
 /*    iconView = new PlIconView( model, this );
  *    iconView->setContextMenuPolicy( Qt::CustomContextMenu );
@@ -648,8 +669,6 @@ void StandardPLPanel::createIconView()
  *             this, activate( const QModelIndex & ) );
  *    iconView->installEventFilter( this );
  *    iconView->viewport()->installEventFilter( this );*/
-
-    viewStack->addWidget( iconView );
 }
 
 void StandardPLPanel::createListView()

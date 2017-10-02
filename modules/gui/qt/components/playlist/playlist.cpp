@@ -85,7 +85,7 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     CONNECT( THEMIM->getIM(), artChanged( input_item_t * ),
              art, showArtUpdate( input_item_t * ) );
 
-    leftSplitter->addWidget( artContainer );
+//    leftSplitter->addWidget( artContainer );
 
     /*******************
      * Right           *
@@ -173,6 +173,11 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     setWindowTitle( qtr( "Playlist" ) );
     setWindowRole( "vlc-playlist" );
     setWindowIcon( QApplication::windowIcon() );
+
+
+    artContainer->setParent(mainView);
+    artContainer->setMaximumSize(300, 200);
+    artContainer->move(20, mainView->height() - artContainer->height() - 20);
 }
 
 PlaylistWidget::~PlaylistWidget()
