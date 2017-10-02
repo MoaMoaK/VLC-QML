@@ -41,6 +41,7 @@
 #include "components/playlist/playlist.hpp"     // plWidget
 #include "dialogs/firstrun.hpp"                 // First Run
 #include "dialogs/playlist.hpp"                 // PlaylistDialog
+#include "components/playlist/standardpanel.hpp"
 
 #include "menus.hpp"                            // Menu creation
 #include "recents.hpp"                          // RecentItems when DnD
@@ -1586,11 +1587,21 @@ void MainInterface::closeEvent( QCloseEvent *e )
 
 bool MainInterface::eventFilter( QObject *obj, QEvent *event )
 {
-    if ( event->type() == MainInterface::ToolbarsNeedRebuild ) {
+    if ( event->type() == MainInterface::ToolbarsNeedRebuild )
+    {
         event->accept();
         recreateToolbars();
         return true;
-    } else {
+    }
+    else if ( event->type() == QEvent::Resize )
+    {
+        QStackedWidget* ac = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->artContainer;
+        StandardPLPanel* mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
+        ac->move(20, mv->height() - ac->height() - 20);
+        return true;
+    }
+    else
+    {
         return QObject::eventFilter( obj, event );
     }
 }
