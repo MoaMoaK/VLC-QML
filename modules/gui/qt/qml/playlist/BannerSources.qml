@@ -52,9 +52,9 @@ Rectangle {
 
     ListModel {
         id: buttonModel
-        ListElement { displayText: "Movie" ; num: 2 }
-        ListElement { displayText: "Music" ; num: 3 }
-        ListElement { displayText: "Pictures" ; num: 4 }
+        ListElement { displayText: "Movie" ; pic: "qrc:///sidebar/movie" ; num: 2 }
+        ListElement { displayText: "Music" ; pic: "qrc:///sidebar/music" ; num: 3 }
+        ListElement { displayText: "Pictures" ; pic: "qrc:///sidebar/pictures" ; num: 4 }
     }
 
     Component {
@@ -65,16 +65,31 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: 0
             height: parent.height
-            width: txt.implicitWidth + 20
+            width: txt.implicitWidth + icon.width + 20
 
             color: banner_color
+
+            Image {
+                id: icon
+
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    margins: 0
+                }
+
+                source: model.pic
+                height: 32
+                width: 32
+                fillMode: Image.PreserveAspectFit
+            }
 
             Text {
                 id: txt
 
                 anchors {
                     top: parent.top
-                    left: parent.left
+                    left: icon.right
                     margins: 10
                 }
 
