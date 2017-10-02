@@ -628,8 +628,10 @@ void StandardPLPanel::showInfoMovie(MCItem *item )
 
 void StandardPLPanel::hideInfoMovie()
 {
+    QWidget* oldView = viewStack->currentWidget();
     viewStack->setCurrentWidget (currentView);
-
+    viewStack->removeWidget(oldView);
+//    delete oldView;
 }
 
 
