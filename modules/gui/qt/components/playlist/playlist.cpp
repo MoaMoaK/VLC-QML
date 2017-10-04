@@ -71,19 +71,6 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     selector = new PLSelector( this, p_intf );
     leftSplitter->addWidget( selector );
 
-    /* Create a Container for the Art Label
-       in order to have a beautiful resizing for the selector above it */
-    artContainer = new QStackedWidget;
-
-    /* Art label */
-    CoverArtLabel *art = new CoverArtLabel( artContainer, p_intf );
-    art->setToolTip( qtr( "Double click to get media information" ) );
-    artContainer->addWidget( art );
-
-    CONNECT( THEMIM->getIM(), artChanged( QString ),
-             art, showArtUpdate( const QString& ) );
-    CONNECT( THEMIM->getIM(), artChanged( input_item_t * ),
-             art, showArtUpdate( input_item_t * ) );
 
 //    leftSplitter->addWidget( artContainer );
 
@@ -174,10 +161,6 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     setWindowRole( "vlc-playlist" );
     setWindowIcon( QApplication::windowIcon() );
 
-
-    artContainer->setParent(mainView);
-    artContainer->setMaximumSize(300, 200);
-    artContainer->move(20, mainView->height() - artContainer->height() - 20);
 }
 
 PlaylistWidget::~PlaylistWidget()

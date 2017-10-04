@@ -84,6 +84,8 @@ public:
     void showInfoMovie(MCItem *item );
     void hideInfoMovie();
 
+    QStackedWidget* getArtContainer() { return artContainer; }
+
 
 protected:
     VLCModel *model;
@@ -103,6 +105,7 @@ private:
     QWidget  *currentView;
 
     QStackedLayout    *viewStack;
+    QStackedWidget    *artContainer;
 
     QSignalMapper *selectColumnsSigMapper;
 

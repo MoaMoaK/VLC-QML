@@ -125,6 +125,13 @@ StandardPLPanel::StandardPLPanel( PlaylistWidget *_parent,
     CONNECT( model, rootIndexChanged(), this, browseInto() );
 
     setRootItem( p_root, false );
+
+    /* Create a Container for the Art Label
+       in order to have a beautiful resizing for the selector above it */
+    artContainer = new QStackedWidget(this);
+
+    artContainer->setMaximumSize(300, 200);
+    artContainer->setGeometry(20, 20, 300, 200);
 }
 
 StandardPLPanel::~StandardPLPanel()
@@ -624,6 +631,8 @@ void StandardPLPanel::showInfoMovie(MCItem *item )
     viewStack->addWidget( infoView );
     viewStack->setCurrentWidget( infoView );
 
+    artContainer->raise();
+
 }
 
 void StandardPLPanel::hideInfoMovie()
@@ -632,6 +641,7 @@ void StandardPLPanel::hideInfoMovie()
     viewStack->setCurrentWidget (currentView);
     viewStack->removeWidget(oldView);
 //    delete oldView;
+    artContainer->raise();
 }
 
 
