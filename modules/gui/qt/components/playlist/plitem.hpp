@@ -10,6 +10,7 @@ class PLItem
 public:
     PLItem( playlist_item_t* _pl_item, int _pl_id );
     QString getTitle();
+    QString getName();
     QString getDuration();
 
     void activate( playlist_t* pl );

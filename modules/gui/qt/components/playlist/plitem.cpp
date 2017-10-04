@@ -15,6 +15,12 @@ QString PLItem::getTitle()
     return QString( title );
 }
 
+QString PLItem::getName()
+{
+    char* uri = input_item_GetName( pl_item->p_input );
+    return QString( uri );
+}
+
 QString PLItem::getDuration()
 {
     mtime_t duration = input_item_GetDuration( pl_item->p_input );

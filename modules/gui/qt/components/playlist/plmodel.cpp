@@ -68,7 +68,10 @@ QVariant PLModel::data(const QModelIndex &index, int role) const
         PLItem *item = getItem(index);
 
         if (!item) return QVariant();
-        return QVariant( item->getTitle() );
+        if ( ! item->getTitle().isEmpty() )
+            return QVariant( item->getTitle() );
+        else
+            return QVariant( item->getName() );
     }
     case DURATION_ROLE :
     {
