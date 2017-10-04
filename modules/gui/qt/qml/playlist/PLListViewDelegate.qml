@@ -8,7 +8,7 @@ Row {
     property string duration
 
     spacing: 0
-    height: 15
+    height: bg.height
     width: parent.width
 
     Image {
@@ -37,7 +37,7 @@ Row {
         id: bg
         color: cur ? "#CCCCCC" : "#FFFFFF"
         width : parent.width - removeButton.width
-        height:  textInfo.implicitHeight
+        height:  textInfo.height
 
         Text {
             id: textInfo
