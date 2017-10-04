@@ -3,7 +3,7 @@ import QtQuick 2.0
 
 Row {
 
-    property bool cur
+    property bool cur: false
     property string title
     property string duration
 
