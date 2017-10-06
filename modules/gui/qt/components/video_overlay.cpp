@@ -5,6 +5,8 @@ VideoOverlay::VideoOverlay(QWidget *parent) : QWidget(parent),
 {
     main_layout->setMargin(0);
     setLayout(main_layout);
+    resizeToFitVideo();
+    updatePosition();
 
 }
 
@@ -18,6 +20,7 @@ void VideoOverlay::setVideo( VideoWidget* v ) {
         main_layout->addWidget(video);
     resizeToFitVideo();
     updatePosition();
+    CONNECT(video, sizeChanged(int, int), this, resizeToFitVideo());
 }
 
 void VideoOverlay::resizeToFitVideo() {
@@ -29,10 +32,14 @@ void VideoOverlay::resizeToFitVideo() {
         else
             resize( max_size.height() * video->width() / video->height(), max_size.height() );
     }
+    else
+        resize(0,0);
 }
 
 void VideoOverlay::updatePosition() {
     if (video)
-        move(20, parentWidget()->height() - video->height() - 20);
+        move(20, parentWidget()->height() - this->height() - 20);
+    else
+        move(0,0);
 }
 

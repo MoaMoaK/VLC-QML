@@ -14,12 +14,15 @@ public:
 
     VideoWidget* getVideo();
     void setVideo( VideoWidget* v );
-    void resizeToFitVideo();
     void updatePosition();
 
 private:
     QHBoxLayout *main_layout;
     VideoWidget *video;
+
+public slots:
+    void resizeToFitVideo();
+
 };
 
 #endif // VIDEOOVERLAY_HPP
