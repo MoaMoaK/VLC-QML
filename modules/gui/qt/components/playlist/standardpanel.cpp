@@ -128,10 +128,7 @@ StandardPLPanel::StandardPLPanel( PlaylistWidget *_parent,
 
     /* Create a Container for the Art Label
        in order to have a beautiful resizing for the selector above it */
-    artContainer = new QStackedWidget(this);
-
-    artContainer->setMaximumSize(300, 200);
-    artContainer->setGeometry(20, 20, 300, 200);
+    videoOverlay = new VideoOverlay(this);
 }
 
 StandardPLPanel::~StandardPLPanel()
@@ -631,7 +628,7 @@ void StandardPLPanel::showInfoMovie(MCItem *item )
     viewStack->addWidget( infoView );
     viewStack->setCurrentWidget( infoView );
 
-    artContainer->raise();
+    videoOverlay->raise();
 
 }
 
@@ -640,8 +637,8 @@ void StandardPLPanel::hideInfoMovie()
     QWidget* oldView = viewStack->currentWidget();
     viewStack->setCurrentWidget (currentView);
     viewStack->removeWidget(oldView);
-//    delete oldView;
-    artContainer->raise();
+
+    videoOverlay->raise();
 }
 
 

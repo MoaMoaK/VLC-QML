@@ -31,7 +31,7 @@
 #include "qt.hpp"
 #include "components/playlist/playlist.hpp"
 #include "components/playlist/vlc_model.hpp"
-
+#include "components/video_overlay.hpp"
 #include "components/interface_widgets.hpp"
 
 #include <qt5/QtWidgets/QWidget>
@@ -84,8 +84,7 @@ public:
     void showInfoMovie(MCItem *item );
     void hideInfoMovie();
 
-    QStackedWidget* getArtContainer() { return artContainer; }
-
+    VideoOverlay* getVideoOverlay() { return videoOverlay; }
 
 protected:
     VLCModel *model;
@@ -105,7 +104,7 @@ private:
     QWidget  *currentView;
 
     QStackedLayout    *viewStack;
-    QStackedWidget    *artContainer;
+    VideoOverlay      *videoOverlay;
 
     QSignalMapper *selectColumnsSigMapper;
 

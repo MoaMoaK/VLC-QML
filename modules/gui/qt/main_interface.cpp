@@ -646,7 +646,7 @@ inline void MainInterface::showTab( QWidget *widget )
         /* Playlist -> Video */
         if( playlistWidget == stackCentralOldWidget && widget == videoWidget )
         {
-            playlistWidget->mainView->getArtContainer()->removeWidget( videoWidget );
+            playlistWidget->mainView->getVideoOverlay()->setVideo( videoWidget );
             videoWidget->show(); videoWidget->raise();
             stackCentralW->addWidget( videoWidget );
         }
@@ -656,7 +656,7 @@ inline void MainInterface::showTab( QWidget *widget )
         {
             /* In rare case when video is started before the interface */
             if( playlistWidget != NULL )
-                playlistWidget->mainView->getArtContainer()->removeWidget( videoWidget );
+                playlistWidget->mainView->getVideoOverlay()->setVideo( videoWidget );
             videoWidget->show(); videoWidget->raise();
             stackCentralW->addWidget( videoWidget );
             stackCentralW->setCurrentWidget( videoWidget );
@@ -680,8 +680,7 @@ inline void MainInterface::showTab( QWidget *widget )
     if( videoWidget && THEMIM->getIM()->hasVideo() &&
         videoWidget == stackCentralOldWidget && widget == playlistWidget )
     {
-        playlistWidget->mainView->getArtContainer()->addWidget( videoWidget );
-        playlistWidget->mainView->getArtContainer()->setCurrentWidget( videoWidget );
+        playlistWidget->mainView->getVideoOverlay()->setVideo( videoWidget );
     }
 }
 
@@ -768,9 +767,9 @@ void MainInterface::releaseVideoSlot( void )
     if( stackCentralW->currentWidget() == videoWidget )
         restoreStackOldWidget();
     else if( playlistWidget &&
-               playlistWidget->mainView->getArtContainer()->currentWidget() == videoWidget )
+               playlistWidget->mainView->getVideoOverlay()->getVideo() == videoWidget )
     {
-        playlistWidget->mainView->getArtContainer()->setCurrentIndex( 0 );
+//        playlistWidget->mainView->getVideoOverlay()->setCurrentIndex( 0 );
         stackCentralW->addWidget( videoWidget );
     }
 
@@ -832,7 +831,7 @@ void MainInterface::setVideoSize( unsigned int w, unsigned int h )
 
 void MainInterface::videoSizeChanged( int w, int h )
 {
-    if( !playlistWidget || playlistWidget->mainView->getArtContainer()->currentWidget() != videoWidget )
+    if( !playlistWidget || playlistWidget->mainView->getVideoOverlay()->getVideo() != videoWidget )
         resizeStack( w, h );
 }
 
@@ -861,7 +860,7 @@ void MainInterface::setVideoFullScreen( bool fs )
         }
 
         /* */
-        if( playlistWidget != NULL && playlistWidget->mainView->getArtContainer()->currentWidget() == videoWidget )
+        if( playlistWidget != NULL && playlistWidget->mainView->getVideoOverlay()->getVideo() == videoWidget )
         {
             showTab( videoWidget );
         }
@@ -1595,9 +1594,7 @@ bool MainInterface::eventFilter( QObject *obj, QEvent *event )
     }
     else if ( event->type() == QEvent::Resize )
     {
-        StandardPLPanel* mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
-        QStackedWidget* ac = mv->getArtContainer();
-        ac->move(20, mv->height() - ac->height() - 20);
+        PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView->getVideoOverlay()->updatePosition();
         return true;
     }
     else

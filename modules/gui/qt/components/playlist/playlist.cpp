@@ -72,8 +72,6 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     leftSplitter->addWidget( selector );
 
 
-//    leftSplitter->addWidget( artContainer );
-
     /*******************
      * Right           *
      *******************/
