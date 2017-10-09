@@ -64,8 +64,8 @@ public:
     StandardPLPanel      *mainView;
 
 private:
-    QSplitter            *leftSplitter;
-    QSplitter            *split;
+//    QSplitter            *leftSplitter;
+//    QSplitter            *split;
 
     PLSelector           *selector;
 

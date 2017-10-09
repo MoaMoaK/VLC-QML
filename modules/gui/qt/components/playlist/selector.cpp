@@ -104,7 +104,7 @@ void PLSelItem::addAction( ItemAction act, const QString& tooltip )
 }
 
 
-PLSelector::PLSelector( QWidget *p, intf_thread_t *_p_intf )
+PLSelector::PLSelector( intf_thread_t *_p_intf, QWidget *p )
            : QTreeWidget( p ), p_intf(_p_intf)
 {
     /* Properties */

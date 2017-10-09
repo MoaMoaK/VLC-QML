@@ -118,7 +118,7 @@ class PLSelector: public QTreeWidget
 {
     Q_OBJECT
 public:
-    PLSelector( QWidget *p, intf_thread_t *_p_intf );
+    PLSelector( intf_thread_t *_p_intf, QWidget *p = nullptr );
     virtual ~PLSelector();
 
     void getCurrentItemInfos( int *type, bool *delayedSearch, QString *name );
