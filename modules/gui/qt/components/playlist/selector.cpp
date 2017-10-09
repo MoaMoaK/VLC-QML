@@ -108,19 +108,19 @@ PLSelector::PLSelector( QWidget *p, intf_thread_t *_p_intf )
            : QTreeWidget( p ), p_intf(_p_intf)
 {
     /* Properties */
-    setFrameStyle( QFrame::NoFrame );
-    setAttribute( Qt::WA_MacShowFocusRect, false );
-    viewport()->setAutoFillBackground( false );
-    setIconSize( QSize( 24,24 ) );
-    setIndentation( 12 );
-    setHeaderHidden( true );
-    setRootIsDecorated( true );
-    setAlternatingRowColors( false );
+    //setFrameStyle( QFrame::NoFrame );
+    //setAttribute( Qt::WA_MacShowFocusRect, false );
+    //viewport()->setAutoFillBackground( false );
+    //setIconSize( QSize( 24,24 ) );
+    //setIndentation( 12 );
+    //setHeaderHidden( true );
+    //setRootIsDecorated( true );
+    //setAlternatingRowColors( false );
 
     /* drops */
-    viewport()->setAcceptDrops(true);
-    setDropIndicatorShown(true);
-    invisibleRootItem()->setFlags( invisibleRootItem()->flags() & ~Qt::ItemIsDropEnabled );
+    //viewport()->setAcceptDrops(true);
+    //setDropIndicatorShown(true);
+    //invisibleRootItem()->setFlags( invisibleRootItem()->flags() & ~Qt::ItemIsDropEnabled );
 
 #ifdef Q_OS_MAC
     setAutoFillBackground( true );
@@ -128,7 +128,7 @@ PLSelector::PLSelector( QWidget *p, intf_thread_t *_p_intf )
     palette.setColor( QPalette::Window, QColor(209,215,226) );
     setPalette( palette );
 #endif
-    setMinimumHeight( 120 );
+    //setMinimumHeight( 120 );
 
     /* Podcasts */
     podcastsParent = NULL;
@@ -144,11 +144,11 @@ PLSelector::PLSelector( QWidget *p, intf_thread_t *_p_intf )
 
     createItems();
 
-    setRootIsDecorated( false );
-    setIndentation( 5 );
+    //setRootIsDecorated( false );
+    //setIndentation( 5 );
     /* Expand at least to show level 2 */
-    for ( int i = 0; i < topLevelItemCount(); i++ )
-        expandItem( topLevelItem( i ) );
+    //for ( int i = 0; i < topLevelItemCount(); i++ )
+        //expandItem( topLevelItem( i ) );
 
     /***
      * We need to react to both clicks and activation (enter-key) here.
@@ -198,31 +198,33 @@ PLSelItem * putPLData( PLSelItem* item, playlist_item_t* plItem )
  */
 void PLSelector::updateTotalDuration( PLSelItem* item, const char* prefix )
 {
-    /* Getting  the playlist */
-    QVariant playlistVariant = item->treeItem()->data( 0, PL_ITEM_ROLE );
-    playlist_item_t* node = playlistVariant.value<playlist_item_t*>();
+// NO NEED AS I DONT WANT OT TO DISPLAY IT
+////////////////////////////////////////////
+//    /* Getting  the playlist */
+//    QVariant playlistVariant = item->treeItem()->data( 0, PL_ITEM_ROLE );
+//    playlist_item_t* node = playlistVariant.value<playlist_item_t*>();
 
-    /* Get the duration of the playlist item */
-    playlist_Lock( THEPL );
-    mtime_t mt_duration = playlist_GetNodeDuration( node );
-    playlist_Unlock( THEPL );
+//    /* Get the duration of the playlist item */
+//    playlist_Lock( THEPL );
+//    mtime_t mt_duration = playlist_GetNodeDuration( node );
+//    playlist_Unlock( THEPL );
 
-    /* Formatting time */
-    QString qs_timeLabel( prefix );
+//    /* Formatting time */
+//    QString qs_timeLabel( prefix );
 
-    int i_seconds = mt_duration / 1000000;
-    int i_minutes = i_seconds / 60;
-    i_seconds = i_seconds % 60;
-    if( i_minutes >= 60 )
-    {
-        int i_hours = i_minutes / 60;
-        i_minutes = i_minutes % 60;
-        qs_timeLabel += QString(" [%1:%2:%3]").arg( i_hours ).arg( i_minutes, 2, 10, QChar('0') ).arg( i_seconds, 2, 10, QChar('0') );
-    }
-    else
-        qs_timeLabel += QString( " [%1:%2]").arg( i_minutes, 2, 10, QChar('0') ).arg( i_seconds, 2, 10, QChar('0') );
+//    int i_seconds = mt_duration / 1000000;
+//    int i_minutes = i_seconds / 60;
+//    i_seconds = i_seconds % 60;
+//    if( i_minutes >= 60 )
+//    {
+//        int i_hours = i_minutes / 60;
+//        i_minutes = i_minutes % 60;
+//        qs_timeLabel += QString(" [%1:%2:%3]").arg( i_hours ).arg( i_minutes, 2, 10, QChar('0') ).arg( i_seconds, 2, 10, QChar('0') );
+//    }
+//    else
+//        qs_timeLabel += QString( " [%1:%2]").arg( i_minutes, 2, 10, QChar('0') ).arg( i_seconds, 2, 10, QChar('0') );
 
-    item->setText( qs_timeLabel );
+//    item->setText( qs_timeLabel );
 }
 
 void PLSelector::createItems()
@@ -249,12 +251,12 @@ void PLSelector::createItems()
     QTreeWidgetItem *lan = addItem( CATEGORY_TYPE, N_("Local Network"), false, true )->treeItem();
     QTreeWidgetItem *internet = addItem( CATEGORY_TYPE, N_("Internet"), false, true )->treeItem();
 
-#define NOT_SELECTABLE(w) w->setFlags( w->flags() ^ Qt::ItemIsSelectable );
-    NOT_SELECTABLE( mycomp );
-    NOT_SELECTABLE( devices );
-    NOT_SELECTABLE( lan );
-    NOT_SELECTABLE( internet );
-#undef NOT_SELECTABLE
+//#define NOT_SELECTABLE(w) w->setFlags( w->flags() ^ Qt::ItemIsSelectable );
+//    NOT_SELECTABLE( mycomp );
+//    NOT_SELECTABLE( devices );
+//    NOT_SELECTABLE( lan );
+//    NOT_SELECTABLE( internet );
+//#undef NOT_SELECTABLE
 
     /* SD subnodes */
     char **ppsz_longnames;
@@ -270,7 +272,7 @@ void PLSelector::createItems()
         //msg_Dbg( p_intf, "Adding a SD item: %s", *ppsz_longname );
 
         PLSelItem *selItem;
-        QIcon icon;
+        //QIcon icon;
         QString name( *ppsz_name );
         switch( *p_category )
         {
@@ -283,48 +285,50 @@ void PLSelector::createItems()
                 selItem->addAction( ADD_ACTION, qtr( "Subscribe to a podcast" ) );
                 CONNECT( selItem, action( PLSelItem* ), this, podcastAdd( PLSelItem* ) );
                 podcastsParent = selItem->treeItem();
-                icon = QIcon( ":/sidebar/podcast" );
+                //icon = QIcon( ":/sidebar/podcast" );
             }
-            else if ( name.startsWith( "lua{" ) )
-            {
-                int i_head = name.indexOf( "sd='" ) + 4;
-                int i_tail = name.indexOf( '\'', i_head );
-                QString iconname = QString( ":/sidebar/sd/%1" ).arg( name.mid( i_head, i_tail - i_head ) );
-                QResource resource( iconname );
-                if ( !resource.isValid() )
-                    icon = QIcon( ":/sidebar/network" );
-                else
-                    icon = QIcon( iconname );
-            }
+// ONLY DESIGN HERE
+///////////////////
+//            else if ( name.startsWith( "lua{" ) )
+//            {
+//                int i_head = name.indexOf( "sd='" ) + 4;
+//                int i_tail = name.indexOf( '\'', i_head );
+//                QString iconname = QString( ":/sidebar/sd/%1" ).arg( name.mid( i_head, i_tail - i_head ) );
+//                QResource resource( iconname );
+//                if ( !resource.isValid() )
+//                    icon = QIcon( ":/sidebar/network" );
+//                else
+//                    icon = QIcon( iconname );
+//            }
             }
             break;
         case SD_CAT_DEVICES:
-            name = name.mid( 0, name.indexOf( '{' ) );
+//            name = name.mid( 0, name.indexOf( '{' ) );
             selItem = addItem( SD_TYPE, *ppsz_longname, false, false, devices );
-            if ( name == "xcb_apps" )
-                icon = QIcon( ":/sidebar/screen" );
-            else if ( name == "mtp" )
-                icon = QIcon( ":/sidebar/mtp" );
-            else if ( name == "disc" )
-                icon = QIcon( ":/sidebar/disc" );
-            else
-                icon = QIcon( ":/sidebar/capture" );
+//            if ( name == "xcb_apps" )
+//                icon = QIcon( ":/sidebar/screen" );
+//            else if ( name == "mtp" )
+//                icon = QIcon( ":/sidebar/mtp" );
+//            else if ( name == "disc" )
+//                icon = QIcon( ":/sidebar/disc" );
+//            else
+//                icon = QIcon( ":/sidebar/capture" );
             break;
         case SD_CAT_LAN:
             selItem = addItem( SD_TYPE, *ppsz_longname, false, false, lan );
-            icon = QIcon( ":/sidebar/lan" );
+//            icon = QIcon( ":/sidebar/lan" );
             break;
         case SD_CAT_MYCOMPUTER:
-            name = name.mid( 0, name.indexOf( '{' ) );
+//            name = name.mid( 0, name.indexOf( '{' ) );
             selItem = addItem( SD_TYPE, *ppsz_longname, false, false, mycomp );
-            if ( name == "video_dir" )
-                icon = QIcon( ":/sidebar/movie" );
-            else if ( name == "audio_dir" )
-                icon = QIcon( ":/sidebar/music" );
-            else if ( name == "picture_dir" )
-                icon = QIcon( ":/sidebar/pictures" );
-            else
-                icon = QIcon( ":/sidebar/movie" );
+//            if ( name == "video_dir" )
+//                icon = QIcon( ":/sidebar/movie" );
+//            else if ( name == "audio_dir" )
+//                icon = QIcon( ":/sidebar/music" );
+//            else if ( name == "picture_dir" )
+//                icon = QIcon( ":/sidebar/pictures" );
+//            else
+//                icon = QIcon( ":/sidebar/movie" );
             break;
         default:
             selItem = addItem( SD_TYPE, *ppsz_longname );
@@ -332,8 +336,8 @@ void PLSelector::createItems()
 
         selItem->treeItem()->setData( 0, SD_CATEGORY_ROLE, *p_category );
         putSDData( selItem, *ppsz_name, *ppsz_longname );
-        if ( ! icon.isNull() )
-            selItem->treeItem()->setData( 0, Qt::DecorationRole, icon );
+//        if ( ! icon.isNull() )
+//            selItem->treeItem()->setData( 0, Qt::DecorationRole, icon );
 
         free( *ppsz_name );
         free( *ppsz_longname );
@@ -428,10 +432,10 @@ PLSelItem * PLSelector::addItem (
       new QTreeWidgetItem( parentItem ) : new QTreeWidgetItem( this );
 
   PLSelItem *selItem = new PLSelItem( item, qtr( str ) );
-  if ( bold ) selItem->setStyleSheet( "font-weight: bold;" );
+//  if ( bold ) selItem->setStyleSheet( "font-weight: bold;" );
   setItemWidget( item, 0, selItem );
   item->setData( 0, TYPE_ROLE, (int)type );
-  if( !drop ) item->setFlags( item->flags() & ~Qt::ItemIsDropEnabled );
+//  if( !drop ) item->setFlags( item->flags() & ~Qt::ItemIsDropEnabled );
 
   return selItem;
 }
@@ -555,25 +559,27 @@ void PLSelector::plItemRemoved( int id )
 
 void PLSelector::inputItemUpdate( input_item_t *arg )
 {
-    updateTotalDuration(playlistItem, "Playlist");
+// ONLY GRAPHICAL STUFF HERE
+////////////////////////////
+//    updateTotalDuration(playlistItem, "Playlist");
 
-    if( podcastsParent == NULL )
-        return;
+//    if( podcastsParent == NULL )
+//        return;
 
-    int c = podcastsParent->childCount();
-    for( int i = 0; i < c; i++ )
-    {
-        QTreeWidgetItem *item = podcastsParent->child(i);
-        input_item_t *p_input = item->data( 0, IN_ITEM_ROLE ).value<input_item_t*>();
-        if( p_input == arg )
-        {
-            PLSelItem *si = itemWidget( item );
-            char *psz_name = input_item_GetName( p_input );
-            si->setText( qfu( psz_name ) );
-            free( psz_name );
-            return;
-        }
-    }
+//    int c = podcastsParent->childCount();
+//    for( int i = 0; i < c; i++ )
+//    {
+//        QTreeWidgetItem *item = podcastsParent->child(i);
+//        input_item_t *p_input = item->data( 0, IN_ITEM_ROLE ).value<input_item_t*>();
+//        if( p_input == arg )
+//        {
+//            PLSelItem *si = itemWidget( item );
+//            char *psz_name = input_item_GetName( p_input );
+//            si->setText( qfu( psz_name ) );
+//            free( psz_name );
+//            return;
+//        }
+//    }
 }
 
 void PLSelector::podcastAdd( PLSelItem * )
@@ -620,13 +626,13 @@ PLSelItem * PLSelector::itemWidget( QTreeWidgetItem *item )
 
 void PLSelector::drawBranches ( QPainter * painter, const QRect & rect, const QModelIndex & index ) const
 {
-    if( !model()->hasChildren( index ) ) return;
-    QStyleOption option;
-    option.initFrom( this );
-    option.rect = rect.adjusted( rect.width() - indentation(), 0, 0, 0 );
-    style()->drawPrimitive( isExpanded( index ) ?
-                            QStyle::PE_IndicatorArrowDown :
-                            QStyle::PE_IndicatorArrowRight, &option, painter );
+//    if( !model()->hasChildren( index ) ) return;
+//    QStyleOption option;
+//    option.initFrom( this );
+//    option.rect = rect.adjusted( rect.width() - indentation(), 0, 0, 0 );
+//    style()->drawPrimitive( isExpanded( index ) ?
+//                            QStyle::PE_IndicatorArrowDown :
+//                            QStyle::PE_IndicatorArrowRight, &option, painter );
 }
 
 void PLSelector::getCurrentItemInfos( int* type, bool* can_delay_search, QString *string)
@@ -654,12 +660,12 @@ void PLSelector::setSourceFromNum(const int item_num)
 
 void PLSelector::wheelEvent( QWheelEvent *e )
 {
-    if( verticalScrollBar()->isVisible() && (
-        (verticalScrollBar()->value() != verticalScrollBar()->minimum() && e->delta() >= 0 ) ||
-        (verticalScrollBar()->value() != verticalScrollBar()->maximum() && e->delta() < 0 )
-        ) )
-        QApplication::sendEvent(verticalScrollBar(), e);
+//    if( verticalScrollBar()->isVisible() && (
+//        (verticalScrollBar()->value() != verticalScrollBar()->minimum() && e->delta() >= 0 ) ||
+//        (verticalScrollBar()->value() != verticalScrollBar()->maximum() && e->delta() < 0 )
+//        ) )
+//        QApplication::sendEvent(verticalScrollBar(), e);
 
-    // Accept this event in order to prevent unwanted volume up/down changes
-    e->accept();
+//    // Accept this event in order to prevent unwanted volume up/down changes
+//    e->accept();
 }
