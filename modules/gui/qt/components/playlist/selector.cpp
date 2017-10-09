@@ -647,15 +647,40 @@ int PLSelector::getCurrentItemCategory()
     return currentItem()->data( 0, SPECIAL_ROLE ).toInt();
 }
 
-// Trick : Will need to change this int later
-void PLSelector::setSourceFromNum(const int item_num)
+void PLSelector::setSourceFromNum( const int req_num )
 {
-    QList<QTreeWidgetItem*> results = findItems("", Qt::MatchContains | Qt::MatchRecursive);
-    if (results.size() < item_num)
+    int num = req_num;
+    QTreeWidgetItem* result = getItemFromNum( num );
+    if (result == NULL)
         return;
-    QTreeWidgetItem *item = results.at(item_num);
-    setSource(item);
+    setSource(result);
 }
+
+QTreeWidgetItem* PLSelector::visitTree( QTreeWidgetItem *item, int* num )
+{
+    if ( *num == 0 )
+        return item;
+    (*num)--;
+    for( int i=0 ; i<item->childCount() ; ++i )
+    {
+        QTreeWidgetItem* res = visitTree( item->child(i), num );
+        if ( res != NULL )
+            return res;
+    }
+    return NULL;
+}
+
+QTreeWidgetItem* PLSelector::getItemFromNum( int num )
+{
+    for ( int i=0 ; i<topLevelItemCount() ; ++i )
+    {
+        QTreeWidgetItem* res = visitTree( topLevelItem(i), &num );
+        if ( res != NULL )
+            return res;
+    }
+    return NULL;
+}
+
 
 
 void PLSelector::wheelEvent( QWheelEvent *e )

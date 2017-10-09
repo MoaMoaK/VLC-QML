@@ -124,7 +124,7 @@ public:
     void getCurrentItemInfos( int *type, bool *delayedSearch, QString *name );
     int getCurrentItemCategory();
 
-    Q_INVOKABLE void setSourceFromNum(const int item_num);
+    Q_INVOKABLE void setSourceFromNum( const int req_num );
 
 protected:
     void drawBranches ( QPainter *, const QRect &, const QModelIndex & ) const Q_DECL_OVERRIDE;
@@ -138,6 +138,9 @@ private:
     PLSelItem * addItem ( SelectorItemType type, const char* str,
             bool drop = false, bool bold = false, QTreeWidgetItem* parentItem = 0 );
     PLSelItem * addPodcastItem( playlist_item_t *p_item );
+
+    QTreeWidgetItem* getItemFromNum( int num );
+    QTreeWidgetItem* visitTree( QTreeWidgetItem *item, int* num );
 
     PLSelItem* playlistItem;
 
