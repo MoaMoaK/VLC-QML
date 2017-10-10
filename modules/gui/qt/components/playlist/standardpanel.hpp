@@ -89,17 +89,17 @@ public:
 protected:
     VLCModel *model;
     void wheelEvent( QWheelEvent *e ) Q_DECL_OVERRIDE;
-    bool popup( const QPoint &point );
+//    bool popup( const QPoint &point );
 
 private:
     intf_thread_t *p_intf;
 
     PLSelector  *p_selector;
 
-    QQuickWidget  *treeView;
-    QWidget  *iconView;
-    QQuickWidget  *listView;
-    QQuickWidget  *picFlowView;
+//    QQuickWidget  *treeView;
+    QWidget  *mainView;
+//    QQuickWidget  *listView;
+//    QQuickWidget  *picFlowView;
 
     QWidget  *currentView;
 
@@ -111,10 +111,10 @@ private:
     int lastActivatedPLItemId;
     int currentRootIndexPLId;
 
-    void createTreeView();
-    void createIconView();
-    void createListView();
-    void createCoverView();
+//    void createTreeView();
+    void createMainView();
+//    void createListView();
+//    void createCoverView();
     void updateZoom( int i_zoom );
     virtual bool eventFilter ( QObject * watched, QEvent * event ) Q_DECL_OVERRIDE;
 
@@ -125,30 +125,30 @@ public slots:
     void setRootItem( playlist_item_t *, bool );
     void browseInto( const QModelIndex& );
     void showView( int );
-    void setWaiting( bool ); /* spinner */
+//    void setWaiting( bool ); /* spinner */
 
 private slots:
-    void deleteSelection();
+//    void deleteSelection();
     void handleExpansion( const QModelIndex& );
-    void activate( const QModelIndex & );
+//    void activate( const QModelIndex & );
 
     void browseInto();
     void browseInto( int );
 
-    void gotoPlayingItem();
+//    void gotoPlayingItem();
 
     void search( const QString& searchText );
     void searchDelayed( const QString& searchText );
 
-    void popupPlView( const QPoint & );
-    void popupSelectColumn( QPoint );
-    void popupAction( QAction * );
+//    void popupPlView( const QPoint & );
+//    void popupSelectColumn( QPoint );
+//    void popupAction( QAction * );
     void increaseZoom() { updateZoom( 1 ); };
     void decreaseZoom() { updateZoom( -1 ); };
-    void toggleColumnShown( int );
+//    void toggleColumnShown( int );
 
     void cycleViews();
-    void updateViewport(); /* spinner */
+//    void updateViewport(); /* spinner */
 
 signals:
     void viewChanged( const QModelIndex& );

@@ -92,10 +92,10 @@ StandardPLPanel::StandardPLPanel( PlaylistWidget *_parent,
     viewStack->setSpacing( 0 ); viewStack->setMargin( 0 );
     setMinimumWidth( 300 );
 
-    iconView    = NULL;
-    treeView    = NULL;
-    listView    = NULL;
-    picFlowView = NULL;
+    mainView    = NULL;
+//    treeView    = NULL;
+//    listView    = NULL;
+//    picFlowView = NULL;
 
     currentRootIndexPLId  = -1;
     lastActivatedPLItemId     = -1;
@@ -144,11 +144,11 @@ StandardPLPanel::~StandardPLPanel()
 }
 
 /* Unused anymore, but might be useful, like in right-click menu */
-void StandardPLPanel::gotoPlayingItem()
-{
+//void StandardPLPanel::gotoPlayingItem()
+//{
 //    if ( currentView != listView )
 //        currentView->scrollTo( model->currentIndex() );
-}
+//}
 
 void StandardPLPanel::handleExpansion( const QModelIndex& index )
 {
@@ -158,8 +158,8 @@ void StandardPLPanel::handleExpansion( const QModelIndex& index )
     //currentView->scrollTo( index );
 }
 
-void StandardPLPanel::popupPlView( const QPoint &point )
-{
+//void StandardPLPanel::popupPlView( const QPoint &point )
+//{
     //QPoint globalPoint = currentView->viewport()->mapToGlobal( point );
     //QModelIndex index = currentView->indexAt( point );
 //    if ( !index.isValid() )
@@ -172,21 +172,21 @@ void StandardPLPanel::popupPlView( const QPoint &point )
 //    }
 
     //if( !popup( globalPoint ) ) THEDP->setPopupMenu();
-}
+//}
 
 /*********** Popup *********/
-bool StandardPLPanel::popup( const QPoint &point )
-{
+//bool StandardPLPanel::popup( const QPoint &point )
+//{
 //    QModelIndex index = popupIndex( currentView ); /* index for menu logic only. Do not store.*/
 //    VLCModel *model = qobject_cast<VLCModel *>(currentView->model());
 
-#define ADD_MENU_ENTRY( icon, title, act ) \
-    if ( model->isSupportedAction( act, index ) )\
-    {\
-    action = menu.addAction( icon, title ); \
-    container.action = act; \
-    action->setData( QVariant::fromValue( container ) );\
-    }
+//#define ADD_MENU_ENTRY( icon, title, act ) \
+//    if ( model->isSupportedAction( act, index ) )\
+//    {\
+//    action = menu.addAction( icon, title ); \
+//    container.action = act; \
+//    action->setData( QVariant::fromValue( container ) );\
+//    }
 
 //    /* */
 //    QMenu menu;
@@ -291,11 +291,11 @@ bool StandardPLPanel::popup( const QPoint &point )
 //    }
 //    else return false;
 
-#undef ADD_MENU_ENTRY
-}
+//#undef ADD_MENU_ENTRY
+//}
 
-void StandardPLPanel::popupAction( QAction *action )
-{
+//void StandardPLPanel::popupAction( QAction *action )
+//{
 //    VLCModel *model = qobject_cast<VLCModel *>(currentView->model());
 //    VLCModelSubInterface::actionsContainerType a =
 //            action->data().value<VLCModelSubInterface::actionsContainerType>();
@@ -404,7 +404,7 @@ void StandardPLPanel::popupAction( QAction *action )
 //    default:
 //        model->action( action, list );
 //    }
-}
+//}
 
 QMenu* StandardPLPanel::viewSelectionMenu( StandardPLPanel *panel )
 {
@@ -436,28 +436,28 @@ inline QModelIndex popupIndex( QAbstractItemView *view )
         return list.first();
 }
 
-void StandardPLPanel::popupSelectColumn( QPoint )
-{
-    QMenu menu;
-    assert( treeView );
+//void StandardPLPanel::popupSelectColumn( QPoint )
+//{
+//    QMenu menu;
+////    assert( treeView );
 
-    /* We do not offer the option to hide index 0 column, or
-     * QTreeView will behave weird */
-    for( int i = 1 << 1, j = 1; i < COLUMN_END; i <<= 1, j++ )
-    {
-        QAction* option = menu.addAction( qfu( psz_column_title( i ) ) );
-        option->setCheckable( true );
-       // option->setChecked( !treeView->isColumnHidden( j ) );
-        selectColumnsSigMapper->setMapping( option, j );
-        CONNECT( option, triggered(), selectColumnsSigMapper, map() );
-    }
-    menu.exec( QCursor::pos() );
-}
+//    /* We do not offer the option to hide index 0 column, or
+//     * QTreeView will behave weird */
+//    for( int i = 1 << 1, j = 1; i < COLUMN_END; i <<= 1, j++ )
+//    {
+//        QAction* option = menu.addAction( qfu( psz_column_title( i ) ) );
+//        option->setCheckable( true );
+//       // option->setChecked( !treeView->isColumnHidden( j ) );
+//        selectColumnsSigMapper->setMapping( option, j );
+//        CONNECT( option, triggered(), selectColumnsSigMapper, map() );
+//    }
+//    menu.exec( QCursor::pos() );
+//}
 
-void StandardPLPanel::toggleColumnShown( int i )
-{
-    //treeView->setColumnHidden( i, !treeView->isColumnHidden( i ) );
-}
+//void StandardPLPanel::toggleColumnShown( int i )
+//{
+//    treeView->setColumnHidden( i, !treeView->isColumnHidden( i ) );
+//}
 
 /* Search in the playlist */
 void StandardPLPanel::search( const QString& searchText )
@@ -469,9 +469,9 @@ void StandardPLPanel::search( const QString& searchText )
 
     if( type != SD_TYPE || !can_search )
     {
-        bool flat = ( currentView == iconView ||
+        bool flat = ( currentView == mainView /*||
                       currentView == listView ||
-                      currentView == picFlowView );
+                      currentView == picFlowView*/ );
 //        model->filter( searchText,
 //                       flat ? currentView->rootIndex() : QModelIndex(),
 //                       !flat );
@@ -503,7 +503,7 @@ void StandardPLPanel::setRootItem( playlist_item_t *p_item, bool b )
 
 void StandardPLPanel::browseInto( const QModelIndex &index )
 {
-    if( currentView == iconView || currentView == listView || currentView == picFlowView )
+    if( currentView == mainView /*|| currentView == listView || currentView == picFlowView*/ )
     {
 
         //currentView->setRootIndex( index );
@@ -527,7 +527,7 @@ void StandardPLPanel::browseInto( const QModelIndex &index )
 
 void StandardPLPanel::browseInto()
 {
-    browseInto( (currentRootIndexPLId != -1 && currentView != treeView) ?
+    browseInto( (currentRootIndexPLId != -1 /*&& currentView != treeView*/) ?
                  model->indexByPLID( currentRootIndexPLId, 0 ) :
                  QModelIndex() );
 }
@@ -553,7 +553,7 @@ bool StandardPLPanel::eventFilter ( QObject *obj, QEvent * event )
         if( keyEvent->key() == Qt::Key_Delete ||
             keyEvent->key() == Qt::Key_Backspace )
         {
-            deleteSelection();
+//            deleteSelection();
             return true;
         }
     }
@@ -582,8 +582,8 @@ bool StandardPLPanel::eventFilter ( QObject *obj, QEvent * event )
                                       "media source from the left."),
                                   QPalette::Text );
         }
-        else if ( spinnerAnimation->state() == PixmapAnimator::Running )
-        {
+//        else if ( spinnerAnimation->state() == PixmapAnimator::Running )
+//        {
 //            if ( currentView->model()->rowCount() )
 //                spinnerAnimation->stop(); /* Trick until SD emits events */
 //            else
@@ -595,16 +595,16 @@ bool StandardPLPanel::eventFilter ( QObject *obj, QEvent * event )
 //                point -= QPoint( spinner->size().width() / 2, spinner->size().height() / 2 );
 //                painter.drawPixmap( point, *spinner );
 //            }
-        }
+//        }
     }
     return false;
 }
 
-void StandardPLPanel::deleteSelection()
-{
+//void StandardPLPanel::deleteSelection()
+//{
 //    QModelIndexList list = currentView->selectionModel()->selectedIndexes();
 //    model->doDelete( list );
-}
+//}
 
 void StandardPLPanel::showInfoMovie(MCItem *item )
 {
@@ -645,17 +645,17 @@ void StandardPLPanel::hideInfoMovie()
 
 
 
-void StandardPLPanel::createIconView()
+void StandardPLPanel::createMainView()
 {
-    iconView = new QWidget();
+    mainView = new QWidget();
 
-    QHBoxLayout* iconViewLayout = new QHBoxLayout(iconView);
-    iconViewLayout->setSpacing(0);
-    iconViewLayout->setMargin(0);
+    QHBoxLayout* mainViewLayout = new QHBoxLayout(mainView);
+    mainViewLayout->setSpacing(0);
+    mainViewLayout->setMargin(0);
 
-    QQuickWidget* iconViewQuick = new QQuickWidget();
+    QQuickWidget* mainViewQuick = new QQuickWidget();
 
-    QQmlContext *rootCtx = iconViewQuick->rootContext();
+    QQmlContext *rootCtx = mainViewQuick->rootContext();
     rootCtx->setContextProperty( "m", model );
     rootCtx->setContextProperty( "selector", p_selector);
 
@@ -663,12 +663,12 @@ void StandardPLPanel::createIconView()
     model->setPLModel(plmodel);
     rootCtx->setContextProperty( "playlist", plmodel);
 
-    iconViewQuick->setSource( QUrl ( QStringLiteral("qrc:/playlist/iconview.qml") ) );
-    iconViewQuick->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    mainViewQuick->setSource( QUrl ( QStringLiteral("qrc:/playlist/MainInterface.qml") ) );
+    mainViewQuick->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
-    iconViewLayout->addWidget(iconViewQuick);
+    mainViewLayout->addWidget(mainViewQuick);
 
-    viewStack->addWidget( iconView );
+    viewStack->addWidget( mainView );
 
 /*    iconView = new PlIconView( model, this );
  *    iconView->setContextMenuPolicy( Qt::CustomContextMenu );
@@ -680,14 +680,14 @@ void StandardPLPanel::createIconView()
  *    iconView->viewport()->installEventFilter( this );*/
 }
 
-void StandardPLPanel::createListView()
-{
-    listView = new QQuickWidget();
+//void StandardPLPanel::createListView()
+//{
+//    listView = new QQuickWidget();
 
-    QQmlContext *rootCtx = listView->rootContext();
-    rootCtx->setContextProperty( "m", model );
-    listView->setResizeMode(QQuickWidget::SizeRootObjectToView);
-    listView->setSource( QUrl ( QStringLiteral("qrc:/playlist/listview.qml") ) );
+//    QQmlContext *rootCtx = listView->rootContext();
+//    rootCtx->setContextProperty( "m", model );
+//    listView->setResizeMode(QQuickWidget::SizeRootObjectToView);
+//    listView->setSource( QUrl ( QStringLiteral("qrc:/playlist/listview.qml") ) );
 
 
 /*    listView = new PlListView( model, this );
@@ -698,14 +698,14 @@ void StandardPLPanel::createListView()
  *             this, activate( const QModelIndex & ) );
  *  listView->installEventFilter( this );
  *    listView->viewport()->installEventFilter( this );*/
-    viewStack->addWidget( listView );
-}
+//    viewStack->addWidget( listView );
+//}
 
-void StandardPLPanel::createCoverView()
-{
-    picFlowView = new QQuickWidget();
+//void StandardPLPanel::createCoverView()
+//{
+//    picFlowView = new QQuickWidget();
 
-    picFlowView->setSource( QUrl ( QStringLiteral("qrc:/playlist/picflowview.qml") ) );
+//    picFlowView->setSource( QUrl ( QStringLiteral("qrc:/playlist/picflowview.qml") ) );
 
 /*    picFlowView = new PicFlowView( model, this );
  *    picFlowView->setContextMenuPolicy( Qt::CustomContextMenu );
@@ -715,14 +715,14 @@ void StandardPLPanel::createCoverView()
  *             this, activate( const QModelIndex & ) );
  *    picFlowView->installEventFilter( this );*/
 
-    viewStack->addWidget( picFlowView );
-}
+//    viewStack->addWidget( picFlowView );
+//}
 
-void StandardPLPanel::createTreeView()
-{
-    treeView = new QQuickWidget();
+//void StandardPLPanel::createTreeView()
+//{
+//    treeView = new QQuickWidget();
 
-    treeView->setSource( QUrl ( QStringLiteral("qrc:/playlist/treeview.qml") ) );
+//    treeView->setSource( QUrl ( QStringLiteral("qrc:/playlist/treeview.qml") ) );
 
 //    /* Create and configure the QTreeView */
 //    treeView = new PlTreeView( model, this );
@@ -744,8 +744,8 @@ void StandardPLPanel::createTreeView()
 //    CONNECT( selectColumnsSigMapper, mapped( int ),
 //             this, toggleColumnShown( int ) );
 
-    viewStack->addWidget( treeView );
-}
+//    viewStack->addWidget( treeView );
+//}
 
 void StandardPLPanel::updateZoom( int i )
 {
@@ -759,131 +759,131 @@ void StandardPLPanel::updateZoom( int i )
 
 void StandardPLPanel::showView( int i_view )
 {
-    bool b_treeViewCreated = false;
+//    bool b_treeViewCreated = false;
 
-    switch( i_view )
-    {
-    case ICON_VIEW:
-    {
-        msg_Dbg(p_intf, "icon");
-        if( iconView == NULL )
-            createIconView();
-        currentView = iconView;
+//    switch( i_view )
+//    {
+//    default:
+//    case ICON_VIEW:
+//    {
+        if( mainView == NULL )
+            createMainView();
+        currentView = mainView;
         //currentView->setModel( model );
-        break;
-    }
-    case LIST_VIEW:
-    {
-        msg_Dbg(p_intf, "list");
-        if( listView == NULL )
-            createListView();
-        currentView = listView;
-        //currentView->setModel( model );
-        break;
-    }
-    case PICTUREFLOW_VIEW:
-    {
-        msg_Dbg(p_intf, "pic");
-        if( picFlowView == NULL )
-            createCoverView();
-        currentView = picFlowView;
-        //currentView->setModel( model );
-        break;
-    }
-    default:
-    case TREE_VIEW:
-    {
-        msg_Dbg(p_intf, "tree");
-        if( treeView == NULL )
-        {
-            createTreeView();
-            b_treeViewCreated = true;
-        }
-        currentView = treeView;
-        //currentView->setModel( model );
-        break;
-    }
-    }
+//        break;
+//    }
+//    case LIST_VIEW:
+//    {
+//        msg_Dbg(p_intf, "list");
+//        if( listView == NULL )
+//            createListView();
+//        currentView = listView;
+//        //currentView->setModel( model );
+//        break;
+//    }
+//    case PICTUREFLOW_VIEW:
+//    {
+//        msg_Dbg(p_intf, "pic");
+//        if( picFlowView == NULL )
+//            createCoverView();
+//        currentView = picFlowView;
+//        //currentView->setModel( model );
+//        break;
+//    }
+//    default:
+//    case TREE_VIEW:
+//    {
+//        msg_Dbg(p_intf, "tree");
+//        if( treeView == NULL )
+//        {
+//            createTreeView();
+//            b_treeViewCreated = true;
+//        }
+//        currentView = treeView;
+//        //currentView->setModel( model );
+//        break;
+//    }
+//    }
 
 
 
     /* Restoring the header Columns must come after changeModel */
-    if( b_treeViewCreated )
-    {
-        assert( treeView );
-        if( getSettings()->contains( "Playlist/headerStateV2" ) )
-        {
-            //treeView->header()->restoreState(getSettings()
-            //        ->value( "Playlist/headerStateV2" ).toByteArray() );
-            /* if there is allready stuff in playlist, we don't sort it and we reset
-               sorting */
-            if( model->rowCount() )
-            {
-                //treeView->header()->setSortIndicator( -1 , Qt::AscendingOrder );
-            }
-        }
-        else
-        {
-            for( int m = 1, c = 0; m != COLUMN_END; m <<= 1, c++ )
-            {
-                //treeView->setColumnHidden( c, !( m & COLUMN_DEFAULT ) );
-                //if( m == COLUMN_TITLE ) treeView->header()->resizeSection( c, 200 );
-                //else if( m == COLUMN_DURATION ) treeView->header()->resizeSection( c, 80 );
-            }
-        }
-    }
+//    if( b_treeViewCreated )
+//    {
+//        assert( treeView );
+//        if( getSettings()->contains( "Playlist/headerStateV2" ) )
+//        {
+//            //treeView->header()->restoreState(getSettings()
+//            //        ->value( "Playlist/headerStateV2" ).toByteArray() );
+//            /* if there is allready stuff in playlist, we don't sort it and we reset
+//               sorting */
+//            if( model->rowCount() )
+//            {
+//                //treeView->header()->setSortIndicator( -1 , Qt::AscendingOrder );
+//            }
+//        }
+//        else
+//        {
+//            for( int m = 1, c = 0; m != COLUMN_END; m <<= 1, c++ )
+//            {
+//                //treeView->setColumnHidden( c, !( m & COLUMN_DEFAULT ) );
+//                //if( m == COLUMN_TITLE ) treeView->header()->resizeSection( c, 200 );
+//                //else if( m == COLUMN_DURATION ) treeView->header()->resizeSection( c, 80 );
+//            }
+//        }
+//    }
     viewStack->setCurrentWidget( currentView );
     browseInto();
-    gotoPlayingItem();
+//    gotoPlayingItem();
 }
 
-void StandardPLPanel::setWaiting( bool b )
-{
-    if ( b )
-    {
-        spinnerAnimation->setLoopCount( 20 ); /* Trick until SD emits an event */
-        spinnerAnimation->start();
-    }
-    else
-        spinnerAnimation->stop();
-}
+//void StandardPLPanel::setWaiting( bool b )
+//{
+//    if ( b )
+//    {
+//        spinnerAnimation->setLoopCount( 20 ); /* Trick until SD emits an event */
+//        spinnerAnimation->start();
+//    }
+//    else
+//        spinnerAnimation->stop();
+//}
 
-void StandardPLPanel::updateViewport()
-{
+//void StandardPLPanel::updateViewport()
+//{
     /* A single update on parent widget won't work */
     //currentView->viewport()->repaint();
-}
+//}
 
 int StandardPLPanel::currentViewIndex() const
 {
-    if( currentView == treeView )
+    /*if( currentView == treeView )
         return TREE_VIEW;
-    else if( currentView == iconView )
+    else*/ if( currentView == mainView )
         return ICON_VIEW;
-    else if( currentView == listView )
-        return LIST_VIEW;
+//    else if( currentView == listView )
+//        return LIST_VIEW;
     else
         return PICTUREFLOW_VIEW;
 }
 
 void StandardPLPanel::cycleViews()
 {
-    if( currentView == iconView )
+    if( currentView == mainView )
         showView( TREE_VIEW );
-    else if( currentView == treeView )
-        showView( LIST_VIEW );
-    else if( currentView == listView )
-#ifndef NDEBUG
-        showView( PICTUREFLOW_VIEW  );
-    else if( currentView == picFlowView )
-#endif
-        showView( ICON_VIEW );
+//    else if( currentView == treeView )
+//        showView( LIST_VIEW );
+//    else if( currentView == listView )
+//#ifndef NDEBUG
+//        showView( PICTUREFLOW_VIEW  );
+//    else if( currentView == picFlowView )
+//#endif
+//        showView( ICON_VIEW );
     else
         vlc_assert_unreachable();
 }
 
-void StandardPLPanel::activate( const QModelIndex &index )
-{
+//void StandardPLPanel::activate( const QModelIndex &index )
+//{
 //    if( currentView->model() == model )
 //    {
 //        /* If we are not a leaf node */
@@ -906,7 +906,7 @@ void StandardPLPanel::activate( const QModelIndex &index )
 //                model->activateItem( index );
 //        }
 //    }
-}
+//}
 
 void StandardPLPanel::browseInto( int i_pl_item_id )
 {
@@ -914,9 +914,9 @@ void StandardPLPanel::browseInto( int i_pl_item_id )
 
     QModelIndex index = model->indexByPLID( i_pl_item_id, 0 );
 
-    if( currentView == treeView ) { }
+//    if( currentView == treeView ) { }
         //treeView->setExpanded( index, true );
-    else
+//    else
         browseInto( index );
 
     lastActivatedPLItemId = -1;

@@ -455,11 +455,8 @@ libqt_plugin_la_RES = \
 	gui/qt/pixmaps/lock.png \
 	gui/qt/qml/help.qml \
 	gui/qt/qml/about.qml \
-	gui/qt/qml/playlist/iconview.qml \
+	gui/qt/qml/playlist/MainInterface.qml \
 	gui/qt/qml/playlist/InfoMovie.qml \
-	gui/qt/qml/playlist/treeview.qml \
-	gui/qt/qml/playlist/picflowview.qml \
-	gui/qt/qml/playlist/listview.qml \
 	gui/qt/qml/playlist/BannerSources.qml \
 	gui/qt/qml/playlist/MCGridViewDelegate.qml \
 	gui/qt/qml/playlist/PLListViewDelegate.qml \
