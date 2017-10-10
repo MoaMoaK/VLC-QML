@@ -139,8 +139,8 @@ PLSelector::PLSelector( intf_thread_t *_p_intf, QWidget *p )
              this, plItemAdded( int, int ) );
     CONNECT( THEMIM, playlistItemRemoved( int ),
              this, plItemRemoved( int ) );
-    DCONNECT( THEMIM->getIM(), metaChanged( input_item_t *),
-              this, inputItemUpdate( input_item_t * ) );
+//    DCONNECT( THEMIM->getIM(), metaChanged( input_item_t *),
+//              this, inputItemUpdate( input_item_t * ) );
 
     createItems();
 
@@ -196,8 +196,8 @@ PLSelItem * putPLData( PLSelItem* item, playlist_item_t* plItem )
  * item - the treeview item to get the duration for
  * prefix - the string to use before the time (should be the category name)
  */
-void PLSelector::updateTotalDuration( PLSelItem* item, const char* prefix )
-{
+//void PLSelector::updateTotalDuration( PLSelItem* item, const char* prefix )
+//{
 // NO NEED AS I DONT WANT OT TO DISPLAY IT
 ////////////////////////////////////////////
 //    /* Getting  the playlist */
@@ -225,7 +225,7 @@ void PLSelector::updateTotalDuration( PLSelItem* item, const char* prefix )
 //        qs_timeLabel += QString( " [%1:%2]").arg( i_minutes, 2, 10, QChar('0') ).arg( i_seconds, 2, 10, QChar('0') );
 
 //    item->setText( qs_timeLabel );
-}
+//}
 
 void PLSelector::createItems()
 {
@@ -506,7 +506,7 @@ void PLSelector::dragMoveEvent ( QDragMoveEvent * event )
 
 void PLSelector::plItemAdded( int item, int parent )
 {
-    updateTotalDuration(playlistItem, "Playlist");
+//    updateTotalDuration(playlistItem, "Playlist");
     if( parent != podcastsParentId || podcastsParent == NULL ) return;
 
     playlist_Lock( THEPL );
@@ -539,7 +539,7 @@ void PLSelector::plItemAdded( int item, int parent )
 
 void PLSelector::plItemRemoved( int id )
 {
-    updateTotalDuration(playlistItem, "Playlist");
+//    updateTotalDuration(playlistItem, "Playlist");
     if( !podcastsParent ) return;
 
     int c = podcastsParent->childCount();
@@ -557,8 +557,8 @@ void PLSelector::plItemRemoved( int id )
     }
 }
 
-void PLSelector::inputItemUpdate( input_item_t *arg )
-{
+//void PLSelector::inputItemUpdate( input_item_t *arg )
+//{
 // ONLY GRAPHICAL STUFF HERE
 ////////////////////////////
 //    updateTotalDuration(playlistItem, "Playlist");
@@ -580,7 +580,7 @@ void PLSelector::inputItemUpdate( input_item_t *arg )
 //            return;
 //        }
 //    }
-}
+//}
 
 void PLSelector::podcastAdd( PLSelItem * )
 {
@@ -624,8 +624,8 @@ PLSelItem * PLSelector::itemWidget( QTreeWidgetItem *item )
     return ( static_cast<PLSelItem*>( QTreeWidget::itemWidget( item, 0 ) ) );
 }
 
-void PLSelector::drawBranches ( QPainter * painter, const QRect & rect, const QModelIndex & index ) const
-{
+//void PLSelector::drawBranches ( QPainter * painter, const QRect & rect, const QModelIndex & index ) const
+//{
 //    if( !model()->hasChildren( index ) ) return;
 //    QStyleOption option;
 //    option.initFrom( this );
@@ -633,7 +633,7 @@ void PLSelector::drawBranches ( QPainter * painter, const QRect & rect, const QM
 //    style()->drawPrimitive( isExpanded( index ) ?
 //                            QStyle::PE_IndicatorArrowDown :
 //                            QStyle::PE_IndicatorArrowRight, &option, painter );
-}
+//}
 
 void PLSelector::getCurrentItemInfos( int* type, bool* can_delay_search, QString *string)
 {
@@ -683,8 +683,8 @@ QTreeWidgetItem* PLSelector::getItemFromNum( int num )
 
 
 
-void PLSelector::wheelEvent( QWheelEvent *e )
-{
+//void PLSelector::wheelEvent( QWheelEvent *e )
+//{
 //    if( verticalScrollBar()->isVisible() && (
 //        (verticalScrollBar()->value() != verticalScrollBar()->minimum() && e->delta() >= 0 ) ||
 //        (verticalScrollBar()->value() != verticalScrollBar()->maximum() && e->delta() < 0 )
@@ -693,4 +693,4 @@ void PLSelector::wheelEvent( QWheelEvent *e )
 
 //    // Accept this event in order to prevent unwanted volume up/down changes
 //    e->accept();
-}
+//}
