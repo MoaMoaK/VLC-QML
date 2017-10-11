@@ -75,7 +75,8 @@ public:
         DISC_NUMBER_ROLE,
         DATE_ROLE,
         DOUBLE_CLICK,
-        SINGLE_CLICK
+        SINGLE_CLICK,
+        IS_MOVIE
     };
     virtual void rebuild( playlist_item_t * p = NULL ) = 0;
     virtual void doDelete( QModelIndexList ) = 0;

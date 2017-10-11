@@ -56,15 +56,14 @@ public:
 
     MCItem(intf_thread_t *_p_intf, playlist_item_t *, MCItem *p_parent );
 
-    void displayInfo();
     void exploreDir();
 
     Q_INVOKABLE QString getTitle() const;
-    Q_INVOKABLE QString getArtworkURL();
-    Q_INVOKABLE void back();
 
     static void staticUpdateType(vlc_event_t const *p_event, void *user_data);
     void updateType();
+
+    bool isMovie() { return itemType == MOVIE; }
 
 
 protected:

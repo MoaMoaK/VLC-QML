@@ -2,6 +2,10 @@ import QtQuick 2.0
 
 Item {
 
+    property var pl_item;
+
+    function back() { }
+
     function decideCover (cover) {
         if (cover)
             return cover
@@ -12,11 +16,6 @@ Item {
     Column {
         id: column
         anchors.fill: parent
-
-        BannerSources {
-            id : sourcesBanner
-            need_toggleView_button: false
-        }
 
         Rectangle {
             id: navbar
@@ -37,12 +36,12 @@ Item {
                     source: "qrc:///toolbar/dvd_prev"
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: {pl_item.back();}
+                        onClicked: { back(); }
                     }
                 }
 
                 Text {
-                    text: "<b>"+pl_item.getTitle()+"</b>"
+                    text: "<b>"+pl_item.title+"</b>"
                     verticalAlignment: Text.AlignVCenter
                     anchors.top: parent.top
                     anchors.topMargin: 0
@@ -70,7 +69,7 @@ Item {
                     anchors.topMargin: 100
                     height: 350; width:200
                     fillMode: Image.PreserveAspectFit
-                    source: decideCover(pl_item.getArtworkURL())
+                    source: decideCover(pl_item.cover)
                 }
 
                 Text {

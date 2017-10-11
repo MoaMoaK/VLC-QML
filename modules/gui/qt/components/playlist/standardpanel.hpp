@@ -81,9 +81,6 @@ public:
 
     static QMenu *viewSelectionMenu(StandardPLPanel *obj);
 
-    void showInfoMovie(MCItem *item );
-    void hideInfoMovie();
-
     VideoOverlay* getVideoOverlay() { return videoOverlay; }
 
 protected:

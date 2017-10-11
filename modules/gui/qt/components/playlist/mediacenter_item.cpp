@@ -203,42 +203,8 @@ bool MCItem::readOnly() const
     return i_flags & PLAYLIST_RO_FLAG;
 }
 
-void MCItem::displayInfo()
-{
-    switch (itemType)
-    {
-    case (MOVIE):
-    {
-        StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
-        mv->showInfoMovie(this);
-        break;
-    }
-    case (MUSIC):
-    {
-        msg_Info(p_intf, "Ceci est un MUSIC");
-        break;
-    }
-    default:
-    {
-        msg_Info(p_intf, "Ceci est un OTHER");
-        break;
-    }
-    }
-}
-
 void MCItem::exploreDir()
 {
     StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
     mv->setRootItem(this->plitem, true);
-}
-
-QString MCItem::getArtworkURL()
-{
-    return input_item_GetArtworkURL(inputItem());
-}
-
-void MCItem::back()
-{
-   StandardPLPanel *mv = PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView;
-   mv->hideInfoMovie();
 }

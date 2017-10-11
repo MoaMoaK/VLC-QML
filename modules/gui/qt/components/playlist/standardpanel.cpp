@@ -606,45 +606,6 @@ bool StandardPLPanel::eventFilter ( QObject *obj, QEvent * event )
 //    model->doDelete( list );
 //}
 
-void StandardPLPanel::showInfoMovie(MCItem *item )
-{
-    QWidget *infoView = new QWidget();
-
-    QHBoxLayout* infoViewLayout = new QHBoxLayout(infoView);
-    infoViewLayout->setSpacing(0);
-    infoViewLayout->setMargin(0);
-
-    QQuickWidget* infoViewQuick = new QQuickWidget();
-
-    QQmlContext *rootCtx = infoViewQuick->rootContext();
-    rootCtx->setContextProperty( "pl_item", item );
-    rootCtx->setContextProperty( "selector", p_selector);
-
-    infoViewQuick->setSource( QUrl ( QStringLiteral("qrc:/playlist/InfoMovie.qml") ) );
-    infoViewQuick->setResizeMode(QQuickWidget::SizeRootObjectToView);
-
-    infoViewLayout->addWidget(infoViewQuick);
-
-    viewStack->addWidget( infoView );
-    viewStack->setCurrentWidget( infoView );
-
-    videoOverlay->raise();
-
-}
-
-void StandardPLPanel::hideInfoMovie()
-{
-    QWidget* oldView = viewStack->currentWidget();
-    viewStack->setCurrentWidget (currentView);
-    viewStack->removeWidget(oldView);
-
-    videoOverlay->raise();
-}
-
-
-
-
-
 void StandardPLPanel::createMainView()
 {
     mainView = new QWidget();

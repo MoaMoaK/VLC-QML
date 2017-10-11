@@ -287,13 +287,6 @@ void MCModel::activateItem( playlist_item_t *p_item )
 //        playlist_ViewPlay( p_playlist, p_parent, p_item );
 }
 
-
-void MCModel::displayInfo(MCItem *item)
-{
-    assert( item );
-    item->displayInfo();
-}
-
 void MCModel::exploreDir(MCItem *item)
 {
     assert( item );
@@ -428,6 +421,9 @@ QVariant MCModel::data( const QModelIndex &index, const int role ) const
         case DATE_ROLE:
             return getMeta(index, COLUMN_DATE);
 
+        case IS_MOVIE:
+            return QVariant( getItem(index)->isMovie() );
+
         default:
             break;
     }
@@ -459,6 +455,7 @@ QHash<int, QByteArray> MCModel::roleNames() const {
     roles[DATE_ROLE] = "date";
     roles[DOUBLE_CLICK] = "double_click";
     roles[SINGLE_CLICK] = "single_click";
+    roles[IS_MOVIE] = "is_movie";
     return roles;
 }
 
@@ -475,14 +472,8 @@ bool MCModel::setData( const QModelIndex &index, const QVariant & value, int rol
         return true;
     // Trick to trigger displayInfo()
     case SINGLE_CLICK :
-        if ( isLeaf( index ) )
-        {
-            displayInfo(getItem(index));
-        }
-        else
-        {
+        if ( ! isLeaf( index ) )
             exploreDir(getItem(index));
-        }
 
         return true;
     default:

@@ -27,10 +27,10 @@ Item {
                 need_toggleView_button: true
 
                 // Basic properties
-                z : 2
+                z : 10
 
                 function toggleView () {
-                    mcDisplay.viewDisplayed = mcDisplay.viewDisplayed == 0 ? 1 : 0
+                    mcDisplay.cycleViews();
                 }
             }
 
@@ -41,7 +41,7 @@ Item {
                 media : m
 
                 // Basic properties
-                z: 1
+                z: 0
                 height : parent.height - sourcesBanner.height
                 anchors.right: parent.right
                 anchors.left: parent.left
@@ -55,7 +55,7 @@ Item {
             default_width: 300
 
             // Basic properties
-            z: 3
+            z: 20
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Layout.maximumWidth: 400

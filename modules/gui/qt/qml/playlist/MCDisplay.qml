@@ -7,6 +7,24 @@ StackView {
 
     property var media
     property int viewDisplayed: 0
+    property bool displayingInfo: false
+    property var displayedItem
+
+    function displayInfoMovie (pl_item) {
+        displayedItem = pl_item;
+        displayingInfo = true;
+        stack.replace( infoMovie );
+    }
+    function hideInfoMovie () {
+        displayingInfo = false;
+        stack.replace( viewDisplayed == 0 ? gridView : listView );
+    }
+
+    function cycleViews() {
+        viewDisplayed = viewDisplayed == 0 ? 1 : 0;
+        if (displayingInfo) { hideInfoMovie(); }
+        else { stack.replace( viewDisplayed == 0 ? gridView : listView ); }
+    }
 
     initialItem: viewDisplayed == 0 ? gridView : listView
 
@@ -25,10 +43,6 @@ StackView {
             to: 0
             duration: 200
         }
-    }
-
-    onViewDisplayedChanged: {
-        stack.replace(viewDisplayed == 0 ? gridView : listView)
     }
 
     Component {
@@ -52,8 +66,11 @@ StackView {
                 width: sub_gridView.cellWidth
                 height: sub_gridView.cellHeight
 
-                function singleClick() { model.single_click = 1 }
-                function doubleClick() { model.double_click = 1 }
+                function singleClick() {
+                    if (model.is_movie) { displayInfoMovie(model); }
+                    else { model.single_click = 1; }
+                }
+                function doubleClick() { model.double_click = 1; }
             }
 
             ScrollBar.vertical: ScrollBar { }
@@ -75,11 +92,24 @@ StackView {
                 duration: model.duration
                 is_leaf: model.leaf_node
 
-                function singleClick() { model.single_click = 1 }
+                function singleClick() {
+                    if (model.is_movie) { displayInfoMovie(model); }
+                    else { model.single_click = 1; }
+                }
                 function doubleClick() { model.double_click = 1 }
            }
 
             ScrollBar.vertical: ScrollBar { }
+        }
+    }
+
+    Component {
+        id: infoMovie
+
+        InfoMovie {
+            pl_item: displayedItem
+
+            function back() { hideInfoMovie(); }
         }
     }
 

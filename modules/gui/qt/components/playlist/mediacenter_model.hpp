@@ -116,7 +116,6 @@ public:
     Q_INVOKABLE virtual void activateItem(const QModelIndex &index ) Q_DECL_OVERRIDE;
     void activateItem( MCItem *item );
     void activateItem( playlist_item_t *p_item ) ;
-    void displayInfo( MCItem *item );
     void exploreDir( MCItem *item );
 
 
