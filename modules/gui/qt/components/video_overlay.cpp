@@ -28,9 +28,9 @@ void VideoOverlay::resizeToFitVideo() {
     {
         QSize max_size(300, 200);
         if ( video->width() / max_size.width() < video->height() / max_size.height() )
-            resize( max_size.width(), max_size.width() * video->height() / video->width() );
-        else
             resize( max_size.height() * video->width() / video->height(), max_size.height() );
+        else
+            resize( max_size.width(), max_size.width() * video->height() / video->width() );
     }
     else
         resize(0,0);
