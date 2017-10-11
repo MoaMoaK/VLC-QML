@@ -105,8 +105,8 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     viewButton->setToolTip( qtr("Change playlistview") );
     topbarLayout->addWidget( viewButton );
 
-    viewButton->setMenu( StandardPLPanel::viewSelectionMenu( mainView ));
-    CONNECT( viewButton, clicked(), mainView, cycleViews() );
+//    viewButton->setMenu( StandardPLPanel::viewSelectionMenu( mainView ));
+//    CONNECT( viewButton, clicked(), mainView, cycleViews() );
 
     /* Search */
     searchEdit = new SearchLineEdit( this );

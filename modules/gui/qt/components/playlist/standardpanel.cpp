@@ -88,8 +88,8 @@ StandardPLPanel::StandardPLPanel( PlaylistWidget *_parent,
                   p_intf( _p_intf ),
                   p_selector( _p_selector )
 {
-    viewStack = new QStackedLayout( this );
-    viewStack->setSpacing( 0 ); viewStack->setMargin( 0 );
+    mainLayout = new QHBoxLayout( this );
+    mainLayout->setSpacing( 0 ); mainLayout->setMargin( 0 );
     setMinimumWidth( 300 );
 
     mainView    = NULL;
@@ -109,13 +109,13 @@ StandardPLPanel::StandardPLPanel( PlaylistWidget *_parent,
     CONNECT( spinnerAnimation, pixmapReady( const QPixmap & ), this, updateViewport() );
 
     /* Saved Settings */
-    int i_savedViewMode = getSettings()->value( "Playlist/view-mode", TREE_VIEW ).toInt();
+//    int i_savedViewMode = getSettings()->value( "Playlist/view-mode", TREE_VIEW ).toInt();
 
     QFont font = QApplication::font();
     font.setPointSize( font.pointSize() + getSettings()->value( "Playlist/zoom", 0 ).toInt() );
     model->setData( QModelIndex(), font, Qt::FontRole );
 
-    showView( i_savedViewMode );
+    showMainView();
 
     DCONNECT( THEMIM, leafBecameParent( int ),
               this, browseInto( int ) );
@@ -136,7 +136,7 @@ StandardPLPanel::~StandardPLPanel()
     getSettings()->beginGroup("Playlist");
 //    if( treeView )
 //        getSettings()->setValue( "headerStateV2", treeView->header()->saveState() );
-    getSettings()->setValue( "view-mode", currentViewIndex() );
+//    getSettings()->setValue( "view-mode", currentViewIndex() );
     getSettings()->setValue( "zoom",
                 model->data( QModelIndex(), Qt::FontRole ).value<QFont>().pointSize()
                 - QApplication::font().pointSize() );
@@ -152,7 +152,7 @@ StandardPLPanel::~StandardPLPanel()
 
 void StandardPLPanel::handleExpansion( const QModelIndex& index )
 {
-    assert( currentView );
+    assert( mainView );
     if( currentRootIndexPLId != -1 && currentRootIndexPLId != model->itemId( index.parent() ) )
         browseInto( index.parent() );
     //currentView->scrollTo( index );
@@ -406,26 +406,26 @@ void StandardPLPanel::handleExpansion( const QModelIndex& index )
 //    }
 //}
 
-QMenu* StandardPLPanel::viewSelectionMenu( StandardPLPanel *panel )
-{
-    QMenu *viewMenu = new QMenu( qtr( "Playlist View Mode" ), panel );
-    QSignalMapper *viewSelectionMapper = new QSignalMapper( viewMenu );
-    CONNECT( viewSelectionMapper, mapped( int ), panel, showView( int ) );
+//QMenu* StandardPLPanel::viewSelectionMenu( StandardPLPanel *panel )
+//{
+//    QMenu *viewMenu = new QMenu( qtr( "Playlist View Mode" ), panel );
+//    QSignalMapper *viewSelectionMapper = new QSignalMapper( viewMenu );
+//    CONNECT( viewSelectionMapper, mapped( int ), panel, showView( int ) );
 
-    QActionGroup *viewGroup = new QActionGroup( viewMenu );
-# define MAX_VIEW StandardPLPanel::VIEW_COUNT
-    for( int i = 0; i < MAX_VIEW; i++ )
-    {
-        QAction *action = viewMenu->addAction( viewNames[i] );
-        action->setCheckable( true );
-        viewGroup->addAction( action );
-        viewSelectionMapper->setMapping( action, i );
-        CONNECT( action, triggered(), viewSelectionMapper, map() );
-        if( panel->currentViewIndex() == i )
-            action->setChecked( true );
-    }
-    return viewMenu;
-}
+////    QActionGroup *viewGroup = new QActionGroup( viewMenu );
+////# define MAX_VIEW StandardPLPanel::VIEW_COUNT
+////    for( int i = 0; i < MAX_VIEW; i++ )
+////    {
+//////        QAction *action = viewMenu->addAction( viewNames[i] );
+////        action->setCheckable( true );
+////        viewGroup->addAction( action );
+////        viewSelectionMapper->setMapping( action, i );
+////        CONNECT( action, triggered(), viewSelectionMapper, map() );
+//////        if( panel->currentViewIndex() == i )
+//////            action->setChecked( true );
+////    }
+//    return viewMenu;
+//}
 
 inline QModelIndex popupIndex( QAbstractItemView *view )
 {
@@ -460,23 +460,23 @@ inline QModelIndex popupIndex( QAbstractItemView *view )
 //}
 
 /* Search in the playlist */
-void StandardPLPanel::search( const QString& searchText )
-{
-    int type;
-    QString name;
-    bool can_search;
-    p_selector->getCurrentItemInfos( &type, &can_search, &name );
+//void StandardPLPanel::search( const QString& searchText )
+//{
+//    int type;
+//    QString name;
+//    bool can_search;
+//    p_selector->getCurrentItemInfos( &type, &can_search, &name );
 
-    if( type != SD_TYPE || !can_search )
-    {
-        bool flat = ( currentView == mainView /*||
-                      currentView == listView ||
-                      currentView == picFlowView*/ );
-//        model->filter( searchText,
-//                       flat ? currentView->rootIndex() : QModelIndex(),
-//                       !flat );
-    }
-}
+//    if( type != SD_TYPE || !can_search )
+//    {
+//        bool flat = ( currentView == mainView /*||
+//                      currentView == listView ||
+//                      currentView == picFlowView*/ );
+////        model->filter( searchText,
+////                       flat ? currentView->rootIndex() : QModelIndex(),
+////                       !flat );
+//    }
+//}
 
 void StandardPLPanel::searchDelayed( const QString& searchText )
 {
@@ -503,8 +503,8 @@ void StandardPLPanel::setRootItem( playlist_item_t *p_item, bool b )
 
 void StandardPLPanel::browseInto( const QModelIndex &index )
 {
-    if( currentView == mainView /*|| currentView == listView || currentView == picFlowView*/ )
-    {
+//    if( currentView == mainView /*|| currentView == listView || currentView == picFlowView*/ )
+//    {
 
         //currentView->setRootIndex( index );
 
@@ -520,7 +520,7 @@ void StandardPLPanel::browseInto( const QModelIndex &index )
         currentRootIndexPLId = model->itemId( index );
 
         model->ensureArtRequested( index );
-    }
+//    }
 
     emit viewChanged( index );
 }
@@ -608,15 +608,15 @@ bool StandardPLPanel::eventFilter ( QObject *obj, QEvent * event )
 
 void StandardPLPanel::createMainView()
 {
-    mainView = new QWidget();
+    mainView = new QQuickWidget();
 
-    QHBoxLayout* mainViewLayout = new QHBoxLayout(mainView);
-    mainViewLayout->setSpacing(0);
-    mainViewLayout->setMargin(0);
+//    QHBoxLayout* mainViewLayout = new QHBoxLayout(mainView);
+//    mainViewLayout->setSpacing(0);
+//    mainViewLayout->setMargin(0);
 
-    QQuickWidget* mainViewQuick = new QQuickWidget();
+//    QQuickWidget* mainViewQuick = new QQuickWidget();
 
-    QQmlContext *rootCtx = mainViewQuick->rootContext();
+    QQmlContext *rootCtx = mainView->rootContext();
     rootCtx->setContextProperty( "m", model );
     rootCtx->setContextProperty( "selector", p_selector);
 
@@ -624,12 +624,10 @@ void StandardPLPanel::createMainView()
     model->setPLModel(plmodel);
     rootCtx->setContextProperty( "playlist", plmodel);
 
-    mainViewQuick->setSource( QUrl ( QStringLiteral("qrc:/playlist/MainInterface.qml") ) );
-    mainViewQuick->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    mainView->setSource( QUrl ( QStringLiteral("qrc:/playlist/MainInterface.qml") ) );
+    mainView->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
-    mainViewLayout->addWidget(mainViewQuick);
-
-    viewStack->addWidget( mainView );
+//    mainLayout->addWidget( mainView );
 
 /*    iconView = new PlIconView( model, this );
  *    iconView->setContextMenuPolicy( Qt::CustomContextMenu );
@@ -718,7 +716,7 @@ void StandardPLPanel::updateZoom( int i )
     model->setData( QModelIndex(), font, Qt::FontRole );
 }
 
-void StandardPLPanel::showView( int i_view )
+void StandardPLPanel::showMainView()
 {
 //    bool b_treeViewCreated = false;
 
@@ -729,7 +727,7 @@ void StandardPLPanel::showView( int i_view )
 //    {
         if( mainView == NULL )
             createMainView();
-        currentView = mainView;
+//        currentView = mainView;
         //currentView->setModel( model );
 //        break;
 //    }
@@ -793,7 +791,7 @@ void StandardPLPanel::showView( int i_view )
 //            }
 //        }
 //    }
-    viewStack->setCurrentWidget( currentView );
+    mainLayout->addWidget( mainView );
     browseInto();
 //    gotoPlayingItem();
 }
@@ -815,22 +813,22 @@ void StandardPLPanel::showView( int i_view )
     //currentView->viewport()->repaint();
 //}
 
-int StandardPLPanel::currentViewIndex() const
-{
-    /*if( currentView == treeView )
-        return TREE_VIEW;
-    else*/ if( currentView == mainView )
-        return ICON_VIEW;
-//    else if( currentView == listView )
-//        return LIST_VIEW;
-    else
-        return PICTUREFLOW_VIEW;
-}
+//int StandardPLPanel::currentViewIndex() const
+//{
+//    /*if( currentView == treeView )
+//        return TREE_VIEW;
+//    else*/ if( currentView == mainView )
+//        return ICON_VIEW;
+////    else if( currentView == listView )
+////        return LIST_VIEW;
+//    else
+//        return PICTUREFLOW_VIEW;
+//}
 
-void StandardPLPanel::cycleViews()
-{
-    if( currentView == mainView )
-        showView( TREE_VIEW );
+//void StandardPLPanel::cycleViews()
+//{
+//    if( currentView == mainView )
+//        showView( TREE_VIEW );
 //    else if( currentView == treeView )
 //        showView( LIST_VIEW );
 //    else if( currentView == listView )
@@ -839,9 +837,9 @@ void StandardPLPanel::cycleViews()
 //    else if( currentView == picFlowView )
 //#endif
 //        showView( ICON_VIEW );
-    else
-        vlc_assert_unreachable();
-}
+//    else
+//        vlc_assert_unreachable();
+//}
 
 //void StandardPLPanel::activate( const QModelIndex &index )
 //{

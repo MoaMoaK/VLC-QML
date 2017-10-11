@@ -71,15 +71,15 @@ public:
                      playlist_item_t *, PLSelector *, VLCModel * );
     virtual ~StandardPLPanel();
 
-    enum { ICON_VIEW = 0,
-           TREE_VIEW ,
-           LIST_VIEW,
-           PICTUREFLOW_VIEW,
-           VIEW_COUNT };
+//    enum { ICON_VIEW = 0,
+//           TREE_VIEW ,
+//           LIST_VIEW,
+//           PICTUREFLOW_VIEW,
+//           VIEW_COUNT };
 
-    int currentViewIndex() const;
+//    int currentViewIndex() const;
 
-    static QMenu *viewSelectionMenu(StandardPLPanel *obj);
+//    static QMenu *viewSelectionMenu(StandardPLPanel *obj);
 
     VideoOverlay* getVideoOverlay() { return videoOverlay; }
 
@@ -94,13 +94,13 @@ private:
     PLSelector  *p_selector;
 
 //    QQuickWidget  *treeView;
-    QWidget  *mainView;
+    QQuickWidget  *mainView;
 //    QQuickWidget  *listView;
 //    QQuickWidget  *picFlowView;
 
-    QWidget  *currentView;
+//    QWidget  *currentView;
 
-    QStackedLayout    *viewStack;
+    QHBoxLayout    *mainLayout;
     VideoOverlay      *videoOverlay;
 
     QSignalMapper *selectColumnsSigMapper;
@@ -121,7 +121,7 @@ private:
 public slots:
     void setRootItem( playlist_item_t *, bool );
     void browseInto( const QModelIndex& );
-    void showView( int );
+    void showMainView();
 //    void setWaiting( bool ); /* spinner */
 
 private slots:
@@ -134,7 +134,7 @@ private slots:
 
 //    void gotoPlayingItem();
 
-    void search( const QString& searchText );
+//    void search( const QString& searchText );
     void searchDelayed( const QString& searchText );
 
 //    void popupPlView( const QPoint & );
@@ -144,7 +144,7 @@ private slots:
     void decreaseZoom() { updateZoom( -1 ); };
 //    void toggleColumnShown( int );
 
-    void cycleViews();
+//    void cycleViews();
 //    void updateViewport(); /* spinner */
 
 signals:
@@ -152,10 +152,10 @@ signals:
 };
 
 
-static const QString viewNames[ StandardPLPanel::VIEW_COUNT ]
-                                = { qtr( "Icons" ),
-                                    qtr( "Detailed List" ),
-                                    qtr( "List" ),
-                                    qtr( "PictureFlow") };
+//static const QString viewNames[ StandardPLPanel::VIEW_COUNT ]
+//                                = { qtr( "Icons" ),
+//                                    qtr( "Detailed List" ),
+//                                    qtr( "List" ),
+//                                    qtr( "PictureFlow") };
 
 #endif

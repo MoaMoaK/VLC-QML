@@ -493,10 +493,10 @@ QMenu *VLCMenuBar::ViewMenu( intf_thread_t *p_intf, QMenu *current, MainInterfac
     CONNECT( action, triggered( bool ), mi, dockPlaylist( bool ) );
 
     /* add menu to change view */
-    if( mi->getPlaylistView() )
-    {
-        menu->addMenu( StandardPLPanel::viewSelectionMenu( mi->getPlaylistView() ) );
-    }
+//    if( mi->getPlaylistView() )
+//    {
+//        menu->addMenu( StandardPLPanel::viewSelectionMenu( mi->getPlaylistView() ) );
+//    }
 
     menu->addSeparator();
 
