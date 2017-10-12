@@ -69,7 +69,12 @@ StackView {
                 height: sub_gridView.cellHeight
 
                 function singleClick() {
-                    if (model.is_movie) { displayInfoMovie(model); }
+                    if (model.is_movie) {
+                        displayInfoMovie( {
+                            title: model.title,
+                            cover: model.cover
+                        } );
+                    }
                     else { model.single_click = 1; }
                 }
                 function doubleClick() { model.double_click = 1; }
