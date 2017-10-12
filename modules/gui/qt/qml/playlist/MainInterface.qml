@@ -32,6 +32,11 @@ Item {
                 function toggleView () {
                     mcDisplay.cycleViews();
                 }
+
+                function selectSource ( num ) {
+                    mcDisplay.hideInfoMovie();
+                    selector.setSourceFromNum( num );
+                }
             }
 
             MCDisplay {

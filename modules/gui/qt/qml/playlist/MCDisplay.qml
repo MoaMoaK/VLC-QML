@@ -16,8 +16,10 @@ StackView {
         stack.replace( infoMovie );
     }
     function hideInfoMovie () {
-        displayingInfo = false;
-        stack.replace( viewDisplayed == 0 ? gridView : listView );
+        if (displayingInfo) {
+            displayingInfo = false;
+            stack.replace( viewDisplayed == 0 ? gridView : listView );
+        }
     }
 
     function cycleViews() {

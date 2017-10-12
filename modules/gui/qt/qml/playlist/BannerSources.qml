@@ -6,6 +6,10 @@ Rectangle {
         return;
     }
 
+    function selectSource( num ) {
+        return ;
+    }
+
     property int banner_height: 32
     property string banner_color: "#e6e6e6"
     property string hover_color: "#d6d6d6"
@@ -99,7 +103,7 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: selector.setSourceFromNum(num)
+                onClicked: selectSource( model.num )
                 hoverEnabled: true
                 onEntered: { rect.color = hover_color }
                 onExited: { rect.color = banner_color }
