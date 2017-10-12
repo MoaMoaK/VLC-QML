@@ -106,7 +106,6 @@ StandardPLPanel::StandardPLPanel( PlaylistWidget *_parent,
     frames << ":/util/wait3";
     frames << ":/util/wait4";
     spinnerAnimation = new PixmapAnimator( this, frames );
-    CONNECT( spinnerAnimation, pixmapReady( const QPixmap & ), this, updateViewport() );
 
     /* Saved Settings */
 //    int i_savedViewMode = getSettings()->value( "Playlist/view-mode", TREE_VIEW ).toInt();
