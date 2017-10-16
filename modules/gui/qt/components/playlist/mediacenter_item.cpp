@@ -198,6 +198,48 @@ QString MCItem::getTitle() const
     return title;
 }
 
+QVariant MCItem::getInfo(info_type infoName)
+{
+    switch (infoName)
+    {
+    case NAME:
+        return QVariant("This is the title");
+        break;
+    case URI:
+        return QVariant("/home/moamoak/Vidéos/KUNG FURY Official Movie.mp4");
+        break;
+    case DURATION:
+        return QVariant(3205);
+        break;
+    case COVER:
+        return QVariant("/home/moamoak/Téléchargements/vikings.jpg");
+        break;
+    case DATE:
+        return QVariant("01/01/1970");
+        break;
+    case ARTIST:
+        return QVariant("The Artist");
+        break;
+    case GENRE:
+        return QVariant("The Genre");
+        break;
+    case NUM_OF_SUBELTS:
+        return QVariant(5);
+        break;
+    case PERCENT_SEEN:
+        return QVariant(0.85);
+        break;
+    case NUM:
+        return QVariant(2);
+        break;
+    default:
+        return QVariant();
+        break;
+    }
+}
+
+
+
 bool MCItem::readOnly() const
 {
     return i_flags & PLAYLIST_RO_FLAG;

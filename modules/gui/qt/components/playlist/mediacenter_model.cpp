@@ -424,6 +424,36 @@ QVariant MCModel::data( const QModelIndex &index, const int role ) const
         case IS_MOVIE:
             return QVariant( getItem(index)->isMovie() );
 
+        case FAKE_NAME:
+            return getItem(index)->getInfo(info_type::NAME);
+
+        case FAKE_URI:
+            return getItem(index)->getInfo(info_type::URI);
+
+        case FAKE_DURATION:
+            return getItem(index)->getInfo(info_type::DURATION);
+
+        case FAKE_COVER:
+            return getItem(index)->getInfo(info_type::COVER);
+
+        case FAKE_DATE:
+            return getItem(index)->getInfo(info_type::DATE);
+
+        case FAKE_ARTIST:
+            return getItem(index)->getInfo(info_type::ARTIST);
+
+        case FAKE_GENRE:
+            return getItem(index)->getInfo(info_type::GENRE);
+
+        case FAKE_NUM_OF_SUBELTS:
+            return getItem(index)->getInfo(info_type::NUM_OF_SUBELTS);
+
+        case FAKE_PERCENT_SEEN:
+            return getItem(index)->getInfo(info_type::PERCENT_SEEN);
+
+        case FAKE_NUM:
+            return getItem(index)->getInfo(info_type::NUM);
+
         default:
             break;
     }
@@ -456,6 +486,18 @@ QHash<int, QByteArray> MCModel::roleNames() const {
     roles[DOUBLE_CLICK] = "double_click";
     roles[SINGLE_CLICK] = "single_click";
     roles[IS_MOVIE] = "is_movie";
+    roles[FAKE_NAME] = "f_name";
+    roles[FAKE_URI] = "f_uri";
+    roles[FAKE_DURATION] = "f_duration";
+    roles[FAKE_COVER] = "f_cover";
+    roles[FAKE_DATE] = "f_date";
+    roles[FAKE_ARTIST] = "f_artist";
+    roles[FAKE_GENRE] = "f_genre";
+    roles[FAKE_NUM_OF_SUBELTS] = "f_num_of_subelts";
+    roles[FAKE_PERCENT_SEEN] = "f_percent_seen";
+    roles[FAKE_NUM] = "f_num";
+    return roles;
+
     return roles;
 }
 

@@ -76,7 +76,17 @@ public:
         DATE_ROLE,
         DOUBLE_CLICK,
         SINGLE_CLICK,
-        IS_MOVIE
+        IS_MOVIE,
+        FAKE_NAME,
+        FAKE_URI,
+        FAKE_DURATION,
+        FAKE_COVER,
+        FAKE_DATE,
+        FAKE_ARTIST,
+        FAKE_GENRE,
+        FAKE_NUM_OF_SUBELTS,
+        FAKE_PERCENT_SEEN,
+        FAKE_NUM
     };
     virtual void rebuild( playlist_item_t * p = NULL ) = 0;
     virtual void doDelete( QModelIndexList ) = 0;

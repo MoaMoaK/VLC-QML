@@ -40,6 +40,21 @@ enum playlist_item_type {
     OTHER
 };
 
+enum info_type {
+    NAME,
+    URI,
+    DURATION,
+    COVER,
+    DATE,
+    ARTIST,
+    GENRE,
+    NUM_OF_SUBELTS,
+    PERCENT_SEEN,
+    NUM
+};
+
+
+
 class MCItem : public QObject
 {
     Q_OBJECT
@@ -59,6 +74,7 @@ public:
     void exploreDir();
 
     Q_INVOKABLE QString getTitle() const;
+    QVariant getInfo(info_type infoName);
 
     static void staticUpdateType(vlc_event_t const *p_event, void *user_data);
     void updateType();
