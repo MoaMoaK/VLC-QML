@@ -11,35 +11,35 @@
 
 SUFFIXES += .ui .h .hpp .moc.cpp
 
-libqtqml_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
+libqt_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
 	-I$(srcdir)/gui/qtqml -I$(builddir)/gui/qtqml
-libqtqml_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt) -DQT_QML_DEBUG
-libqtqml_plugin_la_LIBADD = $(QT_LIBS) $(LIBS_qt) $(LIBM)
-libqtqml_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(guidir)'
+libqt_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt) -DQT_QML_DEBUG
+libqt_plugin_la_LIBADD = $(QT_LIBS) $(LIBS_qt) $(LIBM)
+libqt_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(guidir)'
 if HAVE_DARWIN
-libqtqml_plugin_la_LDFLAGS += -Wl,-framework,Cocoa
+libqt_plugin_la_LDFLAGS += -Wl,-framework,Cocoa
 endif
 if HAVE_QT5_X11
-libqtqml_plugin_la_CXXFLAGS += $(QT5_X11_CFLAGS) -DQT5_HAS_X11
-libqtqml_plugin_la_LIBADD += $(QT5_X11_LIBS) $(X_LIBS) $(X_PRE_LIB) -lX11
+libqt_plugin_la_CXXFLAGS += $(QT5_X11_CFLAGS) -DQT5_HAS_X11
+libqt_plugin_la_LIBADD += $(QT5_X11_LIBS) $(X_LIBS) $(X_PRE_LIB) -lX11
 endif
 if HAVE_XCB
-libqtqml_plugin_la_CXXFLAGS += -DQT5_HAS_XCB
+libqt_plugin_la_CXXFLAGS += -DQT5_HAS_XCB
 endif
 if HAVE_WAYLAND
-libqtqml_plugin_la_CPPFLAGS += -DQT5_HAS_WAYLAND \
+libqt_plugin_la_CPPFLAGS += -DQT5_HAS_WAYLAND \
 	-DQPNI_HEADER=\<$(QT_VERSION)/QtGui/qpa/qplatformnativeinterface.h\>
-libqtqml_plugin_la_CXXFLAGS += $(WAYLAND_CLIENT_CFLAGS)
-libqtqml_plugin_la_LIBADD += $(WAYLAND_CLIENT_LIBS)
+libqt_plugin_la_CXXFLAGS += $(WAYLAND_CLIENT_CFLAGS)
+libqt_plugin_la_LIBADD += $(WAYLAND_CLIENT_LIBS)
 endif
 if HAVE_WIN32
-libqtqml_plugin_la_LIBADD += $(LIBCOM) -lcomctl32 -luuid
+libqt_plugin_la_LIBADD += $(LIBCOM) -lcomctl32 -luuid
 endif
 if UPDATE_CHECK
-libqtqml_plugin_la_CPPFLAGS += -DUPDATE_CHECK
+libqt_plugin_la_CPPFLAGS += -DUPDATE_CHECK
 endif
 
-libqtqml_plugin_la_SOURCES = \
+libqt_plugin_la_SOURCES = \
 	gui/qtqml/qtqml.cpp gui/qtqml/qtqml.hpp \
 	gui/qtqml/menus.cpp gui/qtqml/menus.hpp \
 	gui/qtqml/main_interface.cpp gui/qtqml/main_interface.hpp \
@@ -150,7 +150,7 @@ libqtqml_plugin_la_SOURCES = \
 	gui/qtqml/util/singleton.hpp \
 	gui/qtqml/styles/seekstyle.cpp gui/qtqml/styles/seekstyle.hpp
 if HAVE_WIN32
-libqtqml_plugin_la_SOURCES += \
+libqt_plugin_la_SOURCES += \
 	gui/qtqml/main_interface_win32.cpp gui/qtqml/main_interface_win32.hpp
 endif
 
@@ -167,7 +167,7 @@ moc_verbose__0 = $(moc_verbose_0)
 # These MOC files depend on the configure settings:
 dialogs_provider.moc.cpp dialogs/vlm.moc.cpp: $(top_builddir)/config.h
 
-nodist_libqtqml_plugin_la_SOURCES = \
+nodist_libqt_plugin_la_SOURCES = \
 	gui/qtqml/main_interface.moc.cpp \
 	gui/qtqml/menus.moc.cpp \
 	gui/qtqml/dialogs_provider.moc.cpp \
@@ -243,10 +243,10 @@ nodist_libqtqml_plugin_la_SOURCES = \
 	gui/qtqml/styles/seekstyle.moc.cpp
 
 if HAVE_WIN32
-nodist_libqtqml_plugin_la_SOURCES += gui/qtqml/main_interface_win32.moc.cpp
+nodist_libqt_plugin_la_SOURCES += gui/qtqml/main_interface_win32.moc.cpp
 endif
 
-nodist_libqtqml_plugin_la_SOURCES += \
+nodist_libqt_plugin_la_SOURCES += \
 	gui/qtqml/ui/equalizer.h \
 	gui/qtqml/ui/video_effects.h \
 	gui/qtqml/ui/open_file.h \
@@ -279,7 +279,7 @@ uic_verbose__0 = $(uic_verbose_0)
 
 MOC_CPPFLAGS = $(DEFS) \
 	-I$(top_srcdir)/include -I$(top_builddir)/include -I$(top_builddir) \
-	$(libqtqml_plugin_la_CPPFLAGS)
+	$(libqt_plugin_la_CPPFLAGS)
 if HAVE_DARWIN
 MOC_CPPFLAGS += -DQ_OS_MAC
 endif
@@ -287,7 +287,7 @@ if HAVE_WIN32
 MOC_CPPFLAGS += -D_WIN32
 endif
 
-libqtqml_plugin_la_UI = \
+libqt_plugin_la_UI = \
 	gui/qtqml/ui/equalizer.ui \
 	gui/qtqml/ui/video_effects.ui \
 	gui/qtqml/ui/open_file.ui \
@@ -310,7 +310,7 @@ libqtqml_plugin_la_UI = \
 	gui/qtqml/ui/sout.ui \
 	gui/qtqml/ui/vlm.ui \
 	gui/qtqml/ui/fingerprintdialog.ui
-EXTRA_DIST += $(libqtqml_plugin_la_UI)
+EXTRA_DIST += $(libqt_plugin_la_UI)
 
 .ui.h:
 	$(AM_V_at)mkdir -p -- gui/qtqml/ui
@@ -322,7 +322,7 @@ EXTRA_DIST += $(libqtqml_plugin_la_UI)
 
 # Resources
 
-libqtqml_plugin_la_RES = \
+libqt_plugin_la_RES = \
 	gui/qtqml/pixmaps/clear.png \
 	gui/qtqml/pixmaps/eject.png \
 	gui/qtqml/pixmaps/faster.png \
@@ -463,14 +463,14 @@ libqtqml_plugin_la_RES = \
 	gui/qtqml/qml/playlist/PLDisplay.qml \
 	gui/qtqml/qml/playlist/MCDisplay.qml \
 	gui/qtqml/qml/playlist/MCListViewDelegate.qml
-EXTRA_DIST += gui/qtqml/vlc.qrc $(libqtqml_plugin_la_RES)
+EXTRA_DIST += gui/qtqml/vlc.qrc $(libqt_plugin_la_RES)
 
-nodist_libqtqml_plugin_la_SOURCES += gui/qtqml/resources.cpp
+nodist_libqt_plugin_la_SOURCES += gui/qtqml/resources.cpp
 
-gui/qtqml/resources.cpp: gui/qtqml/vlc.qrc $(libqtqml_plugin_la_RES)
+gui/qtqml/resources.cpp: gui/qtqml/vlc.qrc $(libqt_plugin_la_RES)
 	$(AM_V_GEN)$(RCC) -name vlc -o $@ $<
 
 if ENABLE_QT
-gui_LTLIBRARIES += libqtqml_plugin.la
-BUILT_SOURCES += $(nodist_libqtqml_plugin_la_SOURCES)
+gui_LTLIBRARIES += libqt_plugin.la
+BUILT_SOURCES += $(nodist_libqt_plugin_la_SOURCES)
 endif
