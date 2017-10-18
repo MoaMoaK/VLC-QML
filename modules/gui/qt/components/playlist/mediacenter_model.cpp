@@ -66,6 +66,7 @@ MCModel::MCModel( playlist_t *_p_playlist,  /* THEPL */
              this, processItemAppend( int, int ) );
     CONNECT( THEMIM, playlistItemRemoved( int ),
              this, processItemRemoval( int ) );
+
 }
 
 MCModel::~MCModel()

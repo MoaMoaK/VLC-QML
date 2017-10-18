@@ -119,6 +119,7 @@ public:
     void exploreDir( MCItem *item );
 
 
+
 protected:
     /* VLCModel subclassing */
     virtual bool isParent( const QModelIndex &index, const QModelIndex &current) const Q_DECL_OVERRIDE;
