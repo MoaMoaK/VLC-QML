@@ -1,9 +1,15 @@
+/****************************************************************************
+ * The banner to display the sub sources (albums/genre/tracks/artists ...)
+ ****************************************************************************/
+
 import QtQuick 2.0
+import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.3
 
 Rectangle {
     id: root_id
 
-    property int banner_height: 32
+    property int banner_height: dimensions.heightBar_normal
     property color banner_color: "#e6e6e6"
     property color hover_color: "#d6d6d6"
 
@@ -16,6 +22,11 @@ Rectangle {
         } else {
             return model_network_id;
         }
+    }
+
+    function sort( criteria ){
+        // To be implemented by the parent
+        return ;
     }
 
     function update() {
@@ -38,25 +49,33 @@ Rectangle {
 
     color: banner_color
 
-    Row {
-        anchors.centerIn: parent
+    RowLayout {
+        anchors.fill: parent
+
         Repeater {
             id: repeater_id
             model: chooseSubSources()
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
             Rectangle {
-                height: banner_height
+                // A single button for a sub-source
+                height: parent.height
                 width: subsource_name_id.implicitWidth + 20
 
                 color: banner_color
 
                 Text {
                     id: subsource_name_id
-                    text: model.displayText
                     anchors {
-                        top: parent.top
                         left: parent.left
-                        margins: 10
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                        rightMargin: dimensions.margin_small
+                        leftMargin: dimensions.margin_small
                     }
+                    text: model.displayText
                 }
 
                 MouseArea {
@@ -71,6 +90,7 @@ Rectangle {
         }
 
         ListModel {
+            // The list of sub-sources for Music
             id: model_music_id
             ListElement {
                 displayText: "Albums"
@@ -90,6 +110,7 @@ Rectangle {
             }
         }
         ListModel {
+            // The list of sub-sources for Video
             id: model_video_id
             ListElement {
                 displayText: "TV shows"
@@ -105,8 +126,35 @@ Rectangle {
             }
         }
         ListModel {
+            // The list of sub-sources for Network
             id: model_network_id
         }
+
+        ComboBox {
+            // The selector to choose a specific sorting operation
+            id: combo
+            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+            Layout.preferredWidth: width
+            width: 150
+
+            model: sortModel
+            onCurrentIndexChanged: sort( sortModel.get(currentIndex).text )
+        }
+
+        ListModel {
+            // The model for the different sort possible
+            id: sortModel
+            ListElement { text: "Alphabetic asc" }
+            ListElement { text: "Alphabetic desc" }
+            ListElement { text: "Duration asc" }
+            ListElement { text: "Duration desc" }
+            ListElement { text: "Date asc" }
+            ListElement { text: "Date desc" }
+            ListElement { text: "Artist asc" }
+            ListElement { text: "Artist desc" }
+        }
     }
+
 
 }

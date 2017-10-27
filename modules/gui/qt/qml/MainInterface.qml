@@ -43,10 +43,6 @@ Item {
                     medialib.selectSource(name);
                     subSourcesBanner.update();
                 }
-
-                function sort ( criteria ) {
-                    medialib.sort(criteria);
-                }
             }
 
             SubBannerSources {
@@ -68,6 +64,10 @@ Item {
 
                 function getCategory() {
                     return medialib.getCategory();
+                }
+
+                function sort ( criteria ) {
+                    medialib.sort(criteria);
                 }
             }
 

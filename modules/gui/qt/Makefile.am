@@ -475,7 +475,7 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/help.qml \
 	gui/qt/qml/about.qml \
 	gui/qt/qml/MainInterface.qml \
-	gui/qt/qml/BannerSources.qml \
+	gui/qt/qml/SubBannerSources.qml \
 	gui/qt/qml/mediacenter/MCGridAlbumsDelegate.qml \
 	gui/qt/qml/mediacenter/MCListAlbumsDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridArtistsDelegate.qml \

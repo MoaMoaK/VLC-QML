@@ -1,5 +1,9 @@
+/************************************************************
+ * The banner to display sources (Music, Video, Network)
+ ************************************************************/
+
 import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.3
 
 Rectangle {
 
@@ -13,12 +17,7 @@ Rectangle {
         return ;
     }
 
-    function sort( criteria ){
-        // To be implemented by the parent
-        return ;
-    }
-
-    property int banner_height: 32
+    property int banner_height: dimensions.heightBar_normal
     property color banner_color: "#e6e6e6"
     property color hover_color: "#d6d6d6"
     property bool need_toggleView_button: false
@@ -29,21 +28,23 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: 0
-
 
         Repeater {
+            // The repeater to display each button
             id: sourcesButtons
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
             model: buttonModel
             delegate: buttonView
         }
 
         ListModel {
+            // The model telling the text to display, the
+            // associated image and the name to send to medialib
+            // in order to notify to change the medialib model
             id: buttonModel
             ListElement {
                 displayText: "Music"
@@ -63,14 +64,13 @@ Rectangle {
         }
 
         Component {
+            // One button for the sources = rect(img+txt)
             id: buttonView
 
             Rectangle {
                 id: rect
-                anchors.top: parent.top
-                anchors.topMargin: 0
                 height: parent.height
-                width: txt.implicitWidth + icon.width + 20
+                width: txt.implicitWidth + icon.width + dimensions.margin_small*3
 
                 color: banner_color
 
@@ -78,14 +78,15 @@ Rectangle {
                     id: icon
 
                     anchors {
-                        top: parent.top
                         left: parent.left
-                        margins: 0
+                        verticalCenter: parent.verticalCenter
+                        rightMargin: dimensions.margin_xsmall
+                        leftMargin: dimensions.margin_small
                     }
 
                     source: model.pic
-                    height: 32
-                    width: 32
+                    height: dimensions.icon_normal
+                    width: dimensions.icon_normal
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -93,98 +94,52 @@ Rectangle {
                     id: txt
 
                     anchors {
-                        top: parent.top
                         left: icon.right
-                        margins: 10
+                        verticalCenter: parent.verticalCenter
+                        rightMargin: dimensions.margin_small
+                        leftMargin: dimensions.margin_xsmall
                     }
 
                     text: model.displayText
-                    font.pixelSize: 12
+                    font.pixelSize: dimensions.fontSize_normal
                 }
-
-//                Rectangle {
-//                    id: sub_elts_rect_id
-//                    anchors.top: parent.top
-//                    anchors.left: txt.right
-//                    anchors.topMargin: 0
-//                    anchors.leftMargin: 10
-//                    height: parent.height
-//                    width: 0
-
-//                    Behavior on width {
-//                        PropertyAnimation { duration: 200; easing.type: Easing.InOutCubic; }
-//                    }
-
-
-//                    color: hover_color
-
-//                    Row {
-//                        id: sub_elts_row_id
-//                        anchors.fill: parent
-//                        spacing: 10
-//                        Repeater {
-//                            model: modelData.subElts
-//                            Text {
-//                                anchors.verticalCenter: parent.verticalCenter
-//                                text: modelData.displayText + "  "
-//                            }
-//                        }
-//                    }
-//                }
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: selectSource( model.name )
                     hoverEnabled: true
-                    onEntered: { rect.color = hover_color; /*sub_elts_rect_id.width = sub_elts_row_id.implicitWidth;*/ }
-                    onExited: { rect.color = banner_color; /*sub_elts_rect_id.width = 0;*/ }
+                    onEntered: { rect.color = hover_color; }
+                    onExited: { rect.color = banner_color; }
                 }
             }
         }
 
-        ComboBox {
-            id: combo
+        Image {
+            // A button to choose the view displayed (list or grid)
+            // Should be moved in the end
+            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+            Layout.preferredHeight: height
+            Layout.preferredWidth: width
+            Layout.rightMargin: dimensions.margin_normal
+            height: dimensions.icon_normal
+            width: dimensions.icon_normal
 
-            anchors.verticalCenter: parent.verticalCenter
-            width: 150
-
-            model: sortModel
-            onCurrentIndexChanged: sort( sortModel.get(currentIndex).text )
-        }
-
-        ListModel {
-            id: sortModel
-            ListElement { text: "Alphabetic asc" }
-            ListElement { text: "Alphabetic desc" }
-            ListElement { text: "Duration asc" }
-            ListElement { text: "Duration desc" }
-            ListElement { text: "Date asc" }
-            ListElement { text: "Date desc" }
-            ListElement { text: "Artist asc" }
-            ListElement { text: "Artist desc" }
-        }
-    }
-
-    Image {
-        height: parent.height - 10
-        width: parent.height - 10
-        anchors {
-            top: parent.top
-            right: parent.right
-            topMargin: 5
-            rightMargin: 20
-        }
-        fillMode: Image.PreserveAspectFit
-        source: "qrc:///toolbar/tv"
-        enabled: need_toggleView_button
-        visible: need_toggleView_button
-
-        MouseArea {
-            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:///toolbar/tv"
             enabled: need_toggleView_button
-            onClicked: toggleView()
+            visible: need_toggleView_button
+
+            MouseArea {
+                anchors.fill: parent
+                enabled: need_toggleView_button
+                onClicked: toggleView()
+            }
         }
+
     }
+
+
 
 }
 
