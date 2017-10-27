@@ -1,6 +1,6 @@
 #include "mlserie.hpp"
 
-MLSerie::MLSerie()
+MLSerie::MLSerie(medialibrary::AlbumPtr data)
 {
 
 }

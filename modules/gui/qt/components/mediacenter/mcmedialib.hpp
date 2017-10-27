@@ -14,6 +14,7 @@
 #include "mlalbum.hpp"
 #include "mlmovie.hpp"
 #include "mlserie.hpp"
+#include "mlartist.hpp"
 
 #include <medialibrary/IMediaLibrary.h>
 #include <medialibrary/IAlbum.h>
@@ -21,18 +22,29 @@
 #include "excallback.hpp"
 
 enum MCMediaLibRoles {
-    SET_ALBUMS = Qt::UserRole + 1,
-    SET_MOVIES,
-    SET_SERIES,
-    TITLE,
-    COVER,
-    DURATION
+    GET_ID = Qt::UserRole + 1,
+    GET_TITLE,
+    GET_RELEASE_YEAR,
+    GET_SHORT_SUMMARY,
+    GET_COVER,
+    GET_TRACKS,
+    GET_ARTIST,
+    GET_NB_TRACKS,
+    GET_DURATION,
+    GET_ALBUM,
+    GET_NAME,
+    GET_SHORT_BIO,
+    GET_ALBUMS,
+    GET_NB_ALBUMS
 };
 
 enum MCMediaLibCategory {
-    ALBUMS,
-    MOVIE,
-    SERIE
+    CAT_MUSIC_ALBUM,
+    CAT_MUSIC_ARTIST,
+    CAT_MUSIC_GENRE,
+    CAT_MUSIC_TRACKS,
+    CAT_VIDEO,
+    CAT_NETWORK
 };
 
 class MCMediaLib : public QAbstractListModel
@@ -49,24 +61,41 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const;
 
+    void update();
+
+    Q_INVOKABLE QVariant getCategory();
+    Q_INVOKABLE void selectSource(const QString &name );
+    Q_INVOKABLE void sort(const QString &criteria );
+
 private:
     MLAlbum* getAlbumItem(const QModelIndex &index ) const;
+    MLArtist* getArtistItem(const QModelIndex &index ) const;
+    MLAlbum* getGenreItem(const QModelIndex &index ) const;
+    MLAlbum* getTrackItem(const QModelIndex &index ) const;
     MLMovie* getMovieItem(const QModelIndex &index ) const;
     MLSerie* getSerieItem(const QModelIndex &index ) const;
 
-    void retrieveAlbums();
-    void retrieveMovies();
-    void retrieveSeries();
+    void retrieveAlbums(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
+    void retrieveArtists(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
+    void retrieveGenres(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
+    void retrieveTracks(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
+    void retrieveMovies(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
+    void retrieveSeries(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
     intf_thread_t *p_intf;
     QList<MLAlbum*> *albums;
-    QList<MLMovie*> *movies;
-    QList<MLSerie*> *series;
-    MCMediaLibCategory *current_cat;
+    QList<MLArtist*> *artists;
+    QList<MLAlbum*> *genres;
+    QList<MLAlbum*> *tracks;
+    QList<MLMovie*> *videos;
+    QList<MLSerie*> *networks;
+    MCMediaLibCategory current_cat;
 
     /* Medialibrary */
     medialibrary::IMediaLibrary* ml;
     medialibrary::ExCallback* cb;
+
+    void sortCurrent(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
 };
 

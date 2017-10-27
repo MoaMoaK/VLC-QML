@@ -33,10 +33,12 @@
 #include "components/playlist/vlc_model.hpp"
 #include "components/video_overlay.hpp"
 #include "components/interface_widgets.hpp"
+#include "components/mediacenter/vlcdimensions.hpp"
 
 #include <qt5/QtWidgets/QWidget>
 #include <qt5/QtWidgets/QFrame>
 #include <qt5/QtWidgets/QHBoxLayout>
+#include <qt5/QtQml/QQmlPropertyMap>
 #include <QModelIndexList>
 #include <QQmlContext>
 #include <QtQuickWidgets/QQuickWidget>

@@ -105,6 +105,21 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/epg/EPGView.cpp gui/qt/components/epg/EPGView.hpp \
 	gui/qt/components/epg/EPGWidget.cpp \
 	gui/qt/components/epg/EPGWidget.hpp \
+	gui/qt/components/mediacenter/excallback.hpp \
+	gui/qt/components/mediacenter/vlcdimensions.cpp \
+	gui/qt/components/mediacenter/vlcdimensions.hpp \
+	gui/qt/components/mediacenter/mcmedialib.cpp \
+	gui/qt/components/mediacenter/mcmedialib.hpp \
+	gui/qt/components/mediacenter/mlalbum.cpp \
+	gui/qt/components/mediacenter/mlalbum.hpp \
+	gui/qt/components/mediacenter/mlalbumtrack.cpp \
+	gui/qt/components/mediacenter/mlalbumtrack.hpp \
+	gui/qt/components/mediacenter/mlmovie.cpp \
+	gui/qt/components/mediacenter/mlmovie.hpp \
+	gui/qt/components/mediacenter/mlserie.cpp \
+	gui/qt/components/mediacenter/mlserie.hpp \
+	gui/qt/components/mediacenter/mlartist.cpp \
+	gui/qt/components/mediacenter/mlartist.hpp \
 	gui/qt/components/playlist/views.cpp \
 	gui/qt/components/playlist/views.hpp \
 	gui/qt/components/playlist/vlc_model.cpp \
@@ -218,6 +233,10 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/components/epg/EPGRuler.moc.cpp \
 	gui/qt/components/epg/EPGView.moc.cpp \
 	gui/qt/components/epg/EPGWidget.moc.cpp \
+	gui/qt/components/mediacenter/mcmedialib.moc.cpp \
+	gui/qt/components/mediacenter/mlalbumtrack.moc.cpp \
+	gui/qt/components/mediacenter/mlalbum.moc.cpp \
+	gui/qt/components/mediacenter/mlartist.moc.cpp \
 	gui/qt/components/playlist/views.moc.cpp \
 	gui/qt/components/playlist/vlc_model.moc.cpp \
 	gui/qt/components/playlist/mediacenter_model.moc.cpp \
@@ -455,13 +474,28 @@ libqt_plugin_la_RES = \
 	gui/qt/pixmaps/lock.png \
 	gui/qt/qml/help.qml \
 	gui/qt/qml/about.qml \
-	gui/qt/qml/playlist/MainInterface.qml \
+	gui/qt/qml/MainInterface.qml \
+	gui/qt/qml/BannerSources.qml \
+	gui/qt/qml/mediacenter/MCGridAlbumsDelegate.qml \
+	gui/qt/qml/mediacenter/MCListAlbumsDelegate.qml \
+	gui/qt/qml/mediacenter/MCGridArtistsDelegate.qml \
+	gui/qt/qml/mediacenter/MCListArtistsDelegate.qml \
+	gui/qt/qml/mediacenter/MCAlbumDetails.qml \
+	gui/qt/qml/mediacenter/MCArtistDetails.qml \
+	gui/qt/qml/mediacenter/MCDisplay.qml \
+	gui/qt/qml/mediacenter/MCMusicAlbumsDisplay.qml \
+	gui/qt/qml/mediacenter/MCMusicArtistsDisplay.qml \
+	gui/qt/qml/mediacenter/MCMusicGenresDisplay.qml \
+	gui/qt/qml/mediacenter/MCMusicTracksDisplay.qml \
+	gui/qt/qml/mediacenter/MCVideoDisplay.qml \
+	gui/qt/qml/mediacenter/MCNetworkDisplay.qml \
+	gui/qt/qml/utils/ToolTip.qml \
+	gui/qt/qml/utils/ToolTipArea.qml \
+	gui/qt/qml/utils/HorizontalRule.qml \
 	gui/qt/qml/playlist/InfoMovie.qml \
-	gui/qt/qml/playlist/BannerSources.qml \
 	gui/qt/qml/playlist/MCGridViewDelegate.qml \
 	gui/qt/qml/playlist/PLListViewDelegate.qml \
 	gui/qt/qml/playlist/PLDisplay.qml \
-	gui/qt/qml/playlist/MCDisplay.qml \
 	gui/qt/qml/playlist/MCListViewDelegate.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 

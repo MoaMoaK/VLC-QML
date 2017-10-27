@@ -1,6 +1,6 @@
 #include "mlmovie.hpp"
 
-MLMovie::MLMovie()
+MLMovie::MLMovie(medialibrary::AlbumPtr data)
 {
 
 }

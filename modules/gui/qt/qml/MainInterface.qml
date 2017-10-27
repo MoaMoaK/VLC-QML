@@ -2,6 +2,11 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 
+import "qrc:///mediacenter/"
+//import "./mediacenter"
+import "qrc:///playlist/"
+//import "./playlist"
+
 Item {
     width: 1000
     height: 1000
@@ -33,9 +38,36 @@ Item {
                     mcDisplay.cycleViews();
                 }
 
-                function selectSource ( num ) {
-                    mcDisplay.hideInfoMovie();
-                    selector.setSourceFromNum( num );
+                function selectSource ( name ) {
+                    mcDisplay.setView( name );
+                    medialib.selectSource(name);
+                    subSourcesBanner.update();
+                }
+
+                function sort ( criteria ) {
+                    medialib.sort(criteria);
+                }
+            }
+
+            SubBannerSources {
+                id: subSourcesBanner
+
+                // Custom properties
+                banner_color: "#e6e6e6"
+                hover_color: "#d6d6d6"
+                banner_height: 32
+
+                // Basic properties
+                z : 10
+
+                function selectSource ( name ) {
+                    mcDisplay.setView( name );
+                    medialib.selectSource(name);
+                    subSourcesBanner.update();
+                }
+
+                function getCategory() {
+                    return medialib.getCategory();
                 }
             }
 
@@ -43,11 +75,11 @@ Item {
                 id: mcDisplay
 
                 // Custom properties
-                media : m
+                media : medialib
 
                 // Basic properties
                 z: 0
-                height : parent.height - sourcesBanner.height
+                height : parent.height - sourcesBanner.height - subSourcesBanner.height
                 anchors.right: parent.right
                 anchors.left: parent.left
             }

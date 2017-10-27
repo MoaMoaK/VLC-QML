@@ -47,6 +47,8 @@
 
 #include <qt5/QtQuickWidgets/QQuickWidget>
 
+#include "components/mediacenter/mcmedialib.hpp"
+
 
 #define I_NEW_DIR \
     I_DIR_OR_FOLDER( N_("Create Directory"), N_( "Create Folder" ) )
@@ -615,15 +617,26 @@ void StandardPLPanel::createMainView()
 
 //    QQuickWidget* mainViewQuick = new QQuickWidget();
 
+    MCMediaLib *medialib = new MCMediaLib(p_intf);
+
+
+
+
+    /*************************************************************
+     * PROPERTIES
+     *************************************************************/
+
+    VLCDimensions* dimensions = new VLCDimensions();
+
     QQmlContext *rootCtx = mainView->rootContext();
-    rootCtx->setContextProperty( "m", model );
-    rootCtx->setContextProperty( "selector", p_selector);
+    rootCtx->setContextProperty( "medialib", medialib );
+    rootCtx->setContextProperty( "dimensions", dimensions );
 
     PLModel* plmodel = new PLModel(p_intf);
     model->setPLModel(plmodel);
     rootCtx->setContextProperty( "playlist", plmodel);
 
-    mainView->setSource( QUrl ( QStringLiteral("qrc:/playlist/MainInterface.qml") ) );
+    mainView->setSource( QUrl ( QStringLiteral("qrc:/qml/MainInterface.qml") ) );
     mainView->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
 //    mainLayout->addWidget( mainView );
