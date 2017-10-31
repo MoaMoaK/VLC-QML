@@ -83,6 +83,7 @@ public:
 
     void update();
 
+    Q_INVOKABLE QVariant hasPresentation();
     Q_INVOKABLE QVariant getCategory();
     Q_INVOKABLE QVariant getObjects();
     Q_INVOKABLE QVariant isGridView();
@@ -120,6 +121,7 @@ private:
     medialibrary::SortingCriteria current_sort;
     bool is_desc;
     QList<QObject*> *current_obj;
+    QObject *current_main_obj;
 
     /* Medialibrary */
     medialibrary::IMediaLibrary* ml;

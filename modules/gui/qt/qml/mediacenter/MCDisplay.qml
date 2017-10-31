@@ -21,7 +21,7 @@ ColumnLayout {
     Presentation {
         z: 10
         Layout.fillWidth: true
-        height: dimensions.heightBar_xlarge
+        height: medialib.hasPresentation() ? dimensions.heightBar_xlarge : 0
         Layout.preferredHeight: height
         Layout.minimumHeight: height
         Layout.maximumHeight: height

@@ -28,6 +28,7 @@ MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QQuickWidget *_qml_item, QObject 
     networks = NULL;
 
     current_obj = NULL;
+    current_main_obj = NULL;
 
     retrieveAlbums();
 }
@@ -73,6 +74,13 @@ int MCMediaLib::rowCount(const QModelIndex &parent) const
     default:
         return 0;
     }
+}
+
+QVariant MCMediaLib::hasPresentation() {
+    if (current_main_obj)
+        return true;
+    else
+        return false;
 }
 
 QVariant MCMediaLib::getCategory()
