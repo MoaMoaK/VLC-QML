@@ -18,14 +18,63 @@ ColumnLayout {
         viewLoader.item.reloadData();
     }
 
-    Presentation {
-        z: 10
-        Layout.fillWidth: true
-        height: medialib.hasPresentation() ? dimensions.heightBar_xlarge : 0
-        Layout.preferredHeight: height
-        Layout.minimumHeight: height
-        Layout.maximumHeight: height
+    function reloadPresentation() {
+        if ( medialib.hasPresentation() )
+        {
+            console.log('plop');
+            presentationLoader_id.replace( presentationComponent_id )
+        }
+        else
+            presentationLoader_id.replace( noPresentationComponent_id )
+
+        console.log( "Presentation reloaded "+medialib.getPresObject() )
     }
+
+    StackView {
+        id: presentationLoader_id
+        z:10
+        Layout.fillWidth: true
+        initialItem: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
+
+        replaceEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to: 1
+                duration: 200
+            }
+        }
+        replaceExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 200
+            }
+        }
+    }
+
+    Component {
+        id: presentationComponent_id
+
+        Presentation {
+            height: dimensions.heightBar_xlarge
+            Layout.preferredHeight: height
+            Layout.minimumHeight: height
+            Layout.maximumHeight: height
+        }
+    }
+    Component {
+        id: noPresentationComponent_id
+
+        Rectangle {
+            height: 0
+            Layout.preferredHeight: height
+            Layout.minimumHeight: height
+            Layout.maximumHeight: height
+        }
+    }
+
     Loader {
         id: viewLoader
         z: 0

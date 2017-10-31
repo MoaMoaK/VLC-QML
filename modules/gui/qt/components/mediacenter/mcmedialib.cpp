@@ -140,6 +140,21 @@ void MCMediaLib::toogleView()
     invokeQML("changedView()");
 }
 
+void MCMediaLib::select( const int &item_id )
+{
+    if (item_id >= 0 && item_id <= current_obj->count())
+        current_main_obj = current_obj->at(item_id);
+    invokeQML("reloadPresentation()");
+}
+
+QVariant MCMediaLib::getPresObject()
+{
+    if (current_main_obj)
+        return QVariant::fromValue( current_main_obj );
+    else
+        return QVariant();
+}
+
 void MCMediaLib::selectSource( const QString &name )
 {
     if (name == "music" && current_cat != CAT_MUSIC_ALBUM)
@@ -147,6 +162,8 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to music-general view");
         current_cat = CAT_MUSIC_ALBUM;
         retrieveAlbums();
+        if (current_main_obj) current_main_obj = NULL;
+        invokeQML("reloadPresentation()");
         invokeQML("changedCategory()");
     }
     else if (name == "music-albums" && current_cat != CAT_MUSIC_ALBUM)
@@ -154,6 +171,8 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to music-albums view");
         current_cat = CAT_MUSIC_ALBUM;
         retrieveAlbums();
+        if (current_main_obj) current_main_obj = NULL;
+        invokeQML("reloadPresentation()");
         invokeQML("changedCategory()");
     }
     else if (name == "music-artists" && current_cat != CAT_MUSIC_ARTIST)
@@ -161,6 +180,8 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to music-artists view");
         current_cat = CAT_MUSIC_ARTIST;
         retrieveArtists();
+        if (current_main_obj) current_main_obj = NULL;
+        invokeQML("reloadPresentation()");
         invokeQML("changedCategory()");
     }
     else if (name == "music-genre" && current_cat != CAT_MUSIC_GENRE)
@@ -168,6 +189,8 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to music-genre view");
         current_cat = CAT_MUSIC_GENRE;
         retrieveGenres();
+        if (current_main_obj) current_main_obj = NULL;
+        invokeQML("reloadPresentation()");
         invokeQML("changedCategory()");
     }
     else if (name == "music-tracks" && current_cat != CAT_MUSIC_TRACKS)
@@ -175,6 +198,8 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to music-track view");
         current_cat = CAT_MUSIC_TRACKS;
         retrieveTracks();
+        if (current_main_obj) current_main_obj = NULL;
+        invokeQML("reloadPresentation()");
         invokeQML("changedCategory()");
     }
     else if (name == "video" && current_cat != CAT_VIDEO)
@@ -182,6 +207,8 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to video-general view");
         current_cat = CAT_VIDEO;
         retrieveMovies();
+        if (current_main_obj) current_main_obj = NULL;
+        invokeQML("reloadPresentation()");
         invokeQML("changedCategory()");
     }
     else if (name == "network" && current_cat != CAT_NETWORK)
@@ -189,6 +216,8 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to network-general view");
         current_cat = CAT_NETWORK;
         retrieveSeries();
+        if (current_main_obj) current_main_obj = NULL;
+        invokeQML("reloadPresentation()");
         invokeQML("changedCategory()");
     }
 }

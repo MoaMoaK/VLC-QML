@@ -88,6 +88,8 @@ public:
     Q_INVOKABLE QVariant getObjects();
     Q_INVOKABLE QVariant isGridView();
     Q_INVOKABLE void toogleView();
+    Q_INVOKABLE void select(const int &item_id);
+    Q_INVOKABLE QVariant getPresObject();
     Q_INVOKABLE void selectSource(const QString &name );
     Q_INVOKABLE void sort(const QString &criteria );
 

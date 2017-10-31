@@ -14,6 +14,7 @@ Item {
     function reloadData() { mcDisplay.reloadData();}
     function changedCategory() { mcDisplay.changedCategory(); }
     function changedView() { mcDisplay.changedView(); }
+    function reloadPresentation() { mcDisplay.reloadPresentation(); }
 
     SplitView {
         anchors.fill: parent

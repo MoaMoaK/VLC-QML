@@ -26,7 +26,7 @@ Rectangle {
 
         onClicked: {
             console.log('Clicked on details : '+modelData.getTitle())
-            showDetails( modelData );
+            medialib.select( currentIndex );
             mouse.accepted = false
         }
     }
