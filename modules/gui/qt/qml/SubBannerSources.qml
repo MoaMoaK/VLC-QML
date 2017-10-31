@@ -9,15 +9,14 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id: root_id
 
-    property int banner_height: dimensions.heightBar_normal
     property color banner_color: "#e6e6e6"
     property color hover_color: "#d6d6d6"
 
     function chooseSubSources() {
         var c = getCategory();
-        if (c==="music-albums" || c==="music-artists" || c==="music-genres" || c==="music-tracks") {
+        if (c >= 0 && c <= 3) {
             return model_music_id;
-        } else if (c==="video") {
+        } else if (c===4) {
             return model_video_id;
         } else {
             return model_network_id;
@@ -44,8 +43,6 @@ Rectangle {
     }
     anchors.left: parent.left
     anchors.right: parent.right
-
-    height: banner_height
 
     color: banner_color
 
@@ -139,11 +136,11 @@ Rectangle {
             width: 150
 
             model: sortModel
-            onCurrentIndexChanged: sort( sortModel.get(currentIndex).text )
+            onActivated: sort( sortModel.get(index).text )
         }
 
         ListModel {
-            // The model for the different sort possible
+            // The model for the different possible sorts
             id: sortModel
             ListElement { text: "Alphabetic asc" }
             ListElement { text: "Alphabetic desc" }

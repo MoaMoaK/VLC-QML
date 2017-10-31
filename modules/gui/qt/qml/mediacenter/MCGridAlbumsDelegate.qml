@@ -25,11 +25,10 @@ Rectangle {
         propagateComposedEvents: true
 
         onClicked: {
-            console.log('Clicked on details : '+model.title)
-            showDetails( model.album );
+            console.log('Clicked on details : '+modelData.getTitle())
+            showDetails( modelData );
             mouse.accepted = false
         }
-
     }
 
     Column {
@@ -45,7 +44,7 @@ Rectangle {
 
             Image {
                 id: img
-                source: model.cover || "qrc:///noart.png"
+                source: modelData.getCover() || "qrc:///noart.png"
 
                 anchors.fill: parent
 // Mask for round corner
@@ -77,7 +76,7 @@ Rectangle {
                 Text {
                     id: dur_disp
                     anchors.centerIn: parent
-                    text: model.duration + " - " + model.nb_tracks + " tracks"
+                    text: modelData.getDuration() + " - " + modelData.getNbTracks() + " tracks"
                     font.pixelSize: 10
                 }
             }
@@ -107,7 +106,7 @@ Rectangle {
                     onEntered: { parent.opacity = 0.7; root.color = "#F0F0F0"; }
                     onExited: { parent.opacity = 0 ; root.color = "#FFFFFF";}
 
-                    onClicked: console.log('Clicked on play : '+model.title)
+                    onClicked: console.log('Clicked on play : '+modelData.getTitle())
                 }
             }
         }
@@ -122,7 +121,7 @@ Rectangle {
                 id: year_disp
                 anchors.left: title_disp.right
                 anchors.top: parent.top
-                text: model.release_year !== "0" ? model.release_year : ""
+                text: modelData.getReleaseYear() !== "0" ? modelData.getReleaseYear() : ""
                 font.pixelSize: 12
             }
 
@@ -132,12 +131,12 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 elide: Text.ElideRight
-                text: "<b>"+(model.title || "Unknown title")+"</b>"
+                text: "<b>"+(modelData.getTitle() || "Unknown title")+"</b>"
                 font.pixelSize: 12
 
                 ToolTipArea {
                     anchors.fill: parent
-                    text: model.title || "Unknown title"
+                    text: modelData.getTitle() || "Unknown title"
                     enabled: title_disp.truncated
                     attachedParent: root
                 }

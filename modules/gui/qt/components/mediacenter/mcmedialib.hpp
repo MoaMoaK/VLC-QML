@@ -8,6 +8,10 @@
 #include <qt5/QtCore/QHash>
 #include <qt5/QtCore/QByteArray>
 #include <qt5/QtCore/QList>
+#include <qt5/QtQuickWidgets/QQuickWidget>
+#include <qt5/QtQuick/QQuickItem>
+#include <qt5/QtCore/QMetaObject>
+#include <qt5/QtCore/QMetaMethod>
 
 #include "qt.hpp"
 #include "input_manager.hpp"
@@ -47,12 +51,28 @@ enum MCMediaLibCategory {
     CAT_NETWORK
 };
 
+enum MCMediaLibView {
+    VIEW_NOVIEW,
+    VIEW_MUSIC,
+    VIEW_MUSIC_ALBUMS,
+    VIEW_MUSIC_ARTISTS,
+    VIEW_MUSIC_GENRES,
+    VIEW_MUSIC_TRACKS,
+    VIEW_VIDEO,
+    VIEW_VIDEO_TVSHOWS,
+    VIEW_VIDEO_SEASONS,
+    VIEW_VIDEO_TRACKS,
+    VIEW_NETWORK,
+    VIEW_PLAYLITS,
+    VIEW_BROWSER
+};
+
 class MCMediaLib : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    MCMediaLib(intf_thread_t *_p_intf, QObject *parent = nullptr);
+    MCMediaLib(intf_thread_t *_p_intf, QQuickWidget* _qml_item, QObject *parent = nullptr);
 
     /* Subclassing QAbstractListModel */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -64,6 +84,9 @@ public:
     void update();
 
     Q_INVOKABLE QVariant getCategory();
+    Q_INVOKABLE QVariant getObjects();
+    Q_INVOKABLE QVariant isGridView();
+    Q_INVOKABLE void toogleView();
     Q_INVOKABLE void selectSource(const QString &name );
     Q_INVOKABLE void sort(const QString &criteria );
 
@@ -83,6 +106,10 @@ private:
     void retrieveSeries(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
     intf_thread_t *p_intf;
+    QQuickWidget *qmlItem;
+
+    bool m_gridView;
+
     QList<MLAlbum*> *albums;
     QList<MLArtist*> *artists;
     QList<MLAlbum*> *genres;
@@ -90,6 +117,9 @@ private:
     QList<MLMovie*> *videos;
     QList<MLSerie*> *networks;
     MCMediaLibCategory current_cat;
+    medialibrary::SortingCriteria current_sort;
+    bool is_desc;
+    QList<QObject*> *current_obj;
 
     /* Medialibrary */
     medialibrary::IMediaLibrary* ml;
@@ -97,6 +127,7 @@ private:
 
     void sortCurrent(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
+    void invokeQML(const char *func );
 };
 
 

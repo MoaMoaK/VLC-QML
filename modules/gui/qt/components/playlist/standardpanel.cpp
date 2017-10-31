@@ -617,7 +617,7 @@ void StandardPLPanel::createMainView()
 
 //    QQuickWidget* mainViewQuick = new QQuickWidget();
 
-    MCMediaLib *medialib = new MCMediaLib(p_intf);
+    MCMediaLib *medialib = new MCMediaLib(p_intf, mainView);
 
 
 

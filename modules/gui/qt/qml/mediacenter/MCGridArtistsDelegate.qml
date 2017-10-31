@@ -22,8 +22,8 @@ Rectangle {
         propagateComposedEvents: true
 
         onClicked: {
-            console.log('Clicked on details : '+model.name)
-            showDetails( model.artist );
+            console.log('Clicked on details : '+modelData.getName())
+            showDetails( modelData );
             mouse.accepted = false
         }
 
@@ -35,40 +35,27 @@ Rectangle {
         id: column
         spacing: 5
 
-        Grid {
-            id: grid_cover_id
-            columns: 2
-            spacing: 2
-
+        ArtistCover {
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width - 4
             height: root.height - title_disp.height - 4
 
-            Repeater {
-                model: Math.min(nb_albums, 4)
-
-                Image {
-                    id: img
-                    source: albums[modelData].getCover() || "qrc:///noart.png"
-                    height: nb_albums == 1 ? grid_cover_id.height : (grid_cover_id.height/grid_cover_id.columns) - 1
-                    width: nb_albums == 1 ? grid_cover_id.width : (grid_cover_id.width/grid_cover_id.columns) - 1
-                }
-
-            }
+            albums: modelData.getAlbums()
+            nb_albums: modelData.getNbAlbums()
         }
 
         Text {
             id: title_disp
             anchors.left: parent.left
             width: root.width - 4
-            text: "<b>"+(model.name || "Plop")+"<b>"
+            text: "<b>"+(modelData.getName() || "Plop")+"<b>"
             font.pixelSize: 12
             elide: Text.ElideRight
             height: implicitHeight+10
 
             ToolTipArea {
                 anchors.fill: parent
-                text: model.title || "Unknown Artist"
+                text: modelData.getName() || "Unknown Artist"
                 enabled: title_disp.truncated
                 attachedParent: root
             }

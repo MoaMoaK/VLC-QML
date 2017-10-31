@@ -76,7 +76,7 @@ Rectangle {
                         id: expand_cover_id
                         width: 80
                         height: 80
-                        source: model.cover || "qrc:///noart.png"
+                        source: modelData.getCover() || "qrc:///noart.png"
                     }
 
                     Column {
@@ -85,37 +85,18 @@ Rectangle {
                         spacing: 5
 
                         Text {
-                            text: "<b>"+(model.title || "Unknown title")+"</b>"
+                            text: "<b>"+(modelData.getTitle() || "Unknown title")+"</b>"
                         }
 
-                        ListView {
-                            id: expand_track_id
+                        TracksDisplay {
                             x: 30
-                            height: tracks.length * (spacing + 2 + 12)
+                            height: modelData.getTracks().length * (spacing + 2 + 12)
                             width: expand_infos_id.width - x
-                            interactive: false
-                            model: tracks
 
-                            delegate: Rectangle {
-                                height: expand_track_name_id.font.pixelSize + 2
-                                width: expand_track_id.width
-
-                                Text {
-                                    id: expand_track_name_id
-                                    text: "["+tracks[index].getTrackNumber()+"] "+tracks[index].getTitle()+" - "+tracks[index].getDuration()
-                                }
-
-                                MouseArea {
-                                    anchors.fill: parent
-
-                                    hoverEnabled: true
-
-                                    onEntered: { parent.color = "#f0f0f0" }
-                                    onExited: { parent.color = "#ffffff" }
-                                    onClicked: { console.log( "clicked : "+tracks[index].getTitle() ) }
-                                }
-                            }
+                            tracks: modelData.getTracks()
                         }
+
+
                     }
                 }
 
@@ -139,12 +120,12 @@ Rectangle {
                     id: collapse_cover_id
                     width: 32
                     height: 32
-                    source: model.cover || "qrc:///noart.png"
+                    source: modelData.getCover() || "qrc:///noart.png"
                 }
 
                 Text {
                     id: collapse_title_id
-                    text : "<b>"+(model.title || "Unknown title")+"</b> ["+model.duration+"]"
+                    text : "<b>"+(modelData.getTitle() || "Unknown title")+"</b> ["+modelData.getDuration()+"]"
                     anchors.verticalCenter: parent.verticalCenter
                     width: Math.min( ( parent.width-collapse_cover_id.width-parent.spacing )*2/3 , implicitWidth )
                     elide: Text.ElideRight
@@ -152,7 +133,7 @@ Rectangle {
 
                 Text {
                     id: collapse_infos_id
-                    text: model.artist
+                    text: modelData.getArtist()
                     anchors.verticalCenter: parent.verticalCenter
                     width: Math.min( parent.width-parent.spacing-collapse_cover_id.width-parent.spacing-collapse_title_id.width , implicitWidth )
                     elide: Text.ElideRight

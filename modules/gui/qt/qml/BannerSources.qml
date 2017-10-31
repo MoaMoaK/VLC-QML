@@ -8,8 +8,7 @@ import QtQuick.Layouts 1.3
 Rectangle {
 
     function toggleView () {
-        // To be implemented by the parent
-        return;
+        medialib.toogleView();
     }
 
     function selectSource( name ) {
@@ -17,16 +16,12 @@ Rectangle {
         return ;
     }
 
-    property int banner_height: dimensions.heightBar_normal
     property color banner_color: "#e6e6e6"
     property color hover_color: "#d6d6d6"
     property bool need_toggleView_button: false
 
     id: pLBannerSources
-    height: banner_height
     color: banner_color
-    anchors.left: parent.left
-    anchors.right: parent.right
 
     RowLayout {
         anchors.fill: parent
@@ -131,6 +126,7 @@ Rectangle {
             visible: need_toggleView_button
 
             MouseArea {
+
                 anchors.fill: parent
                 enabled: need_toggleView_button
                 onClicked: toggleView()

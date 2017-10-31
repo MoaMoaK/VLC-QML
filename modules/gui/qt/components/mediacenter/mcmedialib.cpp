@@ -6,14 +6,17 @@
 #include <vlc_playlist.h>
 #include <vlc_input_item.h>
 
-MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QObject *parent)
-    : QAbstractListModel(parent)
+MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QQuickWidget *_qml_item, QObject *parent)
+    : p_intf( _p_intf ),
+      qmlItem( _qml_item ),
+      current_cat ( CAT_MUSIC_ALBUM ),
+      current_sort( medialibrary::SortingCriteria::Default ),
+      is_desc( false ),
+      ml( NewMediaLibrary() ),
+      cb( new medialibrary::ExCallback() ),
+      m_gridView( true ),
+      QAbstractListModel(parent)
 {
-    p_intf = _p_intf;
-    current_cat = CAT_MUSIC_ALBUM;
-
-    ml = NewMediaLibrary();
-    cb = new medialibrary::ExCallback();
     ml->initialize("/home/moamoak/vlc-bdd.db", "/home/moamoak/vlc-thumb", cb);
     ml->start();
 
@@ -24,7 +27,9 @@ MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QObject *parent)
     videos = NULL;
     networks = NULL;
 
-    retrieveAlbums(medialibrary::SortingCriteria::Duration);
+    current_obj = NULL;
+
+    retrieveAlbums();
 }
 
 QVariant MCMediaLib::headerData(int section, Qt::Orientation orientation, int role) const
@@ -72,29 +77,59 @@ int MCMediaLib::rowCount(const QModelIndex &parent) const
 
 QVariant MCMediaLib::getCategory()
 {
-    switch(current_cat)
-    {
-    case CAT_MUSIC_ALBUM:
-        return QVariant("music-albums");
+    return QVariant( current_cat );
+}
 
-    case CAT_MUSIC_ARTIST:
-        return QVariant("music-artists");
+QVariant MCMediaLib::getObjects()
+{
+    return QVariant::fromValue( *current_obj );
+//    QList<QObject*> objects = QList<QObject*>();
+//    switch(current_cat)
+//    {
+//    case CAT_MUSIC_ALBUM:
+//        for ( int i=0 ; i<albums->count() ; i++ )
+//            objects.append( albums->at(i) );
+//        return QVariant::fromValue(objects);
 
-    case CAT_MUSIC_GENRE:
-        return QVariant("music-genres");
+//    case CAT_MUSIC_ARTIST:
+//        for ( int i=0 ; i<artists->count() ; i++ )
+//            objects.append( artists->at(i) );
+//        return QVariant::fromValue(objects);
 
-    case CAT_MUSIC_TRACKS:
-        return QVariant("music-tracks");
+//    case CAT_MUSIC_GENRE:
+//        for ( int i=0 ; i<genres->count() ; i++ )
+//            objects.append( genres->at(i) );
+//        return QVariant::fromValue(objects);
 
-    case CAT_VIDEO:
-        return QVariant("video");
+//    case CAT_MUSIC_TRACKS:
+//        for ( int i=0 ; i<tracks->count() ; i++ )
+//            objects.append( tracks->at(i) );
+//        return QVariant::fromValue(objects);
 
-    case CAT_NETWORK:
-        return QVariant("network");
+//    case CAT_VIDEO:
+//        for ( int i=0 ; i<videos->count() ; i++ )
+//            objects.append( videos->at(i) );
+//        return QVariant::fromValue(objects);
 
-    default:
-        return QVariant("");
-    }
+//    case CAT_NETWORK:
+//        for ( int i=0 ; i<networks->count() ; i++ )
+//            objects.append( networks->at(i) );
+//        return QVariant::fromValue(objects);
+
+//    default:
+//        return QVariant();
+//    }
+}
+
+QVariant MCMediaLib::isGridView()
+{
+    return QVariant( m_gridView );
+}
+
+void MCMediaLib::toogleView()
+{
+    m_gridView = !m_gridView;
+    invokeQML("changedView()");
 }
 
 void MCMediaLib::selectSource( const QString &name )
@@ -104,42 +139,49 @@ void MCMediaLib::selectSource( const QString &name )
         msg_Dbg( p_intf, "Switching to music-general view");
         current_cat = CAT_MUSIC_ALBUM;
         retrieveAlbums();
+        invokeQML("changedCategory()");
     }
     else if (name == "music-albums" && current_cat != CAT_MUSIC_ALBUM)
     {
         msg_Dbg( p_intf, "Switching to music-albums view");
         current_cat = CAT_MUSIC_ALBUM;
         retrieveAlbums();
+        invokeQML("changedCategory()");
     }
     else if (name == "music-artists" && current_cat != CAT_MUSIC_ARTIST)
     {
         msg_Dbg( p_intf, "Switching to music-artists view");
         current_cat = CAT_MUSIC_ARTIST;
         retrieveArtists();
+        invokeQML("changedCategory()");
     }
     else if (name == "music-genre" && current_cat != CAT_MUSIC_GENRE)
     {
         msg_Dbg( p_intf, "Switching to music-genre view");
         current_cat = CAT_MUSIC_GENRE;
         retrieveGenres();
+        invokeQML("changedCategory()");
     }
     else if (name == "music-tracks" && current_cat != CAT_MUSIC_TRACKS)
     {
         msg_Dbg( p_intf, "Switching to music-track view");
         current_cat = CAT_MUSIC_TRACKS;
         retrieveTracks();
+        invokeQML("changedCategory()");
     }
     else if (name == "video" && current_cat != CAT_VIDEO)
     {
         msg_Dbg( p_intf, "Switching to video-general view");
         current_cat = CAT_VIDEO;
         retrieveMovies();
+        invokeQML("changedCategory()");
     }
     else if (name == "network" && current_cat != CAT_NETWORK)
     {
         msg_Dbg( p_intf, "Switching to network-general view");
         current_cat = CAT_NETWORK;
         retrieveSeries();
+        invokeQML("changedCategory()");
     }
 }
 
@@ -148,43 +190,53 @@ void MCMediaLib::sort( const QString &criteria )
     if (criteria == "Alphabetic asc")
     {
         msg_Dbg( p_intf, "Sorting by ascending alphabetic order");
-        sortCurrent(medialibrary::SortingCriteria::Alpha);
+        current_sort = medialibrary::SortingCriteria::Alpha;
+        is_desc = false;
     }
     else if (criteria == "Alphabetic desc")
     {
         msg_Dbg( p_intf, "Sorting by descending alphabetic order");
-        sortCurrent(medialibrary::SortingCriteria::Alpha, true);
+        current_sort = medialibrary::SortingCriteria::Alpha;
+        is_desc = true;
     }
     else if (criteria == "Duration asc")
     {
         msg_Dbg( p_intf, "Sorting by ascending duration order");
-        sortCurrent(medialibrary::SortingCriteria::Duration);
+        current_sort = medialibrary::SortingCriteria::Duration;
+        is_desc = false;
     }
     else if (criteria == "Duration desc")
     {
         msg_Dbg( p_intf, "Sorting by descending duration order");
-        sortCurrent(medialibrary::SortingCriteria::Duration, true);
+        current_sort = medialibrary::SortingCriteria::Duration;
+        is_desc = true;
     }
     else if (criteria == "Date asc")
     {
         msg_Dbg( p_intf, "Sorting by ascending date order");
-        sortCurrent(medialibrary::SortingCriteria::ReleaseDate);
+        current_sort = medialibrary::SortingCriteria::ReleaseDate;
+        is_desc = false;
     }
     else if (criteria == "Date desc")
     {
         msg_Dbg( p_intf, "Sorting by descending date order");
-        sortCurrent(medialibrary::SortingCriteria::ReleaseDate, true);
+        current_sort = medialibrary::SortingCriteria::ReleaseDate;
+        is_desc = true;
     }
     else if (criteria == "Artist asc")
     {
         msg_Dbg( p_intf, "Sorting by ascending artist order");
-        sortCurrent(medialibrary::SortingCriteria::Artist);
+        current_sort = medialibrary::SortingCriteria::Artist;
+        is_desc = false;
     }
     else if (criteria == "Artist desc")
     {
         msg_Dbg( p_intf, "Sorting by descending artist order");
-        sortCurrent(medialibrary::SortingCriteria::Artist, true);
+        current_sort = medialibrary::SortingCriteria::Artist;
+        is_desc = false;
     }
+    sortCurrent();
+    invokeQML("reloadData()");
 }
 
 void MCMediaLib::sortCurrent(medialibrary::SortingCriteria sort, bool desc)
@@ -475,9 +527,15 @@ void MCMediaLib::retrieveAlbums( medialibrary::SortingCriteria sort, bool desc )
     {
         if (albums) delete albums;
         albums = new QList<MLAlbum*>();
-        std::vector<medialibrary::AlbumPtr> a = ml->albums(sort, desc);
+        if (current_obj) delete current_obj;
+        current_obj = new QList<QObject*>();
+        std::vector<medialibrary::AlbumPtr> a = ml->albums(current_sort, is_desc);
         for ( int i=0 ; i<a.size() ; i++ )
-            albums->append( new MLAlbum( a[i] ) );
+        {
+            MLAlbum* item = new MLAlbum( a[i] );
+            albums->append( item );
+            current_obj->append( item );
+        }
     }
     endResetModel();
 }
@@ -488,9 +546,15 @@ void MCMediaLib::retrieveArtists( medialibrary::SortingCriteria sort, bool desc 
     {
         if (artists) delete artists;
         artists = new QList<MLArtist*>();
-        std::vector<medialibrary::ArtistPtr> a = ml->artists(sort, desc);
+        if (current_obj) delete current_obj;
+        current_obj = new QList<QObject*>();
+        std::vector<medialibrary::ArtistPtr> a = ml->artists(current_sort, is_desc);
         for ( int i=0 ; i<a.size() ; i++ )
-            artists->append( new MLArtist( a[i] ) );
+        {
+            MLArtist* item = new MLArtist( a[i] );
+            artists->append( item );
+            current_obj->append( item );
+        }
     }
     endResetModel();
 }
@@ -501,6 +565,8 @@ void MCMediaLib::retrieveGenres( medialibrary::SortingCriteria sort, bool desc )
     {
         if (genres) delete genres;
         genres = new QList<MLAlbum*>();
+        if (current_obj) delete current_obj;
+        current_obj = new QList<QObject*>();
 /* NOT IMPLEMENTED YET
  *        std::vector<medialibrary::AlbumPtr> g = ml->genres(sort, desc);
  *        for ( int i=0 ; i<g.size() ; i++ )
@@ -516,6 +582,8 @@ void MCMediaLib::retrieveTracks( medialibrary::SortingCriteria sort, bool desc )
     {
         if (tracks) delete tracks;
         tracks = new QList<MLAlbum*>();
+        if (current_obj) delete current_obj;
+        current_obj = new QList<QObject*>();
 /* NOT IMPLEMENTED YET
  *        std::vector<medialibrary::AlbumPtr> t = ml->tracks(sort, desc);
  *        for ( int i=0 ; i<t.size() ; i++ )
@@ -531,6 +599,8 @@ void MCMediaLib::retrieveMovies( medialibrary::SortingCriteria sort, bool desc )
     {
         if (videos) delete videos;
         videos = new QList<MLMovie*>();
+        if (current_obj) delete current_obj;
+        current_obj = new QList<QObject*>();
 /* NOT IMPLEMENTED YET IN API
  *        std::vector<MoviePtr> m = ml->movies(sort, desc);
  *        for ( int i=0 ; i<m.size() ; i++ )
@@ -546,6 +616,8 @@ void MCMediaLib::retrieveSeries( medialibrary::SortingCriteria sort, bool desc )
     {
         if (networks) delete networks;
         networks = new QList<MLSerie*>();
+        if (current_obj) delete current_obj;
+        current_obj = new QList<QObject*>();
 /* NOT IMPLEMENTED YET IN API
  *        std::vector<SeriesPtr> s = ml->series(sort, desc);
  *        for ( int i=0 ; i<s.size() ; i++ )
@@ -553,4 +625,11 @@ void MCMediaLib::retrieveSeries( medialibrary::SortingCriteria sort, bool desc )
  */
     }
     endResetModel();
+}
+
+void MCMediaLib::invokeQML( const char* func ) {
+    QQuickItem *root = qmlItem->rootObject();
+    int methodIndex = root->metaObject()->indexOfMethod(func);
+    QMetaMethod method = root->metaObject()->method(methodIndex);
+    method.invoke(root);
 }

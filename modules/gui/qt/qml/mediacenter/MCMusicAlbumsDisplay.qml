@@ -55,7 +55,7 @@ StackView {
         id: gridView
 
         GridView {
-            model: media
+            model: medialib.getObjects()
 
             cellWidth: 170
             cellHeight: 190

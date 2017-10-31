@@ -164,6 +164,8 @@
         <file alias="ToolTip.qml">qml/utils/ToolTip.qml</file>
         <file alias="ToolTipArea.qml">qml/utils/ToolTipArea.qml</file>
         <file alias="HorizontalRule.qml">qml/utils/HorizontalRule.qml</file>
+        <file alias="ArtistCover.qml">qml/utils/ArtistCover.qml</file>
+        <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
     </qresource>
     <qresource prefix="/playlist">
         <file alias="InfoMovie.qml">qml/playlist/InfoMovie.qml</file>
@@ -186,5 +188,8 @@
         <file alias="MCGridArtistsDelegate.qml">qml/mediacenter/MCGridArtistsDelegate.qml</file>
         <file alias="MCListArtistsDelegate.qml">qml/mediacenter/MCListArtistsDelegate.qml</file>
         <file alias="MCArtistDetails.qml">qml/mediacenter/MCArtistDetails.qml</file>
+        <file alias="Presentation.qml">qml/mediacenter/Presentation.qml</file>
+        <file alias="ElementsGridView.qml">qml/mediacenter/ElementsGridView.qml</file>
+        <file alias="ElementsListView.qml">qml/mediacenter/ElementsListView.qml</file>
     </qresource>
 </RCC>

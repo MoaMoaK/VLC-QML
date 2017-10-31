@@ -11,16 +11,21 @@ Item {
     width: 1000
     height: 1000
 
+    function reloadData() { mcDisplay.reloadData();}
+    function changedCategory() { mcDisplay.changedCategory(); }
+    function changedView() { mcDisplay.changedView(); }
+
     SplitView {
         anchors.fill: parent
         orientation: Qt.Horizontal
 
-        Column {
+        ColumnLayout {
             id: column
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Layout.fillWidth: true
             Layout.minimumWidth: 500
+            spacing: 0
 
             BannerSources {
                 id: sourcesBanner
@@ -28,18 +33,17 @@ Item {
                 // Custom properties
                 banner_color: "#e6e6e6"
                 hover_color: "#d6d6d6"
-                banner_height: 32
                 need_toggleView_button: true
 
                 // Basic properties
                 z : 10
-
-                function toggleView () {
-                    mcDisplay.cycleViews();
-                }
+                height: dimensions.heightBar_normal
+                Layout.preferredHeight: height
+                Layout.minimumHeight: height
+                Layout.maximumHeight: height
+                Layout.fillWidth: true
 
                 function selectSource ( name ) {
-                    mcDisplay.setView( name );
                     medialib.selectSource(name);
                     subSourcesBanner.update();
                 }
@@ -51,13 +55,16 @@ Item {
                 // Custom properties
                 banner_color: "#e6e6e6"
                 hover_color: "#d6d6d6"
-                banner_height: 32
 
                 // Basic properties
                 z : 10
+                height: dimensions.heightBar_normal
+                Layout.preferredHeight: height
+                Layout.minimumHeight: height
+                Layout.maximumHeight: height
+                Layout.fillWidth: true
 
                 function selectSource ( name ) {
-                    mcDisplay.setView( name );
                     medialib.selectSource(name);
                     subSourcesBanner.update();
                 }
@@ -74,14 +81,10 @@ Item {
             MCDisplay {
                 id: mcDisplay
 
-                // Custom properties
-                media : medialib
-
                 // Basic properties
                 z: 0
-                height : parent.height - sourcesBanner.height - subSourcesBanner.height
-                anchors.right: parent.right
-                anchors.left: parent.left
+                Layout.fillHeight: true
+                Layout.fillWidth: true
             }
 
         }
@@ -96,7 +99,6 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Layout.maximumWidth: 400
-
         }
     }
 

@@ -476,6 +476,10 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/about.qml \
 	gui/qt/qml/MainInterface.qml \
 	gui/qt/qml/SubBannerSources.qml \
+	gui/qt/qml/BannerSources.qml \
+	gui/qt/qml/mediacenter/ElementsListView.qml \
+	gui/qt/qml/mediacenter/ElementsGridView.qml \
+	gui/qt/qml/mediacenter/Presentation.qml \
 	gui/qt/qml/mediacenter/MCGridAlbumsDelegate.qml \
 	gui/qt/qml/mediacenter/MCListAlbumsDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridArtistsDelegate.qml \
@@ -492,6 +496,8 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/utils/ToolTip.qml \
 	gui/qt/qml/utils/ToolTipArea.qml \
 	gui/qt/qml/utils/HorizontalRule.qml \
+	gui/qt/qml/utils/ArtistCover.qml \
+	gui/qt/qml/utils/TracksDisplay.qml \
 	gui/qt/qml/playlist/InfoMovie.qml \
 	gui/qt/qml/playlist/MCGridViewDelegate.qml \
 	gui/qt/qml/playlist/PLListViewDelegate.qml \
