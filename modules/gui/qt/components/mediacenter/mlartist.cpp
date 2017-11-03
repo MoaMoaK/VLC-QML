@@ -41,3 +41,9 @@ QString MLArtist::getNbAlbums() const
 {
     return QString( std::to_string( albums.count() ).c_str() );
 }
+
+QString MLArtist::getPresName() const
+{
+    return name;
+}
+

@@ -21,6 +21,8 @@ public:
     Q_INVOKABLE QString getTrackNumber() const;
     Q_INVOKABLE QString getDuration() const;
 
+    Q_INVOKABLE QString getPresName() const;
+
 private:
     QString title;
     unsigned int trackNumber;

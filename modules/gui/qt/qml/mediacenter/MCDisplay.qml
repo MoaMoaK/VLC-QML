@@ -56,9 +56,12 @@ ColumnLayout {
 
         Presentation {
             height: dimensions.heightBar_xlarge
+
             Layout.preferredHeight: height
             Layout.minimumHeight: height
             Layout.maximumHeight: height
+
+            obj: medialib.getPresObject();
         }
     }
     Component {

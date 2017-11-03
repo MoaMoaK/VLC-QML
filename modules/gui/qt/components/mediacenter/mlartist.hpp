@@ -24,6 +24,8 @@ public:
     Q_INVOKABLE QString getCover() const;
     Q_INVOKABLE QString getNbAlbums() const;
 
+    Q_INVOKABLE QString getPresName() const;
+
 private:
     int64_t m_id;
     QString name;

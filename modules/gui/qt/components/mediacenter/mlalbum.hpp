@@ -29,6 +29,8 @@ public:
     Q_INVOKABLE QString getNbTracks() const;
     Q_INVOKABLE QString getDuration() const;
 
+    Q_INVOKABLE QString getPresName() const;
+
 private:
     int64_t m_id;
     QString title;

@@ -39,3 +39,8 @@ QString MLAlbumTrack::getDuration() const
     else
         return min_disp + ":" + sec_disp;
 }
+
+QString MLAlbumTrack::getPresName() const
+{
+    return title;
+}

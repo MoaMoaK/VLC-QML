@@ -1,7 +1,11 @@
 import QtQuick 2.0
 
 Rectangle {
+    property var obj: undefined
 
-    color: "#FF0000"
+    Text {
+        text: obj.getPresName()
+    }
 
+    Component.onCompleted: { console.log(obj.getTitle()); console.log( obj ) }
 }

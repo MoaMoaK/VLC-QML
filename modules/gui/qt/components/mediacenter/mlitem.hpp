@@ -2,6 +2,7 @@
 #define MLITEM_HPP
 
 #include <qt5/QtCore/QObject>
+#include <qt5/QtCore/QString>
 
 class MLItem : public QObject
 {
@@ -11,9 +12,7 @@ public:
     MLItem(const MLItem &ml_item);
     ~MLItem();
 
-signals:
-
-public slots:
+    Q_INVOKABLE virtual QString getPresName() const = 0;
 };
 
 #endif // MLITEM_HPP
