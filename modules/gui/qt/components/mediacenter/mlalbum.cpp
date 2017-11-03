@@ -1,6 +1,6 @@
 #include "mlalbum.hpp"
 
-MLAlbum::MLAlbum(medialibrary::AlbumPtr data , QObject *parent) : QObject(parent)
+MLAlbum::MLAlbum(medialibrary::AlbumPtr data , QObject *parent) : MLItem(parent)
 {
     m_id         =          data->id()                    ;
     title        = QString( data->title().c_str()        );

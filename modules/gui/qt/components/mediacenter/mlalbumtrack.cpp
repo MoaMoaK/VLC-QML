@@ -1,6 +1,6 @@
 #include "mlalbumtrack.hpp"
 
-MLAlbumTrack::MLAlbumTrack(QObject *parent) : QObject(parent)
+MLAlbumTrack::MLAlbumTrack(QObject *parent) : MLItem(parent)
 {
     title = nullptr;
     trackNumber = 0;
@@ -8,7 +8,7 @@ MLAlbumTrack::MLAlbumTrack(QObject *parent) : QObject(parent)
 }
 
 MLAlbumTrack::MLAlbumTrack( medialibrary::MediaPtr data, QObject *parent ):
-    QObject(parent)
+    MLItem(parent)
 {
     title = QString( data->title().c_str() );
     trackNumber = data->albumTrack()->trackNumber();

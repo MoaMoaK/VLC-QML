@@ -19,6 +19,7 @@
 #include "mlmovie.hpp"
 #include "mlserie.hpp"
 #include "mlartist.hpp"
+#include "components/utils/mlitemmodel.hpp"
 
 #include <medialibrary/IMediaLibrary.h>
 #include <medialibrary/IAlbum.h>
@@ -122,8 +123,8 @@ private:
     MCMediaLibCategory current_cat;
     medialibrary::SortingCriteria current_sort;
     bool is_desc;
-    QList<QObject*> *current_obj;
-    QObject *current_main_obj;
+    QList<MLItem*> *current_obj;
+    MLItem *current_main_obj;
 
     /* Medialibrary */
     medialibrary::IMediaLibrary* ml;

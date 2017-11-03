@@ -7,7 +7,9 @@
 #include <medialibrary/IAlbumTrack.h>
 #include <medialibrary/Types.h>
 
-class MLAlbumTrack : public QObject
+#include "mlitem.hpp"
+
+class MLAlbumTrack : public MLItem
 {
     Q_OBJECT
 

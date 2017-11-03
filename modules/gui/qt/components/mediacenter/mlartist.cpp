@@ -1,6 +1,6 @@
 #include "mlartist.hpp"
 
-MLArtist::MLArtist(medialibrary::ArtistPtr data, QObject *parent) : QObject(parent)
+MLArtist::MLArtist(medialibrary::ArtistPtr data, QObject *parent) : MLItem(parent)
 {
     m_id = data->id();
     name = QString( data->name().c_str() );

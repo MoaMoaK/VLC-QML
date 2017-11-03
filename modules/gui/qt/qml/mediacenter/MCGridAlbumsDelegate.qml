@@ -12,9 +12,6 @@ Rectangle {
         return ;
     }
 
-// Round corner
-//    radius: 10
-
     MouseArea {
         id: mouseArea
         anchors.fill: root
@@ -25,7 +22,7 @@ Rectangle {
         propagateComposedEvents: true
 
         onClicked: {
-            console.log('Clicked on details : '+modelData.getTitle())
+            console.log('Clicked on details : '+model.album_title)
             medialib.select( currentIndex );
             mouse.accepted = false
         }
@@ -44,23 +41,9 @@ Rectangle {
 
             Image {
                 id: img
-                source: modelData.getCover() || "qrc:///noart.png"
+                source: model.album_cover || "qrc:///noart.png"
 
                 anchors.fill: parent
-// Mask for round corner
-//                layer.enabled: true
-//                layer.effect: OpacityMask {
-//                    maskSource: Item {
-//                        width: img.width
-//                        height: img.height
-//                        Rectangle {
-//                            anchors.centerIn: parent
-//                            width: img.width
-//                            height: img.height
-//                            radius: 10
-//                        }
-//                    }
-//                }
             }
 
             Rectangle {
@@ -68,7 +51,6 @@ Rectangle {
                 anchors.right: parent.right
 
                 color: "#FFFFFF"
-//                radius: Math.min(dur_disp.height, dur_disp.width)
 
                 height: dur_disp.implicitHeight + 5
                 width: dur_disp.implicitWidth + 5
@@ -76,7 +58,7 @@ Rectangle {
                 Text {
                     id: dur_disp
                     anchors.centerIn: parent
-                    text: modelData.getDuration() + " - " + modelData.getNbTracks() + " tracks"
+                    text: model.album_duration + " - " + model.album_nb_tracks + " tracks"
                     font.pixelSize: 10
                 }
             }
@@ -106,7 +88,7 @@ Rectangle {
                     onEntered: { parent.opacity = 0.7; root.color = "#F0F0F0"; }
                     onExited: { parent.opacity = 0 ; root.color = "#FFFFFF";}
 
-                    onClicked: console.log('Clicked on play : '+modelData.getTitle())
+                    onClicked: console.log('Clicked on play : '+model.album_title)
                 }
             }
         }
@@ -121,7 +103,7 @@ Rectangle {
                 id: year_disp
                 anchors.left: title_disp.right
                 anchors.top: parent.top
-                text: modelData.getReleaseYear() !== "0" ? modelData.getReleaseYear() : ""
+                text: model.album_release_year !== "0" ? model.album_release_year : ""
                 font.pixelSize: 12
             }
 
@@ -131,12 +113,12 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 elide: Text.ElideRight
-                text: "<b>"+(modelData.getTitle() || "Unknown title")+"</b>"
+                text: "<b>"+(model.album_title || "Unknown title")+"</b>"
                 font.pixelSize: 12
 
                 ToolTipArea {
                     anchors.fill: parent
-                    text: modelData.getTitle() || "Unknown title"
+                    text: model.album_title || "Unknown title"
                     enabled: title_disp.truncated
                     attachedParent: root
                 }

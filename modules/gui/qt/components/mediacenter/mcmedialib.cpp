@@ -90,7 +90,7 @@ QVariant MCMediaLib::getCategory()
 
 QVariant MCMediaLib::getObjects()
 {
-    return QVariant::fromValue( *current_obj );
+    return QVariant::fromValue<MLItemModel*>( new MLItemModel(current_obj) );
 //    QList<QObject*> objects = QList<QObject*>();
 //    switch(current_cat)
 //    {
@@ -565,7 +565,7 @@ void MCMediaLib::retrieveAlbums( medialibrary::SortingCriteria sort, bool desc )
         if (albums) delete albums;
         albums = new QList<MLAlbum*>();
         if (current_obj) delete current_obj;
-        current_obj = new QList<QObject*>();
+        current_obj = new QList<MLItem*>();
         std::vector<medialibrary::AlbumPtr> a = ml->albums(current_sort, is_desc);
         for ( int i=0 ; i<a.size() ; i++ )
         {
@@ -584,7 +584,7 @@ void MCMediaLib::retrieveArtists( medialibrary::SortingCriteria sort, bool desc 
         if (artists) delete artists;
         artists = new QList<MLArtist*>();
         if (current_obj) delete current_obj;
-        current_obj = new QList<QObject*>();
+        current_obj = new QList<MLItem*>();
         std::vector<medialibrary::ArtistPtr> a = ml->artists(current_sort, is_desc);
         for ( int i=0 ; i<a.size() ; i++ )
         {
@@ -603,7 +603,7 @@ void MCMediaLib::retrieveGenres( medialibrary::SortingCriteria sort, bool desc )
         if (genres) delete genres;
         genres = new QList<MLAlbum*>();
         if (current_obj) delete current_obj;
-        current_obj = new QList<QObject*>();
+        current_obj = new QList<MLItem*>();
 /* NOT IMPLEMENTED YET
  *        std::vector<medialibrary::AlbumPtr> g = ml->genres(sort, desc);
  *        for ( int i=0 ; i<g.size() ; i++ )
@@ -620,7 +620,7 @@ void MCMediaLib::retrieveTracks( medialibrary::SortingCriteria sort, bool desc )
         if (tracks) delete tracks;
         tracks = new QList<MLAlbum*>();
         if (current_obj) delete current_obj;
-        current_obj = new QList<QObject*>();
+        current_obj = new QList<MLItem*>();
 /* NOT IMPLEMENTED YET
  *        std::vector<medialibrary::AlbumPtr> t = ml->tracks(sort, desc);
  *        for ( int i=0 ; i<t.size() ; i++ )
@@ -637,7 +637,7 @@ void MCMediaLib::retrieveMovies( medialibrary::SortingCriteria sort, bool desc )
         if (videos) delete videos;
         videos = new QList<MLMovie*>();
         if (current_obj) delete current_obj;
-        current_obj = new QList<QObject*>();
+        current_obj = new QList<MLItem*>();
 /* NOT IMPLEMENTED YET IN API
  *        std::vector<MoviePtr> m = ml->movies(sort, desc);
  *        for ( int i=0 ; i<m.size() ; i++ )
@@ -654,7 +654,7 @@ void MCMediaLib::retrieveSeries( medialibrary::SortingCriteria sort, bool desc )
         if (networks) delete networks;
         networks = new QList<MLSerie*>();
         if (current_obj) delete current_obj;
-        current_obj = new QList<QObject*>();
+        current_obj = new QList<MLItem*>();
 /* NOT IMPLEMENTED YET IN API
  *        std::vector<SeriesPtr> s = ml->series(sort, desc);
  *        for ( int i=0 ; i<s.size() ; i++ )

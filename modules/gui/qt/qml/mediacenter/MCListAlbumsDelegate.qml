@@ -76,7 +76,7 @@ Rectangle {
                         id: expand_cover_id
                         width: 80
                         height: 80
-                        source: modelData.getCover() || "qrc:///noart.png"
+                        source: model.album_cover || "qrc:///noart.png"
                     }
 
                     Column {
@@ -85,15 +85,15 @@ Rectangle {
                         spacing: 5
 
                         Text {
-                            text: "<b>"+(modelData.getTitle() || "Unknown title")+"</b>"
+                            text: "<b>"+(model.album_title || "Unknown title")+"</b>"
                         }
 
                         TracksDisplay {
                             x: 30
-                            height: modelData.getTracks().length * (spacing + 2 + 12)
+                            height: album_tracks.length * (spacing + 2 + 12)
                             width: expand_infos_id.width - x
 
-                            tracks: modelData.getTracks()
+                            tracks: album_tracks
                         }
 
 
@@ -120,12 +120,12 @@ Rectangle {
                     id: collapse_cover_id
                     width: 32
                     height: 32
-                    source: modelData.getCover() || "qrc:///noart.png"
+                    source: model.album_cover || "qrc:///noart.png"
                 }
 
                 Text {
                     id: collapse_title_id
-                    text : "<b>"+(modelData.getTitle() || "Unknown title")+"</b> ["+modelData.getDuration()+"]"
+                    text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
                     anchors.verticalCenter: parent.verticalCenter
                     width: Math.min( ( parent.width-collapse_cover_id.width-parent.spacing )*2/3 , implicitWidth )
                     elide: Text.ElideRight
@@ -133,7 +133,7 @@ Rectangle {
 
                 Text {
                     id: collapse_infos_id
-                    text: modelData.getArtist()
+                    text: model.album_main_artist
                     anchors.verticalCenter: parent.verticalCenter
                     width: Math.min( parent.width-parent.spacing-collapse_cover_id.width-parent.spacing-collapse_title_id.width , implicitWidth )
                     elide: Text.ElideRight

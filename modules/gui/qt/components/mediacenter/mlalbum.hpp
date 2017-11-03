@@ -9,8 +9,9 @@
 #include <medialibrary/Types.h>
 
 #include "mlalbumtrack.hpp"
+#include "mlitem.hpp"
 
-class MLAlbum : public QObject
+class MLAlbum : public MLItem
 {
     Q_OBJECT
 

@@ -17,8 +17,8 @@ Rectangle {
         propagateComposedEvents: true
 
         onClicked: {
-            console.log('Clicked on details : '+modelData.getName())
-            medialib.select( modelData );
+            console.log('Clicked on details : '+model.artist_name)
+            medialib.select( currentIndex );
             mouse.accepted = false
         }
 
@@ -35,22 +35,22 @@ Rectangle {
             width: root.width - 4
             height: root.height - title_disp.height - 4
 
-            albums: modelData.getAlbums()
-            nb_albums: modelData.getNbAlbums()
+            albums: model.artist_albums
+            nb_albums: model.artist_nb_albums
         }
 
         Text {
             id: title_disp
             anchors.left: parent.left
             width: root.width - 4
-            text: "<b>"+(modelData.getName() || "Plop")+"<b>"
+            text: "<b>"+(model.artist_name || "Plop")+"<b>"
             font.pixelSize: 12
             elide: Text.ElideRight
             height: implicitHeight+10
 
             ToolTipArea {
                 anchors.fill: parent
-                text: modelData.getName() || "Unknown Artist"
+                text: model.artist_name || "Unknown Artist"
                 enabled: title_disp.truncated
                 attachedParent: root
             }
