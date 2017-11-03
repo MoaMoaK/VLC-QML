@@ -47,3 +47,13 @@ QString MLArtist::getPresName() const
     return name;
 }
 
+QString MLArtist::getPresImage() const
+{
+    return cover;
+}
+
+QString MLArtist::getPresInfo() const
+{
+    return shortBio;
+}
+

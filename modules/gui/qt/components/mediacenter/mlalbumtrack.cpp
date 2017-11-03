@@ -44,3 +44,13 @@ QString MLAlbumTrack::getPresName() const
 {
     return title;
 }
+
+QString MLAlbumTrack::getPresImage() const
+{
+    return "qrc:///noart.png";
+}
+
+QString MLAlbumTrack::getPresInfo() const
+{
+    return "";
+}

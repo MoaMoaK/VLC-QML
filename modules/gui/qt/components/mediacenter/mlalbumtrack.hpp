@@ -22,6 +22,8 @@ public:
     Q_INVOKABLE QString getDuration() const;
 
     Q_INVOKABLE QString getPresName() const;
+    Q_INVOKABLE QString getPresImage() const;
+    Q_INVOKABLE QString getPresInfo() const;
 
 private:
     QString title;

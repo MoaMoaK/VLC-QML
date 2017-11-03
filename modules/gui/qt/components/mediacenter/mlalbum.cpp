@@ -84,3 +84,13 @@ QString MLAlbum::getPresName() const
 {
     return title;
 }
+
+QString MLAlbum::getPresImage() const
+{
+    return cover;
+}
+
+QString MLAlbum::getPresInfo() const
+{
+    return shortSummary;
+}

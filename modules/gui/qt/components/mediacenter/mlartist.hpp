@@ -25,6 +25,8 @@ public:
     Q_INVOKABLE QString getNbAlbums() const;
 
     Q_INVOKABLE QString getPresName() const;
+    Q_INVOKABLE QString getPresImage() const;
+    Q_INVOKABLE QString getPresInfo() const;
 
 private:
     int64_t m_id;

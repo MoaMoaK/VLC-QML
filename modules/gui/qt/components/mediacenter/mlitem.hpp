@@ -13,6 +13,8 @@ public:
     ~MLItem();
 
     Q_INVOKABLE virtual QString getPresName() const = 0;
+    Q_INVOKABLE virtual QString getPresImage() const = 0;
+    Q_INVOKABLE virtual QString getPresInfo() const = 0;
 };
 
 #endif // MLITEM_HPP
