@@ -20,10 +20,7 @@ ColumnLayout {
 
     function reloadPresentation() {
         if ( medialib.hasPresentation() )
-        {
-            console.log('plop');
             presentationLoader_id.replace( presentationComponent_id )
-        }
         else
             presentationLoader_id.replace( noPresentationComponent_id )
 

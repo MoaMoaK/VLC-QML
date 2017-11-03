@@ -166,6 +166,7 @@
         <file alias="HorizontalRule.qml">qml/utils/HorizontalRule.qml</file>
         <file alias="ArtistCover.qml">qml/utils/ArtistCover.qml</file>
         <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
+        <file alias="AlbumsDisplay.qml">qml/utils/AlbumsDisplay.qml</file>
     </qresource>
     <qresource prefix="/playlist">
         <file alias="InfoMovie.qml">qml/playlist/InfoMovie.qml</file>

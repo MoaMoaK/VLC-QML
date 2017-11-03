@@ -19,6 +19,5 @@ Grid {
             width: nb_albums == 1 ? gridCover_id.width : (gridCover_id.width/gridCover_id.columns) - 1
             fillMode: Image.PreserveAspectCrop
         }
-
     }
 }

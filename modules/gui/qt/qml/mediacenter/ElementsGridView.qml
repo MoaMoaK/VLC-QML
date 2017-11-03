@@ -13,14 +13,16 @@ GridView {
 
     function changedCategory() {
         model = [];
-        if (medialib.getCategory() == 0) {
-            delegate = gridAlbumsDelegateComponent_id;
-        } else {
-            delegate = gridArtistsDelegateComponent_id;
-        }
+        chooseCat();
         reloadData();
         console.log( "Changed category : "+medialib.getCategory() );
+    }
 
+    function chooseCat() {
+        if (medialib.getCategory() == 0)
+            delegate = gridAlbumsDelegateComponent_id;
+        else
+            delegate = gridArtistsDelegateComponent_id;
     }
 
     function reloadData() {
@@ -33,7 +35,7 @@ GridView {
     cellWidth: 170
     cellHeight: 190
 
-    delegate : gridAlbumsDelegateComponent_id
+    delegate : chooseCat();
 
     ScrollBar.vertical: ScrollBar { }
 

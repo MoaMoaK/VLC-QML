@@ -5,14 +5,16 @@ ListView {
 
     function changedCategory() {
         model = [];
-        if (medialib.getCategory() == 0) {
-            delegate = listAlbumsDelegateComponent_id;
-        } else {
-            delegate = listArtistsDelegateComponent_id;
-        }
+        chooseCat();
         reloadData();
         console.log( "Changed category : "+medialib.getCategory() );
+    }
 
+    function chooseCat() {
+        if (medialib.getCategory() == 0)
+            delegate = listAlbumsDelegateComponent_id;
+        else
+            delegate = listArtistsDelegateComponent_id;
     }
 
     function reloadData() {
@@ -22,7 +24,7 @@ ListView {
 
     model: medialib.getObjects()
 
-    delegate : listAlbumsDelegateComponent_id
+    delegate : chooseCat();
 
     ScrollBar.vertical: ScrollBar { }
 
