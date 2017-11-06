@@ -54,3 +54,8 @@ QString MLAlbumTrack::getPresInfo() const
 {
     return "";
 }
+
+MLItemModel* MLAlbumTrack::getDetailsObjects() const
+{
+    return new MLItemModel();
+}

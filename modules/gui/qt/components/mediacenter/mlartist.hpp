@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
+    Q_INVOKABLE MLItemModel *getDetailsObjects() const;
 
 private:
     int64_t m_id;

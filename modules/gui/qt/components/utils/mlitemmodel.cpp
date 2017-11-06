@@ -1,9 +1,17 @@
 #include "mlitemmodel.hpp"
 
-MLItemModel::MLItemModel(QList<MLItem *> *item, QObject *parent):
-    ml_item_list( item ),
+#include "components/mediacenter/mlitem.hpp"
+#include "components/mediacenter/mlalbum.hpp"
+#include "components/mediacenter/mlartist.hpp"
+
+
+MLItemModel::MLItemModel(const QList<MLItem *> *item, QObject *parent):
     QAbstractListModel( parent )
-{ }
+{
+    ml_item_list = new QList<MLItem *>;
+    for (int i=0 ; i<item->count() ; i++)
+        ml_item_list->append(item->at(i));
+}
 
 MLItemModel::MLItemModel(const MLItemModel &other):
     ml_item_list ( other.getMLItemModel() )

@@ -57,3 +57,8 @@ QString MLArtist::getPresInfo() const
     return shortBio;
 }
 
+MLItemModel* MLArtist::getDetailsObjects() const
+{
+    return new MLItemModel( &albums );
+}
+

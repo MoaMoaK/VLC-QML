@@ -8,6 +8,7 @@
 #include <medialibrary/Types.h>
 
 #include "mlitem.hpp"
+#include "components/utils/mlitemmodel.hpp"
 
 class MLAlbumTrack : public MLItem
 {
@@ -24,6 +25,7 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
+    Q_INVOKABLE MLItemModel* getDetailsObjects() const;
 
 private:
     QString title;

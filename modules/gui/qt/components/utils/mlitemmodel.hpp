@@ -10,9 +10,9 @@
 #include <qt5/QtCore/QModelIndex>
 #include <qt5/QtCore/Qt>
 
-#include "components/mediacenter/mlitem.hpp"
-#include "components/mediacenter/mlalbum.hpp"
-#include "components/mediacenter/mlartist.hpp"
+class MLItem;
+class MLAlbum;
+class MLArtist;
 
 enum MLItemModelRoles {
 
@@ -47,7 +47,7 @@ class MLItemModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    MLItemModel(QList<MLItem *> *item = NULL, QObject *parent = nullptr);
+    MLItemModel(const QList<MLItem *> *item = NULL, QObject *parent = nullptr);
     MLItemModel(const MLItemModel &other );
     ~MLItemModel();
 
