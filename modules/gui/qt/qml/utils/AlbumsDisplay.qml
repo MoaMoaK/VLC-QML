@@ -15,7 +15,7 @@ ListView {
 
         Text {
             id: expand_album_name_id
-            text: "["+albums[index].getReleaseYear()+"] "+albums[index].getTitle()+" - "+albums[index].getDuration()
+            text: "["+model.album_release_year+"] "+model.album_title+" - "+model.album_duration
         }
 
         MouseArea {
@@ -25,7 +25,7 @@ ListView {
 
             onEntered: { parent.color = "#f0f0f0" }
             onExited: { parent.color = "#ffffff" }
-            onClicked: { console.log( "clicked : "+albums[index].getTitle() ) }
+            onClicked: { console.log( "clicked : "+model.album_title ) }
         }
     }
 }

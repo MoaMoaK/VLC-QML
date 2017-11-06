@@ -10,14 +10,15 @@ Grid {
     spacing: 2
 
     Repeater {
-        model: Math.min(nb_albums, 4)
+        model: albums
 
         Image {
             id: img
-            source: albums[modelData].getCover() || "qrc:///noart.png"
+            source: model.album_cover || "qrc:///noart.png"
             height: nb_albums == 1 ? gridCover_id.height : (gridCover_id.height/gridCover_id.columns) - 1
             width: nb_albums == 1 ? gridCover_id.width : (gridCover_id.width/gridCover_id.columns) - 1
             fillMode: Image.PreserveAspectCrop
+            visible: index < 4
         }
     }
 }

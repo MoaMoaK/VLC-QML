@@ -10,6 +10,7 @@
 
 #include "mlalbum.hpp"
 #include "mlitem.hpp"
+#include "components/utils/mlitemmodel.hpp"
 
 class MLArtist : public MLItem
 {
@@ -20,7 +21,7 @@ public:
     Q_INVOKABLE QString getId() const;
     Q_INVOKABLE QString getName() const;
     Q_INVOKABLE QString getShortBio() const;
-    Q_INVOKABLE QList<QObject*> getAlbums() const;
+    Q_INVOKABLE MLItemModel *getAlbums() const;
     Q_INVOKABLE QString getCover() const;
     Q_INVOKABLE QString getNbAlbums() const;
 
@@ -32,7 +33,7 @@ private:
     int64_t m_id;
     QString name;
     QString shortBio;
-    QList<QObject*> albums;
+    QList<MLItem*> albums;
     QString cover;
 };
 

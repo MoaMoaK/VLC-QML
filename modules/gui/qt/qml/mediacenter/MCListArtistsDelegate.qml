@@ -90,7 +90,7 @@ Rectangle {
 
                         AlbumsDisplay {
                             x: 30
-                            height: artist_albums.length * (spacing + 2 + 12)
+                            height: artist_nb_albums * (spacing + 2 + 12)
                             width: expand_infos_id.width - x
 
                             albums: artist_albums

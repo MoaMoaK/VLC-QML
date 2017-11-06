@@ -90,7 +90,7 @@ Rectangle {
 
                         TracksDisplay {
                             x: 30
-                            height: album_tracks.length * (spacing + 2 + 12)
+                            height: album_nb_tracks * (spacing + 2 + 12)
                             width: expand_infos_id.width - x
 
                             tracks: album_tracks

@@ -15,7 +15,7 @@ ListView {
 
         Text {
             id: expand_track_name_id
-            text: "["+tracks[index].getTrackNumber()+"] "+tracks[index].getTitle()+" - "+tracks[index].getDuration()
+            text: "["+model.track_number+"] "+model.track_title+" - "+model.track_duration
         }
 
         MouseArea {
@@ -25,7 +25,7 @@ ListView {
 
             onEntered: { parent.color = "#f0f0f0" }
             onExited: { parent.color = "#ffffff" }
-            onClicked: { console.log( "clicked : "+tracks[index].getTitle() ) }
+            onClicked: { console.log( "clicked : "+model.track_title ) }
         }
     }
 }

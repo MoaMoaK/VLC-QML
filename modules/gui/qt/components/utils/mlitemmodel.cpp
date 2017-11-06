@@ -47,7 +47,7 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
     case GET_ALBUM_COVER :
         return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getCover() );
     case GET_ALBUM_TRACKS :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getTracks() );
+        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLAlbum*>(ml_item)->getTracks() );
     case GET_ALBUM_MAIN_ARTIST :
         return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getArtist() );
     case GET_ALBUM_ARTISTS :
@@ -65,11 +65,19 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
     case GET_ARTIST_SHORT_BIO :
         return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getShortBio() );
     case GET_ARTIST_ALBUMS :
-        return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getAlbums() );
+        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLArtist*>(ml_item)->getAlbums() );
     case GET_ARTIST_COVER :
         return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getCover() );
     case GET_ARTIST_NB_ALBUMS :
         return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getNbAlbums() );
+
+    // Tracks
+    case GET_TRACK_TITLE :
+        return QVariant::fromValue( reinterpret_cast<MLAlbumTrack*>(ml_item)->getTitle() );
+    case GET_TRACK_NUMBER :
+        return QVariant::fromValue( reinterpret_cast<MLAlbumTrack*>(ml_item)->getTrackNumber() );
+    case GET_TRACK_DURATION :
+        return QVariant::fromValue( reinterpret_cast<MLAlbumTrack*>(ml_item)->getDuration() );
 
     default :
         return QVariant();
@@ -100,6 +108,11 @@ QHash<int, QByteArray> MLItemModel::roleNames() const
     roles[GET_ARTIST_ALBUMS] = "artist_albums";
     roles[GET_ARTIST_COVER] = "artist_cover";
     roles[GET_ARTIST_NB_ALBUMS] = "artist_nb_albums";
+
+    // Tracks
+    roles[GET_TRACK_TITLE] = "track_title";
+    roles[GET_TRACK_NUMBER] = "track_number";
+    roles[GET_TRACK_DURATION] = "track_duration";
 
     return roles;
 }

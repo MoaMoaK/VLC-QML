@@ -5,7 +5,7 @@ MLArtist::MLArtist(medialibrary::ArtistPtr data, QObject *parent) : MLItem(paren
     m_id = data->id();
     name = QString( data->name().c_str() );
     shortBio = QString( data->shortBio().c_str() );
-    albums = QList<QObject*>();
+    albums = QList<MLItem*>();
     std::vector<medialibrary::AlbumPtr> a = data->albums();
     for (int i=0 ; i<a.size() ; i++)
         albums.append( new MLAlbum( a[i]) );
@@ -27,9 +27,9 @@ QString MLArtist::getShortBio() const
     return shortBio;
 }
 
-QList<QObject*> MLArtist::getAlbums() const
+MLItemModel* MLArtist::getAlbums() const
 {
-    return albums;
+    return new MLItemModel( &albums );
 }
 
 QString MLArtist::getCover() const

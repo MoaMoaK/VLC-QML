@@ -9,7 +9,7 @@ class MLItem : public QObject
     Q_OBJECT
 public:
     MLItem(QObject *parent = nullptr);
-    MLItem(const MLItem &ml_item);
+    MLItem(const MLItem *ml_item);
     ~MLItem();
 
     Q_INVOKABLE virtual QString getPresName() const = 0;

@@ -7,7 +7,7 @@ MLAlbum::MLAlbum(medialibrary::AlbumPtr data , QObject *parent) : MLItem(parent)
     releaseYear  =          data->releaseYear()           ;
     shortSummary = QString( data->shortSummary().c_str() );
     cover        = QString( data->artworkMrl().c_str()   );
-    tracks       = QList<QObject*>();
+    tracks       = QList<MLItem*>();
     std::vector<medialibrary::MediaPtr> t = data->tracks();
     for (int i=0 ; i<t.size() ; i++ )
         tracks.append( new MLAlbumTrack( t[i] ) );
@@ -45,9 +45,9 @@ QString MLAlbum::getCover() const
     return cover;
 }
 
-QList<QObject*> MLAlbum::getTracks() const
+MLItemModel* MLAlbum::getTracks() const
 {
-    return tracks;
+    return new MLItemModel( &tracks );
 }
 
 QString MLAlbum::getArtist() const

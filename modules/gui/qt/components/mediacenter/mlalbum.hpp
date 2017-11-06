@@ -10,6 +10,7 @@
 
 #include "mlalbumtrack.hpp"
 #include "mlitem.hpp"
+#include "components/utils/mlitemmodel.hpp"
 
 class MLAlbum : public MLItem
 {
@@ -23,7 +24,7 @@ public:
     Q_INVOKABLE QString getReleaseYear() const;
     Q_INVOKABLE QString getShortSummary() const;
     Q_INVOKABLE QString getCover() const;
-    Q_INVOKABLE QList<QObject*> getTracks() const;
+    Q_INVOKABLE MLItemModel* getTracks() const;
     Q_INVOKABLE QString getArtist() const;
     Q_INVOKABLE QList<QString> getArtists() const;
     Q_INVOKABLE QString getNbTracks() const;
@@ -39,7 +40,7 @@ private:
     unsigned int releaseYear;
     QString shortSummary;
     QString cover;
-    QList<QObject*> tracks;
+    QList<MLItem*> tracks;
     QString mainArtist;
     QList<QString> otherArtists;
     uint32_t nbTracks;

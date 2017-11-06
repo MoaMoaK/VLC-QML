@@ -2,7 +2,7 @@
 
 MLItem::MLItem(QObject *parent) : QObject(parent)
 { }
-MLItem::MLItem(const MLItem &ml_item)
+MLItem::MLItem(const MLItem *ml_item)
 { }
 MLItem::~MLItem()
 { }

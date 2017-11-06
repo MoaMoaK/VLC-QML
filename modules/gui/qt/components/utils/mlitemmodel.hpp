@@ -34,7 +34,12 @@ enum MLItemModelRoles {
     GET_ARTIST_SHORT_BIO,
     GET_ARTIST_ALBUMS,
     GET_ARTIST_COVER,
-    GET_ARTIST_NB_ALBUMS
+    GET_ARTIST_NB_ALBUMS,
+
+    // Tracks
+    GET_TRACK_TITLE,
+    GET_TRACK_NUMBER,
+    GET_TRACK_DURATION
 };
 
 class MLItemModel : public QAbstractListModel
