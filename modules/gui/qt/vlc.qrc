@@ -192,5 +192,6 @@
         <file alias="Presentation.qml">qml/mediacenter/Presentation.qml</file>
         <file alias="ElementsGridView.qml">qml/mediacenter/ElementsGridView.qml</file>
         <file alias="ElementsListView.qml">qml/mediacenter/ElementsListView.qml</file>
+        <file alias="MCGridTracksDelegate.qml">qml/mediacenter/MCGridTracksDelegate.qml</file>
     </qresource>
 </RCC>

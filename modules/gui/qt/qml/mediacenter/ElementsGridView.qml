@@ -21,8 +21,10 @@ GridView {
     function chooseCat() {
         if (medialib.getCategory() == 0)
             delegate = gridAlbumsDelegateComponent_id;
-        else
+        else if (medialib.getCategory() == 1)
             delegate = gridArtistsDelegateComponent_id;
+        else
+            delegate = gridTracksDelegateComponent_id;
     }
 
     function reloadData() {
@@ -51,6 +53,14 @@ GridView {
         id: gridArtistsDelegateComponent_id
 
         MCGridArtistsDelegate {
+            width: dimensions.cover_normal
+            height: dimensions.cover_normal+20
+        }
+    }
+    Component {
+        id: gridTracksDelegateComponent_id
+
+        MCGridTracksDelegate {
             width: dimensions.cover_normal
             height: dimensions.cover_normal+20
         }
