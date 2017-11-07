@@ -27,6 +27,12 @@ VLCDimensions::VLCDimensions() : QQmlPropertyMap()
     VLCDim("icon_large", 64);
     VLCDim("icon_xlarge", 128);
 
+    VLCDim("cover_xsmall", 64);
+    VLCDim("cover_small", 96);
+    VLCDim("cover_normal", 128);
+    VLCDim("cover_large", 160);
+    VLCDim("cover_xlarge", 192);
+
     VLCDim("heightBar_xsmall", 8);
     VLCDim("heightBar_small", 46);
     VLCDim("heightBar_normal", 32);

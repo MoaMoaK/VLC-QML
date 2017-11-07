@@ -32,8 +32,8 @@ GridView {
 
     model: medialib.getObjects()
 
-    cellWidth: 170
-    cellHeight: 190
+    cellWidth: dimensions.cover_normal
+    cellHeight: dimensions.cover_normal+20
 
     delegate : chooseCat();
 
@@ -43,16 +43,16 @@ GridView {
         id: gridAlbumsDelegateComponent_id
 
         MCGridAlbumsDelegate {
-            width: 170
-            height: 190
+            width: dimensions.cover_normal
+            height: dimensions.cover_normal+20
         }
     }
     Component {
         id: gridArtistsDelegateComponent_id
 
         MCGridArtistsDelegate {
-            width: 170
-            height: 190
+            width: dimensions.cover_normal
+            height: dimensions.cover_normal+20
         }
     }
 }
