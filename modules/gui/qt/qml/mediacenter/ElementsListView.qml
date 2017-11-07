@@ -13,8 +13,10 @@ ListView {
     function chooseCat() {
         if (medialib.getCategory() == 0)
             delegate = listAlbumsDelegateComponent_id;
-        else
+        else if (medialib.getCategory() == 1)
             delegate = listArtistsDelegateComponent_id;
+        else
+            delegate = listTracksDelegateComponent_id;
     }
 
     function reloadData() {
@@ -37,5 +39,10 @@ ListView {
         id: listArtistsDelegateComponent_id
 
         MCListArtistsDelegate { }
+    }
+    Component {
+        id: listTracksDelegateComponent_id
+
+        MCListTracksDelegate { }
     }
 }

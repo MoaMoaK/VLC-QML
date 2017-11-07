@@ -491,6 +491,7 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/mediacenter/MCGridArtistsDelegate.qml \
 	gui/qt/qml/mediacenter/MCListArtistsDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridTracksDelegate.qml \
+	gui/qt/qml/mediacenter/MCListTracksDelegate.qml \
 	gui/qt/qml/mediacenter/MCAlbumDetails.qml \
 	gui/qt/qml/mediacenter/MCArtistDetails.qml \
 	gui/qt/qml/mediacenter/MCDisplay.qml \
