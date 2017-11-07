@@ -19,7 +19,7 @@ Rectangle {
             Layout.minimumWidth: height
             Layout.preferredWidth: height
 
-            source: obj.getPresImage()
+            source: obj.getPresImage() || "qrc:///noart.png"
             fillMode: Image.PreserveAspectFit
         }
 
@@ -35,7 +35,7 @@ Rectangle {
                 Layout.maximumHeight: implicitHeight
                 Layout.minimumHeight: implicitHeight
                 Layout.preferredHeight: implicitHeight
-                text: obj.getPresName()
+                text: "<b>"+( obj.getPresName() || "Unknwon artist" )+"</b>"
                 elide: Text.ElideRight
             }
 

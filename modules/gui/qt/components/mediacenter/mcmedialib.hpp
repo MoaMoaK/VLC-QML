@@ -52,22 +52,6 @@ enum MCMediaLibCategory {
     CAT_NETWORK
 };
 
-enum MCMediaLibView {
-    VIEW_NOVIEW,
-    VIEW_MUSIC,
-    VIEW_MUSIC_ALBUMS,
-    VIEW_MUSIC_ARTISTS,
-    VIEW_MUSIC_GENRES,
-    VIEW_MUSIC_TRACKS,
-    VIEW_VIDEO,
-    VIEW_VIDEO_TVSHOWS,
-    VIEW_VIDEO_SEASONS,
-    VIEW_VIDEO_TRACKS,
-    VIEW_NETWORK,
-    VIEW_PLAYLITS,
-    VIEW_BROWSER
-};
-
 class MCMediaLib : public QAbstractListModel
 {
     Q_OBJECT

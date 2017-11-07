@@ -18,7 +18,7 @@ Rectangle {
 
         onClicked: {
             console.log('Clicked on details : '+model.artist_name)
-            medialib.select( currentIndex );
+            medialib.select( index );
             mouse.accepted = false
         }
 
@@ -43,7 +43,7 @@ Rectangle {
             id: title_disp
             anchors.left: parent.left
             width: root.width - 4
-            text: "<b>"+(model.artist_name || "Plop")+"<b>"
+            text: "<b>"+(model.artist_name || "Unknown Artist")+"<b>"
             font.pixelSize: 12
             elide: Text.ElideRight
             height: implicitHeight+10

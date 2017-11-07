@@ -15,6 +15,7 @@ ColumnLayout {
     }
 
     function reloadData() {
+        changedCategory();
         viewLoader.item.reloadData();
     }
 
