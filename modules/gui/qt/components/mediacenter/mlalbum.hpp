@@ -33,7 +33,7 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
-    Q_INVOKABLE MLItemModel* getDetailsObjects() const;
+    QList<MLItem* > *getDetailsObjects();
 
 private:
     int64_t m_id;

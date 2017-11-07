@@ -90,10 +90,7 @@ QVariant MCMediaLib::getCategory()
 
 QVariant MCMediaLib::getObjects()
 {
-    if (current_main_obj)
-        return QVariant::fromValue<MLItemModel*>( current_main_obj->getDetailsObjects() );
-    else
-        return QVariant::fromValue<MLItemModel*>( new MLItemModel(current_obj) );
+    return QVariant::fromValue<MLItemModel*>( new MLItemModel(current_obj) );
 //    QList<QObject*> objects = QList<QObject*>();
 //    switch(current_cat)
 //    {
@@ -146,23 +143,26 @@ void MCMediaLib::toogleView()
 void MCMediaLib::select( const int &item_id )
 {
     if (item_id >= 0 && item_id <= current_obj->count())
-        current_main_obj = current_obj->at(item_id);
-    switch (current_cat)
     {
-    case CAT_MUSIC_ALBUM:
-        current_cat = CAT_MUSIC_TRACKS;
-        break;
+        current_main_obj = current_obj->at(item_id);
+        current_obj = current_main_obj->getDetailsObjects();
+        switch (current_cat)
+        {
+        case CAT_MUSIC_ALBUM:
+            current_cat = CAT_MUSIC_TRACKS;
+            break;
 
-    case CAT_MUSIC_ARTIST:
-        current_cat = CAT_MUSIC_ALBUM;
-        break;
+        case CAT_MUSIC_ARTIST:
+            current_cat = CAT_MUSIC_ALBUM;
+            break;
 
-    case CAT_MUSIC_GENRE:
-        current_cat = CAT_MUSIC_ARTIST;
-        break;
+        case CAT_MUSIC_GENRE:
+            current_cat = CAT_MUSIC_ARTIST;
+            break;
 
-    default:
-        break;
+        default:
+            break;
+        }
     }
 
     invokeQML("reloadPresentation()");

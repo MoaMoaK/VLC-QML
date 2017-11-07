@@ -95,7 +95,7 @@ QString MLAlbum::getPresInfo() const
     return shortSummary;
 }
 
-MLItemModel* MLAlbum::getDetailsObjects() const
+QList<MLItem *> *MLAlbum::getDetailsObjects()
 {
-    return new MLItemModel( &tracks );
+    return &tracks ;
 }

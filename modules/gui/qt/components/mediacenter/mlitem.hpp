@@ -17,7 +17,7 @@ public:
     Q_INVOKABLE virtual QString getPresName() const = 0;
     Q_INVOKABLE virtual QString getPresImage() const = 0;
     Q_INVOKABLE virtual QString getPresInfo() const = 0;
-    Q_INVOKABLE virtual MLItemModel* getDetailsObjects() const = 0;
+    virtual QList<MLItem *> *getDetailsObjects() = 0;
 };
 
 

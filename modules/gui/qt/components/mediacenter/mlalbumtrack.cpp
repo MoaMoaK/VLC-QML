@@ -55,7 +55,7 @@ QString MLAlbumTrack::getPresInfo() const
     return "";
 }
 
-MLItemModel* MLAlbumTrack::getDetailsObjects() const
+QList<MLItem *> *MLAlbumTrack::getDetailsObjects()
 {
-    return new MLItemModel();
+    return new QList<MLItem *>();
 }
