@@ -19,10 +19,19 @@ ColumnLayout {
     }
 
     function reloadPresentation() {
-        if ( medialib.hasPresentation() )
-            presentationLoader_id.replace( presentationComponent_id )
-        else
-            presentationLoader_id.replace( noPresentationComponent_id )
+        if ( medialib.hasPresentation() ) {
+            presentationLoader_id.replace( presentationComponent_id );
+            presentationLoader_id.height = dimensions.heightBar_xlarge;
+            presentationLoader_id.Layout.preferredHeigh = dimensions.heightBar_xlarge;
+            presentationLoader_id.Layout.minimumHeight = dimensions.heightBar_xlarge;
+            presentationLoader_id.Layout.maximumHeight = dimensions.heightBar_xlarge;
+        } else {
+            presentationLoader_id.replace( noPresentationComponent_id );
+            presentationLoader_id.height = 0;
+            presentationLoader_id.Layout.preferredHeigh = 0;
+            presentationLoader_id.Layout.minimumHeight = 0;
+            presentationLoader_id.Layout.maximumHeight = 0;
+        }
 
         console.log( "Presentation reloaded "+medialib.getPresObject() )
     }
@@ -31,6 +40,10 @@ ColumnLayout {
         id: presentationLoader_id
         z:10
         Layout.fillWidth: true
+        height: medialib.hasPresentation() ? dimensions.heightBar_xlarge : 0
+        Layout.preferredHeight: height
+        Layout.minimumHeight: height
+        Layout.maximumHeight: height
         initialItem: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
 
         replaceEnter: Transition {
