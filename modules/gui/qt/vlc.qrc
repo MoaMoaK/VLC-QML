@@ -194,5 +194,7 @@
         <file alias="ElementsListView.qml">qml/mediacenter/ElementsListView.qml</file>
         <file alias="MCGridTracksDelegate.qml">qml/mediacenter/MCGridTracksDelegate.qml</file>
         <file alias="MCListTracksDelegate.qml">qml/mediacenter/MCListTracksDelegate.qml</file>
+        <file alias="MCGridGenresDelegate.qml">qml/mediacenter/MCGridGenresDelegate.qml</file>
+        <file alias="MCListGenresDelegate.qml">qml/mediacenter/MCListGenresDelegate.qml</file>
     </qresource>
 </RCC>

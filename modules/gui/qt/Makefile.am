@@ -120,6 +120,8 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/mediacenter/mlmovie.hpp \
 	gui/qt/components/mediacenter/mlserie.cpp \
 	gui/qt/components/mediacenter/mlserie.hpp \
+	gui/qt/components/mediacenter/mlgenre.cpp \
+	gui/qt/components/mediacenter/mlgenre.hpp \
 	gui/qt/components/mediacenter/mlartist.cpp \
 	gui/qt/components/mediacenter/mlartist.hpp \
 	gui/qt/components/playlist/views.cpp \
@@ -241,6 +243,7 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/components/mediacenter/mlalbum.moc.cpp \
 	gui/qt/components/mediacenter/mlalbumtrack.moc.cpp \
 	gui/qt/components/mediacenter/mlartist.moc.cpp \
+	gui/qt/components/mediacenter/mlgenre.moc.cpp \
 	gui/qt/components/mediacenter/mlitem.moc.cpp \
 	gui/qt/components/playlist/views.moc.cpp \
 	gui/qt/components/playlist/vlc_model.moc.cpp \
@@ -490,6 +493,8 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/mediacenter/MCListAlbumsDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridArtistsDelegate.qml \
 	gui/qt/qml/mediacenter/MCListArtistsDelegate.qml \
+	gui/qt/qml/mediacenter/MCGridGenresDelegate.qml \
+	gui/qt/qml/mediacenter/MCListGenresDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridTracksDelegate.qml \
 	gui/qt/qml/mediacenter/MCListTracksDelegate.qml \
 	gui/qt/qml/mediacenter/MCAlbumDetails.qml \

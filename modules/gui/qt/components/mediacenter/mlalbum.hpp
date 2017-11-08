@@ -36,7 +36,7 @@ public:
     QList<MLItem* > *getDetailsObjects();
 
 private:
-    int64_t m_id;
+    int64_t id;
     QString title;
     unsigned int releaseYear;
     QString shortSummary;

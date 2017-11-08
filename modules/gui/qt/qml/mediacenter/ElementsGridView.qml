@@ -23,6 +23,8 @@ GridView {
             delegate = gridAlbumsDelegateComponent_id;
         else if (medialib.getCategory() == 1)
             delegate = gridArtistsDelegateComponent_id;
+        else if (medialib.getCategory() == 2)
+            delegate = gridGenresDelegateComponent_id;
         else
             delegate = gridTracksDelegateComponent_id;
     }
@@ -53,6 +55,14 @@ GridView {
         id: gridArtistsDelegateComponent_id
 
         MCGridArtistsDelegate {
+            width: dimensions.cover_normal
+            height: dimensions.cover_normal+20
+        }
+    }
+    Component {
+        id: gridGenresDelegateComponent_id
+
+        MCGridGenresDelegate {
             width: dimensions.cover_normal
             height: dimensions.cover_normal+20
         }

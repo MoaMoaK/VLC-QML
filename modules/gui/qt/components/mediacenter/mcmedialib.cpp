@@ -160,7 +160,7 @@ void MCMediaLib::select( const int &item_id )
             break;
 
         case CAT_MUSIC_GENRE:
-            current_cat = CAT_MUSIC_ARTIST;
+            current_cat = CAT_MUSIC_ALBUM;
             break;
 
         default:
@@ -541,7 +541,7 @@ MLArtist *MCMediaLib::getArtistItem( const QModelIndex & index ) const
 }
 
 
-MLAlbum* MCMediaLib::getGenreItem( const QModelIndex & index ) const
+MLGenre* MCMediaLib::getGenreItem( const QModelIndex & index ) const
 {
     int r = index.row();
     if (index.isValid() && r >= 0 && r < rowCount())
@@ -626,14 +626,16 @@ void MCMediaLib::retrieveGenres( medialibrary::SortingCriteria sort, bool desc )
     beginResetModel();
     {
         if (genres) delete genres;
-        genres = new QList<MLAlbum*>();
+        genres = new QList<MLGenre*>();
 //        if (current_obj != NULL) delete current_obj;
         current_obj = new QList<MLItem*>();
-/* NOT IMPLEMENTED YET
- *        std::vector<medialibrary::AlbumPtr> g = ml->genres(sort, desc);
- *        for ( int i=0 ; i<g.size() ; i++ )
- *            genres->append( new MLAlbum( g[i] ) );
- */
+        std::vector<medialibrary::GenrePtr> g = ml->genres(current_sort, is_desc);
+        for ( int i=0 ; i<g.size() ; i++ )
+        {
+            MLGenre* item = new MLGenre( g[i] );
+            genres->append( item );
+            current_obj->append( item );
+        }
     }
     endResetModel();
 }

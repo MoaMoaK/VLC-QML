@@ -13,6 +13,7 @@
 class MLItem;
 class MLAlbum;
 class MLArtist;
+class MLGenre;
 
 enum MLItemModelRoles {
 
@@ -35,6 +36,14 @@ enum MLItemModelRoles {
     GET_ARTIST_ALBUMS,
     GET_ARTIST_COVER,
     GET_ARTIST_NB_ALBUMS,
+
+    // Genres
+    GET_GENRE_ID,
+    GET_GENRE_NAME,
+    GET_GENRE_NB_TRACKS,
+    GET_GENRE_ARTISTS,
+    GET_GENRE_TRACKS,
+    GET_GENRE_ALBUMS,
 
     // Tracks
     GET_TRACK_TITLE,

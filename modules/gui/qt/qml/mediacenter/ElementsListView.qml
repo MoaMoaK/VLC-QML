@@ -15,11 +15,14 @@ ListView {
             delegate = listAlbumsDelegateComponent_id;
         else if (medialib.getCategory() == 1)
             delegate = listArtistsDelegateComponent_id;
+        else if (medialib.getCategory() == 2)
+            delegate = listGenresDelegateComponent_id;
         else
             delegate = listTracksDelegateComponent_id;
     }
 
     function reloadData() {
+        console.log( "Reload started : " + medialib.getObjects() )
         model = medialib.getObjects();
         console.log( "Data reloaded" );
     }
@@ -39,6 +42,11 @@ ListView {
         id: listArtistsDelegateComponent_id
 
         MCListArtistsDelegate { }
+    }
+    Component {
+        id: listGenresDelegateComponent_id
+
+        MCListGenresDelegate { }
     }
     Component {
         id: listTracksDelegateComponent_id

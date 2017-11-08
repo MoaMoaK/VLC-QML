@@ -3,6 +3,7 @@
 #include "components/mediacenter/mlitem.hpp"
 #include "components/mediacenter/mlalbum.hpp"
 #include "components/mediacenter/mlartist.hpp"
+#include "components/mediacenter/mlgenre.hpp"
 
 
 MLItemModel::MLItemModel(const QList<MLItem *> *item, QObject *parent):
@@ -12,6 +13,7 @@ MLItemModel::MLItemModel(const QList<MLItem *> *item, QObject *parent):
     for (int i=0 ; i<item->count() ; i++)
         ml_item_list->append(item->at(i));
 }
+
 
 MLItemModel::MLItemModel(const MLItemModel &other):
     ml_item_list ( other.getMLItemModel() )
@@ -79,6 +81,20 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
     case GET_ARTIST_NB_ALBUMS :
         return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getNbAlbums() );
 
+        // Genres
+    case GET_GENRE_ID:
+        return QVariant::fromValue( reinterpret_cast<MLGenre*>(ml_item)->getId() );
+    case GET_GENRE_NAME:
+        return QVariant::fromValue( reinterpret_cast<MLGenre*>(ml_item)->getName() );
+    case GET_GENRE_NB_TRACKS:
+        return QVariant::fromValue( reinterpret_cast<MLGenre*>(ml_item)->getNbTracks() );
+    case GET_GENRE_ARTISTS:
+        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLGenre*>(ml_item)->getArtists() );
+    case GET_GENRE_TRACKS:
+        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLGenre*>(ml_item)->getTracks() );
+    case GET_GENRE_ALBUMS:
+        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLGenre*>(ml_item)->getAlbums() );
+
     // Tracks
     case GET_TRACK_TITLE :
         return QVariant::fromValue( reinterpret_cast<MLAlbumTrack*>(ml_item)->getTitle() );
@@ -116,6 +132,14 @@ QHash<int, QByteArray> MLItemModel::roleNames() const
     roles[GET_ARTIST_ALBUMS] = "artist_albums";
     roles[GET_ARTIST_COVER] = "artist_cover";
     roles[GET_ARTIST_NB_ALBUMS] = "artist_nb_albums";
+
+    // Genres
+    roles[GET_GENRE_ID] = "genre_id";
+    roles[GET_GENRE_NAME] = "genre_name";
+    roles[GET_GENRE_NB_TRACKS] = "genre_nb_tracks";
+    roles[GET_GENRE_ARTISTS] = "genre_artists";
+    roles[GET_GENRE_TRACKS] = "genre_tracks";
+    roles[GET_GENRE_ALBUMS] = "genre_albums";
 
     // Tracks
     roles[GET_TRACK_TITLE] = "track_title";

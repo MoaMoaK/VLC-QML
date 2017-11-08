@@ -2,7 +2,7 @@
 
 MLAlbum::MLAlbum(medialibrary::AlbumPtr data , QObject *parent) : MLItem(parent)
 {
-    m_id         =          data->id()                    ;
+    id         =          data->id()                    ;
     title        = QString( data->title().c_str()        );
     releaseYear  =          data->releaseYear()           ;
     shortSummary = QString( data->shortSummary().c_str() );
@@ -22,7 +22,7 @@ MLAlbum::MLAlbum(medialibrary::AlbumPtr data , QObject *parent) : MLItem(parent)
 
 QString MLAlbum::getId() const
 {
-    return QString( std::to_string(m_id).c_str() );
+    return QString( std::to_string(id).c_str() );
 }
 
 QString MLAlbum::getTitle() const

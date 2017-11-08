@@ -18,6 +18,7 @@
 #include "mlalbum.hpp"
 #include "mlmovie.hpp"
 #include "mlserie.hpp"
+#include "mlgenre.hpp"
 #include "mlartist.hpp"
 #include "components/utils/mlitemmodel.hpp"
 
@@ -81,7 +82,7 @@ public:
 private:
     MLAlbum* getAlbumItem(const QModelIndex &index ) const;
     MLArtist* getArtistItem(const QModelIndex &index ) const;
-    MLAlbum* getGenreItem(const QModelIndex &index ) const;
+    MLGenre* getGenreItem(const QModelIndex &index ) const;
     MLAlbum* getTrackItem(const QModelIndex &index ) const;
     MLMovie* getMovieItem(const QModelIndex &index ) const;
     MLSerie* getSerieItem(const QModelIndex &index ) const;
@@ -100,7 +101,7 @@ private:
 
     QList<MLAlbum*> *albums;
     QList<MLArtist*> *artists;
-    QList<MLAlbum*> *genres;
+    QList<MLGenre*> *genres;
     QList<MLAlbum*> *tracks;
     QList<MLMovie*> *videos;
     QList<MLSerie*> *networks;

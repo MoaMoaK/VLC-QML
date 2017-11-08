@@ -16,6 +16,7 @@ ColumnLayout {
 
     function reloadData() {
         changedCategory();
+        console.log('plop');
         viewLoader.item.reloadData();
     }
 
