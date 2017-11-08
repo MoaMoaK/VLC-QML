@@ -16,7 +16,7 @@ class MLArtist : public MLItem
 {
     Q_OBJECT
 public:
-    MLArtist(medialibrary::ArtistPtr data, QObject *parent = nullptr);
+    MLArtist(medialibrary::ArtistPtr _data, QObject *parent = nullptr);
 
     Q_INVOKABLE QString getId() const;
     Q_INVOKABLE QString getName() const;
@@ -28,14 +28,16 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
-    QList<MLItem *> *getDetailsObjects();
+    QList<MLItem *> *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
 private:
-    int64_t m_id;
+    int64_t id;
     QString name;
     QString shortBio;
     QList<MLItem*> albums;
     QString cover;
+
+    medialibrary::ArtistPtr data;
 };
 
 #endif // MLARTIST_HPP

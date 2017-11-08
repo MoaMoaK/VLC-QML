@@ -16,7 +16,7 @@ class MLAlbumTrack : public MLItem
 
 public:
     explicit MLAlbumTrack(QObject *parent = nullptr);
-    MLAlbumTrack( medialibrary::MediaPtr data, QObject *parent = nullptr);
+    MLAlbumTrack( medialibrary::MediaPtr _data, QObject *parent = nullptr);
 
     Q_INVOKABLE QString getTitle() const;
     Q_INVOKABLE QString getTrackNumber() const;
@@ -25,12 +25,14 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
-    QList<MLItem *> *getDetailsObjects();
+    QList<MLItem *> *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
 private:
     QString title;
     unsigned int trackNumber;
     int64_t duration;
+
+    medialibrary::MediaPtr data;
 
 signals:
 

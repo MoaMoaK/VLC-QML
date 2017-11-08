@@ -4,6 +4,8 @@
 #include <qt5/QtCore/QObject>
 #include <qt5/QtCore/QString>
 
+#include <medialibrary/IMediaLibrary.h>
+
 #include "components/utils/mlitemmodel.hpp"
 
 class MLItem : public QObject
@@ -17,7 +19,7 @@ public:
     Q_INVOKABLE virtual QString getPresName() const = 0;
     Q_INVOKABLE virtual QString getPresImage() const = 0;
     Q_INVOKABLE virtual QString getPresInfo() const = 0;
-    virtual QList<MLItem *> *getDetailsObjects() = 0;
+    virtual QList<MLItem *> *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false) = 0;
 };
 
 

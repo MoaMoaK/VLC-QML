@@ -145,7 +145,7 @@ void MCMediaLib::select( const int &item_id )
     if (item_id >= 0 && item_id <= current_obj->count())
     {
         current_main_obj = current_obj->at(item_id);
-        current_obj = current_main_obj->getDetailsObjects();
+        current_obj = current_main_obj->getDetailsObjects(current_sort, is_desc);
 //        if (current_main_obj) delete current_main_obj;
 //        if (current_obj) delete current_obj;
 
@@ -297,11 +297,15 @@ void MCMediaLib::sort( const QString &criteria )
         current_sort = medialibrary::SortingCriteria::Artist;
         is_desc = false;
     }
-    if (!hasPresentation().toBool())
+    if (current_main_obj)
+    {
+        current_obj = current_main_obj->getDetailsObjects(current_sort, is_desc);
+    }
+    else
     {
         sortCurrent();
-        invokeQML("reloadData()");
     }
+    invokeQML("reloadData()");
 }
 
 void MCMediaLib::sortCurrent(medialibrary::SortingCriteria sort, bool desc)

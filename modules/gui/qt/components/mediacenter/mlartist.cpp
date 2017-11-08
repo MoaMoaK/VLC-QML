@@ -1,20 +1,21 @@
 #include "mlartist.hpp"
 
-MLArtist::MLArtist(medialibrary::ArtistPtr data, QObject *parent) : MLItem(parent)
+MLArtist::MLArtist(medialibrary::ArtistPtr _data, QObject *parent) : MLItem(parent)
 {
-    m_id = data->id();
-    name = QString( data->name().c_str() );
-    shortBio = QString( data->shortBio().c_str() );
+    data = _data;
+    id = _data->id();
+    name = QString( _data->name().c_str() );
+    shortBio = QString( _data->shortBio().c_str() );
     albums = QList<MLItem*>();
-    std::vector<medialibrary::AlbumPtr> a = data->albums();
+    std::vector<medialibrary::AlbumPtr> a = _data->albums();
     for (int i=0 ; i<a.size() ; i++)
         albums.append( new MLAlbum( a[i]) );
-    cover = QString( data->artworkMrl().c_str() );
+    cover = QString( _data->artworkMrl().c_str() );
 }
 
 QString MLArtist::getId() const
 {
-    return QString( std::to_string(m_id).c_str() );
+    return QString( std::to_string(id).c_str() );
 }
 
 QString MLArtist::getName() const
@@ -57,8 +58,12 @@ QString MLArtist::getPresInfo() const
     return shortBio;
 }
 
-QList<MLItem *> *MLArtist::getDetailsObjects()
+QList<MLItem *> *MLArtist::getDetailsObjects(medialibrary::SortingCriteria sort, bool desc)
 {
-    return &albums;
+    QList<MLItem *> *result = new QList<MLItem *>();
+    std::vector<medialibrary::AlbumPtr> t = data->albums(sort, desc);
+    for (int i=0 ; i<t.size() ; i++ )
+        result->append( new MLAlbum( t[i] ) );
+    return result;
 }
 

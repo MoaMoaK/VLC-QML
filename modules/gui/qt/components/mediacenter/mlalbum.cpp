@@ -1,23 +1,24 @@
 #include "mlalbum.hpp"
 
-MLAlbum::MLAlbum(medialibrary::AlbumPtr data , QObject *parent) : MLItem(parent)
+MLAlbum::MLAlbum(medialibrary::AlbumPtr _data , QObject *parent) : MLItem(parent)
 {
-    id         =          data->id()                    ;
-    title        = QString( data->title().c_str()        );
-    releaseYear  =          data->releaseYear()           ;
-    shortSummary = QString( data->shortSummary().c_str() );
-    cover        = QString( data->artworkMrl().c_str()   );
-    tracks       = QList<MLItem*>();
-    std::vector<medialibrary::MediaPtr> t = data->tracks();
+    data = _data;
+    id = _data->id();
+    title = QString( _data->title().c_str() );
+    releaseYear = _data->releaseYear();
+    shortSummary = QString( _data->shortSummary().c_str() );
+    cover = QString( _data->artworkMrl().c_str() );
+    tracks = QList<MLItem*>();
+    std::vector<medialibrary::MediaPtr> t = _data->tracks();
     for (int i=0 ; i<t.size() ; i++ )
         tracks.append( new MLAlbumTrack( t[i] ) );
-    mainArtist       = QString( data->albumArtist()->name().c_str() );
-    otherArtists     = QList<QString>();
-    std::vector<medialibrary::ArtistPtr> a = data->artists( false );
+    mainArtist = QString( _data->albumArtist()->name().c_str() );
+    otherArtists = QList<QString>();
+    std::vector<medialibrary::ArtistPtr> a = _data->artists( false );
     for (int i=0 ; i<a.size() ; i++ )
         otherArtists.append( QString( a[i]->name().c_str() ) );
-    nbTracks     =          data->nbTracks()              ;
-    duration     =          data->duration()              ;
+    nbTracks = _data->nbTracks();
+    duration = _data->duration();
 }
 
 QString MLAlbum::getId() const
@@ -95,7 +96,11 @@ QString MLAlbum::getPresInfo() const
     return shortSummary;
 }
 
-QList<MLItem *> *MLAlbum::getDetailsObjects()
+QList<MLItem *> *MLAlbum::getDetailsObjects(medialibrary::SortingCriteria sort, bool desc)
 {
-    return &tracks ;
+    QList<MLItem *> *result = new QList<MLItem *>();
+    std::vector<medialibrary::MediaPtr> t = data->tracks(sort, desc);
+    for (int i=0 ; i<t.size() ; i++ )
+        result->append( new MLAlbumTrack( t[i] ) );
+    return result;
 }

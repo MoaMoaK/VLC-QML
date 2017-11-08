@@ -21,7 +21,7 @@ class MLGenre : public MLItem
     Q_OBJECT
 
 public:
-    MLGenre( medialibrary::GenrePtr data, QObject *parent = nullptr);
+    MLGenre( medialibrary::GenrePtr _data, QObject *parent = nullptr);
 
     Q_INVOKABLE QString getId() const;
     Q_INVOKABLE QString getName() const;
@@ -33,7 +33,7 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
-    QList<MLItem* > *getDetailsObjects();
+    QList<MLItem* > *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
 private:
     int64_t id;
@@ -42,6 +42,8 @@ private:
     QList<MLItem*> artists;
     QList<MLItem*> tracks;
     QList<MLItem*> albums;
+
+    medialibrary::GenrePtr data;
 
 };
 

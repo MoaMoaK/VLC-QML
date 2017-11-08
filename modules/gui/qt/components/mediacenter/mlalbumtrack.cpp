@@ -2,17 +2,19 @@
 
 MLAlbumTrack::MLAlbumTrack(QObject *parent) : MLItem(parent)
 {
+    data = NULL;
     title = nullptr;
     trackNumber = 0;
     duration = 0;
 }
 
-MLAlbumTrack::MLAlbumTrack( medialibrary::MediaPtr data, QObject *parent ):
+MLAlbumTrack::MLAlbumTrack(medialibrary::MediaPtr _data, QObject *parent ):
     MLItem(parent)
 {
-    title = QString( data->title().c_str() );
-    trackNumber = data->albumTrack()->trackNumber();
-    duration = data->duration();
+    data = _data;
+    title = QString( _data->title().c_str() );
+    trackNumber = _data->albumTrack()->trackNumber();
+    duration = _data->duration();
 }
 
 QString MLAlbumTrack::getTitle() const
@@ -55,7 +57,7 @@ QString MLAlbumTrack::getPresInfo() const
     return "";
 }
 
-QList<MLItem *> *MLAlbumTrack::getDetailsObjects()
+QList<MLItem *> *MLAlbumTrack::getDetailsObjects(medialibrary::SortingCriteria sort, bool desc)
 {
     return new QList<MLItem *>();
 }

@@ -17,7 +17,7 @@ class MLAlbum : public MLItem
     Q_OBJECT
 
 public:
-    MLAlbum( medialibrary::AlbumPtr data, QObject *parent = nullptr);
+    MLAlbum( medialibrary::AlbumPtr _data, QObject *parent = nullptr);
 
     Q_INVOKABLE QString getId() const;
     Q_INVOKABLE QString getTitle() const;
@@ -33,7 +33,7 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
-    QList<MLItem* > *getDetailsObjects();
+    QList<MLItem* > *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
 private:
     int64_t id;
@@ -46,6 +46,8 @@ private:
     QList<QString> otherArtists;
     uint32_t nbTracks;
     unsigned int duration;
+
+    medialibrary::AlbumPtr data;
 };
 
 #endif // MLALBUM_HPP
