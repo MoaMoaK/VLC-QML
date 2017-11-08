@@ -17,8 +17,10 @@ ListView {
             delegate = listArtistsDelegateComponent_id;
         else if (medialib.getCategory() == 2)
             delegate = listGenresDelegateComponent_id;
-        else
+        else if (medialib.getCategory() == 3)
             delegate = listTracksDelegateComponent_id;
+        else
+            delegate = listAlbumsDelegateComponent_id;
     }
 
     function reloadData() {

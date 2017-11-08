@@ -25,8 +25,10 @@ GridView {
             delegate = gridArtistsDelegateComponent_id;
         else if (medialib.getCategory() == 2)
             delegate = gridGenresDelegateComponent_id;
-        else
+        else if (medialib.getCategory() == 3)
             delegate = gridTracksDelegateComponent_id;
+        else
+            delegate = gridAlbumsDelegateComponent_id;
     }
 
     function reloadData() {

@@ -558,7 +558,7 @@ MLGenre* MCMediaLib::getGenreItem( const QModelIndex & index ) const
 }
 
 
-MLAlbum* MCMediaLib::getTrackItem( const QModelIndex & index ) const
+MLAlbumTrack* MCMediaLib::getTrackItem( const QModelIndex & index ) const
 {
     int r = index.row();
     if (index.isValid() && r >= 0 && r < rowCount())
@@ -652,14 +652,16 @@ void MCMediaLib::retrieveTracks( medialibrary::SortingCriteria sort, bool desc )
     beginResetModel();
     {
         if (tracks) delete tracks;
-        tracks = new QList<MLAlbum*>();
+        tracks = new QList<MLAlbumTrack*>();
 //        if (current_obj) delete current_obj;
         current_obj = new QList<MLItem*>();
-/* NOT IMPLEMENTED YET
- *        std::vector<medialibrary::AlbumPtr> t = ml->tracks(sort, desc);
- *        for ( int i=0 ; i<t.size() ; i++ )
- *            tracks->append( new MLAlbum( t[i] ) );
- */
+        std::vector<medialibrary::MediaPtr> t = ml->audioFiles(current_sort, is_desc);
+        for ( int i=0 ; i<t.size() ; i++ )
+        {
+            MLAlbumTrack* item = new MLAlbumTrack( t[i] );
+            tracks->append( item );
+            current_obj->append( item );
+        }
     }
     endResetModel();
 }

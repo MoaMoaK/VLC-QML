@@ -83,7 +83,7 @@ private:
     MLAlbum* getAlbumItem(const QModelIndex &index ) const;
     MLArtist* getArtistItem(const QModelIndex &index ) const;
     MLGenre* getGenreItem(const QModelIndex &index ) const;
-    MLAlbum* getTrackItem(const QModelIndex &index ) const;
+    MLAlbumTrack *getTrackItem(const QModelIndex &index ) const;
     MLMovie* getMovieItem(const QModelIndex &index ) const;
     MLSerie* getSerieItem(const QModelIndex &index ) const;
 
@@ -102,7 +102,7 @@ private:
     QList<MLAlbum*> *albums;
     QList<MLArtist*> *artists;
     QList<MLGenre*> *genres;
-    QList<MLAlbum*> *tracks;
+    QList<MLAlbumTrack*> *tracks;
     QList<MLMovie*> *videos;
     QList<MLSerie*> *networks;
     MCMediaLibCategory current_cat;
