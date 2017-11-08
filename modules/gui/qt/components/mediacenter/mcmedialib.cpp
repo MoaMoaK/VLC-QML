@@ -297,8 +297,11 @@ void MCMediaLib::sort( const QString &criteria )
         current_sort = medialibrary::SortingCriteria::Artist;
         is_desc = false;
     }
-    sortCurrent();
-    invokeQML("reloadData()");
+    if (!hasPresentation().toBool())
+    {
+        sortCurrent();
+        invokeQML("reloadData()");
+    }
 }
 
 void MCMediaLib::sortCurrent(medialibrary::SortingCriteria sort, bool desc)
