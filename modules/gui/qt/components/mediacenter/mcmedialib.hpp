@@ -71,19 +71,12 @@ public:
     Q_INVOKABLE void sort(const QString &criteria );
 
 private:
-    MLAlbum* getAlbumItem(const QModelIndex &index ) const;
-    MLArtist* getArtistItem(const QModelIndex &index ) const;
-    MLGenre* getGenreItem(const QModelIndex &index ) const;
-    MLAlbumTrack *getTrackItem(const QModelIndex &index ) const;
-    MLMovie* getMovieItem(const QModelIndex &index ) const;
-    MLSerie* getSerieItem(const QModelIndex &index ) const;
-
-    void retrieveAlbums(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
-    void retrieveArtists(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
-    void retrieveGenres(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
-    void retrieveTracks(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
-    void retrieveMovies(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
-    void retrieveSeries(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
+    void retrieveAlbums();
+    void retrieveArtists();
+    void retrieveGenres();
+    void retrieveTracks();
+    void retrieveMovies();
+    void retrieveSeries();
 
     intf_thread_t *p_intf;
     QQuickWidget *qmlItem;
@@ -106,7 +99,7 @@ private:
     medialibrary::IMediaLibrary* ml;
     medialibrary::ExCallback* cb;
 
-    void sortCurrent(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
+    void sortCurrent();
 
     void invokeQML(const char *func );
 };

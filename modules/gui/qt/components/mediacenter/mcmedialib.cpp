@@ -33,6 +33,7 @@ MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QQuickWidget *_qml_item, QObject 
     retrieveAlbums();
 }
 
+// Are we exploring a specific item or just browsing generic category
 QVariant MCMediaLib::hasPresentation() {
     if (current_main_obj)
         return true;
@@ -40,27 +41,32 @@ QVariant MCMediaLib::hasPresentation() {
         return false;
 }
 
+// Which category should be displayed
 QVariant MCMediaLib::getCategory()
 {
     return QVariant( current_cat );
 }
 
+// Get the list of items that should be displayed
 QVariant MCMediaLib::getObjects()
 {
     return QVariant::fromValue<MLItemModel*>( new MLItemModel(current_obj) );
 }
 
+// Should the items be displayed as a grid or as list ?
 QVariant MCMediaLib::isGridView()
 {
     return QVariant( m_gridView );
 }
 
+// Toogle between grid and list view for the displayed items
 void MCMediaLib::toogleView()
 {
     m_gridView = !m_gridView;
     invokeQML("changedView()");
 }
 
+// A specific item has been selected -> update the list of obejcts and the presentation
 void MCMediaLib::select( const int &item_id )
 {
     if (item_id >= 0 && item_id <= current_obj->count())
@@ -93,6 +99,7 @@ void MCMediaLib::select( const int &item_id )
     invokeQML("reloadData()");
 }
 
+// The object that should be presented in the presentation banner
 QVariant MCMediaLib::getPresObject()
 {
     if (current_main_obj)
@@ -101,6 +108,7 @@ QVariant MCMediaLib::getPresObject()
         return QVariant();
 }
 
+// When a source (or sub-source) is selected (Music / Music>Albums / Videos / ...)
 void MCMediaLib::selectSource( const QString &name )
 {
     if (name == "music" && current_cat != CAT_MUSIC_ALBUM)
@@ -168,6 +176,7 @@ void MCMediaLib::selectSource( const QString &name )
     }
 }
 
+// When a sort has been selected, we need to recalculate the model
 void MCMediaLib::sort( const QString &criteria )
 {
     if (criteria == "Alphabetic asc")
@@ -229,98 +238,36 @@ void MCMediaLib::sort( const QString &criteria )
     invokeQML("reloadData()");
 }
 
-void MCMediaLib::sortCurrent(medialibrary::SortingCriteria sort, bool desc)
+// Recalculate the list of root objects that should be displayed according to the current category and sort
+void MCMediaLib::sortCurrent()
 {
     switch (current_cat)
     {
     case CAT_MUSIC_ALBUM:
-        retrieveAlbums(sort, desc);
+        retrieveAlbums();
         break;
     case CAT_MUSIC_ARTIST:
-        retrieveArtists(sort, desc);
+        retrieveArtists();
         break;
     case CAT_MUSIC_GENRE:
-        retrieveGenres(sort, desc);
+        retrieveGenres();
         break;
     case CAT_MUSIC_TRACKS:
-        retrieveTracks(sort, desc);
+        retrieveTracks();
         break;
     case CAT_VIDEO:
-        retrieveMovies(sort, desc);
+        retrieveMovies();
         break;
     case CAT_NETWORK:
-        retrieveSeries(sort, desc);
+        retrieveSeries();
         break;
     default:
         break;
     }
 }
 
-// Getters for items in the model
-
-MLAlbum* MCMediaLib::getAlbumItem( const QModelIndex & index ) const
-{
-    int r = index.row();
-    if (index.isValid() && r >= 0 && r < albums->count())
-        return albums->at(r);
-    else
-        return NULL;
-}
-
-
-MLArtist *MCMediaLib::getArtistItem( const QModelIndex & index ) const
-{
-    int r = index.row();
-    if (index.isValid() && r >= 0 && r < artists->count())
-        return artists->at(r);
-    else
-        return NULL;
-}
-
-
-MLGenre* MCMediaLib::getGenreItem( const QModelIndex & index ) const
-{
-    int r = index.row();
-    if (index.isValid() && r >= 0 && r < genres->count())
-        return genres->at(r);
-    else
-        return NULL;
-}
-
-
-MLAlbumTrack* MCMediaLib::getTrackItem( const QModelIndex & index ) const
-{
-    int r = index.row();
-    if (index.isValid() && r >= 0 && r < tracks->count())
-        return tracks->at(r);
-    else
-        return NULL;
-}
-
-MLMovie* MCMediaLib::getMovieItem( const QModelIndex & index ) const
-{
-    int r = index.row();
-    if (index.isValid() && r >= 0 && r < videos->count())
-        return videos->at(r);
-    else
-        return NULL;
-}
-
-MLSerie* MCMediaLib::getSerieItem( const QModelIndex & index ) const
-{
-    int r = index.row();
-    if (index.isValid() && r >= 0 && r < networks->count())
-        return networks->at(r);
-    else
-        return NULL;
-}
-
-
-
-
-// Retriever to fetch items in medialib
-
-void MCMediaLib::retrieveAlbums( medialibrary::SortingCriteria sort, bool desc )
+// Retriever to fetch items in medialib : Recalculate a specific list of root objects
+void MCMediaLib::retrieveAlbums()
 {
     if (albums) delete albums;
     albums = new QList<MLAlbum*>();
@@ -335,7 +282,7 @@ void MCMediaLib::retrieveAlbums( medialibrary::SortingCriteria sort, bool desc )
     }
 }
 
-void MCMediaLib::retrieveArtists( medialibrary::SortingCriteria sort, bool desc )
+void MCMediaLib::retrieveArtists()
 {
     if (artists) delete artists;
     artists = new QList<MLArtist*>();
@@ -350,7 +297,7 @@ void MCMediaLib::retrieveArtists( medialibrary::SortingCriteria sort, bool desc 
     }
 }
 
-void MCMediaLib::retrieveGenres( medialibrary::SortingCriteria sort, bool desc )
+void MCMediaLib::retrieveGenres()
 {
     if (genres) delete genres;
     genres = new QList<MLGenre*>();
@@ -365,7 +312,7 @@ void MCMediaLib::retrieveGenres( medialibrary::SortingCriteria sort, bool desc )
     }
 }
 
-void MCMediaLib::retrieveTracks( medialibrary::SortingCriteria sort, bool desc )
+void MCMediaLib::retrieveTracks()
 {
     if (tracks) delete tracks;
     tracks = new QList<MLAlbumTrack*>();
@@ -380,7 +327,7 @@ void MCMediaLib::retrieveTracks( medialibrary::SortingCriteria sort, bool desc )
     }
 }
 
-void MCMediaLib::retrieveMovies( medialibrary::SortingCriteria sort, bool desc )
+void MCMediaLib::retrieveMovies()
 {
     if (videos) delete videos;
     videos = new QList<MLMovie*>();
@@ -393,7 +340,7 @@ void MCMediaLib::retrieveMovies( medialibrary::SortingCriteria sort, bool desc )
  */
 }
 
-void MCMediaLib::retrieveSeries( medialibrary::SortingCriteria sort, bool desc )
+void MCMediaLib::retrieveSeries()
 {
     if (networks) delete networks;
     networks = new QList<MLSerie*>();
@@ -406,6 +353,7 @@ void MCMediaLib::retrieveSeries( medialibrary::SortingCriteria sort, bool desc )
  */
 }
 
+// Invoke a given QML function (used to notify the view part of a change)
 void MCMediaLib::invokeQML( const char* func ) {
     QQuickItem *root = qmlItem->rootObject();
     int methodIndex = root->metaObject()->indexOfMethod(func);
