@@ -69,14 +69,6 @@ Item {
                     medialib.selectSource(name);
                     subSourcesBanner.update();
                 }
-
-                function getCategory() {
-                    return medialib.getCategory();
-                }
-
-                function sort ( criteria ) {
-                    medialib.sort(criteria);
-                }
             }
 
             MCDisplay {
