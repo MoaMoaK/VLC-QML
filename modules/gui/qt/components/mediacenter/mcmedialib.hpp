@@ -53,21 +53,12 @@ enum MCMediaLibCategory {
     CAT_NETWORK
 };
 
-class MCMediaLib : public QAbstractListModel
+class MCMediaLib : public QObject
 {
     Q_OBJECT
 
 public:
     MCMediaLib(intf_thread_t *_p_intf, QQuickWidget* _qml_item, QObject *parent = nullptr);
-
-    /* Subclassing QAbstractListModel */
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    bool setData( const QModelIndex &index, const QVariant & value, int role = Qt::EditRole ) override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    QHash<int, QByteArray> roleNames() const;
-
-    void update();
 
     Q_INVOKABLE QVariant hasPresentation();
     Q_INVOKABLE QVariant getCategory();
