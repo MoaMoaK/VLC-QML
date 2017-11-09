@@ -36,8 +36,6 @@ Rectangle {
         id: stack_view_id
         anchors.fill: parent
         anchors.leftMargin: 10
-        anchors.topMargin: 5
-        anchors.bottomMargin: 5
 
         initialItem: expanded ? expand_view_id : collapse_view_id
 

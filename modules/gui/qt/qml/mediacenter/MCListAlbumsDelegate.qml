@@ -9,7 +9,7 @@ Rectangle {
 
     property bool expanded: false
 
-    height: stack_view_id.currentItem.implicitHeight + stack_view_id.anchors.topMargin + stack_view_id.anchors.bottomMargin
+    height: stack_view_id.currentItem.implicitHeight
     width: parent.width
 
     Behavior on height {
@@ -36,8 +36,6 @@ Rectangle {
         id: stack_view_id
         anchors.fill: parent
         anchors.leftMargin: 10
-        anchors.topMargin: 5
-        anchors.bottomMargin: 5
 
         initialItem: expanded ? expand_view_id : collapse_view_id
 
@@ -123,21 +121,27 @@ Rectangle {
                     source: model.album_cover || "qrc:///noart.png"
                 }
 
-                Text {
-                    id: collapse_title_id
-                    text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min( ( parent.width-collapse_cover_id.width-parent.spacing )*2/3 , implicitWidth )
-                    elide: Text.ElideRight
-                }
+                Column {
+                    id: collapse_column_id
+                    width: root.width - collapse_cover_id.width - collapse_row_id.spacing
+                    height: collapse_cover_id.height
+                    spacing : 5
+                    Text {
+                        id: collapse_title_id
+                        text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
+                        width: Math.min(parent.width, implicitWidth)
+                        height: implicitHeight
+                        elide: Text.ElideRight
+                    }
 
-                Text {
-                    id: collapse_infos_id
-                    text: model.album_main_artist
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min( parent.width-parent.spacing-collapse_cover_id.width-parent.spacing-collapse_title_id.width , implicitWidth )
-                    elide: Text.ElideRight
-                    font.pixelSize: 8
+                    Text {
+                        id: collapse_infos_id
+                        text: model.album_main_artist
+                        width: Math.min(parent.width, implicitWidth)
+                        height: implicitHeight
+                        elide: Text.ElideRight
+                        font.pixelSize: 8
+                    }
                 }
             }
         }

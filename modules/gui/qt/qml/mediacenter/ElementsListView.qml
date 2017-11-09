@@ -35,6 +35,8 @@ ListView {
 
     ScrollBar.vertical: ScrollBar { }
 
+    spacing: 2
+
     Component {
         id: listAlbumsDelegateComponent_id
 
