@@ -510,6 +510,8 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/utils/ToolTipArea.qml \
 	gui/qt/qml/utils/HorizontalRule.qml \
 	gui/qt/qml/utils/ArtistCover.qml \
+	gui/qt/qml/utils/ExpandGridView.qml \
+	gui/qt/qml/utils/ExpandGridViewRow.qml \
 	gui/qt/qml/utils/TracksDisplay.qml \
 	gui/qt/qml/utils/AlbumsDisplay.qml \
 	gui/qt/qml/playlist/InfoMovie.qml \

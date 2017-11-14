@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import "qrc:///qml/"
 //import "../utils"
 
-GridView {
+ExpandGridView {
 
     function showDetails() {
         // To be implemented by the parent
@@ -20,15 +20,15 @@ GridView {
 
     function chooseCat() {
         if (medialib.getCategory() == 0)
-            delegate = gridAlbumsDelegateComponent_id;
+            return gridAlbumsDelegateComponent_id;
         else if (medialib.getCategory() == 1)
-            delegate = gridArtistsDelegateComponent_id;
+            return gridArtistsDelegateComponent_id;
         else if (medialib.getCategory() == 2)
-            delegate = gridGenresDelegateComponent_id;
+            return gridGenresDelegateComponent_id;
         else if (medialib.getCategory() == 3)
-            delegate = gridTracksDelegateComponent_id;
+            return gridTracksDelegateComponent_id;
         else
-            delegate = gridAlbumsDelegateComponent_id;
+            return gridAlbumsDelegateComponent_id;
     }
 
     function reloadData() {
@@ -36,12 +36,28 @@ GridView {
         console.log( "Data reloaded" );
     }
 
+    width: 480
+    height: 360
+
     model: medialib.getObjects()
 
     cellWidth: dimensions.cover_normal
     cellHeight: dimensions.cover_normal+20
+    expandHeight: 256
+
+    rowSpacing: 1
+    colSpacing: 1
+    expandSpacing: 1
+
+    expandDuration: 200
+    collapseDuration: 200
 
     delegate : chooseCat();
+    expandDelegate: Rectangle {
+        width: parent.parent.width
+        height: 256
+        color: "#FF0000"
+    }
 
     ScrollBar.vertical: ScrollBar { }
 
