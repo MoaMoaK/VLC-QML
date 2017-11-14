@@ -63,11 +63,16 @@ Column {
                 Loader {
                     sourceComponent: root.delegate
                     property var model: get_item(beginIndex + index)
+                    property var currentIndex: beginIndex + index
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: toggleExpand(beginIndex + index)
+                    propagateComposedEvents: true
+                    onClicked: {
+                        toggleExpand(beginIndex + index);
+                        mouse.accepted = false;
+                    }
                 }
             }
         }
@@ -119,6 +124,7 @@ Column {
             Loader {
                 sourceComponent: root.expandDelegate
                 property var model: get_item(expandItemIndex)
+                property var currentIndex: expandItemIndex
             }
         }
     }
