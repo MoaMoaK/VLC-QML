@@ -68,6 +68,8 @@ public:
 
     QList<MLItem *> *getMLItemModel() const;
 
+    Q_INVOKABLE QVariantMap get(int row);
+
 private:
     MLItem* getItem(const QModelIndex &index) const;
 
