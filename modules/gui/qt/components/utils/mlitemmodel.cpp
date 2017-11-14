@@ -47,61 +47,211 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
     {
     // Albums
     case GET_ALBUM_ID :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getId() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getId() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_TITLE :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getTitle() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getTitle() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_RELEASE_YEAR :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getReleaseYear() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getReleaseYear() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_SHORT_SUMMARY :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getShortSummary() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getShortSummary() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_COVER :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getCover() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getCover() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_TRACKS :
-        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLAlbum*>(ml_item)->getTracks() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue<MLItemModel*>( ml_album->getTracks() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_MAIN_ARTIST :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getArtist() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getArtist() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_ARTISTS :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getArtists() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getArtists() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_NB_TRACKS :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getNbTracks() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getNbTracks() );
+        else
+            return QVariant();
+    }
     case GET_ALBUM_DURATION :
-        return QVariant::fromValue( reinterpret_cast<MLAlbum*>(ml_item)->getDuration() );
+    {
+        MLAlbum* ml_album = dynamic_cast<MLAlbum*>(ml_item);
+        if (ml_album != NULL)
+            return QVariant::fromValue( ml_album->getDuration() );
+        else
+            return QVariant();
+    }
 
     // Artists
     case GET_ARTIST_ID :
-        return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getId() );
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getId() );
+        else
+            return QVariant();
+    }
     case GET_ARTIST_NAME :
-        return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getName() );
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getName() );
+        else
+            return QVariant();
+    }
     case GET_ARTIST_SHORT_BIO :
-        return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getShortBio() );
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getShortBio() );
+        else
+            return QVariant();
+    }
     case GET_ARTIST_ALBUMS :
-        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLArtist*>(ml_item)->getAlbums() );
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue<MLItemModel*>( ml_artist->getAlbums() );
+        else
+            return QVariant();
+    }
     case GET_ARTIST_COVER :
-        return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getCover() );
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getCover() );
+        else
+            return QVariant();
+    }
     case GET_ARTIST_NB_ALBUMS :
-        return QVariant::fromValue( reinterpret_cast<MLArtist*>(ml_item)->getNbAlbums() );
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getNbAlbums() );
+        else
+            return QVariant();
+    }
 
         // Genres
     case GET_GENRE_ID:
-        return QVariant::fromValue( reinterpret_cast<MLGenre*>(ml_item)->getId() );
+    {
+        MLGenre* ml_genre = dynamic_cast<MLGenre*>(ml_item);
+        if (ml_genre != NULL)
+            return QVariant::fromValue( ml_genre->getId() );
+        else
+            return QVariant();
+    }
     case GET_GENRE_NAME:
-        return QVariant::fromValue( reinterpret_cast<MLGenre*>(ml_item)->getName() );
+    {
+        MLGenre* ml_genre = dynamic_cast<MLGenre*>(ml_item);
+        if (ml_genre != NULL)
+            return QVariant::fromValue( ml_genre->getName() );
+        else
+            return QVariant();
+    }
     case GET_GENRE_NB_TRACKS:
-        return QVariant::fromValue( reinterpret_cast<MLGenre*>(ml_item)->getNbTracks() );
+    {
+        MLGenre* ml_genre = dynamic_cast<MLGenre*>(ml_item);
+        if (ml_genre != NULL)
+            return QVariant::fromValue( ml_genre->getNbTracks() );
+        else
+            return QVariant();
+    }
     case GET_GENRE_ARTISTS:
-        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLGenre*>(ml_item)->getArtists() );
+    {
+        MLGenre* ml_genre = dynamic_cast<MLGenre*>(ml_item);
+        if (ml_genre != NULL)
+            return QVariant::fromValue<MLItemModel*>( ml_genre->getArtists() );
+        else
+            return QVariant();
+    }
     case GET_GENRE_TRACKS:
-        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLGenre*>(ml_item)->getTracks() );
+    {
+        MLGenre* ml_genre = dynamic_cast<MLGenre*>(ml_item);
+        if (ml_genre != NULL)
+            return QVariant::fromValue<MLItemModel*>( ml_genre->getTracks() );
+        else
+            return QVariant();
+    }
     case GET_GENRE_ALBUMS:
-        return QVariant::fromValue<MLItemModel*>( reinterpret_cast<MLGenre*>(ml_item)->getAlbums() );
+    {
+        MLGenre* ml_genre = dynamic_cast<MLGenre*>(ml_item);
+        if (ml_genre != NULL)
+            return QVariant::fromValue<MLItemModel*>( ml_genre->getAlbums() );
+        else
+            return QVariant();
+    }
 
     // Tracks
     case GET_TRACK_TITLE :
-        return QVariant::fromValue( reinterpret_cast<MLAlbumTrack*>(ml_item)->getTitle() );
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getTitle() );
+        else
+            return QVariant();
+    }
     case GET_TRACK_NUMBER :
-        return QVariant::fromValue( reinterpret_cast<MLAlbumTrack*>(ml_item)->getTrackNumber() );
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getTrackNumber() );
+        else
+            return QVariant();
+    }
     case GET_TRACK_DURATION :
-        return QVariant::fromValue( reinterpret_cast<MLAlbumTrack*>(ml_item)->getDuration() );
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getDuration() );
+        else
+            return QVariant();
+    }
 
     default :
         return QVariant();
