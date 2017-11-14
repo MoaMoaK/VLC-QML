@@ -36,9 +36,6 @@ ExpandGridView {
         console.log( "Data reloaded" );
     }
 
-    width: 480
-    height: 360
-
     model: medialib.getObjects()
 
     cellWidth: dimensions.cover_normal
