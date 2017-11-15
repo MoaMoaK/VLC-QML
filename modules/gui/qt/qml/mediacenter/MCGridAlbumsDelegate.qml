@@ -23,7 +23,7 @@ Rectangle {
 
         onClicked: {
             console.log('Clicked on details : '+model.album_title)
-            medialib.select( index );
+//            medialib.select( currentIndex );
             mouse.accepted = false
         }
     }

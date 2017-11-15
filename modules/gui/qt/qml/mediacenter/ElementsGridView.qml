@@ -52,7 +52,7 @@ ExpandGridView {
     delegate : chooseCat();
     expandDelegate: Rectangle {
         width: parent.parent.width
-        height: 256
+        height: parent.parent.height
         color: "#FF0000"
     }
 

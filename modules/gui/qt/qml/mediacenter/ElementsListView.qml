@@ -24,7 +24,6 @@ ListView {
     }
 
     function reloadData() {
-        console.log( "Reload started : " + medialib.getObjects() )
         model = medialib.getObjects();
         console.log( "Data reloaded" );
     }

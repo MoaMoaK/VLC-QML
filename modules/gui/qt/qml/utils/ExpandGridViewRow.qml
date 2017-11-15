@@ -63,7 +63,7 @@ Column {
                 Loader {
                     sourceComponent: root.delegate
                     property var model: get_item(beginIndex + index)
-                    property var currentIndex: beginIndex + index
+                    property int currentIndex: beginIndex + index
                 }
 
                 MouseArea {
@@ -78,14 +78,16 @@ Column {
         }
     }
 
-    Rectangle {
+    Item {
         id: expandPanel_container_id
-        width: expandPanel_loader_id.item.width
+        width: 0
         height: 0
 
         Loader {
             id: expandPanel_loader_id
             sourceComponent: collapseZone
+            width: expandPanel_container_id.width
+            height: expandPanel_container_id.height
         }
 
         states: State {
@@ -99,17 +101,17 @@ Column {
             Transition {
                 from: ""; to: "expanded"
                 SequentialAnimation {
-                    PropertyAnimation { duration: expandDelay }
+                    PropertyAnimation { properties: "width"; duration: expandDelay }
                     PropertyAnimation { properties: "sourceComponent" }
-                    PropertyAnimation { properties: "height,width"; duration: expandDuration }
+                    PropertyAnimation { properties: "height"; duration: expandDuration }
                 }
             },
             Transition {
                 from: "expanded"; to: ""
                 SequentialAnimation {
                     PropertyAnimation { duration: collapseDelay }
-                    PropertyAnimation { properties: "height,width"; duration: collapseDuration }
-                    PropertyAnimation { properties: "sourceComponent" }
+                    PropertyAnimation { properties: "height"; duration: collapseDuration }
+                    PropertyAnimation { properties: "sourceComponent, width" }
                 }
             }
         ]
@@ -118,13 +120,10 @@ Column {
     Component {
         id: expandZone
         Item {
-            width: expandFillWidth ? rootMaxWidth : itemsPerRow * (cellWidth+main_row.spacing) - main_row.spacing
-            height: expandHeight
-
             Loader {
                 sourceComponent: root.expandDelegate
                 property var model: get_item(expandItemIndex)
-                property var currentIndex: expandItemIndex
+                property int currentIndex: expandItemIndex
             }
         }
     }
