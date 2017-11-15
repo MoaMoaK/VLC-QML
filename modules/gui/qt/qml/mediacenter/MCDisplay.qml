@@ -6,18 +6,181 @@ import QtQuick.Layouts 1.3
 ColumnLayout {
 
     function changedView() {
+        viewLoader.item.changedView();
+    }
+
+    function changedCategory() {
+//        model = [];
+        viewLoader.sourceComponent = chooseCat();
+        reloadData();
+        console.log( "Changed category : "+medialib.getCategory() );
+    }
+
+    function chooseCat() {
+        if (medialib.getCategory() == 0)
+            return albumsDisplayComponent;
+        else if (medialib.getCategory() == 1)
+            return artistsDisplayComponent;
+        else if (medialib.getCategory() == 2)
+            return genresDisplayComponent;
+        else if (medialib.getCategory() == 3)
+            return tracksDisplayComponent;
+        else
+            return albumsDisplayComponent;
+    }
+
+    function reloadData() {
+        viewLoader.item.reloadData();
+    }
+
+    function reloadPresentation() {
+        if ( medialib.hasPresentation() ) {
+            presentationLoader_id.replace( presentationComponent_id );
+            presentationLoader_id.height = dimensions.heightBar_xlarge;
+            presentationLoader_id.Layout.preferredHeigh = dimensions.heightBar_xlarge;
+            presentationLoader_id.Layout.minimumHeight = dimensions.heightBar_xlarge;
+            presentationLoader_id.Layout.maximumHeight = dimensions.heightBar_xlarge;
+        } else {
+            presentationLoader_id.replace( noPresentationComponent_id );
+            presentationLoader_id.height = 0;
+            presentationLoader_id.Layout.preferredHeigh = 0;
+            presentationLoader_id.Layout.minimumHeight = 0;
+            presentationLoader_id.Layout.maximumHeight = 0;
+        }
+
+        console.log( "Presentation reloaded "+medialib.getPresObject() )
+    }
+
+    StackView {
+        id: presentationLoader_id
+        z:10
+        Layout.fillWidth: true
+        height: medialib.hasPresentation() ? dimensions.heightBar_xlarge : 0
+        Layout.preferredHeight: height
+        Layout.minimumHeight: height
+        Layout.maximumHeight: height
+        initialItem: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
+
+        replaceEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to: 1
+                duration: 200
+            }
+        }
+        replaceExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 200
+            }
+        }
+
+        Component {
+            id: presentationComponent_id
+
+            Presentation {
+                height: dimensions.heightBar_xlarge
+
+                Layout.preferredHeight: height
+                Layout.minimumHeight: height
+                Layout.maximumHeight: height
+
+                obj: medialib.getPresObject();
+            }
+        }
+        Component {
+            id: noPresentationComponent_id
+
+            Rectangle {
+                height: 0
+                Layout.preferredHeight: height
+                Layout.minimumHeight: height
+                Layout.maximumHeight: height
+            }
+        }
+    }
+
+    Loader {
+        id: viewLoader
+        z: 0
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        sourceComponent: chooseCat()
+
+        Component {
+            id: albumsDisplayComponent
+
+            AlbumsDisplay {
+                width: dimensions.cover_normal
+                height: dimensions.cover_normal+20
+            }
+        }
+        Component {
+            id: artistsDisplayComponent
+
+            ArtistsDisplay {
+                width: dimensions.cover_normal
+                height: dimensions.cover_normal+20
+            }
+        }
+        Component {
+            id: genresDisplayComponent
+
+            GenresDisplay {
+                width: dimensions.cover_normal
+                height: dimensions.cover_normal+20
+            }
+        }
+        Component {
+            id: tracksDisplayComponent
+
+            TracksDisplay {
+                width: dimensions.cover_normal
+                height: dimensions.cover_normal+20
+            }
+        }
+    }
+}
+
+
+
+
+/*
+
+ColumnLayout {
+
+    function changedView() {
         viewLoader.sourceComponent = medialib.isGridView() ? gridViewComponent_id : listViewComponent_id;
         console.log("View changed");
     }
 
     function changedCategory() {
-        viewLoader.item.changedCategory();
+        model = [];
+        chooseCat();
+        reloadData();
+        console.log( "Changed category : "+medialib.getCategory() );
+    }
+
+    function chooseCat() {
+        if (medialib.getCategory() == 0)
+            return gridAlbumsDelegateComponent_id;
+        else if (medialib.getCategory() == 1)
+            return gridArtistsDelegateComponent_id;
+        else if (medialib.getCategory() == 2)
+            return gridGenresDelegateComponent_id;
+        else if (medialib.getCategory() == 3)
+            return gridTracksDelegateComponent_id;
+        else
+            return gridAlbumsDelegateComponent_id;
     }
 
     function reloadData() {
         changedCategory();
-        console.log('plop');
-        viewLoader.item.reloadData();
+        model = medialib.getObjects();
+        console.log( "Data reloaded" );
     }
 
     function reloadPresentation() {
@@ -113,7 +276,7 @@ ColumnLayout {
     }
 }
 
-
+*/
 
 //StackView {
 //    id: stack

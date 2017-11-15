@@ -199,5 +199,9 @@
         <file alias="MCGridGenresDelegate.qml">qml/mediacenter/MCGridGenresDelegate.qml</file>
         <file alias="MCListGenresDelegate.qml">qml/mediacenter/MCListGenresDelegate.qml</file>
         <file alias="MCGridAlbumsExpandDelegate.qml">qml/mediacenter/MCGridAlbumsExpandDelegate.qml</file>
+        <file alias="AlbumsDisplay.qml">qml/mediacenter/AlbumsDisplay.qml</file>
+        <file alias="ArtistsDisplay.qml">qml/mediacenter/ArtistsDisplay.qml</file>
+        <file alias="TracksDisplay.qml">qml/mediacenter/TracksDisplay.qml</file>
+        <file alias="GenresDisplay.qml">qml/mediacenter/GenresDisplay.qml</file>
     </qresource>
 </RCC>

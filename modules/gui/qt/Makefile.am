@@ -501,6 +501,10 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/mediacenter/MCAlbumDetails.qml \
 	gui/qt/qml/mediacenter/MCArtistDetails.qml \
 	gui/qt/qml/mediacenter/MCDisplay.qml \
+	gui/qt/qml/mediacenter/AlbumsDisplay.qml \
+	gui/qt/qml/mediacenter/ArtistsDisplay.qml \
+	gui/qt/qml/mediacenter/GenresDisplay.qml \
+	gui/qt/qml/mediacenter/TracksDisplay.qml \
 	gui/qt/qml/mediacenter/MCMusicAlbumsDisplay.qml \
 	gui/qt/qml/mediacenter/MCMusicArtistsDisplay.qml \
 	gui/qt/qml/mediacenter/MCMusicGenresDisplay.qml \

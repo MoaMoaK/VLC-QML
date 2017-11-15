@@ -96,7 +96,7 @@ void MCMediaLib::select( const int &item_id )
     }
 
     invokeQML("reloadPresentation()");
-    invokeQML("reloadData()");
+    invokeQML("changedCategory()");
 }
 
 // The object that should be presented in the presentation banner
