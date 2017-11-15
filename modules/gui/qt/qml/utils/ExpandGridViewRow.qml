@@ -102,7 +102,7 @@ Column {
                 from: ""; to: "expanded"
                 SequentialAnimation {
                     PropertyAnimation { properties: "width"; duration: expandDelay }
-                    PropertyAnimation { properties: "sourceComponent" }
+                    PropertyAnimation { properties: "sourceComponent"; duration: 0 }
                     PropertyAnimation { properties: "height"; duration: expandDuration }
                 }
             },
@@ -111,7 +111,7 @@ Column {
                 SequentialAnimation {
                     PropertyAnimation { duration: collapseDelay }
                     PropertyAnimation { properties: "height"; duration: collapseDuration }
-                    PropertyAnimation { properties: "sourceComponent, width" }
+                    PropertyAnimation { properties: "sourceComponent, width"; duration: 0 }
                 }
             }
         ]

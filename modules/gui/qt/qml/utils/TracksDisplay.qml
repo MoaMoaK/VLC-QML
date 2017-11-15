@@ -1,31 +1,36 @@
 import QtQuick 2.0
 
-ListView {
-
+Item {
     property var tracks: []
 
-    id: expand_track_id
+    ListView {
+        id: expand_track_id
 
-    interactive: false
-    model: tracks
+        anchors.fill: parent
 
-    delegate: Rectangle {
-        height: expand_track_name_id.font.pixelSize + 2
-        width: expand_track_id.width
+        interactive: false
+        model: tracks
 
-        Text {
-            id: expand_track_name_id
-            text: "["+model.track_number+"] "+model.track_title+" - "+model.track_duration
-        }
+        delegate: Rectangle {
+            height: expand_track_name_id.font.pixelSize + 2
+            width: expand_track_id.width
 
-        MouseArea {
-            anchors.fill: parent
+            Text {
+                id: expand_track_name_id
+                text: "["+model.track_number+"] "+model.track_title+" - "+model.track_duration
+            }
 
-            hoverEnabled: true
+            MouseArea {
+                anchors.fill: parent
 
-            onEntered: { parent.color = "#f0f0f0" }
-            onExited: { parent.color = "#ffffff" }
-            onClicked: { console.log( "clicked : "+model.track_title ) }
+                hoverEnabled: true
+
+                onEntered: { parent.color = "#f0f0f0" }
+                onExited: { parent.color = "#ffffff" }
+                onClicked: { console.log( "clicked : "+model.track_title ) }
+            }
         }
     }
+
 }
+

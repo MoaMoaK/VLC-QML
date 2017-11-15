@@ -47,13 +47,11 @@ ExpandGridView {
     expandSpacing: 1
 
     expandDuration: 200
-    collapseDuration: 200
 
     delegate : chooseCat();
-    expandDelegate: Rectangle {
+    expandDelegate: MCGridAlbumsExpandDelegate {
         width: parent.parent.width
         height: parent.parent.height
-        color: "#FF0000"
     }
 
     ScrollBar.vertical: ScrollBar { }

@@ -490,6 +490,7 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/mediacenter/ElementsGridView.qml \
 	gui/qt/qml/mediacenter/Presentation.qml \
 	gui/qt/qml/mediacenter/MCGridAlbumsDelegate.qml \
+	gui/qt/qml/mediacenter/MCGridAlbumsExpandDelegate.qml \
 	gui/qt/qml/mediacenter/MCListAlbumsDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridArtistsDelegate.qml \
 	gui/qt/qml/mediacenter/MCListArtistsDelegate.qml \

@@ -198,5 +198,6 @@
         <file alias="MCListTracksDelegate.qml">qml/mediacenter/MCListTracksDelegate.qml</file>
         <file alias="MCGridGenresDelegate.qml">qml/mediacenter/MCGridGenresDelegate.qml</file>
         <file alias="MCListGenresDelegate.qml">qml/mediacenter/MCListGenresDelegate.qml</file>
+        <file alias="MCGridAlbumsExpandDelegate.qml">qml/mediacenter/MCGridAlbumsExpandDelegate.qml</file>
     </qresource>
 </RCC>
