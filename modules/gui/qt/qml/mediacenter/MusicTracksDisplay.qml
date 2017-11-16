@@ -24,7 +24,7 @@ Loader {
             cellWidth: dimensions.cover_normal
             cellHeight: dimensions.cover_normal+20
 
-            delegate : MCGridGenresDelegate {
+            delegate : MusicTracksGridDelegate {
                 width: dimensions.cover_normal
                 height: dimensions.cover_normal+20
             }
@@ -37,7 +37,7 @@ Loader {
         ListView {
             model: medialib.getObjects()
 
-            delegate : MCListGenresDelegate { }
+            delegate : MusicTracksListDelegate { }
 
             ScrollBar.vertical: ScrollBar { }
 

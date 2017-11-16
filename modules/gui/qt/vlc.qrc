@@ -93,7 +93,6 @@
         <file alias="search_clear">pixmaps/search_clear.png</file>
         <file alias="dropzone">pixmaps/playlist/dropzone.png</file>
         <file alias="valid">pixmaps/valid.png</file>
-        <file>qml/SubBannerSources.qml</file>
     </qresource>
     <qresource prefix="/prefsmenu">
         <file alias="cone_audio_64">pixmaps/prefs/spref_cone_Audio_64.png</file>
@@ -168,29 +167,27 @@
         <file alias="AlbumsDisplay.qml">qml/utils/AlbumsDisplay.qml</file>
         <file alias="ExpandGridView.qml">qml/utils/ExpandGridView.qml</file>
         <file alias="ExpandGridViewRow.qml">qml/utils/ExpandGridViewRow.qml</file>
+        <file alias="SubBannerSources.qml">qml/SubBannerSources.qml</file>
     </qresource>
     <qresource prefix="/playlist">
-        <file alias="InfoMovie.qml">qml/playlist/InfoMovie.qml</file>
-        <file alias="MCGridViewDelegate.qml">qml/playlist/MCGridViewDelegate.qml</file>
         <file alias="PLDisplay.qml">qml/playlist/PLDisplay.qml</file>
         <file alias="PLListViewDelegate.qml">qml/playlist/PLListViewDelegate.qml</file>
-        <file alias="MCListViewDelegate.qml">qml/playlist/MCListViewDelegate.qml</file>
     </qresource>
     <qresource prefix="/mediacenter">
         <file alias="MCDisplay.qml">qml/mediacenter/MCDisplay.qml</file>
-        <file alias="MCGridAlbumsDelegate.qml">qml/mediacenter/MCGridAlbumsDelegate.qml</file>
-        <file alias="MCListAlbumsDelegate.qml">qml/mediacenter/MCListAlbumsDelegate.qml</file>
-        <file alias="MCGridArtistsDelegate.qml">qml/mediacenter/MCGridArtistsDelegate.qml</file>
-        <file alias="MCListArtistsDelegate.qml">qml/mediacenter/MCListArtistsDelegate.qml</file>
         <file alias="Presentation.qml">qml/mediacenter/Presentation.qml</file>
-        <file alias="MCGridTracksDelegate.qml">qml/mediacenter/MCGridTracksDelegate.qml</file>
-        <file alias="MCListTracksDelegate.qml">qml/mediacenter/MCListTracksDelegate.qml</file>
-        <file alias="MCGridGenresDelegate.qml">qml/mediacenter/MCGridGenresDelegate.qml</file>
-        <file alias="MCListGenresDelegate.qml">qml/mediacenter/MCListGenresDelegate.qml</file>
-        <file alias="MCGridAlbumsExpandDelegate.qml">qml/mediacenter/MCGridAlbumsExpandDelegate.qml</file>
-        <file alias="AlbumsDisplay.qml">qml/mediacenter/AlbumsDisplay.qml</file>
-        <file alias="ArtistsDisplay.qml">qml/mediacenter/ArtistsDisplay.qml</file>
-        <file alias="TracksDisplay.qml">qml/mediacenter/TracksDisplay.qml</file>
-        <file alias="GenresDisplay.qml">qml/mediacenter/GenresDisplay.qml</file>
+        <file alias="MusicAlbumsDisplay.qml">qml/mediacenter/MusicAlbumsDisplay.qml</file>
+        <file alias="MusicAlbumsGridDelegate.qml">qml/mediacenter/MusicAlbumsGridDelegate.qml</file>
+        <file alias="MusicAlbumsGridExpandDelegate.qml">qml/mediacenter/MusicAlbumsGridExpandDelegate.qml</file>
+        <file alias="MusicAlbumsListDelegate.qml">qml/mediacenter/MusicAlbumsListDelegate.qml</file>
+        <file alias="MusicArtistsDisplay.qml">qml/mediacenter/MusicArtistsDisplay.qml</file>
+        <file alias="MusicArtistsGridDelegate.qml">qml/mediacenter/MusicArtistsGridDelegate.qml</file>
+        <file alias="MusicArtistsListDelegate.qml">qml/mediacenter/MusicArtistsListDelegate.qml</file>
+        <file alias="MusicGenresDisplay.qml">qml/mediacenter/MusicGenresDisplay.qml</file>
+        <file alias="MusicGenresGridDelegate.qml">qml/mediacenter/MusicGenresGridDelegate.qml</file>
+        <file alias="MusicGenresListDelegate.qml">qml/mediacenter/MusicGenresListDelegate.qml</file>
+        <file alias="MusicTracksDisplay.qml">qml/mediacenter/MusicTracksDisplay.qml</file>
+        <file alias="MusicTracksGridDelegate.qml">qml/mediacenter/MusicTracksGridDelegate.qml</file>
+        <file alias="MusicTracksListDelegate.qml">qml/mediacenter/MusicTracksListDelegate.qml</file>
     </qresource>
 </RCC>

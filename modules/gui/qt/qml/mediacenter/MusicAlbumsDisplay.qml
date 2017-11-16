@@ -1,6 +1,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
+import "qrc:///qml/"
+//import "../utils"
+
 Loader {
 
     function changedView() {
@@ -18,15 +21,27 @@ Loader {
 
     Component {
         id: gridViewComponent_id
-        GridView {
+        ExpandGridView {
             model: medialib.getObjects()
 
             cellWidth: dimensions.cover_normal
             cellHeight: dimensions.cover_normal+20
+            expandHeight: 256
 
-            delegate : MCGridTracksDelegate {
+            rowSpacing: 1
+            colSpacing: 1
+            expandSpacing: 1
+            expandCompact: true
+
+            expandDuration: 200
+
+            delegate : MusicAlbumsGridDelegate {
                 width: dimensions.cover_normal
                 height: dimensions.cover_normal+20
+            }
+            expandDelegate: MusicAlbumsGridExpandDelegate {
+                width: parent.parent.width
+                height: parent.parent.height
             }
 
             ScrollBar.vertical: ScrollBar { }
@@ -37,7 +52,7 @@ Loader {
         ListView {
             model: medialib.getObjects()
 
-            delegate : MCListTracksDelegate { }
+            delegate : MusicAlbumsListDelegate { }
 
             ScrollBar.vertical: ScrollBar { }
 

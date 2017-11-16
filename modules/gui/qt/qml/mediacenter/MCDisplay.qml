@@ -113,7 +113,7 @@ ColumnLayout {
         Component {
             id: albumsDisplayComponent
 
-            AlbumsDisplay {
+            MusicAlbumsDisplay {
                 width: dimensions.cover_normal
                 height: dimensions.cover_normal+20
             }
@@ -121,7 +121,7 @@ ColumnLayout {
         Component {
             id: artistsDisplayComponent
 
-            ArtistsDisplay {
+            MusicArtistsDisplay {
                 width: dimensions.cover_normal
                 height: dimensions.cover_normal+20
             }
@@ -129,7 +129,7 @@ ColumnLayout {
         Component {
             id: genresDisplayComponent
 
-            GenresDisplay {
+            MusicGenresDisplay {
                 width: dimensions.cover_normal
                 height: dimensions.cover_normal+20
             }
@@ -137,7 +137,7 @@ ColumnLayout {
         Component {
             id: tracksDisplayComponent
 
-            TracksDisplay {
+            MusicTracksDisplay {
                 width: dimensions.cover_normal
                 height: dimensions.cover_normal+20
             }

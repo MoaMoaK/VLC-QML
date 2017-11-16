@@ -486,21 +486,21 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/MainInterface.qml \
 	gui/qt/qml/SubBannerSources.qml \
 	gui/qt/qml/BannerSources.qml \
-	gui/qt/qml/mediacenter/Presentation.qml \
-	gui/qt/qml/mediacenter/MCGridAlbumsDelegate.qml \
-	gui/qt/qml/mediacenter/MCGridAlbumsExpandDelegate.qml \
-	gui/qt/qml/mediacenter/MCListAlbumsDelegate.qml \
-	gui/qt/qml/mediacenter/MCGridArtistsDelegate.qml \
-	gui/qt/qml/mediacenter/MCListArtistsDelegate.qml \
-	gui/qt/qml/mediacenter/MCGridGenresDelegate.qml \
-	gui/qt/qml/mediacenter/MCListGenresDelegate.qml \
-	gui/qt/qml/mediacenter/MCGridTracksDelegate.qml \
-	gui/qt/qml/mediacenter/MCListTracksDelegate.qml \
 	gui/qt/qml/mediacenter/MCDisplay.qml \
-	gui/qt/qml/mediacenter/AlbumsDisplay.qml \
-	gui/qt/qml/mediacenter/ArtistsDisplay.qml \
-	gui/qt/qml/mediacenter/GenresDisplay.qml \
-	gui/qt/qml/mediacenter/TracksDisplay.qml \
+	gui/qt/qml/mediacenter/MusicAlbumsDisplay.qml \
+	gui/qt/qml/mediacenter/MusicAlbumsGridDelegate.qml \
+	gui/qt/qml/mediacenter/MusicAlbumsGridExpandDelegate.qml \
+	gui/qt/qml/mediacenter/MusicAlbumsListDelegate.qml \
+	gui/qt/qml/mediacenter/MusicArtistsDisplay.qml \
+	gui/qt/qml/mediacenter/MusicArtistsGridDelegate.qml \
+	gui/qt/qml/mediacenter/MusicArtistsListDelegate.qml \
+	gui/qt/qml/mediacenter/MusicGenresDisplay.qml \
+	gui/qt/qml/mediacenter/MusicGenresGridDelegate.qml \
+	gui/qt/qml/mediacenter/MusicGenresListDelegate.qml \
+	gui/qt/qml/mediacenter/MusicTracksDisplay.qml \
+	gui/qt/qml/mediacenter/MusicTracksGridDelegate.qml \
+	gui/qt/qml/mediacenter/MusicTracksListDelegate.qml \
+	gui/qt/qml/mediacenter/Presentation.qml \
 	gui/qt/qml/utils/ToolTip.qml \
 	gui/qt/qml/utils/ToolTipArea.qml \
 	gui/qt/qml/utils/HorizontalRule.qml \
