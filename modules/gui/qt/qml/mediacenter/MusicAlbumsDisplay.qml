@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
-import "qrc:///qml/"
-//import "../utils"
+import "qrc:///utils/" as Utils
 
 Loader {
 
@@ -21,7 +20,7 @@ Loader {
 
     Component {
         id: gridViewComponent_id
-        ExpandGridView {
+        Utils.ExpandGridView {
             model: medialib.getObjects()
 
             cellWidth: dimensions.cover_normal

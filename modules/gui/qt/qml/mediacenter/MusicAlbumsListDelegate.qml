@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
-import "qrc:///qml/"
-//import "../utils"
+import "qrc:///utils/" as Utils
 
 Rectangle {
     id: root
@@ -63,7 +62,7 @@ Rectangle {
             Column {
                 spacing: 5
 
-                HorizontalRule {}
+                Utils.HorizontalRule {}
 
                 Row {
                     id: expand_row_id
@@ -86,7 +85,7 @@ Rectangle {
                             text: "<b>"+(model.album_title || "Unknown title")+"</b>"
                         }
 
-                        TracksDisplay {
+                        Utils.TracksDisplay {
                             x: 30
                             height: album_nb_tracks * (spacing + 2 + 12)
                             width: expand_infos_id.width - x
@@ -98,7 +97,7 @@ Rectangle {
                     }
                 }
 
-                HorizontalRule {}
+                Utils.HorizontalRule {}
 
             }
 

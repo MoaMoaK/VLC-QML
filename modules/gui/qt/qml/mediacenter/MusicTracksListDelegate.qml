@@ -1,9 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
-import "qrc:///qml/"
-//import "../utils"
-
 Rectangle {
     id: root
 

@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
-import "qrc:///qml/"
-//import "../utils"
+import "qrc:///utils/" as Utils
 
 Rectangle {
     id: root
@@ -33,7 +32,7 @@ Rectangle {
         elide: Text.ElideRight
         height: implicitHeight+10
 
-        ToolTipArea {
+        Utils.ToolTipArea {
             anchors.fill: parent
             text: model.track_title || "Unknown track"
             enabled: title_disp.truncated

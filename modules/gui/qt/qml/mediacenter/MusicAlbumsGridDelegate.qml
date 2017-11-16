@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
-import "qrc:///qml/"
-//import "../utils"
+import "qrc:///utils/" as Utils
 
 Rectangle {
     id: root
@@ -110,7 +109,7 @@ Rectangle {
                 text: "<b>"+(model.album_title || "Unknown title")+"</b>"
                 font.pixelSize: 12
 
-                ToolTipArea {
+                Utils.ToolTipArea {
                     anchors.fill: parent
                     text: model.album_title || "Unknown title"
                     enabled: title_disp.truncated

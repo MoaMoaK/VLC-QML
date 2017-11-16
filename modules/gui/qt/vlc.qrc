@@ -154,21 +154,6 @@
         <file alias="addon_red">pixmaps/addons/addon_red.png</file>
         <file alias="addon_yellow">pixmaps/addons/addon_yellow.png</file>
     </qresource>
-    <qresource prefix="/qml">
-        <file alias="about">qml/about.qml</file>
-        <file alias="help">qml/help.qml</file>
-        <file alias="BannerSources.qml">qml/BannerSources.qml</file>
-        <file alias="MainInterface.qml">qml/MainInterface.qml</file>
-        <file alias="ToolTip.qml">qml/utils/ToolTip.qml</file>
-        <file alias="ToolTipArea.qml">qml/utils/ToolTipArea.qml</file>
-        <file alias="HorizontalRule.qml">qml/utils/HorizontalRule.qml</file>
-        <file alias="ArtistCover.qml">qml/utils/ArtistCover.qml</file>
-        <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
-        <file alias="AlbumsDisplay.qml">qml/utils/AlbumsDisplay.qml</file>
-        <file alias="ExpandGridView.qml">qml/utils/ExpandGridView.qml</file>
-        <file alias="ExpandGridViewRow.qml">qml/utils/ExpandGridViewRow.qml</file>
-        <file alias="SubBannerSources.qml">qml/SubBannerSources.qml</file>
-    </qresource>
     <qresource prefix="/playlist">
         <file alias="PLDisplay.qml">qml/playlist/PLDisplay.qml</file>
         <file alias="PLListViewDelegate.qml">qml/playlist/PLListViewDelegate.qml</file>
@@ -189,5 +174,22 @@
         <file alias="MusicTracksDisplay.qml">qml/mediacenter/MusicTracksDisplay.qml</file>
         <file alias="MusicTracksGridDelegate.qml">qml/mediacenter/MusicTracksGridDelegate.qml</file>
         <file alias="MusicTracksListDelegate.qml">qml/mediacenter/MusicTracksListDelegate.qml</file>
+    </qresource>
+    <qresource prefix="/qml">
+        <file alias="about.qml">qml/about.qml</file>
+        <file alias="BannerSources.qml">qml/BannerSources.qml</file>
+        <file alias="help.qml">qml/help.qml</file>
+        <file alias="MainInterface.qml">qml/MainInterface.qml</file>
+        <file alias="SubBannerSources.qml">qml/SubBannerSources.qml</file>
+    </qresource>
+    <qresource prefix="/utils">
+        <file alias="AlbumsDisplay.qml">qml/utils/AlbumsDisplay.qml</file>
+        <file alias="ArtistCover.qml">qml/utils/ArtistCover.qml</file>
+        <file alias="ExpandGridView.qml">qml/utils/ExpandGridView.qml</file>
+        <file alias="ExpandGridViewRow.qml">qml/utils/ExpandGridViewRow.qml</file>
+        <file alias="HorizontalRule.qml">qml/utils/HorizontalRule.qml</file>
+        <file alias="ToolTip.qml">qml/utils/ToolTip.qml</file>
+        <file alias="ToolTipArea.qml">qml/utils/ToolTipArea.qml</file>
+        <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
     </qresource>
 </RCC>

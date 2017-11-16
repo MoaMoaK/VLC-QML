@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
-import "qrc:///qml/"
-//import "../utils"
+import "qrc:///utils/" as Utils
 
 Rectangle {
     id: root
@@ -30,7 +29,7 @@ Rectangle {
         id: column
         spacing: 5
 
-        ArtistCover {
+        Utils.ArtistCover {
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width - 4
             height: root.height - title_disp.height - 4
@@ -48,7 +47,7 @@ Rectangle {
             elide: Text.ElideRight
             height: implicitHeight+10
 
-            ToolTipArea {
+            Utils.ToolTipArea {
                 anchors.fill: parent
                 text: model.artist_name || "Unknown Artist"
                 enabled: title_disp.truncated

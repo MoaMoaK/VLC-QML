@@ -1,7 +1,6 @@
 import QtQuick 2.0
 
-import "qrc:///qml/" as Utils
-//import "../utils" as Utils
+import "qrc:///utils/" as Utils
 
 Row {
     id: root

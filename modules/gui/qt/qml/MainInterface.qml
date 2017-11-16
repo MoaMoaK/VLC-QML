@@ -2,10 +2,8 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 
-import "qrc:///mediacenter/"
-//import "./mediacenter"
-import "qrc:///playlist/"
-//import "./playlist"
+import "qrc:///mediacenter/" as MC
+import "qrc:///playlist/" as PL
 
 Item {
     width: 1000
@@ -71,7 +69,7 @@ Item {
                 }
             }
 
-            MCDisplay {
+            MC.MCDisplay {
                 id: mcDisplay
 
                 // Basic properties
@@ -82,7 +80,7 @@ Item {
 
         }
 
-        PLDisplay {
+        PL.PLDisplay {
             // Custom properties
             pl: playlist
             default_width: 300
