@@ -17,13 +17,14 @@ Column {
     property int expandSpacing: 0
     property bool fillWidth: false
     property bool fillHeight: false
+    property bool expandFillWidth: false
+    property int rootMaxWidth: 0
 
     property int cellHeight: 0
     property int cellWidth: 0
     property int expandHeight: 0
-
-    property bool expandFillWidth: false
-    property int rootMaxWidth: 0
+    property bool expandCompact: false
+    property bool expandAdaptHeight: false
 
     property int expandDelay: 0
     property int collapseDelay: 0
@@ -45,6 +46,15 @@ Column {
             return model[i];
         console.log('Impossible to get item data from '+model+' at index '+i);
         return undefined;
+    }
+
+    function calc_expandzone_height() {
+        if (expandAdaptHeight)
+            return expandPanel_loader_id.item.implicitHeight;
+        else if (expandCompact)
+            return Math.min( expandPanel_loader_id.item.implicitHeight, expandHeight );
+        else
+            return expandHeight;
     }
 
     spacing : expandSpacing
@@ -92,9 +102,18 @@ Column {
 
         states: State {
             name: "expanded"; when: validExpandItemIndex()
-            PropertyChanges { target: expandPanel_loader_id; sourceComponent: expandZone }
-            PropertyChanges { target: expandPanel_container_id; height: expandHeight }
-            PropertyChanges { target: expandPanel_container_id; width: expandFillWidth ? rootMaxWidth : itemsPerRow * (cellWidth+main_row.spacing) - main_row.spacing }
+            PropertyChanges {
+                target: expandPanel_loader_id;
+                sourceComponent: expandZone
+            }
+            PropertyChanges {
+                target: expandPanel_container_id;
+                height: calc_expandzone_height()
+            }
+            PropertyChanges {
+                target: expandPanel_container_id;
+                width: expandFillWidth ? rootMaxWidth : itemsPerRow * (cellWidth+main_row.spacing) - main_row.spacing
+            }
         }
 
         transitions: [
@@ -120,7 +139,9 @@ Column {
     Component {
         id: expandZone
         Item {
+            implicitHeight: expandDelegate_loader.item.implicitHeight
             Loader {
+                id: expandDelegate_loader
                 sourceComponent: root.expandDelegate
                 property var model: get_item(expandItemIndex)
                 property int currentIndex: expandItemIndex

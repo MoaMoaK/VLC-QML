@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 import "qrc:///qml/" as Utils
-//import "../utils"
+//import "../utils" as Utils
 
 Row {
     id: root
@@ -30,8 +30,6 @@ Row {
 
             tracks: model.album_tracks
         }
-
-
     }
 }
 

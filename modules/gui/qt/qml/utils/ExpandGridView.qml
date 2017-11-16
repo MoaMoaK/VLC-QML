@@ -6,16 +6,21 @@ Flickable {
     property int rowSpacing: 0          // Space between two rows
     property int colSpacing: 0          // Space between two columns
     property int expandSpacing: 0       // Space between a row and the expanded zone
-    property bool fillWidth: false      // Should the space between cols been maximized
-    property bool fillHeight: false     // Should the space between rows been maximized
+    property bool fillWidth: false      // Should the space between cols been maximized ?
+    property bool fillHeight: false     // Should the space between rows been maximized ?
+    // Should the width of the expanded zone be the root's width (true)
+    // or the row's width (false) (different when there is space left at end of row) ?
+    property bool expandFillWidth: false
 
     property int cellHeight: 0          // Height of a cell
     property int cellWidth: 0           // Width of a cell
     property int expandHeight: 0        // Height of the expanded zone
-
-    // Should the width of the expanded zone be the root's width (true)
-    // or the row's width (false) (different when there is space left at end of row)
-    property bool expandFillWidth: false
+    // Should the height of the expanded zone be expandHeight or should it be compacted
+    // so it's the minimum between expandHeight and the height of the expandDelegate ?
+    property bool expandCompact : false
+    // Should the height of the expanded zone be always the height of the epxand Delegate ?
+    // (if true, properties expandHeight and expandCompact becom useless)
+    property bool expandAdaptHeight: false
 
     property int expandDelay: 0         // The delay before the expanding animation starts (in ms)
     property int collapseDelay: 0       // The delay before the collapsing animation starts (in ms)
@@ -108,13 +113,14 @@ Flickable {
                 expandSpacing: root.expandSpacing
                 fillWidth: root.fillWidth
                 fillHeight: root.fillHeight
+                expandFillWidth: root.expandFillWidth
+                rootMaxWidth: root.width
 
                 cellHeight: root.cellHeight
                 cellWidth: root.cellWidth
                 expandHeight: root.expandHeight
-
-                expandFillWidth: root.expandFillWidth
-                rootMaxWidth: root.width
+                expandCompact: root.expandCompact
+                expandAdaptHeight : root.expandAdaptHeight
 
                 expandDelay: root.expandDelay
                 collapseDelay: root.collapseDelay

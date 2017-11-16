@@ -31,6 +31,8 @@ Loader {
             rowSpacing: 1
             colSpacing: 1
             expandSpacing: 1
+            expandCompact: true
+            expandAdaptHeight: false
 
             expandDuration: 200
 
