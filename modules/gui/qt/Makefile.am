@@ -486,8 +486,6 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/MainInterface.qml \
 	gui/qt/qml/SubBannerSources.qml \
 	gui/qt/qml/BannerSources.qml \
-	gui/qt/qml/mediacenter/ElementsListView.qml \
-	gui/qt/qml/mediacenter/ElementsGridView.qml \
 	gui/qt/qml/mediacenter/Presentation.qml \
 	gui/qt/qml/mediacenter/MCGridAlbumsDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridAlbumsExpandDelegate.qml \
@@ -498,19 +496,11 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/mediacenter/MCListGenresDelegate.qml \
 	gui/qt/qml/mediacenter/MCGridTracksDelegate.qml \
 	gui/qt/qml/mediacenter/MCListTracksDelegate.qml \
-	gui/qt/qml/mediacenter/MCAlbumDetails.qml \
-	gui/qt/qml/mediacenter/MCArtistDetails.qml \
 	gui/qt/qml/mediacenter/MCDisplay.qml \
 	gui/qt/qml/mediacenter/AlbumsDisplay.qml \
 	gui/qt/qml/mediacenter/ArtistsDisplay.qml \
 	gui/qt/qml/mediacenter/GenresDisplay.qml \
 	gui/qt/qml/mediacenter/TracksDisplay.qml \
-	gui/qt/qml/mediacenter/MCMusicAlbumsDisplay.qml \
-	gui/qt/qml/mediacenter/MCMusicArtistsDisplay.qml \
-	gui/qt/qml/mediacenter/MCMusicGenresDisplay.qml \
-	gui/qt/qml/mediacenter/MCMusicTracksDisplay.qml \
-	gui/qt/qml/mediacenter/MCVideoDisplay.qml \
-	gui/qt/qml/mediacenter/MCNetworkDisplay.qml \
 	gui/qt/qml/utils/ToolTip.qml \
 	gui/qt/qml/utils/ToolTipArea.qml \
 	gui/qt/qml/utils/HorizontalRule.qml \
@@ -519,11 +509,8 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/utils/ExpandGridViewRow.qml \
 	gui/qt/qml/utils/TracksDisplay.qml \
 	gui/qt/qml/utils/AlbumsDisplay.qml \
-	gui/qt/qml/playlist/InfoMovie.qml \
-	gui/qt/qml/playlist/MCGridViewDelegate.qml \
 	gui/qt/qml/playlist/PLListViewDelegate.qml \
-	gui/qt/qml/playlist/PLDisplay.qml \
-	gui/qt/qml/playlist/MCListViewDelegate.qml
+	gui/qt/qml/playlist/PLDisplay.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 
 nodist_libqt_plugin_la_SOURCES += gui/qt/resources.cpp

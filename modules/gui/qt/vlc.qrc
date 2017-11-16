@@ -93,7 +93,6 @@
         <file alias="search_clear">pixmaps/search_clear.png</file>
         <file alias="dropzone">pixmaps/playlist/dropzone.png</file>
         <file alias="valid">pixmaps/valid.png</file>
-        <file>qml/mediacenter/MCAlbumDetails.qml</file>
         <file>qml/SubBannerSources.qml</file>
     </qresource>
     <qresource prefix="/prefsmenu">
@@ -181,19 +180,9 @@
         <file alias="MCDisplay.qml">qml/mediacenter/MCDisplay.qml</file>
         <file alias="MCGridAlbumsDelegate.qml">qml/mediacenter/MCGridAlbumsDelegate.qml</file>
         <file alias="MCListAlbumsDelegate.qml">qml/mediacenter/MCListAlbumsDelegate.qml</file>
-        <file alias="MCAlbumDetails.qml">qml/mediacenter/MCAlbumDetails.qml</file>
-        <file alias="MCMusicAlbumsDisplay.qml">qml/mediacenter/MCMusicAlbumsDisplay.qml</file>
-        <file alias="MCMusicArtistsDisplay.qml">qml/mediacenter/MCMusicArtistsDisplay.qml</file>
-        <file alias="MCMusicGenresDisplay.qml">qml/mediacenter/MCMusicGenresDisplay.qml</file>
-        <file alias="MCMusicTracksDisplay.qml">qml/mediacenter/MCMusicTracksDisplay.qml</file>
-        <file alias="MCNetworkDisplay.qml">qml/mediacenter/MCNetworkDisplay.qml</file>
-        <file alias="MCVideoDisplay.qml">qml/mediacenter/MCVideoDisplay.qml</file>
         <file alias="MCGridArtistsDelegate.qml">qml/mediacenter/MCGridArtistsDelegate.qml</file>
         <file alias="MCListArtistsDelegate.qml">qml/mediacenter/MCListArtistsDelegate.qml</file>
-        <file alias="MCArtistDetails.qml">qml/mediacenter/MCArtistDetails.qml</file>
         <file alias="Presentation.qml">qml/mediacenter/Presentation.qml</file>
-        <file alias="ElementsGridView.qml">qml/mediacenter/ElementsGridView.qml</file>
-        <file alias="ElementsListView.qml">qml/mediacenter/ElementsListView.qml</file>
         <file alias="MCGridTracksDelegate.qml">qml/mediacenter/MCGridTracksDelegate.qml</file>
         <file alias="MCListTracksDelegate.qml">qml/mediacenter/MCListTracksDelegate.qml</file>
         <file alias="MCGridGenresDelegate.qml">qml/mediacenter/MCGridGenresDelegate.qml</file>
