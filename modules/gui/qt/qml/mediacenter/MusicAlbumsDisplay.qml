@@ -25,7 +25,7 @@ Loader {
 
             cellWidth: dimensions.cover_normal
             cellHeight: dimensions.cover_normal+20
-            expandHeight: 256
+            expandHeight: 150
 
             rowSpacing: 1
             colSpacing: 1

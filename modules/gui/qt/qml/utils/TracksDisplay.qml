@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 
 Item {
     property var tracks: []
@@ -8,7 +9,6 @@ Item {
 
         anchors.fill: parent
 
-        interactive: false
         model: tracks
 
         delegate: Rectangle {
@@ -30,6 +30,8 @@ Item {
                 onClicked: { console.log( "clicked : "+model.track_title ) }
             }
         }
+
+        ScrollBar.vertical: ScrollBar { }
     }
 
 }

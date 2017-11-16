@@ -5,6 +5,7 @@ import "qrc:///utils/" as Utils
 Row {
     id: root
     spacing: 5
+    x: 5
 
     Image {
         id: expand_cover_id
@@ -18,13 +19,22 @@ Row {
         width: root.width - expand_cover_id.width - root.spacing
         spacing: 5
 
-        Text {
-            text: "<b>"+(model.album_title || "Unknown title")+"</b>"
+        Rectangle {
+            id: expand_infos_titleRect_id
+            color: "#FFFFFF"
+            height: expand_infos_title_id.implicitHeight
+            width: expand_infos_id.width
+
+            Text {
+                id: expand_infos_title_id
+                text: "<b>"+(model.album_title || "Unknown title")+"</b>"
+            }
         }
 
         Utils.TracksDisplay {
             x: 30
-            height: model.album_nb_tracks * (spacing + 2 + 12)
+            z: expand_infos_titleRect_id.z - 1
+            height: Math.min(root.height - expand_infos_titleRect_id.height - expand_infos_id.spacing, model.album_nb_tracks * (expand_infos_id.spacing + 2 + 12) - expand_infos_id.spacing)
             width: expand_infos_id.width - x
 
             tracks: model.album_tracks
