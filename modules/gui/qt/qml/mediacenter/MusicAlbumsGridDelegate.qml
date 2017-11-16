@@ -7,11 +7,6 @@ import "qrc:///qml/"
 Rectangle {
     id: root
 
-    function showDetails() {
-        // To be implemented by the parent
-        return ;
-    }
-
     MouseArea {
         id: mouseArea
         anchors.fill: root
@@ -23,7 +18,6 @@ Rectangle {
 
         onClicked: {
             console.log('Clicked on details : '+model.album_title)
-//            medialib.select( currentIndex );
             mouse.accepted = false
         }
     }
