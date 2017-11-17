@@ -8,7 +8,7 @@ Rectangle {
 
     property bool expanded: false
 
-    height: stack_view_id.currentItem.implicitHeight
+    height: stack_view_id.item.implicitHeight
     width: parent.width
 
     Behavior on height {
@@ -26,34 +26,16 @@ Rectangle {
         onClicked: {
             expanded = !expanded
             root.color = expanded ? "#ffffff" : "#f0f0f0"
-            stack_view_id.replace(expanded ? expand_view_id : collapse_view_id)
             mouse.accepted = false
         }
     }
 
-    StackView {
+    Loader {
         id: stack_view_id
         anchors.fill: parent
         anchors.leftMargin: 10
 
-        initialItem: expanded ? expand_view_id : collapse_view_id
-
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: 200
-            }
-        }
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to: 0
-                duration: 200
-            }
-        }
+        sourceComponent: expanded ? expand_view_id : collapse_view_id
 
         Component
         {
@@ -87,7 +69,7 @@ Rectangle {
 
                         Utils.TracksDisplay {
                             x: 30
-                            height: album_nb_tracks * (spacing + 2 + 12)
+                            height: album_nb_tracks * (2 + 12)
                             width: expand_infos_id.width - x
 
                             tracks: album_tracks
