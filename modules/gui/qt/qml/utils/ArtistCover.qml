@@ -1,13 +1,57 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.3
 
-Grid {
+GridLayout {
 
     property var albums: undefined
     property int nb_albums: 0
 
+    function calc_height(i) {
+        if (nb_albums === 1) {
+            return gridCover_id.height;
+        } else if (nb_albums === 2) {
+            return gridCover_id.height;
+        } else if (nb_albums === 3) {
+            if (i === 0) {
+                return gridCover_id.height;
+            } else {
+                return gridCover_id.height/2 - rowSpacing/2;
+            }
+        } else {
+            return gridCover_id.height/2 - rowSpacing/2;
+        }
+    }
+    function calc_width(i) {
+        if (nb_albums === 1) {
+            return gridCover_id.width;
+        } else if (nb_albums === 2) {
+            return gridCover_id.width/2 - columnSpacing/2;
+        } else if (nb_albums === 3) {
+            return gridCover_id.width/2 - columnSpacing/2;
+        } else {
+            return gridCover_id.width/2 - columnSpacing/2;
+        }
+    }
+    function calc_rowSpanning(i) {
+        if (nb_albums === 1) {
+            return 2;
+        } else if (nb_albums === 2) {
+            return 2;
+        } else if (nb_albums === 3) {
+            if (i === 0) {
+                return 2;
+            } else {
+                return 1;
+            }
+        } else {
+            return 1;
+        }
+    }
+
     id: gridCover_id
     columns: 2
-    spacing: 2
+    columnSpacing: 2
+    rowSpacing: 2
 
     Repeater {
         model: albums
@@ -15,8 +59,9 @@ Grid {
         Image {
             id: img
             source: model.album_cover || "qrc:///noart.png"
-            height: nb_albums == 1 ? gridCover_id.height : (gridCover_id.height/gridCover_id.columns) - 1
-            width: nb_albums == 1 ? gridCover_id.width : (gridCover_id.width/gridCover_id.columns) - 1
+            Layout.rowSpan: calc_rowSpanning(index)
+            Layout.preferredHeight: calc_height(index)
+            Layout.preferredWidth: calc_width(index)
             fillMode: Image.PreserveAspectCrop
             visible: index < 4
         }
