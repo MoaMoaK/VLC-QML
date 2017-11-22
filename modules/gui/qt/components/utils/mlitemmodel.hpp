@@ -47,6 +47,7 @@ enum MLItemModelRoles {
 
     // Tracks
     GET_TRACK_TITLE,
+    GET_TRACK_COVER,
     GET_TRACK_NUMBER,
     GET_TRACK_DURATION
 };

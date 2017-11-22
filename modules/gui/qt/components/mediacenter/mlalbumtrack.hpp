@@ -5,6 +5,7 @@
 #include <qt5/QtCore/QString>
 #include <medialibrary/IMedia.h>
 #include <medialibrary/IAlbumTrack.h>
+#include <medialibrary/IAlbum.h>
 #include <medialibrary/Types.h>
 
 #include "mlitem.hpp"
@@ -19,6 +20,7 @@ public:
     MLAlbumTrack( medialibrary::MediaPtr _data, QObject *parent = nullptr);
 
     Q_INVOKABLE QString getTitle() const;
+    Q_INVOKABLE QString getCover() const;
     Q_INVOKABLE QString getTrackNumber() const;
     Q_INVOKABLE QString getDuration() const;
 
@@ -29,6 +31,7 @@ public:
 
 private:
     QString title;
+    QString cover;
     unsigned int trackNumber;
     int64_t duration;
 

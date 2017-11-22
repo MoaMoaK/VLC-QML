@@ -236,6 +236,14 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
         else
             return QVariant();
     }
+    case GET_TRACK_COVER :
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getCover() );
+        else
+            return QVariant();
+    }
     case GET_TRACK_NUMBER :
     {
         MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
@@ -293,6 +301,7 @@ QHash<int, QByteArray> MLItemModel::roleNames() const
 
     // Tracks
     roles[GET_TRACK_TITLE] = "track_title";
+    roles[GET_TRACK_COVER] = "track_cover";
     roles[GET_TRACK_NUMBER] = "track_number";
     roles[GET_TRACK_DURATION] = "track_duration";
 
