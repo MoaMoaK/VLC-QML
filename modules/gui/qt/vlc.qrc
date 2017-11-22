@@ -191,5 +191,6 @@
         <file alias="ToolTip.qml">qml/utils/ToolTip.qml</file>
         <file alias="ToolTipArea.qml">qml/utils/ToolTipArea.qml</file>
         <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
+        <file alias="GenreCover.qml">qml/utils/GenreCover.qml</file>
     </qresource>
 </RCC>

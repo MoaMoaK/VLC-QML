@@ -22,21 +22,36 @@ Rectangle {
         }
     }
 
-    Text {
-        id: title_disp
-        width: root.width - 4
-        anchors.left: parent.left
-        text: "<b>"+(model.genre_name || "Unknown title")+"</b>"
-        font.pixelSize: 12
-        elide: Text.ElideRight
-        height: implicitHeight+10
+    Column {
+        x: 2
+        y: 2
+        id: column
+        spacing: 5
+
+        Utils.GenreCover {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: root.width - 4
+            height: root.height - title_disp.height - 4
+
+            albums: model.genre_albums
+        }
+
+        Text {
+            id: title_disp
+            anchors.left: parent.left
+            width: root.width - 4
+            text: "<b>"+(model.genre_name || "Unknown title")+"</b>"
+            font.pixelSize: 12
+            elide: Text.ElideRight
+            height: implicitHeight+10
 
 
-        Utils.ToolTipArea {
-            anchors.fill: parent
-            text: model.album_title || "Unknown title"
-            enabled: title_disp.truncated
-            attachedParent: root
+            Utils.ToolTipArea {
+                anchors.fill: parent
+                text: model.album_title || "Unknown title"
+                enabled: title_disp.truncated
+                attachedParent: root
+            }
         }
     }
 
