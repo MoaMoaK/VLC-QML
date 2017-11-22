@@ -6,122 +6,68 @@ import "qrc:///utils/" as Utils
 Rectangle {
     id: root
 
-    property bool expanded: false
-
-    height: stack_view_id.currentItem.implicitHeight + stack_view_id.anchors.topMargin + stack_view_id.anchors.bottomMargin
+    height: main_row.height
     width: parent.width
 
-    Behavior on height {
-        PropertyAnimation { duration: 200; easing.type: Easing.InOutBounce; }
-    }
-
     MouseArea {
-        id: mouseArea_root_id
         anchors.fill: root
-
         hoverEnabled: true
         propagateComposedEvents: true
-        onEntered: { root.color = expanded ? "#ffffff" : "#f0f0f0" }
+        onEntered: { root.color = root.state === "expanded" ? "#ffffff" : "#f0f0f0" }
         onExited: { root.color = "#ffffff" }
         onClicked: {
-            expanded = !expanded
-            root.color = expanded ? "#ffffff" : "#f0f0f0"
-            stack_view_id.replace(expanded ? expand_view_id : collapse_view_id)
+            root.state = root.state === "" ? "expanded" : ""
+            root.color = root.state === "expanded" ? "#ffffff" : "#f0f0f0"
             mouse.accepted = false
         }
     }
 
-    StackView {
-        id: stack_view_id
-        anchors.fill: parent
-        anchors.leftMargin: 10
+    Row {
+        id: main_row
+        height: cover.height
+        spacing: 5
 
-        initialItem: expanded ? expand_view_id : collapse_view_id
+        Behavior on height { PropertyAnimation { duration: 100 } }
 
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: 200
-            }
-        }
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to: 0
-                duration: 200
-            }
+        Image {
+            id: cover
+            width: dimensions.icon_normal
+            height: dimensions.icon_normal
+            source: model.artist_cover || "qrc:///noart.png"
+
+            Behavior on height { PropertyAnimation { duration: 100 } }
+            Behavior on width { PropertyAnimation { duration: 100 } }
         }
 
-        Component
-        {
-            id: expand_view_id
+        Column {
+            id: main_column
+            width: root.width - cover.width - main_row.spacing
+            height: cover.height
+            spacing : 5
+            Text {
+                id: title
+                text : "<b>"+(model.artist_name || "Unknown artist")+"</b>"
+                width: Math.min(parent.width, implicitWidth)
+                height: implicitHeight
+                elide: Text.ElideRight
+            }
 
-            Column {
-                spacing: 5
-
-                Utils.HorizontalRule {}
-
-                Row {
-                    id: expand_row_id
-                    height: Math.max( expand_cover_id.height, expand_infos_id.height )
-                    spacing: 5
-
-                    Image {
-                        id: expand_cover_id
-                        width: 80
-                        height: 80
-                        source: model.artist_cover || "qrc:///noart.png"
-                    }
-
-                    Column {
-                        id: expand_infos_id
-                        width: stack_view_id.width - expand_cover_id.width - expand_row_id.spacing
-                        spacing: 5
-
-                        Text {
-                            text: "<b>"+(model.artist_name || "Unknown artist")+"</b>"
-                        }
-
-                        Utils.AlbumsDisplay {
-                            x: 30
-                            height: artist_nb_albums * (spacing + 2 + 12)
-                            width: expand_infos_id.width - x
-
-                            albums: artist_albums
-                        }
-                    }
-                }
-                Utils.HorizontalRule {}
+            Utils.AlbumsDisplay {
+                id: albumsDisplay
+                x: 30
+                height: artist_nb_albums * (2 + 12)
+                width: main_column.width - x
+                visible: false
+                albums: artist_albums
             }
         }
+    }
 
-        Component
-        {
-            id: collapse_view_id
-            Row {
-                id: collapse_row_id
-                height: collapse_cover_id.height
-                spacing: 5
-
-                Image {
-                    id: collapse_cover_id
-                    width: 32
-                    height: 32
-                    source: model.artist_cover || "qrc:///noart.png"
-                }
-
-                Text {
-                    id: collapse_title_id
-                    text : "<b>"+(model.artist_name || "Unknown artist")+"</b>"
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min( ( parent.width-collapse_cover_id.width-parent.spacing )*2/3 , implicitWidth )
-                    elide: Text.ElideRight
-                }
-            }
-        }
+    states: State {
+        name: "expanded"
+        PropertyChanges { target: albumsDisplay; visible: true }
+        PropertyChanges { target: cover; width: dimensions.icon_xlarge; height: dimensions.icon_xlarge}
+        PropertyChanges { target: main_row; height: Math.max( cover.height, main_column.spacing*2 + title.height + albumsDisplay.height ) }
     }
 }
 

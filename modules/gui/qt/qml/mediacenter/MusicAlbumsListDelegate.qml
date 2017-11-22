@@ -6,13 +6,11 @@ import "qrc:///utils/" as Utils
 Rectangle {
     id: root
 
-    height: collapse_row_id.height
+    height: main_row.height
     width: parent.width
 
     MouseArea {
-        id: mouseArea_root_id
         anchors.fill: root
-
         hoverEnabled: true
         propagateComposedEvents: true
         onEntered: { root.color = root.state === "expanded" ? "#ffffff" : "#f0f0f0" }
@@ -25,14 +23,14 @@ Rectangle {
     }
 
     Row {
-        id: collapse_row_id
-        height: collapse_cover_id.height
+        id: main_row
+        height: cover.height
         spacing: 5
 
         Behavior on height { PropertyAnimation { duration: 100 } }
 
         Image {
-            id: collapse_cover_id
+            id: cover
             width: dimensions.icon_normal
             height: dimensions.icon_normal
             source: model.album_cover || "qrc:///noart.png"
@@ -42,12 +40,12 @@ Rectangle {
         }
 
         Column {
-            id: collapse_column_id
-            width: root.width - collapse_cover_id.width - collapse_row_id.spacing
-            height: collapse_cover_id.height
+            id: main_column
+            width: root.width - cover.width - main_row.spacing
+            height: cover.height
             spacing : 5
             Text {
-                id: collapse_title_id
+                id: title
                 text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
                 width: Math.min(parent.width, implicitWidth)
                 height: implicitHeight
@@ -55,7 +53,7 @@ Rectangle {
             }
 
             Text {
-                id: collapse_infos_id
+                id: infos
                 text: model.album_main_artist
                 width: Math.min(parent.width, implicitWidth)
                 height: implicitHeight
@@ -64,10 +62,10 @@ Rectangle {
             }
 
             Utils.TracksDisplay {
-                id: trackDisplay
+                id: tracksDisplay
                 x: 30
                 height: album_nb_tracks * (2 + 12)
-                width: collapse_column_id.width - x
+                width: main_column.width - x
                 visible: false
                 tracks: album_tracks
             }
@@ -76,9 +74,9 @@ Rectangle {
 
     states: State {
         name: "expanded"
-        PropertyChanges { target: trackDisplay; visible: true }
-        PropertyChanges { target: collapse_cover_id; width: dimensions.icon_xlarge; height: dimensions.icon_xlarge}
-        PropertyChanges { target: collapse_row_id; height: Math.max( collapse_cover_id.height, collapse_column_id.spacing*2 + collapse_title_id.height + collapse_infos_id.height + trackDisplay.height ) }
+        PropertyChanges { target: tracksDisplay; visible: true }
+        PropertyChanges { target: cover; width: dimensions.icon_xlarge; height: dimensions.icon_xlarge}
+        PropertyChanges { target: main_row; height: Math.max( cover.height, main_column.spacing*2 + title.height + infos.height + tracksDisplay.height ) }
     }
 }
 
