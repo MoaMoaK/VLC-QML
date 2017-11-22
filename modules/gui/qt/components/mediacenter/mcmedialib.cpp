@@ -10,6 +10,7 @@ MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QQuickWidget *_qml_item, QObject 
     : p_intf( _p_intf ),
       qmlItem( _qml_item ),
       current_cat ( CAT_MUSIC_ALBUM ),
+      old_cat ( CAT_MUSIC_ALBUM ),
       current_sort( medialibrary::SortingCriteria::Default ),
       is_desc( false ),
       ml( NewMediaLibrary() ),
@@ -39,6 +40,59 @@ QVariant MCMediaLib::hasPresentation() {
         return true;
     else
         return false;
+}
+
+// Remove presentation to get back to the list of items that were in place before
+void MCMediaLib::backPresentation() {
+    switch (old_cat)
+    {
+    case CAT_MUSIC_ALBUM:
+    {
+        current_cat = CAT_MUSIC_ALBUM;
+        retrieveAlbums();
+        if (current_main_obj) current_main_obj = NULL;
+        break;
+    }
+    case CAT_MUSIC_ARTIST:
+    {
+        current_cat = CAT_MUSIC_ARTIST;
+        retrieveArtists();
+        if (current_main_obj) current_main_obj = NULL;
+        break;
+    }
+    case CAT_MUSIC_GENRE:
+    {
+        current_cat = CAT_MUSIC_GENRE;
+        retrieveGenres();
+        if (current_main_obj) current_main_obj = NULL;
+        break;
+    }
+    case CAT_MUSIC_TRACKS:
+    {
+        current_cat = CAT_MUSIC_TRACKS;
+        retrieveTracks();
+        if (current_main_obj) current_main_obj = NULL;
+        break;
+    }
+    case CAT_VIDEO:
+    {
+        current_cat = CAT_VIDEO;
+        retrieveMovies();
+        if (current_main_obj) current_main_obj = NULL;
+        break;
+    }
+    case CAT_NETWORK:
+    {
+        current_cat = CAT_NETWORK;
+        retrieveSeries();
+        if (current_main_obj) current_main_obj = NULL;
+        break;
+    }
+    default:
+        break;
+    }
+    invokeQML("reloadPresentation()");
+    invokeQML("changedCategory()");
 }
 
 // Which category should be displayed
@@ -71,6 +125,9 @@ void MCMediaLib::select( const int &item_id )
 {
     if (item_id >= 0 && item_id <= current_obj->count())
     {
+        if (!current_main_obj)
+            old_cat = current_cat;
+
         current_main_obj = current_obj->at(item_id);
         current_obj = current_main_obj->getDetailsObjects(current_sort, is_desc);
 //        if (current_main_obj) delete current_main_obj;

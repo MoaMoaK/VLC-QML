@@ -12,6 +12,21 @@ Rectangle {
         spacing: dimensions.margin_normal
 
         Image {
+            height: dimensions.icon_normal
+            Layout.maximumHeight: height
+            Layout.minimumHeight: height
+            Layout.preferredHeight: height
+
+            source: "qrc:///toolbar/dvd_prev"
+            fillMode: Image.PreserveAspectFit
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: medialib.backPresentation()
+            }
+        }
+
+        Image {
             id : image_id
             Layout.fillHeight: true
             height: dimensions.heightAlbumCover_large

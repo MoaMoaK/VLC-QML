@@ -61,6 +61,7 @@ public:
     MCMediaLib(intf_thread_t *_p_intf, QQuickWidget* _qml_item, QObject *parent = nullptr);
 
     Q_INVOKABLE QVariant hasPresentation();
+    Q_INVOKABLE void backPresentation();
     Q_INVOKABLE QVariant getCategory();
     Q_INVOKABLE QVariant getObjects();
     Q_INVOKABLE QVariant isGridView();
@@ -90,6 +91,7 @@ private:
     QList<MLMovie*> *videos;
     QList<MLSerie*> *networks;
     MCMediaLibCategory current_cat;
+    MCMediaLibCategory old_cat;
     medialibrary::SortingCriteria current_sort;
     bool is_desc;
     QList<MLItem*> *current_obj;
