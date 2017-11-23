@@ -5,14 +5,15 @@ import "qrc:///utils/" as Utils
 
 Rectangle {
     id: root
+    color : medialib.isNightMode() ? "#000000" : "#ffffff"
 
     MouseArea {
         id: mouseArea
         anchors.fill: root
 
         hoverEnabled: true
-        onEntered: { root.color = "#f0f0f0" }
-        onExited: { root.color = "#ffffff" }
+        onEntered: { root.color = medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0" }
+        onExited: { root.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
         propagateComposedEvents: true
 
         onClicked: {
@@ -44,6 +45,7 @@ Rectangle {
             font.pixelSize: 12
             elide: Text.ElideRight
             height: implicitHeight+10
+            color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
 
 
             Utils.ToolTipArea {

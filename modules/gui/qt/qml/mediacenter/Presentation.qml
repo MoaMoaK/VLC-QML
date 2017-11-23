@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id: root
     property var obj: undefined
+    color : medialib.isNightMode() ? "#000000" : "#ffffff"
 
     RowLayout {
         id: row_id
@@ -52,6 +53,7 @@ Rectangle {
                 Layout.preferredHeight: implicitHeight
                 text: "<b>"+( obj.getPresName() || "Unknwon artist" )+"</b>"
                 elide: Text.ElideRight
+                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
             }
 
             Text {
@@ -61,6 +63,7 @@ Rectangle {
                 text: obj.getPresInfo()
                 wrapMode: Text.WordWrap
                 elide: Text.ElideRight
+                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
             }
         }
     }

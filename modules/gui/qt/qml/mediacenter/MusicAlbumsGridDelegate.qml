@@ -5,14 +5,15 @@ import "qrc:///utils/" as Utils
 
 Rectangle {
     id: root
+    color : medialib.isNightMode() ? "#000000" : "#ffffff"
 
     MouseArea {
         id: mouseArea
         anchors.fill: root
 
         hoverEnabled: true
-        onEntered: { root.color = "#f0f0f0" }
-        onExited: { root.color = "#ffffff" }
+        onEntered: { root.color = medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0" }
+        onExited: { root.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
         propagateComposedEvents: true
 
         onClicked: {
@@ -43,7 +44,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
 
-                color: "#FFFFFF"
+                color: medialib.isNightMode() ? "#000000" : "#FFFFFF"
 
                 height: dur_disp.implicitHeight + 5
                 width: dur_disp.implicitWidth + 5
@@ -53,6 +54,7 @@ Rectangle {
                     anchors.centerIn: parent
                     text: model.album_duration + " - " + model.album_nb_tracks + " tracks"
                     font.pixelSize: 10
+                    color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
                 }
             }
 
@@ -78,8 +80,8 @@ Rectangle {
                     anchors.fill: parent
 
                     hoverEnabled: true
-                    onEntered: { parent.opacity = 0.7; root.color = "#F0F0F0"; }
-                    onExited: { parent.opacity = 0 ; root.color = "#FFFFFF";}
+                    onEntered: { parent.opacity = 0.7; root.color = medialib.isNightMode() ? "#0f0f0f" : "#F0F0F0"; }
+                    onExited: { parent.opacity = 0 ; root.color = medialib.isNightMode() ? "#000000" : "#FFFFFF";}
 
                     onClicked: console.log('Clicked on play : '+model.album_title)
                 }
@@ -98,6 +100,7 @@ Rectangle {
                 anchors.top: parent.top
                 text: model.album_release_year !== "0" ? model.album_release_year : ""
                 font.pixelSize: 12
+                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
             }
 
             Text {
@@ -108,6 +111,7 @@ Rectangle {
                 elide: Text.ElideRight
                 text: "<b>"+(model.album_title || "Unknown title")+"</b>"
                 font.pixelSize: 12
+                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
 
                 Utils.ToolTipArea {
                     anchors.fill: parent

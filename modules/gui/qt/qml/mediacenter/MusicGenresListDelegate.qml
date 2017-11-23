@@ -6,14 +6,15 @@ Rectangle {
 
     height: collapse_title_id.implicitHeight + 4
     width: parent.width
+    color : medialib.isNightMode() ? "#000000" : "#ffffff"
 
     MouseArea {
         id: mouseArea_root_id
         anchors.fill: root
 
         hoverEnabled: true
-        onEntered: { root.color = "#f0f0f0" }
-        onExited: { root.color = "#ffffff" }
+        onEntered: { root.color = medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0" }
+        onExited: { root.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
         onClicked: { console.log("clicked : "+model.genre_name) }
     }
 
@@ -23,7 +24,8 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width-parent.spacing
         elide: Text.ElideRight
-    }
+        color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+   }
 }
 
 

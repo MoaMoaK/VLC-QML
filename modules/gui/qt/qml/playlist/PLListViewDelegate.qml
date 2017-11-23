@@ -43,6 +43,7 @@ Row {
             id: textInfo
             x: 10
             text: duration ? '[' + duration + '] ' + (title ? title : "") : (title ? title : "")
+            color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
         }
 
         MouseArea {

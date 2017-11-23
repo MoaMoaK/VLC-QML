@@ -72,7 +72,7 @@ Item {
     Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        color: "#80FFFFFF"
+        color: medialib.isNightMode() ? "#80000000" : "#80FFFFFF"
         height: moreText.implicitHeight/2
         width: moreText.implicitWidth
         visible: nb_albums > 4
@@ -82,6 +82,7 @@ Item {
             anchors.bottom: parent.bottom
             text: "..."
             font.pixelSize: 30
+            color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
         }
     }
 }

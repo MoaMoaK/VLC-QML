@@ -21,13 +21,14 @@ Row {
 
         Rectangle {
             id: expand_infos_titleRect_id
-            color: "#FFFFFF"
+            color: medialib.isNightMode() ? "#000000" : "#FFFFFF"
             height: expand_infos_title_id.implicitHeight
             width: expand_infos_id.width
 
             Text {
                 id: expand_infos_title_id
                 text: "<b>"+(model.album_title || "Unknown title")+"</b>"
+                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
             }
         }
 

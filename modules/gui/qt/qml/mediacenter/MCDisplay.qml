@@ -2,9 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-
-ColumnLayout {
-
+Rectangle {
     function changedView() {
         viewLoader.item.changedView();
     }
@@ -50,95 +48,100 @@ ColumnLayout {
         console.log( "Presentation reloaded "+medialib.getPresObject() )
     }
 
-    StackView {
-        id: presentationLoader_id
-        z:10
-        Layout.fillWidth: true
-        height: medialib.hasPresentation() ? dimensions.heightBar_xlarge : 0
-        Layout.preferredHeight: height
-        Layout.minimumHeight: height
-        Layout.maximumHeight: height
-        initialItem: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
+    color: medialib.isNightMode() ? "#000000" : "#ffffff"
 
-        replaceEnter: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: 200
+    ColumnLayout {
+        anchors.fill : parent
+
+        StackView {
+            id: presentationLoader_id
+            z:10
+            Layout.fillWidth: true
+            height: medialib.hasPresentation() ? dimensions.heightBar_xlarge : 0
+            Layout.preferredHeight: height
+            Layout.minimumHeight: height
+            Layout.maximumHeight: height
+            initialItem: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
+
+            replaceEnter: Transition {
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 200
+                }
+            }
+            replaceExit: Transition {
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 200
+                }
+            }
+
+            Component {
+                id: presentationComponent_id
+
+                Presentation {
+                    height: dimensions.heightBar_xlarge
+
+                    Layout.preferredHeight: height
+                    Layout.minimumHeight: height
+                    Layout.maximumHeight: height
+
+                    obj: medialib.getPresObject();
+                }
+            }
+            Component {
+                id: noPresentationComponent_id
+
+                Rectangle {
+                    height: 0
+                    Layout.preferredHeight: height
+                    Layout.minimumHeight: height
+                    Layout.maximumHeight: height
+                }
             }
         }
-        replaceExit: Transition {
-            PropertyAnimation {
-                property: "opacity"
-                from: 1
-                to: 0
-                duration: 200
+        Loader {
+            id: viewLoader
+            z: 0
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            sourceComponent: chooseCat()
+
+            Component {
+                id: albumsDisplayComponent
+
+                MusicAlbumsDisplay {
+                    width: dimensions.cover_normal
+                    height: dimensions.cover_normal+20
+                }
             }
-        }
+            Component {
+                id: artistsDisplayComponent
 
-        Component {
-            id: presentationComponent_id
-
-            Presentation {
-                height: dimensions.heightBar_xlarge
-
-                Layout.preferredHeight: height
-                Layout.minimumHeight: height
-                Layout.maximumHeight: height
-
-                obj: medialib.getPresObject();
+                MusicArtistsDisplay {
+                    width: dimensions.cover_normal
+                    height: dimensions.cover_normal+20
+                }
             }
-        }
-        Component {
-            id: noPresentationComponent_id
+            Component {
+                id: genresDisplayComponent
 
-            Rectangle {
-                height: 0
-                Layout.preferredHeight: height
-                Layout.minimumHeight: height
-                Layout.maximumHeight: height
+                MusicGenresDisplay {
+                    width: dimensions.cover_normal
+                    height: dimensions.cover_normal+20
+                }
             }
-        }
-    }
+            Component {
+                id: tracksDisplayComponent
 
-    Loader {
-        id: viewLoader
-        z: 0
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        sourceComponent: chooseCat()
-
-        Component {
-            id: albumsDisplayComponent
-
-            MusicAlbumsDisplay {
-                width: dimensions.cover_normal
-                height: dimensions.cover_normal+20
-            }
-        }
-        Component {
-            id: artistsDisplayComponent
-
-            MusicArtistsDisplay {
-                width: dimensions.cover_normal
-                height: dimensions.cover_normal+20
-            }
-        }
-        Component {
-            id: genresDisplayComponent
-
-            MusicGenresDisplay {
-                width: dimensions.cover_normal
-                height: dimensions.cover_normal+20
-            }
-        }
-        Component {
-            id: tracksDisplayComponent
-
-            MusicTracksDisplay {
-                width: dimensions.cover_normal
-                height: dimensions.cover_normal+20
+                MusicTracksDisplay {
+                    width: dimensions.cover_normal
+                    height: dimensions.cover_normal+20
+                }
             }
         }
     }

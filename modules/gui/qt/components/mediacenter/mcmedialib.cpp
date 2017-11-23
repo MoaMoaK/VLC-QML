@@ -13,6 +13,7 @@ MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QQuickWidget *_qml_item, QObject 
       old_cat ( CAT_MUSIC_ALBUM ),
       current_sort( medialibrary::SortingCriteria::Default ),
       is_desc( false ),
+      is_night_mode( true ),
       ml( NewMediaLibrary() ),
       cb( new medialibrary::ExCallback() ),
       m_gridView( true ),
@@ -111,6 +112,12 @@ QVariant MCMediaLib::getObjects()
 QVariant MCMediaLib::isGridView()
 {
     return QVariant( m_gridView );
+}
+
+// Is the night mode activated
+QVariant MCMediaLib::isNightMode()
+{
+    return QVariant( is_night_mode );
 }
 
 // Toogle between grid and list view for the displayed items

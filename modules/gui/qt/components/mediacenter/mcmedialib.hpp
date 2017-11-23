@@ -65,6 +65,7 @@ public:
     Q_INVOKABLE QVariant getCategory();
     Q_INVOKABLE QVariant getObjects();
     Q_INVOKABLE QVariant isGridView();
+    Q_INVOKABLE QVariant isNightMode();
     Q_INVOKABLE void toogleView();
     Q_INVOKABLE void select(const int &item_id);
     Q_INVOKABLE QVariant getPresObject();
@@ -94,6 +95,7 @@ private:
     MCMediaLibCategory old_cat;
     medialibrary::SortingCriteria current_sort;
     bool is_desc;
+    bool is_night_mode;
     QList<MLItem*> *current_obj;
     MLItem *current_main_obj;
 
