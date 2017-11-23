@@ -13,7 +13,7 @@ MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QQuickWidget *_qml_item, QObject 
       old_cat ( CAT_MUSIC_ALBUM ),
       current_sort( medialibrary::SortingCriteria::Default ),
       is_desc( false ),
-      is_night_mode( true ),
+      is_night_mode( false ),
       ml( NewMediaLibrary() ),
       cb( new medialibrary::ExCallback() ),
       m_gridView( true ),

@@ -15,7 +15,10 @@ Rectangle {
         hoverEnabled: true
         onEntered: { root.color = medialib.isNightMode() ? vlc_style.hoverBgColor_nightmode : vlc_style.hoverBgColor_daymode }
         onExited: { root.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
-        onClicked: { console.log("clicked : "+model.genre_name) }
+        onClicked: {
+            console.log("Clicked on : "+model.genre_name);
+            medialib.select( index );
+        }
     }
 
     Text {
