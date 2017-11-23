@@ -69,20 +69,15 @@ Item {
         }
     }
 
-    Rectangle {
+    Text {
+        id: moreText
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        color: medialib.isNightMode() ? "#80000000" : "#80FFFFFF"
-        height: moreText.implicitHeight/2
-        width: moreText.implicitWidth
         visible: nb_albums > 4
-        Text {
-            id: moreText
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            text: "..."
-            font.pixelSize: 30
-            color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
-        }
+        text: "..."
+        font.pixelSize: 30
+        color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
+        style: Text.Outline
+        styleColor: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
     }
 }
