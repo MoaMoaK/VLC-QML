@@ -25,7 +25,7 @@ Loader {
 
             cellWidth: dimensions.cover_normal
             cellHeight: dimensions.cover_normal+20
-            expandHeight: 150
+            expandHeight: 256
 
             rowSpacing: 1
             colSpacing: 1
@@ -40,7 +40,7 @@ Loader {
             }
             expandDelegate: MusicAlbumsGridExpandDelegate {
                 width: parent.parent.width
-                height: parent.parent.height
+                height: 256
             }
 
             ScrollBar.vertical: ScrollBar { }
