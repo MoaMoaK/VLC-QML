@@ -13,7 +13,7 @@ Rectangle {
         anchors.fill: root
 
         hoverEnabled: true
-        onEntered: { root.color = medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode }
+        onEntered: { root.color = medialib.isNightMode() ? vlc_style.hoverBgColor_nightmode : vlc_style.hoverBgColor_daymode }
         onExited: { root.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
         onClicked: { console.log("clicked : "+model.genre_name) }
     }

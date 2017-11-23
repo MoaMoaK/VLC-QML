@@ -30,8 +30,6 @@ Item {
                 id: sourcesBanner
 
                 // Custom properties
-                banner_color: "#e6e6e6"
-                hover_color: "#d6d6d6"
                 need_toggleView_button: true
 
                 // Basic properties
@@ -50,10 +48,6 @@ Item {
 
             SubBannerSources {
                 id: subSourcesBanner
-
-                // Custom properties
-                banner_color: "#e6e6e6"
-                hover_color: "#d6d6d6"
 
                 // Basic properties
                 z : 10

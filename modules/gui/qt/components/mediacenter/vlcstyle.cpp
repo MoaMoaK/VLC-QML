@@ -41,9 +41,13 @@ VLCStyle::VLCStyle() : QQmlPropertyMap()
 
     prop("bgColor_daymode", "#FFFFFF");
     prop("bgColor_nightmode", "#000000");
-    prop("hoverColor_daymode", "#F0F0F0");
-    prop("hoverColor_nightmode", "#0F0F0F");
+    prop("hoverBgColor_daymode", "#F0F0F0");
+    prop("hoverBgColor_nightmode", "#0F0F0F");
     prop("textColor_daymode", "#000000");
     prop("textColor_nightmode", "#FFFFFF");
+    prop("bannerColor_daymode", "#e6e6e6");
+    prop("bannerColor_nightmode", "#191919");
+    prop("hoverBannerColor_daymode", "#d6d6d6");
+    prop("hoverBannerColor_nightmode", "#292929");
 #undef prop
 }

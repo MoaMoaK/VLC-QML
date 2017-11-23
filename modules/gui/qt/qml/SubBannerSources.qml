@@ -9,9 +9,6 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id: root_id
 
-    property color banner_color: "#e6e6e6"
-    property color hover_color: "#d6d6d6"
-
     function chooseSubSources() {
         var c = medialib.getCategory();
         if (c >= 0 && c <= 3) {
@@ -36,7 +33,7 @@ Rectangle {
         if (c === 3 && index === 3) return "#FF0000";
         if (c === 4 && index === 0) return "#FF0000";
         if (c === 5 && index === 0) return "#FF0000";
-        return "#000000";
+        return medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
     }
 
     function update() {
@@ -51,7 +48,7 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    color: banner_color
+    color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
     RowLayout {
         anchors.fill: parent
@@ -84,7 +81,7 @@ Rectangle {
                         // A single button for a sub-source
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
-                        color: banner_color
+                        color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
                         Text {
                             id: subsource_name_id
@@ -104,8 +101,8 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: selectSource( model.name )
                             hoverEnabled: true
-                            onEntered: { parent.color = hover_color; }
-                            onExited: { parent.color = banner_color; }
+                            onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverBannerColor_nightmode : vlc_style.hoverBannerColor_daymode; }
+                            onExited: { parent.color = medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode; }
                         }
                     }
                 }
@@ -132,7 +129,7 @@ Rectangle {
                         // A single button for a sub-source
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
-                        color: banner_color
+                        color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
                         Text {
                             id: subsource_name_id
@@ -152,8 +149,8 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: selectSource( model.name )
                             hoverEnabled: true
-                            onEntered: { parent.color = hover_color; }
-                            onExited: { parent.color = banner_color; }
+                            onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverBannerColor_nightmode : vlc_style.hoverBannerColor_daymode; }
+                            onExited: { parent.color = medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode; }
                         }
                     }
                 }
@@ -176,7 +173,7 @@ Rectangle {
                         // A single button for a sub-source
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
-                        color: banner_color
+                        color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
                         Text {
                             id: subsource_name_id
@@ -196,8 +193,8 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: selectSource( model.name )
                             hoverEnabled: true
-                            onEntered: { parent.color = hover_color; }
-                            onExited: { parent.color = banner_color; }
+                            onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverBannerColor_nightmode : vlc_style.hoverBannerColor_daymode; }
+                            onExited: { parent.color = medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode; }
                         }
                     }
                 }

@@ -16,12 +16,10 @@ Rectangle {
         return ;
     }
 
-    property color banner_color: "#e6e6e6"
-    property color hover_color: "#d6d6d6"
     property bool need_toggleView_button: false
 
     id: pLBannerSources
-    color: banner_color
+    color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
     RowLayout {
         anchors.fill: parent
@@ -67,7 +65,7 @@ Rectangle {
                 height: parent.height
                 width: txt.implicitWidth + icon.width + vlc_style.margin_small*3
 
-                color: banner_color
+                color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
                 Image {
                     id: icon
@@ -97,14 +95,15 @@ Rectangle {
 
                     text: model.displayText
                     font.pixelSize: vlc_style.fontSize_normal
+                    color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: selectSource( model.name )
                     hoverEnabled: true
-                    onEntered: { rect.color = hover_color; }
-                    onExited: { rect.color = banner_color; }
+                    onEntered: { rect.color = medialib.isNightMode() ? vlc_style.hoverBannerColor_nightmode : vlc_style.hoverBannerColor_daymode; }
+                    onExited: { rect.color = medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode; }
                 }
             }
         }

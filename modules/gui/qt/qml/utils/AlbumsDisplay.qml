@@ -25,7 +25,7 @@ ListView {
 
             hoverEnabled: true
 
-            onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode }
+            onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverBgColor_nightmode : vlc_style.hoverBgColor_daymode }
             onExited: { parent.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
             onClicked: { console.log( "clicked : "+model.album_title ) }
         }
