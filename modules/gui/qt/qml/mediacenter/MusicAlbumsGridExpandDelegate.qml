@@ -21,14 +21,14 @@ Row {
 
         Rectangle {
             id: expand_infos_titleRect_id
-            color: medialib.isNightMode() ? "#000000" : "#FFFFFF"
+            color: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
             height: expand_infos_title_id.implicitHeight
             width: expand_infos_id.width
 
             Text {
                 id: expand_infos_title_id
                 text: "<b>"+(model.album_title || "Unknown title")+"</b>"
-                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+                color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
             }
         }
 

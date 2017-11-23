@@ -5,15 +5,15 @@ import "qrc:///utils/" as Utils
 
 Rectangle {
     id: root
-    color : medialib.isNightMode() ? "#000000" : "#ffffff"
+    color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     MouseArea {
         id: mouseArea
         anchors.fill: root
 
         hoverEnabled: true
-        onEntered: { root.color = medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0" }
-        onExited: { root.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
+        onEntered: { root.color = medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode }
+        onExited: { root.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
         propagateComposedEvents: true
 
         onClicked: {
@@ -45,7 +45,7 @@ Rectangle {
             font.pixelSize: 12
             elide: Text.ElideRight
             height: implicitHeight+10
-            color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+            color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
 
 
             Utils.ToolTipArea {

@@ -82,7 +82,7 @@ Item {
             anchors.bottom: parent.bottom
             text: "..."
             font.pixelSize: 30
-            color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+            color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
         }
     }
 }

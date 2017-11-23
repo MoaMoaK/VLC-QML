@@ -12,12 +12,12 @@ ListView {
     delegate: Rectangle {
         height: expand_album_name_id.font.pixelSize + 2
         width: expand_album_id.width
-        color : medialib.isNightMode() ? "#000000" : "#ffffff"
+        color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
         Text {
             id: expand_album_name_id
             text: "["+model.album_release_year+"] "+model.album_title+" - "+model.album_duration
-            color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+            color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
         }
 
         MouseArea {
@@ -25,8 +25,8 @@ ListView {
 
             hoverEnabled: true
 
-            onEntered: { parent.color = medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0" }
-            onExited: { parent.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
+            onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode }
+            onExited: { parent.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
             onClicked: { console.log( "clicked : "+model.album_title ) }
         }
     }

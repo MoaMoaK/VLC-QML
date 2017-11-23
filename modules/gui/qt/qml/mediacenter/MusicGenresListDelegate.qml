@@ -6,15 +6,15 @@ Rectangle {
 
     height: collapse_title_id.implicitHeight + 4
     width: parent.width
-    color : medialib.isNightMode() ? "#000000" : "#ffffff"
+    color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     MouseArea {
         id: mouseArea_root_id
         anchors.fill: root
 
         hoverEnabled: true
-        onEntered: { root.color = medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0" }
-        onExited: { root.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
+        onEntered: { root.color = medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode }
+        onExited: { root.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
         onClicked: { console.log("clicked : "+model.genre_name) }
     }
 
@@ -24,7 +24,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width-parent.spacing
         elide: Text.ElideRight
-        color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+        color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
    }
 }
 

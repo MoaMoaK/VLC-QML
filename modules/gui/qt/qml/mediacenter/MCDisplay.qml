@@ -48,7 +48,7 @@ Rectangle {
         console.log( "Presentation reloaded "+medialib.getPresObject() )
     }
 
-    color: medialib.isNightMode() ? "#000000" : "#ffffff"
+    color: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     ColumnLayout {
         anchors.fill : parent

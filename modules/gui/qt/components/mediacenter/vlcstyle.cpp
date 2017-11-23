@@ -38,5 +38,12 @@ VLCStyle::VLCStyle() : QQmlPropertyMap()
     prop("heightBar_normal", 32);
     prop("heightBar_large", 64);
     prop("heightBar_xlarge", 128);
+
+    prop("bgColor_daymode", "#FFFFFF");
+    prop("bgColor_nightmode", "#000000");
+    prop("hoverColor_daymode", "#F0F0F0");
+    prop("hoverColor_nightmode", "#0F0F0F");
+    prop("textColor_daymode", "#000000");
+    prop("textColor_nightmode", "#FFFFFF");
 #undef prop
 }

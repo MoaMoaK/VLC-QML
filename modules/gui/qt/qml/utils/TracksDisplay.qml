@@ -14,12 +14,12 @@ Item {
         delegate: Rectangle {
             height: expand_track_name_id.font.pixelSize + 2
             width: expand_track_id.width
-            color : medialib.isNightMode() ? "#000000" : "#ffffff"
+            color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
             Text {
                 id: expand_track_name_id
                 text: "["+model.track_number+"] "+model.track_title+" - "+model.track_duration
-                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+                color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
             }
 
             MouseArea {
@@ -27,8 +27,8 @@ Item {
 
                 hoverEnabled: true
 
-                onEntered: { parent.color = medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0" }
-                onExited: { parent.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
+                onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode }
+                onExited: { parent.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
                 onClicked: { console.log( "clicked : "+model.track_title ) }
             }
         }

@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id: root
     property var obj: undefined
-    color : medialib.isNightMode() ? "#000000" : "#ffffff"
+    color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     RowLayout {
         id: row_id
@@ -53,7 +53,7 @@ Rectangle {
                 Layout.preferredHeight: implicitHeight
                 text: "<b>"+( obj.getPresName() || "Unknwon artist" )+"</b>"
                 elide: Text.ElideRight
-                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+                color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
             }
 
             Text {
@@ -63,7 +63,7 @@ Rectangle {
                 text: obj.getPresInfo()
                 wrapMode: Text.WordWrap
                 elide: Text.ElideRight
-                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+                color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
             }
         }
     }

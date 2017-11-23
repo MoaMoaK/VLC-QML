@@ -8,17 +8,17 @@ Rectangle {
 
     height: main_row.height
     width: parent.width
-    color : medialib.isNightMode() ? "#000000" : "#ffffff"
+    color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     MouseArea {
         anchors.fill: root
         hoverEnabled: true
         propagateComposedEvents: true
-        onEntered: { root.color = root.state === "expanded" ? (medialib.isNightMode() ? "#000000" : "#ffffff") : (medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0") }
-        onExited: { root.color = medialib.isNightMode() ? "#000000" : "#ffffff" }
+        onEntered: { root.color = root.state === "expanded" ? (medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode) : (medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode) }
+        onExited: { root.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
         onClicked: {
             root.state = root.state === "" ? "expanded" : ""
-            root.color = root.state === "expanded" ? (medialib.isNightMode() ? "#000000" : "#ffffff") : (medialib.isNightMode() ? "#0f0f0f" : "#f0f0f0")
+            root.color = root.state === "expanded" ? (medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode) : (medialib.isNightMode() ? vlc_style.hoverColor_nightmode : vlc_style.hoverColor_daymode)
             mouse.accepted = false
         }
     }
@@ -50,7 +50,7 @@ Rectangle {
                 text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
                 width: Math.min(parent.width, implicitWidth)
                 height: implicitHeight
-                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+                color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 elide: Text.ElideRight
             }
 
@@ -59,7 +59,7 @@ Rectangle {
                 text: model.album_main_artist
                 width: Math.min(parent.width, implicitWidth)
                 height: implicitHeight
-                color: medialib.isNightMode() ? "#FFFFFF" : "#000000"
+                color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 elide: Text.ElideRight
                 font.pixelSize: 8
             }
