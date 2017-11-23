@@ -152,9 +152,9 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     /************
      * Menu Bar *
      ************/
-    VLCMenuBar::createMenuBar( this, p_intf );
-    CONNECT( THEMIM->getIM(), voutListChanged( vout_thread_t **, int ),
-             THEDP, destroyPopupMenu() );
+//    VLCMenuBar::createMenuBar( this, p_intf );
+//    CONNECT( THEMIM->getIM(), voutListChanged( vout_thread_t **, int ),
+//             THEDP, destroyPopupMenu() );
 
     createMainWidget( settings );
 

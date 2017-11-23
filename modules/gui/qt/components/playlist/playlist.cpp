@@ -88,42 +88,42 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     mainView = new StandardPLPanel( this, p_intf, p_root, selector, model );
 
     /* Location Bar */
-    locationBar = new LocationBar( model );
-    locationBar->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
-    layout->addWidget( locationBar, 0, 0, 1, 2 );
-    layout->setColumnStretch( 0, 5 );
-    CONNECT( locationBar, invoked( const QModelIndex & ),
-             mainView, browseInto( const QModelIndex & ) );
+//    locationBar = new LocationBar( model );
+//    locationBar->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
+//    layout->addWidget( locationBar, 0, 0, 1, 2 );
+//    layout->setColumnStretch( 0, 5 );
+//    CONNECT( locationBar, invoked( const QModelIndex & ),
+//             mainView, browseInto( const QModelIndex & ) );
 
-    QHBoxLayout *topbarLayout = new QHBoxLayout();
-    layout->addLayout( topbarLayout, 0, 1 );
-    topbarLayout->setSpacing( 10 );
+//    QHBoxLayout *topbarLayout = new QHBoxLayout();
+//    layout->addLayout( topbarLayout, 0, 1 );
+//    topbarLayout->setSpacing( 10 );
 
     /* Button to switch views */
-    QToolButton *viewButton = new QToolButton( this );
-    viewButton->setIcon( style()->standardIcon( QStyle::SP_FileDialogDetailedView ) );
-    viewButton->setToolTip( qtr("Change playlistview") );
-    topbarLayout->addWidget( viewButton );
+//    QToolButton *viewButton = new QToolButton( this );
+//    viewButton->setIcon( style()->standardIcon( QStyle::SP_FileDialogDetailedView ) );
+//    viewButton->setToolTip( qtr("Change playlistview") );
+//    topbarLayout->addWidget( viewButton );
 
 //    viewButton->setMenu( StandardPLPanel::viewSelectionMenu( mainView ));
 //    CONNECT( viewButton, clicked(), mainView, cycleViews() );
 
     /* Search */
-    searchEdit = new SearchLineEdit( this );
-    searchEdit->setMaximumWidth( 250 );
-    searchEdit->setMinimumWidth( 80 );
-    searchEdit->setToolTip( qtr("Search the playlist") );
-    topbarLayout->addWidget( searchEdit );
-    CONNECT( searchEdit, searchDelayedChanged( const QString& ),
-             mainView, searchDelayed( const QString & ) );
+//    searchEdit = new SearchLineEdit( this );
+//    searchEdit->setMaximumWidth( 250 );
+//    searchEdit->setMinimumWidth( 80 );
+//    searchEdit->setToolTip( qtr("Search the playlist") );
+//    topbarLayout->addWidget( searchEdit );
+//    CONNECT( searchEdit, searchDelayedChanged( const QString& ),
+//             mainView, searchDelayed( const QString & ) );
 
-    CONNECT( mainView, viewChanged( const QModelIndex& ),
-             this, changeView( const QModelIndex &) );
+//    CONNECT( mainView, viewChanged( const QModelIndex& ),
+//             this, changeView( const QModelIndex &) );
 
-    /* Connect the activation of the selector to a redefining of the PL */
-    DCONNECT( selector, categoryActivated( playlist_item_t *, bool ),
-              mainView, setRootItem( playlist_item_t *, bool ) );
-    mainView->setRootItem( p_root, false );
+//    /* Connect the activation of the selector to a redefining of the PL */
+//    DCONNECT( selector, categoryActivated( playlist_item_t *, bool ),
+//              mainView, setRootItem( playlist_item_t *, bool ) );
+//    mainView->setRootItem( p_root, false );
 //    CONNECT( selector, SDCategorySelected(bool), mainView, setWaiting(bool) );
 
     /* */
@@ -219,7 +219,7 @@ void PlaylistWidget::changeView( const QModelIndex& index )
 
 void PlaylistWidget::setSearchFieldFocus()
 {
-    searchEdit->setFocus();
+//    searchEdit->setFocus();
 
 }
 
