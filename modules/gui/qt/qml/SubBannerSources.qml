@@ -83,7 +83,7 @@ Rectangle {
                     Rectangle {
                         // A single button for a sub-source
                         height: parent.height
-                        width: subsource_name_id.implicitWidth+dimensions.margin_small*2
+                        width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
                         color: banner_color
 
                         Text {
@@ -92,8 +92,8 @@ Rectangle {
                                 left: parent.left
                                 right: parent.right
                                 verticalCenter: parent.verticalCenter
-                                rightMargin: dimensions.margin_small
-                                leftMargin: dimensions.margin_small
+                                rightMargin: vlc_style.margin_small
+                                leftMargin: vlc_style.margin_small
                             }
                             text: model.displayText
                             color: chooseColor(index)
@@ -131,7 +131,7 @@ Rectangle {
                     Rectangle {
                         // A single button for a sub-source
                         height: parent.height
-                        width: subsource_name_id.implicitWidth+dimensions.margin_small*2
+                        width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
                         color: banner_color
 
                         Text {
@@ -140,8 +140,8 @@ Rectangle {
                                 left: parent.left
                                 right: parent.right
                                 verticalCenter: parent.verticalCenter
-                                rightMargin: dimensions.margin_small
-                                leftMargin: dimensions.margin_small
+                                rightMargin: vlc_style.margin_small
+                                leftMargin: vlc_style.margin_small
                             }
                             text: model.displayText
                             color: chooseColor(index)
@@ -175,7 +175,7 @@ Rectangle {
                     Rectangle {
                         // A single button for a sub-source
                         height: parent.height
-                        width: subsource_name_id.implicitWidth+dimensions.margin_small*2
+                        width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
                         color: banner_color
 
                         Text {
@@ -184,8 +184,8 @@ Rectangle {
                                 left: parent.left
                                 right: parent.right
                                 verticalCenter: parent.verticalCenter
-                                rightMargin: dimensions.margin_small
-                                leftMargin: dimensions.margin_small
+                                rightMargin: vlc_style.margin_small
+                                leftMargin: vlc_style.margin_small
                             }
                             text: model.displayText
                             color: chooseColor(index)

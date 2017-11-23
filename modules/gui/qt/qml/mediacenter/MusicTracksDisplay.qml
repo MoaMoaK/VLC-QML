@@ -21,12 +21,12 @@ Loader {
         GridView {
             model: medialib.getObjects()
 
-            cellWidth: dimensions.cover_normal
-            cellHeight: dimensions.cover_normal+20
+            cellWidth: vlc_style.cover_normal
+            cellHeight: vlc_style.cover_normal+20
 
             delegate : MusicTracksGridDelegate {
-                width: dimensions.cover_normal
-                height: dimensions.cover_normal+20
+                width: vlc_style.cover_normal
+                height: vlc_style.cover_normal+20
             }
 
             ScrollBar.vertical: ScrollBar { }

@@ -9,11 +9,11 @@ Rectangle {
     RowLayout {
         id: row_id
         anchors.fill: parent
-        anchors.margins: dimensions.margin_normal
-        spacing: dimensions.margin_normal
+        anchors.margins: vlc_style.margin_normal
+        spacing: vlc_style.margin_normal
 
         Image {
-            height: dimensions.icon_normal
+            height: vlc_style.icon_normal
             Layout.maximumHeight: height
             Layout.minimumHeight: height
             Layout.preferredHeight: height
@@ -30,7 +30,7 @@ Rectangle {
         Image {
             id : image_id
             Layout.fillHeight: true
-            height: dimensions.heightAlbumCover_large
+            height: vlc_style.heightAlbumCover_large
             Layout.maximumWidth: height
             Layout.minimumWidth: height
             Layout.preferredWidth: height
@@ -43,7 +43,7 @@ Rectangle {
             id: col_id
             Layout.fillHeight: true
             Layout.fillWidth: true
-            spacing: dimensions.margin_normal
+            spacing: vlc_style.margin_normal
 
             Text {
                 id: title_id

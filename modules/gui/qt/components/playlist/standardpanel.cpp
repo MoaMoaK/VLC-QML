@@ -626,11 +626,11 @@ void StandardPLPanel::createMainView()
      * PROPERTIES
      *************************************************************/
 
-    VLCDimensions* dimensions = new VLCDimensions();
+    VLCStyle* vlc_style = new VLCStyle();
 
     QQmlContext *rootCtx = mainView->rootContext();
     rootCtx->setContextProperty( "medialib", medialib );
-    rootCtx->setContextProperty( "dimensions", dimensions );
+    rootCtx->setContextProperty( "vlc_style", vlc_style );
 
     PLModel* plmodel = new PLModel(p_intf);
     model->setPLModel(plmodel);

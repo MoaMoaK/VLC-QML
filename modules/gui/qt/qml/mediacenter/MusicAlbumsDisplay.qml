@@ -23,8 +23,8 @@ Loader {
         Utils.ExpandGridView {
             model: medialib.getObjects()
 
-            cellWidth: dimensions.cover_normal
-            cellHeight: dimensions.cover_normal+20
+            cellWidth: vlc_style.cover_normal
+            cellHeight: vlc_style.cover_normal+20
             expandHeight: 256
 
             rowSpacing: 1
@@ -35,8 +35,8 @@ Loader {
             expandDuration: 200
 
             delegate : MusicAlbumsGridDelegate {
-                width: dimensions.cover_normal
-                height: dimensions.cover_normal+20
+                width: vlc_style.cover_normal
+                height: vlc_style.cover_normal+20
             }
             expandDelegate: MusicAlbumsGridExpandDelegate {
                 width: parent.parent.width

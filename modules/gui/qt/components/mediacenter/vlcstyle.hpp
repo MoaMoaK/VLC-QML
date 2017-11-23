@@ -5,10 +5,10 @@
 #include <qt5/QtCore/QVariant>
 
 
-class VLCDimensions : public QQmlPropertyMap
+class VLCStyle : public QQmlPropertyMap
 {
 public:
-    VLCDimensions();
+    VLCStyle();
 };
 
 #endif // VLCDIMENSIONS_HPP

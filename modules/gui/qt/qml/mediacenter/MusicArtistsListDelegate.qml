@@ -32,8 +32,8 @@ Rectangle {
 
         Image {
             id: cover
-            width: dimensions.icon_normal
-            height: dimensions.icon_normal
+            width: vlc_style.icon_normal
+            height: vlc_style.icon_normal
             source: model.artist_cover || "qrc:///noart.png"
 
             Behavior on height { PropertyAnimation { duration: 100 } }
@@ -68,7 +68,7 @@ Rectangle {
     states: State {
         name: "expanded"
         PropertyChanges { target: albumsDisplay; visible: true }
-        PropertyChanges { target: cover; width: dimensions.icon_xlarge; height: dimensions.icon_xlarge}
+        PropertyChanges { target: cover; width: vlc_style.icon_xlarge; height: vlc_style.icon_xlarge}
         PropertyChanges { target: main_row; height: Math.max( cover.height, main_column.spacing*2 + title.height + albumsDisplay.height ) }
     }
 }

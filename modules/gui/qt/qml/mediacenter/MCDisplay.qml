@@ -33,10 +33,10 @@ Rectangle {
     function reloadPresentation() {
         if ( medialib.hasPresentation() ) {
             presentationLoader_id.replace( presentationComponent_id );
-            presentationLoader_id.height = dimensions.heightBar_xlarge;
-            presentationLoader_id.Layout.preferredHeigh = dimensions.heightBar_xlarge;
-            presentationLoader_id.Layout.minimumHeight = dimensions.heightBar_xlarge;
-            presentationLoader_id.Layout.maximumHeight = dimensions.heightBar_xlarge;
+            presentationLoader_id.height = vlc_style.heightBar_xlarge;
+            presentationLoader_id.Layout.preferredHeigh = vlc_style.heightBar_xlarge;
+            presentationLoader_id.Layout.minimumHeight = vlc_style.heightBar_xlarge;
+            presentationLoader_id.Layout.maximumHeight = vlc_style.heightBar_xlarge;
         } else {
             presentationLoader_id.replace( noPresentationComponent_id );
             presentationLoader_id.height = 0;
@@ -57,7 +57,7 @@ Rectangle {
             id: presentationLoader_id
             z:10
             Layout.fillWidth: true
-            height: medialib.hasPresentation() ? dimensions.heightBar_xlarge : 0
+            height: medialib.hasPresentation() ? vlc_style.heightBar_xlarge : 0
             Layout.preferredHeight: height
             Layout.minimumHeight: height
             Layout.maximumHeight: height
@@ -84,7 +84,7 @@ Rectangle {
                 id: presentationComponent_id
 
                 Presentation {
-                    height: dimensions.heightBar_xlarge
+                    height: vlc_style.heightBar_xlarge
 
                     Layout.preferredHeight: height
                     Layout.minimumHeight: height
@@ -115,32 +115,32 @@ Rectangle {
                 id: albumsDisplayComponent
 
                 MusicAlbumsDisplay {
-                    width: dimensions.cover_normal
-                    height: dimensions.cover_normal+20
+                    width: vlc_style.cover_normal
+                    height: vlc_style.cover_normal+20
                 }
             }
             Component {
                 id: artistsDisplayComponent
 
                 MusicArtistsDisplay {
-                    width: dimensions.cover_normal
-                    height: dimensions.cover_normal+20
+                    width: vlc_style.cover_normal
+                    height: vlc_style.cover_normal+20
                 }
             }
             Component {
                 id: genresDisplayComponent
 
                 MusicGenresDisplay {
-                    width: dimensions.cover_normal
-                    height: dimensions.cover_normal+20
+                    width: vlc_style.cover_normal
+                    height: vlc_style.cover_normal+20
                 }
             }
             Component {
                 id: tracksDisplayComponent
 
                 MusicTracksDisplay {
-                    width: dimensions.cover_normal
-                    height: dimensions.cover_normal+20
+                    width: vlc_style.cover_normal
+                    height: vlc_style.cover_normal+20
                 }
             }
         }

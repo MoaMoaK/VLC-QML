@@ -65,7 +65,7 @@ Rectangle {
             Rectangle {
                 id: rect
                 height: parent.height
-                width: txt.implicitWidth + icon.width + dimensions.margin_small*3
+                width: txt.implicitWidth + icon.width + vlc_style.margin_small*3
 
                 color: banner_color
 
@@ -75,13 +75,13 @@ Rectangle {
                     anchors {
                         left: parent.left
                         verticalCenter: parent.verticalCenter
-                        rightMargin: dimensions.margin_xsmall
-                        leftMargin: dimensions.margin_small
+                        rightMargin: vlc_style.margin_xsmall
+                        leftMargin: vlc_style.margin_small
                     }
 
                     source: model.pic
-                    height: dimensions.icon_normal
-                    width: dimensions.icon_normal
+                    height: vlc_style.icon_normal
+                    width: vlc_style.icon_normal
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -91,12 +91,12 @@ Rectangle {
                     anchors {
                         left: icon.right
                         verticalCenter: parent.verticalCenter
-                        rightMargin: dimensions.margin_small
-                        leftMargin: dimensions.margin_xsmall
+                        rightMargin: vlc_style.margin_small
+                        leftMargin: vlc_style.margin_xsmall
                     }
 
                     text: model.displayText
-                    font.pixelSize: dimensions.fontSize_normal
+                    font.pixelSize: vlc_style.fontSize_normal
                 }
 
                 MouseArea {
@@ -116,9 +116,9 @@ Rectangle {
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
             Layout.preferredHeight: height
             Layout.preferredWidth: width
-            Layout.rightMargin: dimensions.margin_normal
-            height: dimensions.icon_normal
-            width: dimensions.icon_normal
+            Layout.rightMargin: vlc_style.margin_normal
+            height: vlc_style.icon_normal
+            width: vlc_style.icon_normal
 
             fillMode: Image.PreserveAspectFit
             source: "qrc:///toolbar/tv"

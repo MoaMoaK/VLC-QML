@@ -9,8 +9,8 @@ Row {
 
     Image {
         id: expand_cover_id
-        width: dimensions.cover_large
-        height: dimensions.cover_large
+        width: vlc_style.cover_large
+        height: vlc_style.cover_large
         source: model.album_cover || "qrc:///noart.png"
     }
 

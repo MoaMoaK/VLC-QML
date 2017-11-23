@@ -36,7 +36,7 @@ Item {
 
                 // Basic properties
                 z : 10
-                height: dimensions.heightBar_normal
+                height: vlc_style.heightBar_normal
                 Layout.preferredHeight: height
                 Layout.minimumHeight: height
                 Layout.maximumHeight: height
@@ -57,7 +57,7 @@ Item {
 
                 // Basic properties
                 z : 10
-                height: dimensions.heightBar_normal
+                height: vlc_style.heightBar_normal
                 Layout.preferredHeight: height
                 Layout.minimumHeight: height
                 Layout.maximumHeight: height
