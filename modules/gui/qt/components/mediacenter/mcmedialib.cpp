@@ -105,7 +105,11 @@ QVariant MCMediaLib::getCategory()
 // Get the list of items that should be displayed
 QVariant MCMediaLib::getObjects()
 {
-    return QVariant::fromValue<MLItemModel*>( new MLItemModel(current_obj) );
+    MLItemModel* obj =  new MLItemModel(current_obj);
+    // Trick needed else the ownership is passed to QML and might be destroyed
+    // cf. http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
+    QQmlEngine::setObjectOwnership(obj, QQmlEngine::CppOwnership);
+    return QVariant::fromValue<MLItemModel*>( obj );
 }
 
 // Should the items be displayed as a grid or as list ?
