@@ -17,12 +17,13 @@ Item {
     /* Button to show/hide the playlist */
     Image {
         id: toogleBar
+
         x: -20
         width: 20
         height: 20
+
         fillMode: Image.PreserveAspectFit
         source: "qrc:///toolbar/playlist"
-
         mirror: plDisplay.width <= 20 ? true : false
 
         MouseArea {
@@ -37,23 +38,24 @@ Item {
 
         height: parent.height
         width: parent.width
-        delegate: PLListViewDelegate {
-            cur: model.current
-            title: model.title
-            duration: model.duration
 
+        delegate: PLListViewDelegate {
             function singleClick() { }
             function doubleClick() { model.activate_item = 1 }
             function remove() { model.remove_item = 1 }
+
+            cur: model.current
+            title: model.title
+            duration: model.duration
         }
 
         ScrollBar.vertical: ScrollBar { }
-
     }
 
     /* Hiding of the playlist animation */
     PropertyAnimation {
         id: closeAnimation
+
         target: plDisplay
         properties: "width"
         duration: 1000
@@ -64,6 +66,7 @@ Item {
     /* Showing of the playlist animation */
     PropertyAnimation {
         id: openAnimation
+
         target: plDisplay
         properties: "width"
         duration: 1000

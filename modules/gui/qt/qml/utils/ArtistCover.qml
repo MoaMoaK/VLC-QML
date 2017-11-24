@@ -16,8 +16,8 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
-Item {
 
+Item {
     property var albums: undefined
     property int nb_albums: 0
 
@@ -71,7 +71,9 @@ Item {
 
     GridLayout {
         id: gridCover_id
+
         anchors.fill: parent
+
         columns: 2
         columnSpacing: 2
         rowSpacing: 2
@@ -82,12 +84,15 @@ Item {
             /* One cover */
             Image {
                 id: img
-                source: model.album_cover || "qrc:///noart.png"
+
                 Layout.rowSpan: calc_rowSpanning(index)
                 Layout.preferredHeight: calc_height(index)
                 Layout.preferredWidth: calc_width(index)
+
+                source: model.album_cover || "qrc:///noart.png"
                 fillMode: Image.PreserveAspectCrop
                 visible: index < 4
+
             }
         }
     }
@@ -96,13 +101,16 @@ Item {
     // If there are more than 4 albums, display "..." to signal there are more
     Text {
         id: moreText
+
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        visible: nb_albums > 4
+
         text: "..."
         font.pixelSize: 30
         color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
         style: Text.Outline
         styleColor: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
+
+        visible: nb_albums > 4
     }
 }

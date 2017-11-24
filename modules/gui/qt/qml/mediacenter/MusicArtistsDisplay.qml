@@ -6,6 +6,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 
 Loader {
+    id: viewLoader
 
     // notify when the view has changed
     function changedView() {
@@ -18,18 +19,17 @@ Loader {
         console.log( "Data reloaded" );
     }
 
-    id: viewLoader
     sourceComponent: medialib.isGridView() ? gridViewComponent_id : listViewComponent_id
 
     /* Grid View */
     Component {
         id: gridViewComponent_id
-        GridView {
-            model: medialib.getObjects()
 
+        GridView {
             cellWidth: vlc_style.cover_normal
             cellHeight: vlc_style.cover_normal+20
 
+            model: medialib.getObjects()
             delegate : MusicArtistsGridDelegate {
                 width: vlc_style.cover_normal
                 height: vlc_style.cover_normal+20
@@ -41,14 +41,14 @@ Loader {
     /* List View */
     Component {
         id: listViewComponent_id
-        ListView {
-            model: medialib.getObjects()
 
+        ListView {
+            spacing: 2
+
+            model: medialib.getObjects()
             delegate : MusicArtistsListDelegate { }
 
             ScrollBar.vertical: ScrollBar { }
-
-            spacing: 2
         }
     }
 }

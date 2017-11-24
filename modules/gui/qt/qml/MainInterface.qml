@@ -12,14 +12,14 @@ import "qrc:///mediacenter/" as MC
 import "qrc:///playlist/" as PL
 
 Item {
-    width: 1000
-    height: 1000
-
     // The functions the C++ part can call
     function reloadData() { mcDisplay.reloadData();}
     function changedCategory() { mcDisplay.changedCategory(); }
     function changedView() { mcDisplay.changedView(); }
     function reloadPresentation() { mcDisplay.reloadPresentation(); }
+
+    width: 1000
+    height: 1000
 
     SplitView {
         anchors.fill: parent
@@ -27,6 +27,7 @@ Item {
 
         ColumnLayout {
             id: column
+
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Layout.fillWidth: true
@@ -37,7 +38,11 @@ Item {
             BannerSources {
                 id: sourcesBanner
 
-                need_toggleView_button: true
+                // function triggered when a source is selected
+                function selectSource ( name ) {
+                    medialib.selectSource(name);
+                    subSourcesBanner.update();
+                }
 
                 z : 10
                 height: vlc_style.heightBar_normal
@@ -46,29 +51,25 @@ Item {
                 Layout.maximumHeight: height
                 Layout.fillWidth: true
 
-                // function triggered when a source is selected
-                function selectSource ( name ) {
-                    medialib.selectSource(name);
-                    subSourcesBanner.update();
-                }
+                need_toggleView_button: true
             }
 
             /* Sub-source selection */
             SubBannerSources {
                 id: subSourcesBanner
 
+                // function triggered when a source is selected
+                function selectSource ( name ) {
+                    medialib.selectSource(name);
+                    subSourcesBanner.update();
+                }
+
                 z : 10
                 height: vlc_style.heightBar_normal
                 Layout.preferredHeight: height
                 Layout.minimumHeight: height
                 Layout.maximumHeight: height
                 Layout.fillWidth: true
-
-                // function triggered when a source is selected
-                function selectSource ( name ) {
-                    medialib.selectSource(name);
-                    subSourcesBanner.update();
-                }
             }
 
             /* MediaCenter */
@@ -84,13 +85,13 @@ Item {
 
         /* Playlist */
         PL.PLDisplay {
-            pl: playlist
-            default_width: 300
-
             z: 20
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Layout.maximumWidth: 400
+
+            pl: playlist
+            default_width: 300
         }
     }
 

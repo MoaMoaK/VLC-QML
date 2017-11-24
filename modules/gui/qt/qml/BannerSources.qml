@@ -6,6 +6,9 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 
 Rectangle {
+    id: pLBannerSources
+
+    property bool need_toggleView_button: false
 
     // Triggered when the toogleView button is selected
     function toggleView () {
@@ -17,9 +20,6 @@ Rectangle {
         return ;
     }
 
-    property bool need_toggleView_button: false
-
-    id: pLBannerSources
     color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
     RowLayout {
@@ -28,6 +28,7 @@ Rectangle {
         /* Repeater to display each button */
         Repeater {
             id: sourcesButtons
+
             Layout.fillHeight: true
             Layout.fillWidth: true
 
@@ -40,6 +41,7 @@ Rectangle {
         // in order to notify to change the medialib model
         ListModel {
             id: buttonModel
+
             ListElement {
                 displayText: "Music"
                 pic: "qrc:///sidebar/music"
@@ -63,6 +65,7 @@ Rectangle {
 
             Rectangle {
                 id: rect
+
                 height: parent.height
                 width: txt.implicitWidth + icon.width + vlc_style.margin_small*3
 
@@ -78,10 +81,10 @@ Rectangle {
                         rightMargin: vlc_style.margin_xsmall
                         leftMargin: vlc_style.margin_small
                     }
-
-                    source: model.pic
                     height: vlc_style.icon_normal
                     width: vlc_style.icon_normal
+
+                    source: model.pic
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -103,6 +106,7 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
+
                     onClicked: selectSource( model.name )
                     hoverEnabled: true
                     onEntered: { rect.color = medialib.isNightMode() ? vlc_style.hoverBannerColor_nightmode : vlc_style.hoverBannerColor_daymode; }
@@ -123,12 +127,13 @@ Rectangle {
 
             fillMode: Image.PreserveAspectFit
             source: "qrc:///toolbar/tv"
+
             enabled: need_toggleView_button
             visible: need_toggleView_button
 
             MouseArea {
-
                 anchors.fill: parent
+
                 enabled: need_toggleView_button
                 onClicked: toggleView()
             }

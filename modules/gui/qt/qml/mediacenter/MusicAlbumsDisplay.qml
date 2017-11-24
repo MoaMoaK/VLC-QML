@@ -8,6 +8,7 @@ import QtQuick.Controls 2.0
 import "qrc:///utils/" as Utils
 
 Loader {
+    id: viewLoader
 
     // notify when the view has changed
     function changedView() {
@@ -20,12 +21,12 @@ Loader {
         console.log( "Data reloaded" );
     }
 
-    id: viewLoader
     sourceComponent: medialib.isGridView() ? gridViewComponent_id : listViewComponent_id
 
     /* Grid View */
     Component {
         id: gridViewComponent_id
+
         Utils.ExpandGridView {
             model: medialib.getObjects()
 
@@ -56,14 +57,14 @@ Loader {
     /* List View */
     Component {
         id: listViewComponent_id
-        ListView {
-            model: medialib.getObjects()
 
+        ListView {
+            spacing: 2
+
+            model: medialib.getObjects()
             delegate : MusicAlbumsListDelegate { }
 
             ScrollBar.vertical: ScrollBar { }
-
-            spacing: 2
         }
     }
 }

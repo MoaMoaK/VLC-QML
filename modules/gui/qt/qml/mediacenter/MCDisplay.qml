@@ -7,7 +7,6 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 Rectangle {
-
     // Notify the view has beeen changed
     function changedView() {
         viewLoader.item.changedView();
@@ -57,12 +56,14 @@ Rectangle {
         /* The Presentation Bar */
         Loader {
             id: presentationLoader_id
+
             z:10
             Layout.fillWidth: true
             height: item.height
             Layout.preferredHeight: height
             Layout.minimumHeight: height
             Layout.maximumHeight: height
+
             sourceComponent: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
 
             // If the presentation bar should be displayed
@@ -71,7 +72,6 @@ Rectangle {
 
                 Presentation {
                     height: vlc_style.heightBar_xlarge
-
                     Layout.preferredHeight: height
                     Layout.minimumHeight: height
                     Layout.maximumHeight: height
@@ -95,10 +95,13 @@ Rectangle {
         /* The data elements */
         Loader {
             id: viewLoader
+
             z: 0
             Layout.fillWidth: true
             Layout.fillHeight: true
+
             sourceComponent: chooseCat()
+
             // Display some 'Artists' items
             Component {
                 id: albumsDisplayComponent
@@ -108,6 +111,7 @@ Rectangle {
                     height: vlc_style.cover_normal+20
                 }
             }
+
             // Display some 'Albums' items
             Component {
                 id: artistsDisplayComponent
@@ -117,6 +121,7 @@ Rectangle {
                     height: vlc_style.cover_normal+20
                 }
             }
+
             // Display some 'Genres' items
             Component {
                 id: genresDisplayComponent
@@ -126,6 +131,7 @@ Rectangle {
                     height: vlc_style.cover_normal+20
                 }
             }
+
             // Display some 'Tracks' items
             Component {
                 id: tracksDisplayComponent

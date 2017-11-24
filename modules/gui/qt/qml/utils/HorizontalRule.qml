@@ -10,8 +10,8 @@ Rectangle {
     property real percent: 1
 
     anchors.horizontalCenter: parent.horizontalCenter
-
     height: 1
     width: size * percent
+
     color: c
 }

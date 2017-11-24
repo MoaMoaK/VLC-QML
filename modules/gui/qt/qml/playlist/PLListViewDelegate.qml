@@ -9,20 +9,24 @@ Row {
     property string title
     property string duration
 
-    spacing: 0
     height: bg.height
     width: parent.width
+
+    spacing: 0
 
     /* Button to remove this item from playlist */
     Image {
         id: removeButton
+
         height: parent.height
         width: parent.height
+
         source: "qrc:///toolbar/clear"
         fillMode: Image.PreserveAspectFit
 
         MouseArea {
             anchors.fill: parent
+
             onClicked: { remove(); }
             hoverEnabled: true
             onEntered: {
@@ -38,19 +42,24 @@ Row {
 
     Rectangle {
         id: bg
-        color: cur ? "#CCCCCC" : "#FFFFFF"
+
         width : parent.width - removeButton.width
         height:  textInfo.height
+
+        color: cur ? "#CCCCCC" : "#FFFFFF"
 
         /* Title/name of the item */
         Text {
             id: textInfo
+
             x: 10
+
             text: duration ? '[' + duration + '] ' + (title ? title : "") : (title ? title : "")
         }
 
         MouseArea {
             anchors.fill: parent
+
             hoverEnabled: true
             onEntered: {
                 parent.color = cur ? "#BBBBBB" : "#EEEEEE"

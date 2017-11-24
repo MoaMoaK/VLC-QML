@@ -48,9 +48,9 @@ Rectangle {
     function selectSource( name ) {
         return ;
     }
+
     anchors.left: parent.left
     anchors.right: parent.right
-
     color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
     RowLayout {
@@ -58,6 +58,7 @@ Rectangle {
 
         Loader {
             id: stack_id
+
             Layout.fillHeight: true
             Layout.fillWidth: true
             sourceComponent: chooseSubSources()
@@ -71,6 +72,7 @@ Rectangle {
 
                 Repeater {
                     id: repeater_id
+
                     model: ListModel {
                         ListElement { displayText: "Albums" ; name: "music-albums" }
                         ListElement { displayText: "Artistes" ; name: "music-artists" }
@@ -88,6 +90,7 @@ Rectangle {
 
                         Text {
                             id: subsource_name_id
+
                             anchors {
                                 left: parent.left
                                 right: parent.right
@@ -120,22 +123,26 @@ Rectangle {
 
                 Repeater {
                     id: repeater_id
+
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
                     model: ListModel {
                         ListElement { displayText: "TV shows" ; name: "video" }
                         ListElement { displayText: "Seasons" ; name: "video" }
                         ListElement { displayText: "Videos" ; name: "video" }
                     }
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
 
                     /* A single button for a sub-source */
                     Rectangle {
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
+
                         color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
                         Text {
                             id: subsource_name_id
+
                             anchors {
                                 left: parent.left
                                 right: parent.right
@@ -143,13 +150,14 @@ Rectangle {
                                 rightMargin: vlc_style.margin_small
                                 leftMargin: vlc_style.margin_small
                             }
+
                             text: model.displayText
                             color: chooseColor(index)
-
                         }
 
                         MouseArea {
                             anchors.fill: parent
+
                             onClicked: selectSource( model.name )
                             hoverEnabled: true
                             onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverBannerColor_nightmode : vlc_style.hoverBannerColor_daymode; }
@@ -168,18 +176,22 @@ Rectangle {
 
                 Repeater {
                     id: repeater_id
-                    model: ListModel { }
+
                     Layout.fillHeight: true
                     Layout.fillWidth: true
+
+                    model: ListModel { }
 
                     /* A single button for a sub-source */
                     Rectangle {
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
+
                         color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
                         Text {
                             id: subsource_name_id
+
                             anchors {
                                 left: parent.left
                                 right: parent.right
@@ -187,13 +199,14 @@ Rectangle {
                                 rightMargin: vlc_style.margin_small
                                 leftMargin: vlc_style.margin_small
                             }
+
                             text: model.displayText
                             color: chooseColor(index)
-
                         }
 
                         MouseArea {
                             anchors.fill: parent
+
                             onClicked: selectSource( model.name )
                             hoverEnabled: true
                             onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverBannerColor_nightmode : vlc_style.hoverBannerColor_daymode; }
@@ -207,6 +220,7 @@ Rectangle {
         /* Selector to choose a specific sorting operation */
         ComboBox {
             id: combo
+
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
             Layout.preferredWidth: width
@@ -219,6 +233,7 @@ Rectangle {
         /* Model for the different possible sorts */
         ListModel {
             id: sortModel
+
             ListElement { text: "Alphabetic asc" }
             ListElement { text: "Alphabetic desc" }
             ListElement { text: "Duration asc" }

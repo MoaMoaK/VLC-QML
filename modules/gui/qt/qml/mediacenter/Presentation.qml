@@ -8,13 +8,17 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     id: root
+
     property var obj: undefined
+
     color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     RowLayout {
         id: row_id
+
         anchors.fill: parent
         anchors.margins: vlc_style.margin_normal
+
         spacing: vlc_style.margin_normal
 
         /* A button to go back one step */
@@ -29,6 +33,7 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
+
                 onClicked: medialib.backPresentation()
             }
         }
@@ -36,6 +41,7 @@ Rectangle {
         /* The cover/image associated with the item */
         Image {
             id : image_id
+
             Layout.fillHeight: true
             height: vlc_style.heightAlbumCover_large
             Layout.maximumWidth: height
@@ -48,17 +54,21 @@ Rectangle {
 
         ColumnLayout {
             id: col_id
+
             Layout.fillHeight: true
             Layout.fillWidth: true
+
             spacing: vlc_style.margin_normal
 
             /* the title/main name of the item */
             Text {
                 id: title_id
+
                 Layout.fillWidth: true
                 Layout.maximumHeight: implicitHeight
                 Layout.minimumHeight: implicitHeight
                 Layout.preferredHeight: implicitHeight
+
                 text: "<b>"+( obj.getPresName() || "Unknwon artist" )+"</b>"
                 elide: Text.ElideRight
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
@@ -67,8 +77,10 @@ Rectangle {
             /* A description for the item */
             Text {
                 id: info_id
+
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+
                 text: obj.getPresInfo()
                 wrapMode: Text.WordWrap
                 elide: Text.ElideRight

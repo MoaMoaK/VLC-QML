@@ -12,10 +12,12 @@ Rectangle {
 
     height: main_row.height
     width: parent.width
+
     color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     MouseArea {
         anchors.fill: root
+
         hoverEnabled: true
         propagateComposedEvents: true
         onEntered: { root.color = root.state === "expanded" ? (medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode) : (medialib.isNightMode() ? vlc_style.hoverBgColor_nightmode : vlc_style.hoverBgColor_daymode) }
@@ -29,7 +31,9 @@ Rectangle {
 
     Row {
         id: main_row
+
         height: cover.height
+
         spacing: 5
 
         Behavior on height { PropertyAnimation { duration: 100 } }
@@ -37,8 +41,10 @@ Rectangle {
         /* The cover of the album */
         Image {
             id: cover
+
             width: vlc_style.icon_normal
             height: vlc_style.icon_normal
+
             source: model.album_cover || "qrc:///noart.png"
 
             Behavior on height { PropertyAnimation { duration: 100 } }
@@ -47,16 +53,20 @@ Rectangle {
 
         Column {
             id: main_column
+
             width: root.width - cover.width - main_row.spacing
             height: cover.height
+
             spacing : 5
 
             /* The title of the album */
             Text {
                 id: title
-                text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
+
                 width: Math.min(parent.width, implicitWidth)
                 height: implicitHeight
+
+                text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 elide: Text.ElideRight
             }
@@ -64,9 +74,11 @@ Rectangle {
             /* The name of the main artist */
             Text {
                 id: infos
-                text: model.album_main_artist
+
                 width: Math.min(parent.width, implicitWidth)
                 height: implicitHeight
+
+                text: model.album_main_artist
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 elide: Text.ElideRight
                 font.pixelSize: 8
@@ -75,11 +87,14 @@ Rectangle {
             /* The list of the tracks only visible if the item was clicked (state = expanded) */
             Utils.TracksDisplay {
                 id: tracksDisplay
+
                 x: 30
                 height: album_nb_tracks * (2 + 12)
                 width: main_column.width - x
-                visible: false
+
                 tracks: album_tracks
+
+                visible: false
             }
         }
     }
