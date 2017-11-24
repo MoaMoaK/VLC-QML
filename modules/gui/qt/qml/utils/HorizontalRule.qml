@@ -1,3 +1,7 @@
+/*******************************************************
+ * A simple 1px-tall rectangle to use as an horizontal
+ * rule of color 'c' and width 'size'*'percent'
+ *******************************************************/
 import QtQuick 2.0
 
 Rectangle {

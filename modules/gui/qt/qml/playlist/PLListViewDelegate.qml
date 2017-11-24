@@ -1,5 +1,7 @@
+/*********************************************************
+ * The delegate used to display an item in the playlist
+ *********************************************************/
 import QtQuick 2.0
-
 
 Row {
 
@@ -11,6 +13,7 @@ Row {
     height: bg.height
     width: parent.width
 
+    /* Button to remove this item from playlist */
     Image {
         id: removeButton
         height: parent.height
@@ -39,6 +42,7 @@ Row {
         width : parent.width - removeButton.width
         height:  textInfo.height
 
+        /* Title/name of the item */
         Text {
             id: textInfo
             x: 10

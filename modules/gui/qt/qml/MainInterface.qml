@@ -1,3 +1,9 @@
+/********************************************************************
+ * The main component that is displayed.
+ * Display the source selection, the mediacenter and the playlist
+ * all in the same QML view.
+ ********************************************************************/
+
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
@@ -9,6 +15,7 @@ Item {
     width: 1000
     height: 1000
 
+    // The functions the C++ part can call
     function reloadData() { mcDisplay.reloadData();}
     function changedCategory() { mcDisplay.changedCategory(); }
     function changedView() { mcDisplay.changedView(); }
@@ -26,13 +33,12 @@ Item {
             Layout.minimumWidth: 500
             spacing: 0
 
+            /* Source selection*/
             BannerSources {
                 id: sourcesBanner
 
-                // Custom properties
                 need_toggleView_button: true
 
-                // Basic properties
                 z : 10
                 height: vlc_style.heightBar_normal
                 Layout.preferredHeight: height
@@ -40,16 +46,17 @@ Item {
                 Layout.maximumHeight: height
                 Layout.fillWidth: true
 
+                // function triggered when a source is selected
                 function selectSource ( name ) {
                     medialib.selectSource(name);
                     subSourcesBanner.update();
                 }
             }
 
+            /* Sub-source selection */
             SubBannerSources {
                 id: subSourcesBanner
 
-                // Basic properties
                 z : 10
                 height: vlc_style.heightBar_normal
                 Layout.preferredHeight: height
@@ -57,16 +64,17 @@ Item {
                 Layout.maximumHeight: height
                 Layout.fillWidth: true
 
+                // function triggered when a source is selected
                 function selectSource ( name ) {
                     medialib.selectSource(name);
                     subSourcesBanner.update();
                 }
             }
 
+            /* MediaCenter */
             MC.MCDisplay {
                 id: mcDisplay
 
-                // Basic properties
                 z: 0
                 Layout.fillHeight: true
                 Layout.fillWidth: true
@@ -74,12 +82,11 @@ Item {
 
         }
 
+        /* Playlist */
         PL.PLDisplay {
-            // Custom properties
             pl: playlist
             default_width: 300
 
-            // Basic properties
             z: 20
             anchors.top: parent.top
             anchors.bottom: parent.bottom

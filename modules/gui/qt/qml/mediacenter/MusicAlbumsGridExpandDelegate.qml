@@ -1,3 +1,8 @@
+/********************************************************
+ * The delegate to use for the expanded zone inside a
+ * GridExpandView that appears when an album is clicked
+ ********************************************************/
+
 import QtQuick 2.0
 
 import "qrc:///utils/" as Utils
@@ -7,6 +12,7 @@ Row {
     spacing: 5
     x: 5
 
+    /* A bigger cover for the album */
     Image {
         id: expand_cover_id
         width: vlc_style.cover_large
@@ -19,6 +25,8 @@ Row {
         width: root.width - expand_cover_id.width - root.spacing
         spacing: 5
 
+        /* The title of the albums */
+        // Needs a rectangle too prevent the tracks from overlapping the title when scrolled
         Rectangle {
             id: expand_infos_titleRect_id
             color: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
@@ -32,6 +40,7 @@ Row {
             }
         }
 
+        /* The list of the tracks available */
         Utils.TracksDisplay {
             x: 30
             z: expand_infos_titleRect_id.z - 1

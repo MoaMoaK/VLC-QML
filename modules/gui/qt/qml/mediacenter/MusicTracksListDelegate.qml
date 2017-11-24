@@ -1,3 +1,7 @@
+/**********************************************************
+ * The delegate to display an album inside the listView
+ **********************************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
@@ -21,6 +25,7 @@ Rectangle {
         }
     }
 
+    /* The title of the track and the duration of the track */
     Text {
         id: collapse_title_id
         text : "<b>"+(model.track_title || "Unknown track")+"</b> - "+model.track_duration

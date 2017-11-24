@@ -1,3 +1,8 @@
+/**********************************************************
+ * The component that is displayed on the top with the
+ * details of the clicked item
+ **********************************************************/
+
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 
@@ -12,6 +17,7 @@ Rectangle {
         anchors.margins: vlc_style.margin_normal
         spacing: vlc_style.margin_normal
 
+        /* A button to go back one step */
         Image {
             height: vlc_style.icon_normal
             Layout.maximumHeight: height
@@ -27,6 +33,7 @@ Rectangle {
             }
         }
 
+        /* The cover/image associated with the item */
         Image {
             id : image_id
             Layout.fillHeight: true
@@ -45,6 +52,7 @@ Rectangle {
             Layout.fillWidth: true
             spacing: vlc_style.margin_normal
 
+            /* the title/main name of the item */
             Text {
                 id: title_id
                 Layout.fillWidth: true
@@ -56,6 +64,7 @@ Rectangle {
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
             }
 
+            /* A description for the item */
             Text {
                 id: info_id
                 Layout.fillWidth: true

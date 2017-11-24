@@ -1,3 +1,7 @@
+/***********************************************
+ * A component to display a listview of tracks
+ ***********************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
@@ -16,6 +20,8 @@ Item {
             width: expand_track_id.width
             color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
+            /* The infos about the track */
+            // Format : [track_number] title - duration
             Text {
                 id: expand_track_name_id
                 text: "["+model.track_number+"] "+model.track_title+" - "+model.track_duration

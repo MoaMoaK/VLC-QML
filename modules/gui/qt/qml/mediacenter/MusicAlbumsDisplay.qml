@@ -1,3 +1,7 @@
+/******************************************************
+ * The component to display when category is "albums"
+ ******************************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
@@ -5,11 +9,12 @@ import "qrc:///utils/" as Utils
 
 Loader {
 
+    // notify when the view has changed
     function changedView() {
         viewLoader.sourceComponent = medialib.isGridView() ? gridViewComponent_id : listViewComponent_id;
         console.log("View changed");
     }
-
+    // Force the data to be reloaded
     function reloadData() {
         viewLoader.item.model = medialib.getObjects();
         console.log( "Data reloaded" );
@@ -18,6 +23,7 @@ Loader {
     id: viewLoader
     sourceComponent: medialib.isGridView() ? gridViewComponent_id : listViewComponent_id
 
+    /* Grid View */
     Component {
         id: gridViewComponent_id
         Utils.ExpandGridView {
@@ -46,6 +52,8 @@ Loader {
             ScrollBar.vertical: ScrollBar { }
         }
     }
+
+    /* List View */
     Component {
         id: listViewComponent_id
         ListView {

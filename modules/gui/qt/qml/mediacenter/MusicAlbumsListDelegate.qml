@@ -1,3 +1,7 @@
+/**********************************************************
+ * The delegate to display an album inside the listView
+ **********************************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
@@ -30,6 +34,7 @@ Rectangle {
 
         Behavior on height { PropertyAnimation { duration: 100 } }
 
+        /* The cover of the album */
         Image {
             id: cover
             width: vlc_style.icon_normal
@@ -45,6 +50,8 @@ Rectangle {
             width: root.width - cover.width - main_row.spacing
             height: cover.height
             spacing : 5
+
+            /* The title of the album */
             Text {
                 id: title
                 text : "<b>"+(model.album_title || "Unknown title")+"</b> ["+model.album_duration+"]"
@@ -54,6 +61,7 @@ Rectangle {
                 elide: Text.ElideRight
             }
 
+            /* The name of the main artist */
             Text {
                 id: infos
                 text: model.album_main_artist
@@ -64,6 +72,7 @@ Rectangle {
                 font.pixelSize: 8
             }
 
+            /* The list of the tracks only visible if the item was clicked (state = expanded) */
             Utils.TracksDisplay {
                 id: tracksDisplay
                 x: 30

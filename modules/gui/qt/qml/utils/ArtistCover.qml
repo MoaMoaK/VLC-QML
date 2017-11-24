@@ -1,3 +1,19 @@
+/********************************************************
+ * A component to display up to 4 albums covers in a
+ * grid layout. If 2 or 3 items, some cover will be
+ * cropped to fit in not square spaces
+ * If 1 album : |--------| If 2 albums : |----|----|
+ *              |        |               |    |    |
+ *              |        |               |    |    |
+ *              |        |               |    |    |
+ *              |--------|               |----|----|
+ * If 3 albums : |----|----| If 4+ albums : |----|----|
+ *               |    |    |                |    |    |
+ *               |    |----|                |----|----|
+ *               |    |    |                |    |    |
+ *               |----|----|                |----|----|
+ ********************************************************/
+
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 Item {
@@ -5,6 +21,8 @@ Item {
     property var albums: undefined
     property int nb_albums: 0
 
+    // Calculate the height the cover at index i
+    // should take according to the number of items
     function calc_height(i) {
         if (nb_albums === 1) {
             return gridCover_id.height;
@@ -20,6 +38,8 @@ Item {
             return gridCover_id.height/2 - gridCover_id.rowSpacing/2;
         }
     }
+    // Calculate the width the cover at index i
+    // should take according to the number of items
     function calc_width(i) {
         if (nb_albums === 1) {
             return gridCover_id.width;
@@ -31,6 +51,8 @@ Item {
             return gridCover_id.width/2 - gridCover_id.columnSpacing/2;
         }
     }
+    // Calculate the number of row the cover at index i
+    // should span according to the number of items
     function calc_rowSpanning(i) {
         if (nb_albums === 1) {
             return 2;
@@ -57,6 +79,7 @@ Item {
         Repeater {
             model: albums
 
+            /* One cover */
             Image {
                 id: img
                 source: model.album_cover || "qrc:///noart.png"
@@ -69,6 +92,8 @@ Item {
         }
     }
 
+    /* "..." label */
+    // If there are more than 4 albums, display "..." to signal there are more
     Text {
         id: moreText
         anchors.right: parent.right

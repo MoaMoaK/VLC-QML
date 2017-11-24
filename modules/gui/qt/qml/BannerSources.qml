@@ -7,12 +7,13 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
 
+    // Triggered when the toogleView button is selected
     function toggleView () {
         medialib.toogleView();
     }
-
+    // Trigerred when a source is clicked
+    // To be implemented by the parent
     function selectSource( name ) {
-        // To be implemented by the parent
         return ;
     }
 
@@ -24,8 +25,8 @@ Rectangle {
     RowLayout {
         anchors.fill: parent
 
+        /* Repeater to display each button */
         Repeater {
-            // The repeater to display each button
             id: sourcesButtons
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -34,10 +35,10 @@ Rectangle {
             delegate: buttonView
         }
 
+        /* Model telling the text to display */
+        // The associated image and the name to send to medialib
+        // in order to notify to change the medialib model
         ListModel {
-            // The model telling the text to display, the
-            // associated image and the name to send to medialib
-            // in order to notify to change the medialib model
             id: buttonModel
             ListElement {
                 displayText: "Music"
@@ -56,8 +57,8 @@ Rectangle {
             }
         }
 
+        /* Button for the sources */
         Component {
-            // One button for the sources = rect(img+txt)
             id: buttonView
 
             Rectangle {
@@ -67,6 +68,7 @@ Rectangle {
 
                 color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
+                /* Icon for this source */
                 Image {
                     id: icon
 
@@ -83,6 +85,7 @@ Rectangle {
                     fillMode: Image.PreserveAspectFit
                 }
 
+                /* Name of this source */
                 Text {
                     id: txt
 
@@ -108,9 +111,8 @@ Rectangle {
             }
         }
 
+        /* button to choose the view displayed (list or grid) */
         Image {
-            // A button to choose the view displayed (list or grid)
-            // Should be moved in the end
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
             Layout.preferredHeight: height

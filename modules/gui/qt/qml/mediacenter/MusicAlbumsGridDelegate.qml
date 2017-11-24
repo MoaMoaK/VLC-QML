@@ -1,3 +1,7 @@
+/**************************************************************
+ * The delegate to use to display an album inside a grid view
+ **************************************************************/
+
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
@@ -28,11 +32,13 @@ Rectangle {
         id: column
         spacing: 5
 
+        /* The full cover component with all added infos */
         Item {
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width - 4
             height: root.height - info_disp.height - 4
 
+            /* The cover */
             Image {
                 id: img
                 source: model.album_cover || "qrc:///noart.png"
@@ -40,6 +46,7 @@ Rectangle {
                 anchors.fill: parent
             }
 
+            /* The duration and number of tracks displayed in the corner of the cover */
             Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
@@ -58,6 +65,7 @@ Rectangle {
                 }
             }
 
+            /* A play button appearing when hovering */
             Rectangle {
                 id: playbutton
                 anchors.top: parent.top
@@ -88,12 +96,14 @@ Rectangle {
             }
         }
 
+        /* A section with the infos about the album */
         Item {
             id: info_disp
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width - 4
             height: title_disp.height + 10
 
+            /* The year of the album */
             Text {
                 id: year_disp
                 anchors.left: title_disp.right
@@ -103,6 +113,7 @@ Rectangle {
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
             }
 
+            /* The title of the album elided */
             Text {
                 id: title_disp
                 width: parent.width - year_disp.implicitWidth

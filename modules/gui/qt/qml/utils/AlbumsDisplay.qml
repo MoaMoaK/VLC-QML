@@ -1,3 +1,7 @@
+/***********************************************
+ * A component to display a listview of albums
+ ***********************************************/
+
 import QtQuick 2.0
 
 ListView {
@@ -14,6 +18,8 @@ ListView {
         width: expand_album_id.width
         color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
+        /* The infos about the album */
+        // Format : [release_year] title - duration
         Text {
             id: expand_album_name_id
             text: "["+model.album_release_year+"] "+model.album_title+" - "+model.album_duration

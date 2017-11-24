@@ -1,3 +1,7 @@
+/**************************************************************
+ * The delegate to use to display a genre inside a grid view
+ **************************************************************/
+
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
@@ -29,6 +33,7 @@ Rectangle {
         id: column
         spacing: 5
 
+        /* Display up to 4 preview of the genre's albums */
         Utils.GenreCover {
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width - 4
@@ -37,6 +42,7 @@ Rectangle {
             albums: model.genre_albums
         }
 
+        /* The name of the artist */
         Text {
             id: title_disp
             anchors.left: parent.left

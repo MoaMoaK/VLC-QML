@@ -1,3 +1,9 @@
+/*****************************************************
+ * A component that defines an area where the
+ * mouse activates a popup tooltip with a specific
+ * text (like a hint)
+ *****************************************************/
+
 import QtQuick 2.0
 
 MouseArea {

@@ -1,3 +1,7 @@
+/**********************************************************
+ * The delegate to display an artist inside the listView
+ **********************************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
@@ -27,6 +31,7 @@ Rectangle {
         height: cover.height
         spacing: 5
 
+        /* The cover of the artist */
         Image {
             id: cover
             width: vlc_style.icon_normal
@@ -34,6 +39,7 @@ Rectangle {
             source: model.artist_cover || "qrc:///noart.png"
         }
 
+        /* The name of the artist */
         Text {
             id: title
             text : "<b>"+(model.artist_name || "Unknown artist")+"</b>"

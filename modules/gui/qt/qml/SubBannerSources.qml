@@ -9,6 +9,8 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id: root_id
 
+    // Choose wich listModel of sub-source to choose
+    // according to the current category
     function chooseSubSources() {
         var c = medialib.getCategory();
         if (c >= 0 && c <= 3) {
@@ -19,12 +21,13 @@ Rectangle {
             return model_network_id;
         }
     }
-
+    // Activated when the sort has been changed
     function sort( criteria ){
         medialib.sort(criteria);
         return ;
     }
-
+    // Choose the color of the text depending on the fact the
+    // sub-source is the current one (red) or not (black/white)
     function chooseColor(index) {
         var c = medialib.getCategory();
         if (c === 0 && index === 0) return "#FF0000";
@@ -35,14 +38,14 @@ Rectangle {
         if (c === 5 && index === 0) return "#FF0000";
         return medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
     }
-
+    // Force the sub-source to be recalculated (used when category has been changed)
     function update() {
         stack_id.sourceComponent = undefined;
         stack_id.sourceComponent = chooseSubSources();
     }
-
+    // Trigerred when a source is clicked
+    // To be implemented by the parent
     function selectSource( name ) {
-        // To be implemented by the parent
         return ;
     }
     anchors.left: parent.left
@@ -60,8 +63,8 @@ Rectangle {
             sourceComponent: chooseSubSources()
         }
 
+        /* List of sub-sources for Music */
         Component {
-            // The list of sub-sources for Music
             id: model_music_id
 
             RowLayout {
@@ -77,8 +80,8 @@ Rectangle {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
+                    /* A single button for a sub-source */
                     Rectangle {
-                        // A single button for a sub-source
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
                         color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
@@ -109,8 +112,8 @@ Rectangle {
             }
         }
 
+        /* List of sub-sources for Video */
         Component {
-            // The list of sub-sources for Video
             id: model_video_id
 
             RowLayout {
@@ -125,8 +128,8 @@ Rectangle {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
+                    /* A single button for a sub-source */
                     Rectangle {
-                        // A single button for a sub-source
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
                         color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
@@ -157,8 +160,8 @@ Rectangle {
             }
         }
 
+        /* List of sub-sources for Network */
         Component {
-            // The list of sub-sources for Network
             id: model_network_id
 
             RowLayout {
@@ -169,8 +172,8 @@ Rectangle {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
 
+                    /* A single button for a sub-source */
                     Rectangle {
-                        // A single button for a sub-source
                         height: parent.height
                         width: subsource_name_id.implicitWidth+vlc_style.margin_small*2
                         color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
@@ -201,12 +204,8 @@ Rectangle {
             }
         }
 
-
-
-
-
+        /* Selector to choose a specific sorting operation */
         ComboBox {
-            // The selector to choose a specific sorting operation
             id: combo
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
@@ -217,8 +216,8 @@ Rectangle {
             onActivated: sort( sortModel.get(index).text )
         }
 
+        /* Model for the different possible sorts */
         ListModel {
-            // The model for the different possible sorts
             id: sortModel
             ListElement { text: "Alphabetic asc" }
             ListElement { text: "Alphabetic desc" }

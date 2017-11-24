@@ -1,51 +1,52 @@
+/*************************************************
+ * The main component to display the mediacenter
+ *************************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 Rectangle {
+
+    // Notify the view has beeen changed
     function changedView() {
         viewLoader.item.changedView();
     }
 
+    // Notify the category has been changed
     function changedCategory() {
         viewLoader.sourceComponent = chooseCat();
         reloadData();
         console.log( "Changed category : "+medialib.getCategory() );
     }
 
+    // Function to get which component to display according to the category
     function chooseCat() {
-        if (medialib.getCategory() == 0)
+        var cat = medialib.getCategory();
+        if (cat === 0)
             return albumsDisplayComponent;
-        else if (medialib.getCategory() == 1)
+        else if (cat === 1)
             return artistsDisplayComponent;
-        else if (medialib.getCategory() == 2)
+        else if (cat === 2)
             return genresDisplayComponent;
-        else if (medialib.getCategory() == 3)
+        else if (cat === 3)
             return tracksDisplayComponent;
         else
             return albumsDisplayComponent;
     }
 
+    // Force the data inside the displayed view to de reloaded
     function reloadData() {
         viewLoader.item.reloadData();
     }
 
+    // Force to recalculate if the presentation needs to be displayed
     function reloadPresentation() {
         if ( medialib.hasPresentation() ) {
-            presentationLoader_id.replace( presentationComponent_id );
-            presentationLoader_id.height = vlc_style.heightBar_xlarge;
-            presentationLoader_id.Layout.preferredHeigh = vlc_style.heightBar_xlarge;
-            presentationLoader_id.Layout.minimumHeight = vlc_style.heightBar_xlarge;
-            presentationLoader_id.Layout.maximumHeight = vlc_style.heightBar_xlarge;
+            presentationLoader_id.sourceComponent = presentationComponent_id;
         } else {
-            presentationLoader_id.replace( noPresentationComponent_id );
-            presentationLoader_id.height = 0;
-            presentationLoader_id.Layout.preferredHeigh = 0;
-            presentationLoader_id.Layout.minimumHeight = 0;
-            presentationLoader_id.Layout.maximumHeight = 0;
-        }
-
-        console.log( "Presentation reloaded "+medialib.getPresObject() )
+            presentationLoader_id.sourceComponent = noPresentationComponent_id;
+       }
     }
 
     color: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
@@ -53,33 +54,18 @@ Rectangle {
     ColumnLayout {
         anchors.fill : parent
 
-        StackView {
+        /* The Presentation Bar */
+        Loader {
             id: presentationLoader_id
             z:10
             Layout.fillWidth: true
-            height: medialib.hasPresentation() ? vlc_style.heightBar_xlarge : 0
+            height: item.height
             Layout.preferredHeight: height
             Layout.minimumHeight: height
             Layout.maximumHeight: height
-            initialItem: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
+            sourceComponent: medialib.hasPresentation() ? presentationComponent_id : noPresentationComponent_id
 
-            replaceEnter: Transition {
-                PropertyAnimation {
-                    property: "opacity"
-                    from: 0
-                    to: 1
-                    duration: 200
-                }
-            }
-            replaceExit: Transition {
-                PropertyAnimation {
-                    property: "opacity"
-                    from: 1
-                    to: 0
-                    duration: 200
-                }
-            }
-
+            // If the presentation bar should be displayed
             Component {
                 id: presentationComponent_id
 
@@ -93,10 +79,11 @@ Rectangle {
                     obj: medialib.getPresObject();
                 }
             }
+            // If the presentation bar should be hidden
             Component {
                 id: noPresentationComponent_id
 
-                Rectangle {
+                Item {
                     height: 0
                     Layout.preferredHeight: height
                     Layout.minimumHeight: height
@@ -104,13 +91,15 @@ Rectangle {
                 }
             }
         }
+
+        /* The data elements */
         Loader {
             id: viewLoader
             z: 0
             Layout.fillWidth: true
             Layout.fillHeight: true
             sourceComponent: chooseCat()
-
+            // Display some 'Artists' items
             Component {
                 id: albumsDisplayComponent
 
@@ -119,6 +108,7 @@ Rectangle {
                     height: vlc_style.cover_normal+20
                 }
             }
+            // Display some 'Albums' items
             Component {
                 id: artistsDisplayComponent
 
@@ -127,6 +117,7 @@ Rectangle {
                     height: vlc_style.cover_normal+20
                 }
             }
+            // Display some 'Genres' items
             Component {
                 id: genresDisplayComponent
 
@@ -135,6 +126,7 @@ Rectangle {
                     height: vlc_style.cover_normal+20
                 }
             }
+            // Display some 'Tracks' items
             Component {
                 id: tracksDisplayComponent
 

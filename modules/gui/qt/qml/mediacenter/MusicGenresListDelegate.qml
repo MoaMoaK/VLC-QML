@@ -1,3 +1,7 @@
+/**********************************************************
+ * The delegate to display an album inside the listView
+ **********************************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
@@ -21,6 +25,7 @@ Rectangle {
         }
     }
 
+    /* The name of the genre and the number of track associated */
     Text {
         id: collapse_title_id
         text : "<b>"+(model.genre_name || "Unknown track")+"</b> - "+model.genre_nb_tracks+" tracks"

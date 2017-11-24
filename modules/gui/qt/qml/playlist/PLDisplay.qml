@@ -1,3 +1,8 @@
+/***********************************************
+ * The main component to display the playlist
+ * on the right side of the screen
+ ***********************************************/
+
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
@@ -9,6 +14,7 @@ Item {
 
     width: default_width
 
+    /* Button to show/hide the playlist */
     Image {
         id: toogleBar
         x: -20
@@ -25,6 +31,7 @@ Item {
         }
     }
 
+    /* List of items in the playlist */
     ListView {
         id: listView
 
@@ -44,6 +51,7 @@ Item {
 
     }
 
+    /* Hiding of the playlist animation */
     PropertyAnimation {
         id: closeAnimation
         target: plDisplay
@@ -53,6 +61,7 @@ Item {
         easing.type: Easing.InOutCubic
     }
 
+    /* Showing of the playlist animation */
     PropertyAnimation {
         id: openAnimation
         target: plDisplay

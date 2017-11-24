@@ -1,3 +1,8 @@
+/************************************************
+ * A component to display a tooltip with a
+ * specific text. Used by ToolTipArea.qml
+ ************************************************/
+
 import QtQuick 2.0
 
 Rectangle {

@@ -1,3 +1,7 @@
+/**************************************************************
+ * The delegate to use to display a track inside a grid view
+ **************************************************************/
+
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
@@ -30,6 +34,7 @@ Rectangle {
         id: column
         spacing: 5
 
+        /* The cover of the album associated with the track */
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width - 4
@@ -38,6 +43,7 @@ Rectangle {
             source: model.track_cover || "qrc:///noart.png"
         }
 
+        /* The title of the track */
         Text {
             id: title_disp
             anchors.left: parent.left
