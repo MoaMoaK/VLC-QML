@@ -26,6 +26,11 @@ Rectangle {
         medialib.sort(criteria);
         return ;
     }
+    // Force to recalculate the colors
+    function changedNightMode() {
+        color = medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
+        update();
+    }
     // Choose the color of the text depending on the fact the
     // sub-source is the current one (red) or not (black/white)
     function chooseColor(index) {

@@ -3,7 +3,6 @@
  ************************************************************/
 
 import QtQuick 2.0
-import QtQuick.Layouts 1.3
 
 Rectangle {
     id: pLBannerSources
@@ -14,6 +13,16 @@ Rectangle {
     function toggleView () {
         medialib.toogleView();
     }
+    // Force to recalculate the colors
+    function changedNightMode() {
+        color = medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode;
+        update();
+    }
+    // Force the source to be redrawn
+    function update() {
+        sourcesButtons.model = undefined;
+        sourcesButtons.model = buttonModel;
+    }
     // Trigerred when a source is clicked
     // To be implemented by the parent
     function selectSource( name ) {
@@ -22,15 +31,12 @@ Rectangle {
 
     color: medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode
 
-    RowLayout {
+    Row {
         anchors.fill: parent
 
         /* Repeater to display each button */
         Repeater {
             id: sourcesButtons
-
-            Layout.fillHeight: true
-            Layout.fillWidth: true
 
             model: buttonModel
             delegate: buttonView
@@ -114,31 +120,28 @@ Rectangle {
                 }
             }
         }
+    }
 
-        /* button to choose the view displayed (list or grid) */
-        Image {
-            Layout.fillHeight: true
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-            Layout.preferredHeight: height
-            Layout.preferredWidth: width
-            Layout.rightMargin: vlc_style.margin_normal
-            height: vlc_style.icon_normal
-            width: vlc_style.icon_normal
+    /* button to choose the view displayed (list or grid) */
+    Image {
+        anchors.right: parent.right
+        anchors.rightMargin: vlc_style.margin_normal
+        anchors.verticalCenter: parent.verticalCenter
+        height: vlc_style.icon_normal
+        width: vlc_style.icon_normal
 
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:///toolbar/tv"
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:///toolbar/tv"
+
+        enabled: need_toggleView_button
+        visible: need_toggleView_button
+
+        MouseArea {
+            anchors.fill: parent
 
             enabled: need_toggleView_button
-            visible: need_toggleView_button
-
-            MouseArea {
-                anchors.fill: parent
-
-                enabled: need_toggleView_button
-                onClicked: toggleView()
-            }
+            onClicked: toggleView()
         }
-
     }
 
 

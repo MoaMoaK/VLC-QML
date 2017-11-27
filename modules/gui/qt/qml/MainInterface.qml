@@ -16,6 +16,11 @@ Item {
     function reloadData() { mcDisplay.reloadData();}
     function changedCategory() { mcDisplay.changedCategory(); }
     function changedView() { mcDisplay.changedView(); }
+    function changedNightMode() {
+        sourcesBanner.changedNightMode();
+        subSourcesBanner.changedNightMode();
+        mcDisplay.changedNightMode();
+    }
     function reloadPresentation() { mcDisplay.reloadPresentation(); }
 
     width: 1000

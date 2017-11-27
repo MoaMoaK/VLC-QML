@@ -48,6 +48,12 @@ Rectangle {
        }
     }
 
+    // Force to recalculate the colors
+    function changedNightMode() {
+        color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
+        reloadData();
+    }
+
     color: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     ColumnLayout {

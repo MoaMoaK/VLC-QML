@@ -90,6 +90,11 @@ Flickable {
 
     contentHeight: calc_content_height();
     contentWidth: width
+
+    onModelChanged: {
+        row_repeater.model = 0;
+        row_repeater.model = Qt.binding(function() { return priv.nbLines } );
+    }
     
     Column {
         anchors.fill: parent
@@ -97,6 +102,7 @@ Flickable {
         spacing : calc_row_spacing()
 
         Repeater {
+            id: row_repeater
             model: priv.nbLines
 
             ExpandGridViewRow {
@@ -134,6 +140,5 @@ Flickable {
                 }
             }
         }
-
     }
 }

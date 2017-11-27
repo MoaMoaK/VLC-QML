@@ -66,8 +66,9 @@ public:
     Q_INVOKABLE QVariant getCategory();
     Q_INVOKABLE QVariant getObjects();
     Q_INVOKABLE QVariant isGridView();
-    Q_INVOKABLE QVariant isNightMode();
     Q_INVOKABLE void toogleView();
+    Q_INVOKABLE QVariant isNightMode();
+    Q_INVOKABLE void toogleNightMode();
     Q_INVOKABLE void select(const int &item_id);
     Q_INVOKABLE QVariant getPresObject();
     Q_INVOKABLE void selectSource(const QString &name );

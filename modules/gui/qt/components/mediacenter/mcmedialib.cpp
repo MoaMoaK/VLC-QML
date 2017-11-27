@@ -118,17 +118,24 @@ QVariant MCMediaLib::isGridView()
     return QVariant( m_gridView );
 }
 
+// Toogle between grid and list view for the displayed items
+void MCMediaLib::toogleView()
+{
+    m_gridView = !m_gridView;
+    invokeQML("changedView()");
+}
+
 // Is the night mode activated
 QVariant MCMediaLib::isNightMode()
 {
     return QVariant( is_night_mode );
 }
 
-// Toogle between grid and list view for the displayed items
-void MCMediaLib::toogleView()
+// Toogle between nightmode and daymode
+void MCMediaLib::toogleNightMode()
 {
-    m_gridView = !m_gridView;
-    invokeQML("changedView()");
+    is_night_mode = !is_night_mode;
+    invokeQML("changedNightMode()");
 }
 
 // A specific item has been selected -> update the list of obejcts and the presentation
