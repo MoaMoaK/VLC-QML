@@ -5,6 +5,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
+import "qrc:///utils/" as Utils
+
 Loader {
     id: viewLoader
 
@@ -30,9 +32,15 @@ Loader {
             cellHeight: vlc_style.cover_normal+20
 
             model: medialib.getObjects()
-            delegate : MusicTracksGridDelegate {
+            delegate : Utils.GridItem {
                 width: vlc_style.cover_normal
                 height: vlc_style.cover_normal+20
+
+                cover: Image { source: model.track_cover || "qrc:///noart.png" }
+                name: model.track_title || "Unknown track"
+
+                onItemClicked: console.log('Clicked on details : '+model.track_title);
+                onPlayClicked: console.log('Clicked on play : '+model.track_title)
             }
 
             ScrollBar.vertical: ScrollBar { }

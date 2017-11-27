@@ -41,9 +41,17 @@ Loader {
 
             expandDuration: 200
 
-            delegate : MusicAlbumsGridDelegate {
+            delegate : Utils.GridItem {
                 width: vlc_style.cover_normal
                 height: vlc_style.cover_normal+20
+
+                cover : Image { source: model.album_cover || "qrc:///noart.png" }
+                name : model.album_title || "Unknown title"
+                date : model.album_release_year !== "0" ? model.album_release_year : ""
+                infos : model.album_duration + " - " + model.album_nb_tracks + " tracks"
+
+                onItemClicked : console.log('Clicked on details : '+model.album_title)
+                onPlayClicked : console.log('Clicked on play : '+model.album_title)
             }
             expandDelegate: MusicAlbumsGridExpandDelegate {
                 width: parent.parent.width

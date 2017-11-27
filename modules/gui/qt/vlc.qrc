@@ -162,17 +162,13 @@
         <file alias="MCDisplay.qml">qml/mediacenter/MCDisplay.qml</file>
         <file alias="Presentation.qml">qml/mediacenter/Presentation.qml</file>
         <file alias="MusicAlbumsDisplay.qml">qml/mediacenter/MusicAlbumsDisplay.qml</file>
-        <file alias="MusicAlbumsGridDelegate.qml">qml/mediacenter/MusicAlbumsGridDelegate.qml</file>
         <file alias="MusicAlbumsGridExpandDelegate.qml">qml/mediacenter/MusicAlbumsGridExpandDelegate.qml</file>
         <file alias="MusicAlbumsListDelegate.qml">qml/mediacenter/MusicAlbumsListDelegate.qml</file>
         <file alias="MusicArtistsDisplay.qml">qml/mediacenter/MusicArtistsDisplay.qml</file>
-        <file alias="MusicArtistsGridDelegate.qml">qml/mediacenter/MusicArtistsGridDelegate.qml</file>
         <file alias="MusicArtistsListDelegate.qml">qml/mediacenter/MusicArtistsListDelegate.qml</file>
         <file alias="MusicGenresDisplay.qml">qml/mediacenter/MusicGenresDisplay.qml</file>
-        <file alias="MusicGenresGridDelegate.qml">qml/mediacenter/MusicGenresGridDelegate.qml</file>
         <file alias="MusicGenresListDelegate.qml">qml/mediacenter/MusicGenresListDelegate.qml</file>
         <file alias="MusicTracksDisplay.qml">qml/mediacenter/MusicTracksDisplay.qml</file>
-        <file alias="MusicTracksGridDelegate.qml">qml/mediacenter/MusicTracksGridDelegate.qml</file>
         <file alias="MusicTracksListDelegate.qml">qml/mediacenter/MusicTracksListDelegate.qml</file>
     </qresource>
     <qresource prefix="/qml">
@@ -192,5 +188,6 @@
         <file alias="ToolTipArea.qml">qml/utils/ToolTipArea.qml</file>
         <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
         <file alias="GenreCover.qml">qml/utils/GenreCover.qml</file>
+        <file alias="GridItem.qml">qml/utils/GridItem.qml</file>
     </qresource>
 </RCC>

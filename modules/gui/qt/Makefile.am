@@ -488,19 +488,16 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/BannerSources.qml \
 	gui/qt/qml/mediacenter/MCDisplay.qml \
 	gui/qt/qml/mediacenter/MusicAlbumsDisplay.qml \
-	gui/qt/qml/mediacenter/MusicAlbumsGridDelegate.qml \
 	gui/qt/qml/mediacenter/MusicAlbumsGridExpandDelegate.qml \
 	gui/qt/qml/mediacenter/MusicAlbumsListDelegate.qml \
 	gui/qt/qml/mediacenter/MusicArtistsDisplay.qml \
-	gui/qt/qml/mediacenter/MusicArtistsGridDelegate.qml \
 	gui/qt/qml/mediacenter/MusicArtistsListDelegate.qml \
 	gui/qt/qml/mediacenter/MusicGenresDisplay.qml \
-	gui/qt/qml/mediacenter/MusicGenresGridDelegate.qml \
 	gui/qt/qml/mediacenter/MusicGenresListDelegate.qml \
 	gui/qt/qml/mediacenter/MusicTracksDisplay.qml \
-	gui/qt/qml/mediacenter/MusicTracksGridDelegate.qml \
 	gui/qt/qml/mediacenter/MusicTracksListDelegate.qml \
 	gui/qt/qml/mediacenter/Presentation.qml \
+	gui/qt/qml/utils/GridItem.qml \
 	gui/qt/qml/utils/ToolTip.qml \
 	gui/qt/qml/utils/ToolTipArea.qml \
 	gui/qt/qml/utils/HorizontalRule.qml \

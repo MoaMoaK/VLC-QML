@@ -5,6 +5,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
+import "qrc:///utils/" as Utils
+
 Loader {
     id: viewLoader
 
@@ -30,9 +32,18 @@ Loader {
             cellHeight: vlc_style.cover_normal+20
 
             model: medialib.getObjects()
-            delegate : MusicGenresGridDelegate {
+            delegate : Utils.GridItem {
                 width: vlc_style.cover_normal
                 height: vlc_style.cover_normal+20
+
+                cover: Utils.GenreCover { albums: model.genre_albums }
+                name: model.album_title || "Unknown title"
+
+                onItemClicked: {
+                    console.log('Clicked on details : '+model.album_title);
+                    medialib.select( index );
+                }
+                onPlayClicked: console.log('Clicked on play : '+model.album_title)
             }
 
             ScrollBar.vertical: ScrollBar { }
