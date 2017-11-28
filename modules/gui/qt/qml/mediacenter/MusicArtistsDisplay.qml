@@ -60,7 +60,27 @@ Loader {
             spacing: 2
 
             model: medialib.getObjects()
-            delegate : MusicArtistsListDelegate { }
+            delegate : Utils.ListItem {
+                height: vlc_style.icon_normal
+                width: parent.width
+
+                cover: Image {
+                    height: vlc_style.icon_normal
+                    width: vlc_style.icon_normal
+
+                    source: model.artist_cover || "qrc:///noart.png"
+                }
+                line1: Text{
+                    text: "<b>" + (model.artist_name || "Unknown artist") + "</b>"
+                    elide: Text.ElideRight
+                    color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
+                }
+
+                onItemClicked: {
+                    console.log("Clicked on : "+model.artist_name);
+                    medialib.select( index );
+                }
+            }
 
             ScrollBar.vertical: ScrollBar { }
         }

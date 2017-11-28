@@ -54,7 +54,18 @@ Loader {
             spacing: 2
 
             model: medialib.getObjects()
-            delegate : MusicTracksListDelegate { }
+            delegate : Utils.ListItem {
+                height: vlc_style.heightBar_small
+                width: parent.width
+
+                line1: Text{
+                    text: "<b>"+(model.track_title || "Unknown track")+"</b> - "+model.track_duration
+                    elide: Text.ElideRight
+                    color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
+                }
+
+                onItemClicked: console.log("Clicked on : "+model.track_title)
+            }
 
             ScrollBar.vertical: ScrollBar { }
         }

@@ -165,11 +165,8 @@
         <file alias="MusicAlbumsGridExpandDelegate.qml">qml/mediacenter/MusicAlbumsGridExpandDelegate.qml</file>
         <file alias="MusicAlbumsListDelegate.qml">qml/mediacenter/MusicAlbumsListDelegate.qml</file>
         <file alias="MusicArtistsDisplay.qml">qml/mediacenter/MusicArtistsDisplay.qml</file>
-        <file alias="MusicArtistsListDelegate.qml">qml/mediacenter/MusicArtistsListDelegate.qml</file>
         <file alias="MusicGenresDisplay.qml">qml/mediacenter/MusicGenresDisplay.qml</file>
-        <file alias="MusicGenresListDelegate.qml">qml/mediacenter/MusicGenresListDelegate.qml</file>
         <file alias="MusicTracksDisplay.qml">qml/mediacenter/MusicTracksDisplay.qml</file>
-        <file alias="MusicTracksListDelegate.qml">qml/mediacenter/MusicTracksListDelegate.qml</file>
     </qresource>
     <qresource prefix="/qml">
         <file alias="about.qml">qml/about.qml</file>
@@ -189,5 +186,6 @@
         <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
         <file alias="GenreCover.qml">qml/utils/GenreCover.qml</file>
         <file alias="GridItem.qml">qml/utils/GridItem.qml</file>
+        <file alias="ListItem.qml">qml/utils/ListItem.qml</file>
     </qresource>
 </RCC>

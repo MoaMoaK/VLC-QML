@@ -34,7 +34,7 @@ VLCStyle::VLCStyle() : QQmlPropertyMap()
     prop("cover_xlarge", 192);
 
     prop("heightBar_xsmall", 8);
-    prop("heightBar_small", 46);
+    prop("heightBar_small", 16);
     prop("heightBar_normal", 32);
     prop("heightBar_large", 64);
     prop("heightBar_xlarge", 128);

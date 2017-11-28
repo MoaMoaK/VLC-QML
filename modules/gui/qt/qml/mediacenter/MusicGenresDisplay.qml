@@ -37,13 +37,13 @@ Loader {
                 height: vlc_style.cover_normal+20
 
                 cover: Utils.GenreCover { albums: model.genre_albums }
-                name: model.album_title || "Unknown title"
+                name: model.genre_name || "Unknown genre"
 
                 onItemClicked: {
-                    console.log('Clicked on details : '+model.album_title);
+                    console.log('Clicked on details : '+model.genre_name);
                     medialib.select( index );
                 }
-                onPlayClicked: console.log('Clicked on play : '+model.album_title)
+                onPlayClicked: console.log('Clicked on play : '+model.genre_name)
             }
 
             ScrollBar.vertical: ScrollBar { }
@@ -58,7 +58,21 @@ Loader {
             spacing: 2
 
             model: medialib.getObjects()
-            delegate : MusicGenresListDelegate { }
+            delegate : Utils.ListItem {
+                height: vlc_style.heightBar_small
+                width: parent.width
+
+                line1: Text{
+                    text: "<b>"+(model.genre_name || "Unknown genre")+"</b> - "+model.genre_nb_tracks+" tracks"
+                    elide: Text.ElideRight
+                    color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
+                }
+
+                onItemClicked: {
+                    console.log("Clicked on : "+model.genre_name);
+                    medialib.select( index );
+                }
+            }
 
             ScrollBar.vertical: ScrollBar { }
         }

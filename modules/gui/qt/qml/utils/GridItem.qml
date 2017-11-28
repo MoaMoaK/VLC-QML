@@ -3,12 +3,11 @@
  *******************************************/
 
 import QtQuick 2.0
-import QtGraphicalEffects 1.0
 
 Rectangle {
     id: root
 
-    property Component cover
+    property Component cover: Item {}
     property string name: ""
     property string date: ""
     property string infos: ""
