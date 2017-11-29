@@ -16,7 +16,6 @@ MLItem {
 
     Column {
         id: column
-
         x: 2
         y: 2
 
@@ -121,11 +120,10 @@ MLItem {
 
                 ToolTipArea {
                     anchors.fill: parent
-
                     text: name
-                    enabled: name_text.truncated
-                    attachedParent: root
+                    activated: parent.truncated
                 }
+
             }
         }
     }
