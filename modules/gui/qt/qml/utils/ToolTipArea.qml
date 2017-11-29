@@ -14,6 +14,7 @@ MouseArea {
     hoverEnabled: true
     onEntered: state = "hovered"
     onExited: state = ""
+    propagateComposedEvents: true
     states: [
         State {
             name: "hovered"

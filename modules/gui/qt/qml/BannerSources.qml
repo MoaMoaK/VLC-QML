@@ -13,6 +13,10 @@ Rectangle {
     function toggleView () {
         medialib.toogleView();
     }
+    // Triggered when the toogleView button is selected
+    function toogleNightmode () {
+        medialib.toogleNightMode();
+    }
     // Force to recalculate the colors
     function changedNightMode() {
         color = medialib.isNightMode() ? vlc_style.bannerColor_nightmode : vlc_style.bannerColor_daymode;
@@ -124,6 +128,8 @@ Rectangle {
 
     /* button to choose the view displayed (list or grid) */
     Image {
+        id: view_selector
+
         anchors.right: parent.right
         anchors.rightMargin: vlc_style.margin_normal
         anchors.verticalCenter: parent.verticalCenter
@@ -141,6 +147,28 @@ Rectangle {
 
             enabled: need_toggleView_button
             onClicked: toggleView()
+        }
+    }
+
+    /* button to toogle between night and day mode */
+    Image {
+        anchors.right: view_selector.left
+        anchors.rightMargin: vlc_style.margin_small
+        anchors.verticalCenter: parent.verticalCenter
+        height: vlc_style.icon_normal
+        width: vlc_style.icon_normal
+
+        fillMode: Image.PreserveAspectFit
+        source: "qrc:///prefsmenu/advanced/intf"
+
+        enabled: need_toggleView_button
+        visible: need_toggleView_button
+
+        MouseArea {
+            anchors.fill: parent
+
+            enabled: need_toggleView_button
+            onClicked: toogleNightmode()
         }
     }
 
