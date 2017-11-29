@@ -11,6 +11,12 @@ Rectangle {
 
     property var obj: undefined
 
+    function changedNightMode() {
+        color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode;
+        title_id.color = medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode;
+        info_id.color = medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode;
+    }
+
     color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     RowLayout {
