@@ -17,6 +17,7 @@ MouseArea {
     acceptedButtons: Qt.NoButton
     anchors.fill: parent
     hoverEnabled: true
+    propagateComposedEvents: true
     Timer {
         id:showTimer
         interval: 1000

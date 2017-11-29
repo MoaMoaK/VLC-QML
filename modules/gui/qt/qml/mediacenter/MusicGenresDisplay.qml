@@ -63,7 +63,8 @@ Loader {
                 width: parent.width
 
                 line1: Text{
-                    text: "<b>"+(model.genre_name || "Unknown genre")+"</b> - "+model.genre_nb_tracks+" tracks"
+                    text: (model.genre_name || "Unknown genre")+" - "+model.genre_nb_tracks+" tracks"
+                    font.bold: true
                     elide: Text.ElideRight
                     color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 }

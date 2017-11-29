@@ -85,19 +85,21 @@ MLItem {
         }
 
         /* A section with the infos about the album */
-        Item {
+        Row {
             id: info_disp
 
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width - 4
             height: name_text.height + 10
 
+            layoutDirection: Qt.RightToLeft
+
             /* The year of the album */
             Text {
                 id: date_text
 
-                anchors.left: name_text.right
-                anchors.top: parent.top
+                width: implicitWidth
+                height: implicitHeight
 
                 text: date
                 font.pixelSize: 12
@@ -108,12 +110,12 @@ MLItem {
             Text {
                 id: name_text
 
-                width: parent.width - date_text.implicitWidth
-                anchors.left: parent.left
-                anchors.top: parent.top
+                width: parent.width - date_text.width
+                height: implicitHeight
 
                 elide: Text.ElideRight
-                text: "<b>"+name+"</b>"
+                font.bold: true
+                text: name
                 font.pixelSize: 12
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
 
@@ -126,11 +128,5 @@ MLItem {
                 }
             }
         }
-
-
-
-
-
     }
-
 }

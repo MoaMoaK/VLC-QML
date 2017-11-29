@@ -71,7 +71,8 @@ Loader {
                     source: model.artist_cover || "qrc:///noart.png"
                 }
                 line1: Text{
-                    text: "<b>" + (model.artist_name || "Unknown artist") + "</b>"
+                    text: model.artist_name || "Unknown artist"
+                    font.bold: true
                     elide: Text.ElideRight
                     color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 }

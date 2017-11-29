@@ -59,7 +59,8 @@ Loader {
                 width: parent.width
 
                 line1: Text{
-                    text: "<b>"+(model.track_title || "Unknown track")+"</b> - "+model.track_duration
+                    text: (model.track_title || "Unknown track")+" - "+model.track_duration
+                    font.bold: true
                     elide: Text.ElideRight
                     color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
                 }
