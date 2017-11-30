@@ -14,6 +14,8 @@ MLItem {
 
     signal playClicked
 
+    hovered: playbutton_mousearea.containsMouse || name_tooltip.containsMouse
+
     Column {
         id: column
         x: 2
@@ -73,11 +75,12 @@ MLItem {
                 }
 
                 MouseArea{
+                    id: playbutton_mousearea
                     anchors.fill: parent
 
                     hoverEnabled: true
-                    onEntered: { parent.opacity = 0.7; root.color = medialib.isNightMode() ? vlc_style.hoverBgColor_nightmode : vlc_style.hoverBgColor_daymode; }
-                    onExited: { parent.opacity = 0 ; root.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode;}
+                    onEntered: { parent.opacity = 0.7; }
+                    onExited: { parent.opacity = 0; }
                     onClicked: root.playClicked()
                 }
             }
@@ -119,6 +122,7 @@ MLItem {
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
 
                 ToolTipArea {
+                    id: name_tooltip
                     anchors.fill: parent
                     text: name
                     activated: parent.truncated

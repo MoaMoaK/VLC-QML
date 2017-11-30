@@ -12,19 +12,12 @@ MouseArea {
     anchors.fill: parent
 
     hoverEnabled: true
-    onEntered: state = "hovered"
-    onExited: state = ""
     propagateComposedEvents: true
-    states: [
-        State {
-            name: "hovered"
-        }
-    ]
 
     ToolTip {
         id: tip
         text: "plop"
         delay: 500
-        visible: activated && parent.state == "hovered"
+        visible: activated && parent.containsMouse
     }
 }
