@@ -11,7 +11,9 @@ Item {
     ListView {
         id: expand_track_id
 
-        anchors.fill: parent
+        x: 30
+        height: parent.height
+        width: parent.width - x
 
         model: tracks
         delegate: Rectangle {

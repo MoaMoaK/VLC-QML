@@ -102,7 +102,6 @@ Loader {
                     font.pixelSize: 8
                 }
                 expand: Utils.TracksDisplay {
-                    x: 30
                     height: album_nb_tracks * (2 + 12)
                     width: parent.width
 

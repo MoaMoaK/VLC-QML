@@ -29,7 +29,7 @@ MLItem {
 
         Column {
             height: parent.height
-            width: parent.width - cover_loader.width - spacing
+            width: parent.width - cover_loader.width - parent.spacing
 
             /* Line 1 */
             Loader {
