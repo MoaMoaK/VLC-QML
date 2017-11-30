@@ -497,6 +497,7 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/utils/ToolTipArea.qml \
 	gui/qt/qml/utils/GridItem.qml \
 	gui/qt/qml/utils/ListItem.qml \
+	gui/qt/qml/utils/ListExpandItem.qml \
 	gui/qt/qml/utils/MLItem.qml \
 	gui/qt/qml/utils/HorizontalRule.qml \
 	gui/qt/qml/utils/ArtistCover.qml \

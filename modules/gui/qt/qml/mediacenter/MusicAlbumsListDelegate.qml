@@ -89,10 +89,10 @@ Rectangle {
                 id: tracksDisplay
 
                 x: 30
-                height: album_nb_tracks * (2 + 12)
+                height: model.album_nb_tracks * (2 + 12)
                 width: main_column.width - x
 
-                tracks: album_tracks
+                tracks: model.album_tracks
 
                 visible: false
             }

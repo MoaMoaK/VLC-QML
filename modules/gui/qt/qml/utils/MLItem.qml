@@ -4,9 +4,10 @@ Rectangle {
     id: root
 
     property bool hovered: false
+    property bool force_disable: false
 
     function active() {
-        return hovered || mouseArea.containsMouse
+        return !force_disable && (hovered || mouseArea.containsMouse)
     }
 
     signal itemClicked
