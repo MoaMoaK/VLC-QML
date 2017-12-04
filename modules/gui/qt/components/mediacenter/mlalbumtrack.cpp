@@ -43,9 +43,18 @@ QString MLAlbumTrack::getDuration() const
     unsigned int sec = duration / 1000;
     unsigned int min = sec / 60;
     unsigned int hour = min / 60;
-    QString sec_disp = QString( std::to_string( sec - min * 60 ).c_str() );
-    QString min_disp = QString( std::to_string( min - hour * 60 ).c_str() );
-    QString hour_disp = QString( std::to_string( hour ).c_str() );
+    std::string sec_str = std::to_string( sec - min * 60 );
+    std::string min_str = std::to_string( min - hour * 60 );
+    std::string hour_str = std::to_string( hour );
+    QString sec_disp = QString(
+        std::string(2-sec_str.length(), '0').append(sec_str).c_str()
+    );
+    QString min_disp = QString(
+        std::string(2-min_str.length(), '0').append(min_str).c_str()
+    );
+    QString hour_disp = QString(
+        std::string(2-hour_str.length(), '0').append(hour_str).c_str()
+    );
 
     if ( hour > 0 )
         return hour_disp + ":" + min_disp + ":" + sec_disp;
