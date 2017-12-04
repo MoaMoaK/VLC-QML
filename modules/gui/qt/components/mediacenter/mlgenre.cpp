@@ -66,6 +66,15 @@ QString MLGenre::getPresInfo() const
     return QString();
 }
 
+QList<MLAlbumTrack*>* MLGenre::getPLTracks() const
+{
+    QList<MLAlbumTrack*>* result = new QList<MLAlbumTrack*>();
+    std::vector<medialibrary::MediaPtr> t = data->tracks();
+    for (int i=0 ; i<t.size() ; i++ )
+        result->append( new MLAlbumTrack( t[i] ) );
+    return result;
+}
+
 QList<MLItem* > *MLGenre::getDetailsObjects(medialibrary::SortingCriteria sort, bool desc)
 {
     QList<MLItem *> *result = new QList<MLItem *>();

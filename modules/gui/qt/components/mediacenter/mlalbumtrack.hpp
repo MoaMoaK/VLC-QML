@@ -9,6 +9,7 @@
 #include <medialibrary/Types.h>
 
 #include "mlitem.hpp"
+#include "mlalbumtrack.hpp"
 #include "components/utils/mlitemmodel.hpp"
 
 class MLAlbumTrack : public MLItem
@@ -23,10 +24,12 @@ public:
     Q_INVOKABLE QString getCover() const;
     Q_INVOKABLE QString getTrackNumber() const;
     Q_INVOKABLE QString getDuration() const;
+    Q_INVOKABLE QString getMRL() const;
 
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
+    Q_INVOKABLE QList<MLAlbumTrack*>* getPLTracks() const;
     QList<MLItem *> *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
 private:
@@ -34,6 +37,7 @@ private:
     QString cover;
     unsigned int trackNumber;
     int64_t duration;
+    QString mrl;
 
     medialibrary::MediaPtr data;
 

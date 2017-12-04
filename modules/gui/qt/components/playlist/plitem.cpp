@@ -2,43 +2,35 @@
 
 #include "vlc_input_item.h"
 
-PLItem::PLItem(playlist_item_t *_pl_item , int _pl_id) :
-    pl_item( _pl_item ),
-    pl_id( _pl_id )
+PLItem::PLItem(MLAlbumTrack *_item ) :
+    pl_item( _item )
 {
-
+    inputItem = input_item_New(
+        pl_item->getMRL().toLatin1().data(),
+        pl_item->getTitle().toLatin1().data()
+    );
 }
 
 QString PLItem::getTitle()
 {
-    char* title = input_item_GetTitle( pl_item->p_input );
-    return QString( title );
+    return pl_item->getTitle();
 }
 
 QString PLItem::getName()
 {
-    char* uri = input_item_GetName( pl_item->p_input );
-    return QString( uri );
+    return QString( "plop" );
 }
 
 QString PLItem::getDuration()
 {
-    mtime_t duration = input_item_GetDuration( pl_item->p_input );
-    int secs = duration / 1000000;
-    char psz_secs[MSTRTIME_MAX_SIZE];
-    secstotimestr( psz_secs, secs);
-    return QString( psz_secs );
+    return pl_item->getDuration();
 }
 
 void PLItem::activate( playlist_t *pl )
 {
-    playlist_item_t *p_parent = getItem();
 
-    while( p_parent )
-    {
-        if( p_parent->i_id == pl->root.i_id ) break;
-        p_parent = p_parent->p_parent;
-    }
-    if( p_parent )
-        playlist_ViewPlay( pl, p_parent, getItem() );
+    playlist_item_t* playlist_item = playlist_ItemGetByInput(pl, inputItem);
+
+    if( playlist_item )
+        playlist_ViewPlay( pl, NULL, playlist_item );
 }

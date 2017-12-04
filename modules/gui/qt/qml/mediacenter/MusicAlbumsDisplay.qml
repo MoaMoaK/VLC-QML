@@ -51,7 +51,10 @@ Loader {
                 infos : model.album_duration + " - " + model.album_nb_tracks + " tracks"
 
                 onItemClicked : console.log('Clicked on details : '+model.album_title)
-                onPlayClicked : console.log('Clicked on play : '+model.album_title)
+                onPlayClicked : {
+                    console.log('Clicked on play : '+model.album_title);
+                    medialib.addToPlaylist(currentIndex);
+                }
             }
             expandDelegate: MusicAlbumsGridExpandDelegate {
                 width: parent.parent.width

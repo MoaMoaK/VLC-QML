@@ -617,7 +617,6 @@ void StandardPLPanel::createMainView()
 
 //    QQuickWidget* mainViewQuick = new QQuickWidget();
 
-    MCMediaLib *medialib = new MCMediaLib(p_intf, mainView);
 
 
 
@@ -629,12 +628,14 @@ void StandardPLPanel::createMainView()
     VLCStyle* vlc_style = new VLCStyle();
 
     QQmlContext *rootCtx = mainView->rootContext();
-    rootCtx->setContextProperty( "medialib", medialib );
     rootCtx->setContextProperty( "vlc_style", vlc_style );
 
     PLModel* plmodel = new PLModel(p_intf);
     model->setPLModel(plmodel);
     rootCtx->setContextProperty( "playlist", plmodel);
+
+    MCMediaLib *medialib = new MCMediaLib(p_intf, mainView, plmodel);
+    rootCtx->setContextProperty( "medialib", medialib );
 
     mainView->setSource( QUrl ( QStringLiteral("qrc:/qml/MainInterface.qml") ) );
     mainView->setResizeMode(QQuickWidget::SizeRootObjectToView);

@@ -37,11 +37,10 @@ public:
 
     /* Handling the playlist items */
     void removeItem(int index);
-    void appendItem(playlist_item_t *item, int i_pl_itemid);
+    void appendItem(PLItem* item);
 
 private:
     PLItem* getItem(const QModelIndex &index ) const;
-    int getItemIndexFromPLId( int id );
 
     intf_thread_t *p_intf;
     QList<PLItem*> plitems;

@@ -10,6 +10,7 @@
 
 #include "mlalbum.hpp"
 #include "mlitem.hpp"
+#include "components/playlist/plitem.hpp"
 #include "components/utils/mlitemmodel.hpp"
 
 class MLArtist : public MLItem
@@ -28,6 +29,7 @@ public:
     Q_INVOKABLE QString getPresName() const;
     Q_INVOKABLE QString getPresImage() const;
     Q_INVOKABLE QString getPresInfo() const;
+    Q_INVOKABLE QList<MLAlbumTrack*>* getPLTracks() const;
     QList<MLItem *> *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false);
 
 private:

@@ -6,18 +6,23 @@
 #include <vlc_playlist.h>
 #include <vlc_input_item.h>
 
-MCMediaLib::MCMediaLib(intf_thread_t *_p_intf, QQuickWidget *_qml_item, QObject *parent)
-    : p_intf( _p_intf ),
-      qmlItem( _qml_item ),
-      current_cat ( CAT_MUSIC_ALBUM ),
-      old_cat ( CAT_MUSIC_ALBUM ),
-      current_sort( medialibrary::SortingCriteria::Default ),
-      is_desc( false ),
-      is_night_mode( false ),
-      ml( NewMediaLibrary() ),
-      cb( new medialibrary::ExCallback() ),
-      m_gridView( true ),
-      QObject(parent)
+MCMediaLib::MCMediaLib(
+        intf_thread_t *_p_intf,
+        QQuickWidget *_qml_item,
+        PLModel* _pl_model,
+        QObject *parent
+    ) : p_intf( _p_intf ),
+        qmlItem( _qml_item ),
+        current_cat ( CAT_MUSIC_ALBUM ),
+        old_cat ( CAT_MUSIC_ALBUM ),
+        current_sort( medialibrary::SortingCriteria::Default ),
+        is_desc( false ),
+        is_night_mode( false ),
+        ml( NewMediaLibrary() ),
+        cb( new medialibrary::ExCallback() ),
+        m_gridView( true ),
+        pl_model( _pl_model ),
+        QObject(parent)
 {
     ml->initialize("/home/moamoak/vlc-bdd.db", "/home/moamoak/vlc-thumb", cb);
     ml->start();
@@ -172,6 +177,22 @@ void MCMediaLib::select( const int &item_id )
 
     invokeQML("reloadPresentation()");
     invokeQML("changedCategory()");
+}
+
+// A specific item has been asked to be added to the playlist
+void MCMediaLib::addToPlaylist( const int &item_id )
+{
+    if (item_id >= 0 && item_id <= current_obj->count())
+    {
+        MLItem* selected_item = current_obj->at(item_id);
+        QList<MLAlbumTrack*>* tracks = selected_item->getPLTracks();
+
+        for (int i=0 ; i<tracks->size() ; i++)
+        {
+            PLItem* pl_item = new PLItem(tracks->at(i));
+            pl_model->appendItem(pl_item);
+        }
+    }
 }
 
 // The object that should be presented in the presentation banner

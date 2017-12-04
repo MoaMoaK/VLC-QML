@@ -23,6 +23,9 @@
 #include "mlartist.hpp"
 #include "components/utils/mlitemmodel.hpp"
 
+#include "components/playlist/plitem.hpp"
+#include "components/playlist/plmodel.hpp"
+
 #include <medialibrary/IMediaLibrary.h>
 #include <medialibrary/IAlbum.h>
 #include <medialibrary/Types.h>
@@ -59,7 +62,12 @@ class MCMediaLib : public QObject
     Q_OBJECT
 
 public:
-    MCMediaLib(intf_thread_t *_p_intf, QQuickWidget* _qml_item, QObject *parent = nullptr);
+    MCMediaLib(
+        intf_thread_t *_p_intf,
+        QQuickWidget* _qml_item,
+        PLModel* _pl_model,
+        QObject *parent = nullptr
+    );
 
     Q_INVOKABLE QVariant hasPresentation();
     Q_INVOKABLE void backPresentation();
@@ -70,6 +78,7 @@ public:
     Q_INVOKABLE QVariant isNightMode();
     Q_INVOKABLE void toogleNightMode();
     Q_INVOKABLE void select(const int &item_id);
+    Q_INVOKABLE void addToPlaylist(const int &item_id);
     Q_INVOKABLE QVariant getPresObject();
     Q_INVOKABLE void selectSource(const QString &name );
     Q_INVOKABLE void sort(const QString &criteria );
@@ -84,6 +93,7 @@ private:
 
     intf_thread_t *p_intf;
     QQuickWidget *qmlItem;
+    PLModel* pl_model;
 
     bool m_gridView;
 

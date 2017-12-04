@@ -116,18 +116,30 @@ void PLModel::removeItem( int index )
 
     beginRemoveRows(QModelIndex(), index, index);
     {
+        // Doc at /src/playlist/item.c L.336
+        playlist_NodeDelete(
+            THEPL,
+            playlist_ItemGetByInput(
+                THEPL,
+                plitems.at(index)->getInputItem()
+            )
+        );
+
         plitems.removeAt(index);
     }
     endRemoveRows();
 }
 
-void PLModel::appendItem( playlist_item_t *item, int i_pl_itemid )
+void PLModel::appendItem( PLItem* item )
 {
     if( !item ) return;
 
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     {
-        plitems.append( new PLItem(item, i_pl_itemid) );
+        plitems.append( item );
+
+        // Doc at /src/playlist/item.c L.488
+        playlist_AddInput(THEPL, item->getInputItem(), false, true);
     }
     endInsertRows();
 }
@@ -139,16 +151,6 @@ PLItem* PLModel::getItem( const QModelIndex & index ) const
         return plitems.at(r);
     else
         return NULL;
-}
-
-int PLModel::getItemIndexFromPLId( int id )
-{
-    for (int i=0 ; i<plitems.size() ; i++)
-    {
-        if ( plitems.at(i)->getId() == id )
-            return i;
-    }
-    return -1;
 }
 
 

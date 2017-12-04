@@ -46,7 +46,10 @@ Loader {
                     console.log('Clicked on details : '+model.artist_name);
                     medialib.select( index );
                 }
-                onPlayClicked: console.log('Clicked on play : '+model.artist_name)
+                onPlayClicked: {
+                    console.log('Clicked on play : '+model.artist_name);
+                    medialib.addToPlaylist(index);
+                }
             }
 
             ScrollBar.vertical: ScrollBar { }

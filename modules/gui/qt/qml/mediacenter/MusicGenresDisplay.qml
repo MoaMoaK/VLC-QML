@@ -43,7 +43,10 @@ Loader {
                     console.log('Clicked on details : '+model.genre_name);
                     medialib.select( index );
                 }
-                onPlayClicked: console.log('Clicked on play : '+model.genre_name)
+                onPlayClicked: {
+                    console.log('Clicked on play : '+model.genre_name);
+                    medialib.addToPlaylist(index);
+                }
             }
 
             ScrollBar.vertical: ScrollBar { }

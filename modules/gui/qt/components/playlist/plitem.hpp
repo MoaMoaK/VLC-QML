@@ -3,26 +3,28 @@
 
 #include "qt.hpp"
 #include <qt5/QtCore/QString>
+#include "components/mediacenter/mlalbumtrack.hpp"
 
 
 class PLItem
 {
 public:
-    PLItem( playlist_item_t* _pl_item, int _pl_id );
+    PLItem( MLAlbumTrack* _item);
     QString getTitle();
     QString getName();
     QString getDuration();
 
+    input_item_t* getInputItem() { return inputItem; }
+
     void activate( playlist_t* pl );
 
-    int getId() { return pl_id; }
+private:
+    MLAlbumTrack* getItem() { return pl_item; }
 
 private:
-    playlist_item_t* getItem() { return pl_item; }
+    MLAlbumTrack* pl_item;
 
-private:
-    playlist_item_t* pl_item;
-    int pl_id;
+    input_item_t* inputItem;
 };
 
 #endif // PLITEM_HPP

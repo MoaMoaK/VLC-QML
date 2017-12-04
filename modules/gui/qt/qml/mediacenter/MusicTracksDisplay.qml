@@ -40,7 +40,10 @@ Loader {
                 name: model.track_title || "Unknown track"
 
                 onItemClicked: console.log('Clicked on details : '+model.track_title);
-                onPlayClicked: console.log('Clicked on play : '+model.track_title)
+                onPlayClicked: {
+                    console.log('Clicked on play : '+model.track_title);
+                    medialib.addToPlaylist(index);
+                }
             }
 
             ScrollBar.vertical: ScrollBar { }

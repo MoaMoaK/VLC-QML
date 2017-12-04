@@ -270,7 +270,7 @@ void MCModel::activateItem( MCItem* item )
     vlc_playlist_locker pl_lock( THEPL );
 
     playlist_item_t *p_item = playlist_ItemGetById( p_playlist, item->i_playlist_id );
-    getPLModel()->appendItem(p_item, item->i_playlist_id);
+//    getPLModel()->appendItem(p_item, item->i_playlist_id);
 }
 
 /* Convenient overloaded private version of activateItem
