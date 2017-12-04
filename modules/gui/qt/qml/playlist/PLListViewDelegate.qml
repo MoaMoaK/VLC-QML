@@ -25,18 +25,12 @@ Row {
         fillMode: Image.PreserveAspectFit
 
         MouseArea {
+            id: delete_mouseArea
+
             anchors.fill: parent
 
             onClicked: { remove(); }
             hoverEnabled: true
-            onEntered: {
-                bg.color = "#CC0000"
-                textInfo.color = "#FFFFFF"
-            }
-            onExited: {
-                bg.color = cur ? "#CCCCCC" : "#FFFFFF"
-                textInfo.color = "#000000"
-            }
         }
     }
 
@@ -46,7 +40,15 @@ Row {
         width : parent.width - removeButton.width
         height:  textInfo.height
 
-        color: cur ? "#CCCCCC" : "#FFFFFF"
+        color: delete_mouseArea.containsMouse ? (
+            "#CC0000"
+        ) : (
+            medialib.isNightMode() ? (
+                hover_mouseArea.containsMouse ? vlc_style.hoverBgColor_nightmode : vlc_style.bgColor_nightmode
+            ) : (
+                hover_mouseArea.containsMouse ? vlc_style.hoverBgColor_daymode : vlc_style.bgColor_daymode
+            )
+        )
 
         /* Title/name of the item */
         Text {
@@ -55,18 +57,19 @@ Row {
             x: 10
 
             text: duration ? '[' + duration + '] ' + (title ? title : "") : (title ? title : "")
+            color: delete_mouseArea.containsMouse ? (
+                "#FFFFFF"
+            ) : (
+                medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
+            )
         }
 
         MouseArea {
+            id: hover_mouseArea
+
             anchors.fill: parent
 
             hoverEnabled: true
-            onEntered: {
-                parent.color = cur ? "#BBBBBB" : "#EEEEEE"
-            }
-            onExited: {
-                parent.color = cur ? "#CCCCCC" : "#FFFFFF"
-            }
             onClicked: { singleClick(); }
             onDoubleClicked: { doubleClick(); }
         }

@@ -6,13 +6,25 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
-Item {
+Rectangle {
     id: plDisplay
 
     property int default_width: 300
-    property alias pl: listView.model
+
+    // Force to recalculate the colors
+    function changedNightMode() {
+        color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
+        reloadData();
+    }
+
+    // Force the data inside the listview to de reloaded
+    function reloadData() {
+        listView.model = [];
+        listView.model = playlist;
+    }
 
     width: default_width
+    color: medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
 
     /* Button to show/hide the playlist */
     Image {
@@ -39,6 +51,8 @@ Item {
         height: parent.height
         width: parent.width
 
+        model: playlist
+
         delegate: PLListViewDelegate {
             function singleClick() { }
             function doubleClick() { model.activate_item = 1 }
@@ -52,7 +66,7 @@ Item {
         ScrollBar.vertical: ScrollBar { }
     }
 
-    /* Hiding of the playlist animation */
+    /* Hiding animation of the playlist */
     PropertyAnimation {
         id: closeAnimation
 
@@ -63,7 +77,7 @@ Item {
         easing.type: Easing.InOutCubic
     }
 
-    /* Showing of the playlist animation */
+    /* Showing animation of the playlist */
     PropertyAnimation {
         id: openAnimation
 

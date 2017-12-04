@@ -20,6 +20,7 @@ Item {
         sourcesBanner.changedNightMode();
         subSourcesBanner.changedNightMode();
         mcDisplay.changedNightMode();
+        plDisplay.changedNightMode();
     }
     function reloadPresentation() { mcDisplay.reloadPresentation(); }
 
@@ -90,12 +91,13 @@ Item {
 
         /* Playlist */
         PL.PLDisplay {
+            id: plDisplay
+
             z: 20
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Layout.maximumWidth: 400
 
-            pl: playlist
             default_width: 300
         }
     }
