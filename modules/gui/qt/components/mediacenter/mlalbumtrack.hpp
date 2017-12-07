@@ -21,6 +21,7 @@ public:
     MLAlbumTrack( medialibrary::MediaPtr _data, QObject *parent = nullptr);
 
     Q_INVOKABLE QString getTitle() const;
+    Q_INVOKABLE QString getAlbumTitle() const;
     Q_INVOKABLE QString getCover() const;
     Q_INVOKABLE QString getTrackNumber() const;
     Q_INVOKABLE QString getDuration() const;
@@ -34,6 +35,7 @@ public:
 
 private:
     QString title;
+    QString albumTitle;
     QString cover;
     unsigned int trackNumber;
     int64_t duration;

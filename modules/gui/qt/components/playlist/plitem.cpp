@@ -16,6 +16,11 @@ QString PLItem::getTitle()
     return pl_item->getTitle();
 }
 
+QString PLItem::getAlbumTitle()
+{
+    return pl_item->getAlbumTitle();
+}
+
 QString PLItem::getName()
 {
     return QString( "plop" );
@@ -24,6 +29,11 @@ QString PLItem::getName()
 QString PLItem::getDuration()
 {
     return pl_item->getDuration();
+}
+
+QString PLItem::getCover()
+{
+    return pl_item->getCover();
 }
 
 void PLItem::activate( playlist_t *pl )

@@ -45,25 +45,43 @@ Rectangle {
     }
 
     /* List of items in the playlist */
-    ListView {
+    PlaylistListView {
         id: listView
 
         height: parent.height
         width: parent.width
 
+        vertSpace: 2
+        horiSpace: 5
         model: playlist
-
-        delegate: PLListViewDelegate {
+        dataFunc: function( elt ) { return elt.album_title; }
+        delegate: PLItem {
             function singleClick() { }
-            function doubleClick() { model.activate_item = 1 }
-            function remove() { model.remove_item = 1 }
+            function doubleClick() { playlist.play_item(currentIndex) }
+            function remove() { playlist.remove_item(currentIndex) }
 
             cur: model.current
             title: model.title
             duration: model.duration
         }
+        delegateGrouped: PLItem {
+            function singleClick() { }
+            function doubleClick() { playlist.play_item(currentIndex) }
+            function remove() { playlist.remove_item(currentIndex) }
 
-        ScrollBar.vertical: ScrollBar { }
+            cur: model.current
+            title: model.title
+            duration: model.duration
+        }
+        commonGrouped: Image {
+            width: vlc_style.cover_xsmall
+            height: vlc_style.cover_xsmall
+
+            fillMode: Image.PreserveAspectFit
+            source: model.cover
+        }
+
+        //ScrollBar.vertical: ScrollBar { }
     }
 
     /* Hiding animation of the playlist */

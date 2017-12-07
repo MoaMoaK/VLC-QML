@@ -506,7 +506,9 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/utils/ExpandGridViewRow.qml \
 	gui/qt/qml/utils/TracksDisplay.qml \
 	gui/qt/qml/utils/AlbumsDisplay.qml \
-	gui/qt/qml/playlist/PLListViewDelegate.qml \
+	gui/qt/qml/playlist/PLItem.qml \
+	gui/qt/qml/playlist/PlaylistGrouped.qml \
+	gui/qt/qml/playlist/PlaylistListView.qml \
 	gui/qt/qml/playlist/PLDisplay.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 

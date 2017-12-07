@@ -14,10 +14,10 @@
 
 enum PLModelRoles {
     TITLE_ROLE = Qt::UserRole + 1,
+    ALBUM_TITLE_ROLE,
     DURATION_ROLE,
-    CURRENT_ROLE,
-    ACTIVATE_ROLE,
-    REMOVE_ROLE
+    COVER_ROLE,
+    CURRENT_ROLE
 };
 
 class PLModel : public QAbstractListModel
@@ -30,7 +30,6 @@ public:
     /* Subclassing QAbstractListModel */
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    bool setData( const QModelIndex &index, const QVariant & value, int role = Qt::EditRole ) override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -38,6 +37,10 @@ public:
     /* Handling the playlist items */
     void removeItem(int index);
     void appendItem(PLItem* item);
+
+    Q_INVOKABLE QVariantMap get(int row);
+    Q_INVOKABLE void remove_item(int index);
+    Q_INVOKABLE void play_item(int index);
 
 private:
     PLItem* getItem(const QModelIndex &index ) const;

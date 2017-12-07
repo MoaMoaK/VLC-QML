@@ -4,7 +4,6 @@
 import QtQuick 2.0
 
 Row {
-
     property bool cur: false
     property string title
     property string duration
@@ -38,7 +37,7 @@ Row {
         id: bg
 
         width : parent.width - removeButton.width
-        height:  textInfo.height
+        height:  textInfo.implicitHeight
 
         color: delete_mouseArea.containsMouse ? (
             "#CC0000"

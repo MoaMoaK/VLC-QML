@@ -156,7 +156,9 @@
     </qresource>
     <qresource prefix="/playlist">
         <file alias="PLDisplay.qml">qml/playlist/PLDisplay.qml</file>
-        <file alias="PLListViewDelegate.qml">qml/playlist/PLListViewDelegate.qml</file>
+        <file alias="PlaylistGrouped.qml">qml/playlist/PlaylistGrouped.qml</file>
+        <file alias="PLItem.qml">qml/playlist/PLItem.qml</file>
+        <file alias="PlaylistListView.qml">qml/playlist/PlaylistListView.qml</file>
     </qresource>
     <qresource prefix="/mediacenter">
         <file alias="MCDisplay.qml">qml/mediacenter/MCDisplay.qml</file>

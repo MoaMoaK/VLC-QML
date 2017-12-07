@@ -11,8 +11,10 @@ class PLItem
 public:
     PLItem( MLAlbumTrack* _item);
     QString getTitle();
+    QString getAlbumTitle();
     QString getName();
     QString getDuration();
+    QString getCover();
 
     input_item_t* getInputItem() { return inputItem; }
 

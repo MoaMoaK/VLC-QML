@@ -3,10 +3,12 @@
 MLAlbumTrack::MLAlbumTrack(QObject *parent) : MLItem(parent)
 {
     data = NULL;
-    title = nullptr;
+    title = QString();
+    cover = QString();
+    albumTitle = QString();
     trackNumber = 0;
     duration = 0;
-    mrl = nullptr;
+    mrl = QString();
 }
 
 MLAlbumTrack::MLAlbumTrack(medialibrary::MediaPtr _data, QObject *parent ):
@@ -15,9 +17,15 @@ MLAlbumTrack::MLAlbumTrack(medialibrary::MediaPtr _data, QObject *parent ):
     data = _data;
     title = QString( _data->title().c_str() );
     if (_data->subType() == medialibrary::IMedia::SubType::AlbumTrack)
+    {
+        albumTitle = QString ( _data->albumTrack()->album()->title().c_str() );
         cover = QString( _data->albumTrack()->album()->artworkMrl().c_str() );
+    }
     else
+    {
+        albumTitle = QString();
         cover = QString();
+    }
     trackNumber = _data->albumTrack()->trackNumber();
     duration = _data->duration();
     mrl = QString( _data->files()[0]->mrl().c_str() );
@@ -26,6 +34,11 @@ MLAlbumTrack::MLAlbumTrack(medialibrary::MediaPtr _data, QObject *parent ):
 QString MLAlbumTrack::getTitle() const
 {
     return title;
+}
+
+QString MLAlbumTrack::getAlbumTitle() const
+{
+    return albumTitle;
 }
 
 QString MLAlbumTrack::getCover() const

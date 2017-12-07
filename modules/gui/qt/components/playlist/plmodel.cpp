@@ -28,34 +28,6 @@ int PLModel::rowCount(const QModelIndex &parent) const
     return plitems.count();
 }
 
-bool PLModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (!index.isValid())
-        return false;
-
-    switch (role) {
-    case ACTIVATE_ROLE:
-    {
-        PLItem *plitem = getItem(index);
-        if (!plitem) return false;
-
-        plitem->activate( THEPL );
-
-        return true;
-    }
-    case REMOVE_ROLE:
-    {
-        if( !index.isValid() ) return false;
-        removeItem( index.row() );
-        return true;
-    }
-    default:
-        return false;
-    }
-
-}
-
-
 QVariant PLModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
@@ -73,12 +45,26 @@ QVariant PLModel::data(const QModelIndex &index, int role) const
         else
             return QVariant( item->getName() );
     }
+    case ALBUM_TITLE_ROLE :
+    {
+        PLItem *item = getItem(index);
+
+        if (!item) return QVariant();
+        return QVariant( item->getAlbumTitle() );
+    }
     case DURATION_ROLE :
     {
         PLItem *item = getItem(index);
 
         if (!item) return QVariant();
         return QVariant( item->getDuration() );
+    }
+    case COVER_ROLE :
+    {
+        PLItem *item = getItem(index);
+
+        if (!item) return QVariant();
+        return QVariant( item->getCover() );
     }
     case CURRENT_ROLE :
         return QVariant( false );
@@ -95,10 +81,10 @@ QHash<int, QByteArray> PLModel::roleNames() const
     roles[Qt::DecorationRole] = "decoration";
     roles[Qt::BackgroundRole] = "background";
     roles[TITLE_ROLE] = "title";
+    roles[ALBUM_TITLE_ROLE] = "album_title";
     roles[DURATION_ROLE] = "duration";
+    roles[COVER_ROLE] = "cover";
     roles[CURRENT_ROLE] = "current";
-    roles[ACTIVATE_ROLE] = "activate_item";
-    roles[REMOVE_ROLE] = "remove_item";
     return roles;
 }
 
@@ -114,7 +100,10 @@ void PLModel::removeItem( int index )
 {
     if( index < 0 || index > rowCount() ) return;
 
-    beginRemoveRows(QModelIndex(), index, index);
+    // Need a full-model reset, else only the removed row will
+    // be reloaded in views and if this items leaves a group with
+    // only one element it can't be detected
+    beginResetModel();
     {
         // Doc at /src/playlist/item.c L.336
         playlist_NodeDelete(
@@ -127,23 +116,27 @@ void PLModel::removeItem( int index )
 
         plitems.removeAt(index);
     }
-    endRemoveRows();
+    endResetModel();
 }
 
 void PLModel::appendItem( PLItem* item )
 {
     if( !item ) return;
 
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    // Need a full-model reset, else only the added row will
+    // be reloaded in views and if this items forms a new group,
+    // it can't be detected
+    beginResetModel();
     {
         plitems.append( item );
 
         // Doc at /src/playlist/item.c L.488
         playlist_AddInput(THEPL, item->getInputItem(), false, true);
     }
-    endInsertRows();
+    endResetModel();
 }
 
+/* Retrieve the item at the given index */
 PLItem* PLModel::getItem( const QModelIndex & index ) const
 {
     int r = index.row();
@@ -152,5 +145,36 @@ PLItem* PLModel::getItem( const QModelIndex & index ) const
     else
         return NULL;
 }
+
+/**** Invokable functions ****/
+
+/* Convenient function that create an object that can be passed to QML
+ * and acts like a standard model item */
+QVariantMap PLModel::get(int row) {
+    QHash<int,QByteArray> names = roleNames();
+    QHashIterator<int, QByteArray> i(names);
+    QVariantMap res;
+    while (i.hasNext()) {
+        i.next();
+        QModelIndex idx = index(row, 0);
+        QVariant data = idx.data(i.key());
+        res[i.value()] = data;
+    }
+    return res;
+}
+
+/* Play the item at index given */
+void PLModel::play_item(int index)
+{
+    if (index < 0 || index >= rowCount()) return;
+    plitems.at(index)->activate( THEPL );
+}
+
+/* Remove the item at index given from the playlist */
+void PLModel::remove_item(int index)
+{
+    removeItem( index );
+}
+
 
 
