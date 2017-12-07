@@ -108,15 +108,26 @@ Flickable{
 
                 Component{
                     id: group
-                    PlaylistGrouped {
-                        // a component displaying a full group of item
-                        model: root.model
-                        indexFirst: index
-                        indexLast: endOfGroup(index)
-                        delegateGrouped: root.delegateGrouped
-                        commonGrouped: root.commonGrouped
-                        vertSpace: root.vertSpace
-                        horiSpace: root.horiSpace
+                    Column {
+                        spacing: vertSpace
+
+                        PlaylistGrouped {
+                            // a component displaying a full group of item
+                            width: parent.width
+                            model: root.model
+                            indexFirst: index
+                            indexLast: endOfGroup(index)
+                            delegateGrouped: root.delegateGrouped
+                            commonGrouped: root.commonGrouped
+                            vertSpace: root.vertSpace
+                            horiSpace: root.horiSpace
+                        }
+
+                        Rectangle {
+                            height: 1
+                            width: parent.width
+                            color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
+                        }
                     }
                 }
             }

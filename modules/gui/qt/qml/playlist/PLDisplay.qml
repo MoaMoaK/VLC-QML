@@ -78,7 +78,7 @@ Rectangle {
             height: vlc_style.cover_xsmall
 
             fillMode: Image.PreserveAspectFit
-            source: model.cover
+            source: model.cover || "qrc:///noart.png"
         }
 
         ScrollBar.vertical: ScrollBar { }
