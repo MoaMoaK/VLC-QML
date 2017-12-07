@@ -76,6 +76,10 @@ Loader {
                     console.log("Clicked on : "+model.genre_name);
                     medialib.select( index );
                 }
+                onPlayClicked: {
+                    console.log('Clicked on play : '+model.genre_name);
+                    medialib.addToPlaylist(index);
+                }
             }
 
             ScrollBar.vertical: ScrollBar { }

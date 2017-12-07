@@ -39,7 +39,7 @@ Loader {
                 cover: Image { source: model.track_cover || "qrc:///noart.png" }
                 name: model.track_title || "Unknown track"
 
-                onItemClicked: console.log('Clicked on details : '+model.track_title);
+                onItemClicked: console.log('Clicked on details : '+model.track_title)
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.track_title);
                     medialib.addToPlaylist(index);
@@ -69,6 +69,10 @@ Loader {
                 }
 
                 onItemClicked: console.log("Clicked on : "+model.track_title)
+                onPlayClicked: {
+                    console.log('Clicked on play : '+model.track_title);
+                    medialib.addToPlaylist(index);
+                }
             }
 
             ScrollBar.vertical: ScrollBar { }

@@ -110,6 +110,11 @@ Loader {
 
                     tracks: album_tracks
                 }
+
+                onPlayClicked: {
+                    console.log('Clicked on play : '+model.album_title);
+                    medialib.addToPlaylist(index);
+                }
             }
 
             ScrollBar.vertical: ScrollBar { }
