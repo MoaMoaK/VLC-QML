@@ -69,12 +69,6 @@ Column {
             Item {
                 height: cellHeight
                 width: cellWidth
-                
-                Loader {
-                    sourceComponent: root.delegate
-                    property var model: get_item(beginIndex + index)
-                    property int currentIndex: beginIndex + index
-                }
 
                 MouseArea {
                     anchors.fill: parent
@@ -83,6 +77,12 @@ Column {
                         toggleExpand(beginIndex + index);
                         mouse.accepted = false;
                     }
+                }
+                
+                Loader {
+                    sourceComponent: root.delegate
+                    property var model: get_item(beginIndex + index)
+                    property int currentIndex: beginIndex + index
                 }
             }
         }

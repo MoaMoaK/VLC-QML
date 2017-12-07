@@ -1,5 +1,5 @@
 /*********************************************************************
- * The List View for the playlist (can displayed groups of items)
+ * The List View for the playlist (can display groups of items)
  *********************************************************************/
 
 import QtQuick 2.0
@@ -11,8 +11,8 @@ Column {
 
     // The List/AbstractListModel of items to display
     property var model: []
-    // A function that returns an object to compare to
-    // determine if two items are in the same group
+    // A function that returns an object to compare (used
+    // to determine if two items are in the same group)
     property var dataFunc: function( elt ) { return elt; }
     // The component used when item is not grouped
     property Component delegate: Item {}
