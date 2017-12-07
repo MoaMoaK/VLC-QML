@@ -4,7 +4,7 @@
 
 import QtQuick 2.0
 
-Column {
+Flickable{
     id: root
 
     /* Parameters */
@@ -82,37 +82,42 @@ Column {
     }
 
 
+    contentHeight: main_col.height
+    contentWidth: width
 
-    spacing: vertSpace
+    Column {
+        id: main_col
+        spacing: vertSpace
 
-    Repeater {
-        id: repeater
-        model : root.model
+        Repeater {
+            id: repeater
+            model : root.model
 
 
-        Loader {
-            // Choose either a simple item, a group of items, or nothing
-            width: root.width
-            property var model: get_item( index )
-            property int currentIndex: index
-            sourceComponent : {
-                if (index < 0 || index > get_nb()) return undefined; // index is wrong (happens when model is resetting)
-                if (groupedWithPrev( index )) return undefined; // item part of a group but not first one
-                if (groupedWithNext( index )) return group; // first item of a group
-                return delegate; // item not part of a group
-            }
+            Loader {
+                // Choose either a simple item, a group of items, or nothing
+                width: root.width
+                property var model: get_item( index )
+                property int currentIndex: index
+                sourceComponent : {
+                    if (index < 0 || index > get_nb()) return undefined; // index is wrong (happens when model is resetting)
+                    if (groupedWithPrev( index )) return undefined; // item part of a group but not first one
+                    if (groupedWithNext( index )) return group; // first item of a group
+                    return delegate; // item not part of a group
+                }
 
-            Component{
-                id: group
-                PlaylistGrouped {
-                    // a component displaying a full group of item
-                    model: root.model
-                    indexFirst: index
-                    indexLast: endOfGroup(index)
-                    delegateGrouped: root.delegateGrouped
-                    commonGrouped: root.commonGrouped
-                    vertSpace: root.vertSpace
-                    horiSpace: root.horiSpace
+                Component{
+                    id: group
+                    PlaylistGrouped {
+                        // a component displaying a full group of item
+                        model: root.model
+                        indexFirst: index
+                        indexLast: endOfGroup(index)
+                        delegateGrouped: root.delegateGrouped
+                        commonGrouped: root.commonGrouped
+                        vertSpace: root.vertSpace
+                        horiSpace: root.horiSpace
+                    }
                 }
             }
         }

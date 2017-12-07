@@ -81,7 +81,7 @@ Rectangle {
             source: model.cover
         }
 
-        //ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar { }
     }
 
     /* Hiding animation of the playlist */
