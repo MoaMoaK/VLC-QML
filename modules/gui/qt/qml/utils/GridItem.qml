@@ -72,21 +72,6 @@ MLItem {
                     anchors.bottomMargin: vlc_style.margin_xsmall
                     spacing: vlc_style.margin_xsmall
 
-                    /* A play button visible when hovered */
-                    Image {
-                        height: vlc_style.icon_normal
-                        width: vlc_style.icon_normal
-                        fillMode: Image.PreserveAspectFit
-
-                        visible: root.active()
-                        source: "qrc:///toolbar/play_b"
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: root.playClicked()
-                        }
-                    }
-
                     /* A addToPlaylist button visible when hovered */
                     Image {
                         height: vlc_style.icon_normal
@@ -99,6 +84,21 @@ MLItem {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: root.addToPlaylistClicked()
+                        }
+                    }
+
+                    /* A play button visible when hovered */
+                    Image {
+                        height: vlc_style.icon_normal
+                        width: vlc_style.icon_normal
+                        fillMode: Image.PreserveAspectFit
+
+                        visible: root.active()
+                        source: "qrc:///toolbar/play_b"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: root.playClicked()
                         }
                     }
                 }
