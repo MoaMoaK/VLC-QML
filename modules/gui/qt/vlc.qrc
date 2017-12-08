@@ -165,7 +165,6 @@
         <file alias="Presentation.qml">qml/mediacenter/Presentation.qml</file>
         <file alias="MusicAlbumsDisplay.qml">qml/mediacenter/MusicAlbumsDisplay.qml</file>
         <file alias="MusicAlbumsGridExpandDelegate.qml">qml/mediacenter/MusicAlbumsGridExpandDelegate.qml</file>
-        <file alias="MusicAlbumsListDelegate.qml">qml/mediacenter/MusicAlbumsListDelegate.qml</file>
         <file alias="MusicArtistsDisplay.qml">qml/mediacenter/MusicArtistsDisplay.qml</file>
         <file alias="MusicGenresDisplay.qml">qml/mediacenter/MusicGenresDisplay.qml</file>
         <file alias="MusicTracksDisplay.qml">qml/mediacenter/MusicTracksDisplay.qml</file>
