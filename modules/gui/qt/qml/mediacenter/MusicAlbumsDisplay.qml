@@ -113,6 +113,7 @@ Loader {
                     width: parent.width
 
                     tracks: album_tracks
+                    parentIndex: index
                 }
 
                 onPlayClicked: {

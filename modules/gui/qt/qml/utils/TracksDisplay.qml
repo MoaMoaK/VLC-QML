@@ -7,6 +7,7 @@ import QtQuick.Controls 2.0
 
 Item {
     property var tracks: []
+    property int parentIndex: 0
 
     ListView {
         id: expand_track_id
@@ -16,28 +17,24 @@ Item {
         width: parent.width - x
 
         model: tracks
-        delegate: Rectangle {
-            height: expand_track_name_id.font.pixelSize + 2
-            width: expand_track_id.width
+        delegate: ListItem {
+            height: vlc_style.heightBar_small
+            width: parent.width
 
-            color : medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode
-
-            /* The infos about the track */
-            // Format : [track_number] title - duration
-            Text {
-                id: expand_track_name_id
-
-                text: "["+model.track_number+"] "+model.track_title+" - "+model.track_duration
+            line1: Text{
+                text: (model.track_title || "Unknown track")+" - "+model.track_duration
+                elide: Text.ElideRight
                 color: medialib.isNightMode() ? vlc_style.textColor_nightmode : vlc_style.textColor_daymode
             }
 
-            MouseArea {
-                anchors.fill: parent
-
-                hoverEnabled: true
-                onEntered: { parent.color = medialib.isNightMode() ? vlc_style.hoverBgColor_nightmode : vlc_style.hoverBgColor_daymode }
-                onExited: { parent.color = medialib.isNightMode() ? vlc_style.bgColor_nightmode : vlc_style.bgColor_daymode }
-                onClicked: { console.log( "clicked : "+model.track_title ) }
+            onItemClicked: console.log("Clicked on : "+model.track_title)
+            onPlayClicked: {
+                console.log('Clicked on play : '+model.track_title);
+                medialib.addAndPlay(parentIndex, index);
+            }
+            onAddToPlaylistClicked: {
+                console.log('Clicked on addToPlaylist : '+model.track_title);
+                medialib.addToPlaylist(parentIndex, index);
             }
         }
 

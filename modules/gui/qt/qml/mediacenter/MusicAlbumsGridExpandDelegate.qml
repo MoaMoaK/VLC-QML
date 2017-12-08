@@ -57,6 +57,7 @@ Row {
             width: expand_infos_id.width - x
 
             tracks: model.album_tracks
+            parentIndex: currentIndex
         }
     }
 }

@@ -195,6 +195,27 @@ void MCMediaLib::addToPlaylist( const int &item_id )
     }
 }
 
+// A specific sub-item has been asked to be added to the playlist
+void MCMediaLib::addToPlaylist( const int &item_id, const int &subitem_id )
+{
+    if (item_id >= 0 && item_id <= current_obj->count())
+    {
+        MLItem* selected_item = current_obj->at(item_id);
+        QList<MLItem*>* subitems = selected_item->getDetailsObjects(current_sort, is_desc);
+        if (subitem_id >= 0 && subitem_id <= subitems->count())
+        {
+            MLItem* selected_subitem = subitems->at(subitem_id);
+            QList<MLAlbumTrack*>* tracks = selected_subitem->getPLTracks();
+
+            for (int i=0 ; i<tracks->size() ; i++)
+            {
+                PLItem* pl_item = new PLItem(tracks->at(i));
+                pl_model->appendItem(pl_item, false);
+            }
+        }
+    }
+}
+
 // A specific item has been asked to be played,
 // so it's added to the playlist and played
 void MCMediaLib::addAndPlay( const int &item_id )
@@ -208,6 +229,28 @@ void MCMediaLib::addAndPlay( const int &item_id )
         {
             PLItem* pl_item = new PLItem(tracks->at(i));
             pl_model->appendItem(pl_item, i==0);
+        }
+    }
+}
+
+// A specific sub-item has been asked to be played,
+// so it's added to the playlist and played
+void MCMediaLib::addAndPlay( const int &item_id, const int &subitem_id )
+{
+    if (item_id >= 0 && item_id <= current_obj->count())
+    {
+        MLItem* selected_item = current_obj->at(item_id);
+        QList<MLItem*>* subitems = selected_item->getDetailsObjects(current_sort, is_desc);
+        if (subitem_id >= 0 && subitem_id <= subitems->count())
+        {
+            MLItem* selected_subitem = subitems->at(subitem_id);
+            QList<MLAlbumTrack*>* tracks = selected_subitem->getPLTracks();
+
+            for (int i=0 ; i<tracks->size() ; i++)
+            {
+                PLItem* pl_item = new PLItem(tracks->at(i));
+                pl_model->appendItem(pl_item, i==0);
+            }
         }
     }
 }

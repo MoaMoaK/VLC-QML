@@ -79,7 +79,9 @@ public:
     Q_INVOKABLE void toogleNightMode();
     Q_INVOKABLE void select(const int &item_id);
     Q_INVOKABLE void addToPlaylist(const int &item_id);
+    Q_INVOKABLE void addToPlaylist(const int &item_id, const int &subitem_id);
     Q_INVOKABLE void addAndPlay(const int &item_id);
+    Q_INVOKABLE void addAndPlay(const int &item_id, const int &subitem_id);
     Q_INVOKABLE QVariant getPresObject();
     Q_INVOKABLE void selectSource(const QString &name );
     Q_INVOKABLE void sort(const QString &criteria );
