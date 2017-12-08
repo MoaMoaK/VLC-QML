@@ -55,24 +55,8 @@ Rectangle {
         horiSpace: 5
         model: playlist
         dataFunc: function( elt ) { return elt.album_title; }
-        delegate: PLItem {
-            function singleClick() { }
-            function doubleClick() { playlist.play_item(currentIndex) }
-            function remove() { playlist.remove_item(currentIndex) }
-
-            cur: model !== undefined ? model.current : false
-            title: model !== undefined ? model.title : ""
-            duration: model !== undefined ? model.duration : ""
-        }
-        delegateGrouped: PLItem {
-            function singleClick() { }
-            function doubleClick() { playlist.play_item(currentIndex) }
-            function remove() { playlist.remove_item(currentIndex) }
-
-            cur: model !== undefined ? model.current : false
-            title: model !== undefined ? model.title : ""
-            duration: model !== undefined ? model.duration : ""
-        }
+        delegate: PLItem {}
+        delegateGrouped: PLItem {}
         commonGrouped: Image {
             width: vlc_style.cover_xsmall
             height: vlc_style.cover_xsmall

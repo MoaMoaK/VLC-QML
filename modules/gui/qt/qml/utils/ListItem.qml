@@ -19,7 +19,7 @@ MLItem {
 
         anchors.fill: parent
 
-        spacing: vlc_style.margin_smalle
+        spacing: vlc_style.margin_small
 
         /* The cover */
         Loader {

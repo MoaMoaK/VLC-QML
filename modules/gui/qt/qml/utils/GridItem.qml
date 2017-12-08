@@ -15,7 +15,7 @@ MLItem {
     signal playClicked
     signal addToPlaylistClicked
 
-    hovered: playbutton_mousearea.containsMouse || name_tooltip.containsMouse
+    hovered: name_tooltip.containsMouse
 
     Column {
         id: column
@@ -56,46 +56,53 @@ MLItem {
                 }
             }
 
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: vlc_style.margin_xsmall
-                spacing: vlc_style.margin_xsmall
+            Rectangle {
+                anchors.fill: parent
 
-                /* A play button visible when hovered */
-                Image {
-                    height: vlc_style.icon_normal
-                    width: vlc_style.icon_normal
-                    fillMode: Image.PreserveAspectFit
-
-                    visible: root.active()
-                    source: "qrc:///toolbar/play_b"
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: root.playClicked()
-                    }
+                visible: root.active()
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#00FF950D" }
+                    GradientStop { position: 0.5; color: "#A0FF950D" }
+                    GradientStop { position: 1.0; color: "#FFFF950D" }
                 }
 
-                /* A addToPlaylist button visible when hovered */
-                Image {
-                    height: vlc_style.icon_normal
-                    width: vlc_style.icon_normal
-                    fillMode: Image.PreserveAspectFit
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: vlc_style.margin_xsmall
+                    spacing: vlc_style.margin_xsmall
 
-                    visible: root.active()
-                    source: "qrc:///buttons/playlist/playlist_add"
+                    /* A play button visible when hovered */
+                    Image {
+                        height: vlc_style.icon_normal
+                        width: vlc_style.icon_normal
+                        fillMode: Image.PreserveAspectFit
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: root.addToPlaylistClicked()
+                        visible: root.active()
+                        source: "qrc:///toolbar/play_b"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: root.playClicked()
+                        }
+                    }
+
+                    /* A addToPlaylist button visible when hovered */
+                    Image {
+                        height: vlc_style.icon_normal
+                        width: vlc_style.icon_normal
+                        fillMode: Image.PreserveAspectFit
+
+                        visible: root.active()
+                        source: "qrc:///buttons/playlist/playlist_add"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: root.addToPlaylistClicked()
+                        }
                     }
                 }
             }
-
-
-
-
         }
 
         /* A section with the infos about the album */
