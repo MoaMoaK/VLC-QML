@@ -61,9 +61,9 @@ MLItem {
 
                 visible: root.active()
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: "#00FF950D" }
-                    GradientStop { position: 0.5; color: "#A0FF950D" }
-                    GradientStop { position: 1.0; color: "#FFFF950D" }
+                    GradientStop { position: 0.0; color: "#00"+vlc_style.vlc_orange.slice(1) }
+                    GradientStop { position: 0.5; color: "#A0"+vlc_style.vlc_orange.slice(1) }
+                    GradientStop { position: 1.0; color: "#FF"+vlc_style.vlc_orange.slice(1) }
                 }
 
                 Row {
