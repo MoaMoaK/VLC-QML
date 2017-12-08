@@ -60,6 +60,8 @@ Flickable{
 
     // Return the index of the last item in indexFirst's group
     function endOfGroup(indexFirst) {
+        if (indexFirst <0 || indexFirst>get_nb()) return indexFirst;
+
         var indexCur = indexFirst + 1;
         var dataFirst = dataFunc(get_item(indexFirst));
         while (indexCur < get_nb() && root.dataFunc(get_item(indexCur)) === dataFirst) {

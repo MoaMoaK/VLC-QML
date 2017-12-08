@@ -17,6 +17,8 @@ Row {
     property alias horiSpace: root.spacing
 
     function get_item(i) {
+        if (i<0 || i> get_nb() )
+            return undefined;
         if (model.get && model.get(i))
             return model.get(i);
         if (model.itemData)
@@ -28,9 +30,9 @@ Row {
     }
 
     Loader {
-        property var model: get_item( indexFirst )
-        property int currentIndex: indexFirst
         sourceComponent: commonGrouped
+        property int currentIndex: indexFirst
+        property var model: get_item( indexFirst )
     }
 
     Column {

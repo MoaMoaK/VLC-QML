@@ -9,7 +9,6 @@ Row {
     property string duration
 
     height: bg.height
-    width: parent.width
 
     spacing: 0
 

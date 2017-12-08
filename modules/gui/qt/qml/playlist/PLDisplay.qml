@@ -60,25 +60,25 @@ Rectangle {
             function doubleClick() { playlist.play_item(currentIndex) }
             function remove() { playlist.remove_item(currentIndex) }
 
-            cur: model.current
-            title: model.title
-            duration: model.duration
+            cur: model !== undefined ? model.current : false
+            title: model !== undefined ? model.title : ""
+            duration: model !== undefined ? model.duration : ""
         }
         delegateGrouped: PLItem {
             function singleClick() { }
             function doubleClick() { playlist.play_item(currentIndex) }
             function remove() { playlist.remove_item(currentIndex) }
 
-            cur: model.current
-            title: model.title
-            duration: model.duration
+            cur: model !== undefined ? model.current : false
+            title: model !== undefined ? model.title : ""
+            duration: model !== undefined ? model.duration : ""
         }
         commonGrouped: Image {
             width: vlc_style.cover_xsmall
             height: vlc_style.cover_xsmall
 
             fillMode: Image.PreserveAspectFit
-            source: model.cover || "qrc:///noart.png"
+            source: model !== undefined ? (model.cover || "qrc:///noart.png") : "qrc:///noart.png"
         }
 
         ScrollBar.vertical: ScrollBar { }
