@@ -36,7 +36,7 @@ public:
 
     /* Handling the playlist items */
     void removeItem(int index);
-    void appendItem(PLItem* item);
+    void appendItem(PLItem* item, bool play);
 
     Q_INVOKABLE QVariantMap get(int row);
     Q_INVOKABLE void remove_item(int index);

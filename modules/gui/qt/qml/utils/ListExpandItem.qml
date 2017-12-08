@@ -13,6 +13,7 @@ MLItem {
     property Component expand: Item{}
 
     signal playClicked
+    signal addToPlaylistClicked
 
     onItemClicked: root.state = root.state === "expanded" ? "" : "expanded"
     force_disable: root.state === "expanded"
@@ -33,7 +34,7 @@ MLItem {
 
         Column {
             height: parent.height
-            width: parent.width - cover_loader.width - parent.spacing*2 - add_to_playlist_icon.width - add_to_playlist_icon.anchors.rightMargin
+            width: parent.width - cover_loader.width - parent.spacing*3 - add_to_playlist_icon.width - add_and_play_icon.anchors.rightMargin - add_and_play_icon.width
 
             /* Line 1 */
             Loader {
@@ -69,12 +70,30 @@ MLItem {
             id: add_to_playlist_icon
 
             anchors.verticalCenter: parent.verticalCenter
-            anchors.rightMargin: vlc_style.margin_small
             width: vlc_style.icon_small
             height: vlc_style.icon_small
 
             visible: root.active()
             source: "qrc:///buttons/playlist/playlist_add"
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: root.addToPlaylistClicked()
+            }
+        }
+
+        /* The icon to add to playlist and play */
+        Image {
+            id: add_and_play_icon
+
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: vlc_style.margin_small
+            width: vlc_style.icon_small
+            height: vlc_style.icon_small
+
+            visible: root.active()
+            source: "qrc:///toolbar/play_b"
 
             MouseArea {
                 anchors.fill: parent

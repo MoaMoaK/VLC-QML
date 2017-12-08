@@ -45,6 +45,10 @@ Loader {
                 }
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.genre_name);
+                    medialib.addAndPlay(index)
+                }
+                onAddToPlaylistClicked: {
+                    console.log('Clicked on addToPlaylist : '+model.genre_name);
                     medialib.addToPlaylist(index);
                 }
             }
@@ -78,6 +82,10 @@ Loader {
                 }
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.genre_name);
+                    medialib.addAndPlay(index)
+                }
+                onAddToPlaylistClicked: {
+                    console.log('Clicked on addToPlaylist : '+model.genre_name);
                     medialib.addToPlaylist(index);
                 }
             }

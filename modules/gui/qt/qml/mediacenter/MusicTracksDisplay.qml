@@ -42,6 +42,10 @@ Loader {
                 onItemClicked: console.log('Clicked on details : '+model.track_title)
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.track_title);
+                    medialib.addAndPlay(index)
+                }
+                onAddToPlaylistClicked: {
+                    console.log('Clicked on addToPlaylist : '+model.track_title);
                     medialib.addToPlaylist(index);
                 }
             }
@@ -71,6 +75,10 @@ Loader {
                 onItemClicked: console.log("Clicked on : "+model.track_title)
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.track_title);
+                    medialib.addAndPlay(index)
+                }
+                onAddToPlaylistClicked: {
+                    console.log('Clicked on addToPlaylist : '+model.track_title);
                     medialib.addToPlaylist(index);
                 }
             }

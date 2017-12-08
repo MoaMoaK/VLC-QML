@@ -48,6 +48,10 @@ Loader {
                 }
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.artist_name);
+                    medialib.addAndPlay(index)
+                }
+                onAddToPlaylistClicked: {
+                    console.log('Clicked on addToPlaylist : '+model.artist_name);
                     medialib.addToPlaylist(index);
                 }
             }
@@ -86,6 +90,10 @@ Loader {
                 }
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.artist_name);
+                    medialib.addAndPlay(index)
+                }
+                onAddToPlaylistClicked: {
+                    console.log('Clicked on addToPlaylist : '+model.artist_name);
                     medialib.addToPlaylist(index);
                 }
             }

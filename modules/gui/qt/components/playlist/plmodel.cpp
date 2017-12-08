@@ -119,7 +119,7 @@ void PLModel::removeItem( int index )
     endResetModel();
 }
 
-void PLModel::appendItem( PLItem* item )
+void PLModel::appendItem( PLItem* item, bool play )
 {
     if( !item ) return;
 
@@ -131,7 +131,7 @@ void PLModel::appendItem( PLItem* item )
         plitems.append( item );
 
         // Doc at /src/playlist/item.c L.488
-        playlist_AddInput(THEPL, item->getInputItem(), false, true);
+        playlist_AddInput(THEPL, item->getInputItem(), play, true);
     }
     endResetModel();
 }

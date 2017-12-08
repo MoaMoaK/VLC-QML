@@ -51,8 +51,12 @@ Loader {
                 infos : model.album_duration + " - " + model.album_nb_tracks + " tracks"
 
                 onItemClicked : console.log('Clicked on details : '+model.album_title)
-                onPlayClicked : {
+                onPlayClicked: {
                     console.log('Clicked on play : '+model.album_title);
+                    medialib.addAndPlay(currentIndex)
+                }
+                onAddToPlaylistClicked : {
+                    console.log('Clicked on addToPlaylist : '+model.album_title);
                     medialib.addToPlaylist(currentIndex);
                 }
             }
@@ -113,6 +117,10 @@ Loader {
 
                 onPlayClicked: {
                     console.log('Clicked on play : '+model.album_title);
+                    medialib.addAndPlay(index)
+                }
+                onAddToPlaylistClicked: {
+                    console.log('Clicked on addToPlaylist : '+model.album_title);
                     medialib.addToPlaylist(index);
                 }
             }

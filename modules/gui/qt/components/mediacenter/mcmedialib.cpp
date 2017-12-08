@@ -190,7 +190,24 @@ void MCMediaLib::addToPlaylist( const int &item_id )
         for (int i=0 ; i<tracks->size() ; i++)
         {
             PLItem* pl_item = new PLItem(tracks->at(i));
-            pl_model->appendItem(pl_item);
+            pl_model->appendItem(pl_item, false);
+        }
+    }
+}
+
+// A specific item has been asked to be played,
+// so it's added to the playlist and played
+void MCMediaLib::addAndPlay( const int &item_id )
+{
+    if (item_id >= 0 && item_id <= current_obj->count())
+    {
+        MLItem* selected_item = current_obj->at(item_id);
+        QList<MLAlbumTrack*>* tracks = selected_item->getPLTracks();
+
+        for (int i=0 ; i<tracks->size() ; i++)
+        {
+            PLItem* pl_item = new PLItem(tracks->at(i));
+            pl_model->appendItem(pl_item, i==0);
         }
     }
 }

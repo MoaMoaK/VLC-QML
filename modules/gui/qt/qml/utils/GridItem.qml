@@ -13,6 +13,7 @@ MLItem {
     property string infos: ""
 
     signal playClicked
+    signal addToPlaylistClicked
 
     hovered: playbutton_mousearea.containsMouse || name_tooltip.containsMouse
 
@@ -55,35 +56,46 @@ MLItem {
                 }
             }
 
-            /* A play button appearing when hovering */
-            Rectangle {
-                id: playbutton
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: vlc_style.margin_xsmall
+                spacing: vlc_style.margin_xsmall
 
-                anchors.top: parent.top
-                anchors.right: parent.right
-                width: parent.width / 2
-                height: parent.width / 2
-
-                radius: Math.min( width, height )
-                opacity: 0
-                color: "#E1A244"
-
+                /* A play button visible when hovered */
                 Image {
-                    anchors.centerIn: parent
+                    height: vlc_style.icon_normal
+                    width: vlc_style.icon_normal
+                    fillMode: Image.PreserveAspectFit
 
+                    visible: root.active()
                     source: "qrc:///toolbar/play_b"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: root.playClicked()
+                    }
                 }
 
-                MouseArea{
-                    id: playbutton_mousearea
-                    anchors.fill: parent
+                /* A addToPlaylist button visible when hovered */
+                Image {
+                    height: vlc_style.icon_normal
+                    width: vlc_style.icon_normal
+                    fillMode: Image.PreserveAspectFit
 
-                    hoverEnabled: true
-                    onEntered: { parent.opacity = 0.7; }
-                    onExited: { parent.opacity = 0; }
-                    onClicked: root.playClicked()
+                    visible: root.active()
+                    source: "qrc:///buttons/playlist/playlist_add"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: root.addToPlaylistClicked()
+                    }
                 }
             }
+
+
+
+
         }
 
         /* A section with the infos about the album */
