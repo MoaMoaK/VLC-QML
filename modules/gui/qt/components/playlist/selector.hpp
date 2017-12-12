@@ -29,6 +29,8 @@
 # include "config.h"
 #endif
 
+#include <qt5/QtCore/Qt>
+
 #include "qt.hpp"
 #include "util/customwidgets.hpp" /* QFramelessButton */
 
@@ -116,18 +118,20 @@ class PLSelector: public QTreeWidget
 {
     Q_OBJECT
 public:
-    PLSelector( QWidget *p, intf_thread_t *_p_intf );
+    PLSelector( intf_thread_t *_p_intf, QWidget *p = nullptr );
     virtual ~PLSelector();
 
     void getCurrentItemInfos( int *type, bool *delayedSearch, QString *name );
     int getCurrentItemCategory();
 
+    Q_INVOKABLE void setSourceFromNum( const int req_num );
+
 protected:
-    void drawBranches ( QPainter *, const QRect &, const QModelIndex & ) const Q_DECL_OVERRIDE;
+//    void drawBranches ( QPainter *, const QRect &, const QModelIndex & ) const Q_DECL_OVERRIDE;
     void dragMoveEvent ( QDragMoveEvent * event ) Q_DECL_OVERRIDE;
     bool dropMimeData ( QTreeWidgetItem *, int, const QMimeData *, Qt::DropAction ) Q_DECL_OVERRIDE;
     QStringList mimeTypes () const Q_DECL_OVERRIDE;
-    void wheelEvent(QWheelEvent *e) Q_DECL_OVERRIDE;
+//    void wheelEvent(QWheelEvent *e) Q_DECL_OVERRIDE;
 
 private:
     void createItems();
@@ -135,9 +139,12 @@ private:
             bool drop = false, bool bold = false, QTreeWidgetItem* parentItem = 0 );
     PLSelItem * addPodcastItem( playlist_item_t *p_item );
 
+    QTreeWidgetItem* getItemFromNum( int num );
+    QTreeWidgetItem* visitTree( QTreeWidgetItem *item, int* num );
+
     PLSelItem* playlistItem;
 
-    void updateTotalDuration(PLSelItem*, const char*);
+//    void updateTotalDuration(PLSelItem*, const char*);
 
     inline PLSelItem * itemWidget( QTreeWidgetItem * );
 
@@ -150,13 +157,13 @@ private slots:
     void setSource( QTreeWidgetItem *item );
     void plItemAdded( int, int );
     void plItemRemoved( int );
-    void inputItemUpdate( input_item_t * );
+//    void inputItemUpdate( input_item_t * );
     void podcastAdd( PLSelItem* );
     void podcastRemove( PLSelItem* );
 
 signals:
     void categoryActivated( playlist_item_t *, bool );
-    void SDCategorySelected( bool );
+//    void SDCategorySelected( bool );
 };
 
 #endif

@@ -29,7 +29,7 @@
 #include "components/playlist/playlist.hpp"
 #include "components/playlist/standardpanel.hpp"  /* MainView */
 #include "components/playlist/selector.hpp"       /* PLSelector */
-#include "components/playlist/playlist_model.hpp" /* PLModel */
+#include "components/playlist/mediacenter_model.hpp" /* PLModel */
 #include "components/interface_widgets.hpp"       /* CoverArtLabel */
 
 #include "util/searchlineedit.hpp"
@@ -49,37 +49,28 @@
 PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
                : QWidget( _par ), p_intf ( _p_i )
 {
-
-    setContentsMargins( 0, 3, 0, 3 );
-
+    /* Setup of the window */
     QGridLayout *layout = new QGridLayout( this );
     layout->setMargin( 0 ); layout->setSpacing( 0 );
+
+
+//    view->setResizeMode( QQuickView::SizeRootObjectToView );
+//    view->setTitle( qtr( "Playlist" ) );
+
+
+//    setContentsMargins( 0, 3, 0, 3 );
+
 
     /*******************
      * Left            *
      *******************/
     /* We use a QSplitter for the left part */
-    leftSplitter = new QSplitter( Qt::Vertical, this );
+//    leftSplitter = new QSplitter( Qt::Vertical, this );
 
     /* Source Selector */
-    selector = new PLSelector( this, p_intf );
-    leftSplitter->addWidget( selector );
+    selector = new PLSelector( p_intf );
+//    leftSplitter->addWidget( selector );
 
-    /* Create a Container for the Art Label
-       in order to have a beautiful resizing for the selector above it */
-    artContainer = new QStackedWidget;
-
-    /* Art label */
-    CoverArtLabel *art = new CoverArtLabel( artContainer, p_intf );
-    art->setToolTip( qtr( "Double click to get media information" ) );
-    artContainer->addWidget( art );
-
-    CONNECT( THEMIM->getIM(), artChanged( QString ),
-             art, showArtUpdate( const QString& ) );
-    CONNECT( THEMIM->getIM(), artChanged( input_item_t * ),
-             art, showArtUpdate( input_item_t * ) );
-
-    leftSplitter->addWidget( artContainer );
 
     /*******************
      * Right           *
@@ -92,7 +83,7 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
 
     setMinimumWidth( 400 );
 
-    PLModel *model = PLModel::getPLModel( p_intf );
+    MCModel *model = MCModel::getMCModel( p_intf );
 
     mainView = new StandardPLPanel( this, p_intf, p_root, selector, model );
 
@@ -101,77 +92,77 @@ PlaylistWidget::PlaylistWidget( intf_thread_t *_p_i, QWidget *_par )
     layout->addLayout( topbarLayout, 0, 0 );
 
     /* Location Bar */
-    locationBar = new LocationBar( model );
-    locationBar->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
-    topbarLayout->addWidget( locationBar );
-    CONNECT( locationBar, invoked( const QModelIndex & ),
-             mainView, browseInto( const QModelIndex & ) );
+//    locationBar = new LocationBar( model );
+//    locationBar->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
+//    topbarLayout->addWidget( locationBar );
+//    CONNECT( locationBar, invoked( const QModelIndex & ),
+//             mainView, browseInto( const QModelIndex & ) );
 
     /* Button to switch views */
-    QToolButton *viewButton = new QToolButton( this );
-    viewButton->setIcon( style()->standardIcon( QStyle::SP_FileDialogDetailedView ) );
-    viewButton->setToolTip( qtr("Change playlistview") );
-    topbarLayout->addWidget( viewButton );
+//    QToolButton *viewButton = new QToolButton( this );
+//    viewButton->setIcon( style()->standardIcon( QStyle::SP_FileDialogDetailedView ) );
+//    viewButton->setToolTip( qtr("Change playlistview") );
+//    topbarLayout->addWidget( viewButton );
 
-    viewButton->setMenu( StandardPLPanel::viewSelectionMenu( mainView ));
-    CONNECT( viewButton, clicked(), mainView, cycleViews() );
+//    viewButton->setMenu( StandardPLPanel::viewSelectionMenu( mainView ));
+//    CONNECT( viewButton, clicked(), mainView, cycleViews() );
 
     /* Search */
-    searchEdit = new SearchLineEdit( this );
-    searchEdit->setMaximumWidth( 250 );
-    searchEdit->setMinimumWidth( 80 );
-    searchEdit->setToolTip( qtr("Search the playlist") );
-    topbarLayout->addWidget( searchEdit );
-    CONNECT( searchEdit, textChanged( const QString& ),
-             mainView, search( const QString& ) );
-    CONNECT( searchEdit, searchDelayedChanged( const QString& ),
-             mainView, searchDelayed( const QString & ) );
+//    searchEdit = new SearchLineEdit( this );
+//    searchEdit->setMaximumWidth( 250 );
+//    searchEdit->setMinimumWidth( 80 );
+//    searchEdit->setToolTip( qtr("Search the playlist") );
+//    topbarLayout->addWidget( searchEdit );
+//    CONNECT( searchEdit, searchDelayedChanged( const QString& ),
+//             mainView, searchDelayed( const QString & ) );
 
-    CONNECT( mainView, viewChanged( const QModelIndex& ),
-             this, changeView( const QModelIndex &) );
+//    CONNECT( mainView, viewChanged( const QModelIndex& ),
+//             this, changeView( const QModelIndex &) );
 
-    /* Connect the activation of the selector to a redefining of the PL */
-    DCONNECT( selector, categoryActivated( playlist_item_t *, bool ),
-              mainView, setRootItem( playlist_item_t *, bool ) );
-    mainView->setRootItem( p_root, false );
-    CONNECT( selector, SDCategorySelected(bool), mainView, setWaiting(bool) );
+//    /* Connect the activation of the selector to a redefining of the PL */
+//    DCONNECT( selector, categoryActivated( playlist_item_t *, bool ),
+//              mainView, setRootItem( playlist_item_t *, bool ) );
+//    mainView->setRootItem( p_root, false );
+//    CONNECT( selector, SDCategorySelected(bool), mainView, setWaiting(bool) );
 
     /* */
-    split = new QSplitter( this );
+//    split = new QSplitter( this );
 
     /* Add the two sides of the QSplitter */
-    split->addWidget( leftSplitter );
-    split->addWidget( mainView );
+//    split->addWidget( leftSplitter );
+    //split->addWidget( container );
+//    split->addWidget( mainView );
 
     QList<int> sizeList;
     sizeList << 180 << 420 ;
-    split->setSizes( sizeList );
-    split->setStretchFactor( 0, 0 );
-    split->setStretchFactor( 1, 3 );
-    split->setCollapsible( 1, false );
-    leftSplitter->setMaximumWidth( 250 );
+//    split->setSizes( sizeList );
+//    split->setStretchFactor( 0, 0 );
+//    split->setStretchFactor( 1, 3 );
+//    split->setCollapsible( 1, false );
+//    leftSplitter->setMaximumWidth( 250 );
 
     /* In case we want to keep the splitter information */
     // components shall never write there setting to a fixed location, may infer
     // with other uses of the same component...
     getSettings()->beginGroup("Playlist");
-    split->restoreState( getSettings()->value("splitterSizes").toByteArray());
-    leftSplitter->restoreState( getSettings()->value("leftSplitterGeometry").toByteArray() );
+//    split->restoreState( getSettings()->value("splitterSizes").toByteArray());
+//    leftSplitter->restoreState( getSettings()->value("leftSplitterGeometry").toByteArray() );
     getSettings()->endGroup();
 
-    layout->addWidget( split, 1, 0, 1, -1 );
+    layout->addWidget( mainView, 1, 0, 1, -1 );
 
     setAcceptDrops( true );
     setWindowTitle( qtr( "Playlist" ) );
     setWindowRole( "vlc-playlist" );
     setWindowIcon( QApplication::windowIcon() );
+
 }
 
 PlaylistWidget::~PlaylistWidget()
 {
     getSettings()->beginGroup("Playlist");
-    getSettings()->setValue( "splitterSizes", split->saveState() );
-    getSettings()->setValue( "leftSplitterGeometry", leftSplitter->saveState() );
+//    getSettings()->setValue( "splitterSizes", split->saveState() );
+//    getSettings()->setValue( "leftSplitterGeometry", leftSplitter->saveState() );
     getSettings()->endGroup();
     msg_Dbg( p_intf, "Playlist Destroyed" );
 }
@@ -207,14 +198,14 @@ void PlaylistWidget::closeEvent( QCloseEvent *event )
 
 void PlaylistWidget::forceHide()
 {
-    leftSplitter->hide();
+//    leftSplitter->hide();
     mainView->hide();
     updateGeometry();
 }
 
 void PlaylistWidget::forceShow()
 {
-    leftSplitter->show();
+//    leftSplitter->show();
     mainView->show();
     updateGeometry();
 }
@@ -222,11 +213,13 @@ void PlaylistWidget::forceShow()
 void PlaylistWidget::changeView( const QModelIndex& index )
 {
     locationBar->setIndex( index );
+
 }
 
 void PlaylistWidget::setSearchFieldFocus()
 {
-    searchEdit->setFocus();
+//    searchEdit->setFocus();
+
 }
 
 #include <QSignalMapper>

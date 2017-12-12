@@ -1,0 +1,28 @@
+#ifndef MLITEM_HPP
+#define MLITEM_HPP
+
+#include <qt5/QtCore/QObject>
+#include <qt5/QtCore/QString>
+#include <qt5/QtCore/QList>
+
+#include <medialibrary/IMediaLibrary.h>
+
+class MLAlbumTrack;
+
+class MLItem : public QObject
+{
+    Q_OBJECT
+public:
+    MLItem(QObject *parent = nullptr);
+    MLItem(const MLItem *ml_item);
+    ~MLItem();
+
+    Q_INVOKABLE virtual QString getPresName() const = 0;
+    Q_INVOKABLE virtual QString getPresImage() const = 0;
+    Q_INVOKABLE virtual QString getPresInfo() const = 0;
+    Q_INVOKABLE virtual QList<MLAlbumTrack*>* getPLTracks() const = 0;
+    virtual QList<MLItem *> *getDetailsObjects(medialibrary::SortingCriteria sort = medialibrary::SortingCriteria::Default, bool desc = false) = 0;
+};
+
+
+#endif // MLITEM_HPP

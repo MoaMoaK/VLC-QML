@@ -28,7 +28,7 @@
 #endif
 
 #include "qt.hpp"
-#include "components/playlist/playlist_model.hpp"
+#include "components/playlist/mediacenter_model.hpp"
 #include "input_manager.hpp"                            /* THEMIM */
 #include "util/qt_dirs.hpp"
 #include "recents.hpp"                                  /* Open:: */
@@ -47,7 +47,7 @@
  * Playlist model implementation
  *************************************************************************/
 
-PLModel::PLModel( playlist_t *_p_playlist,  /* THEPL */
+MCModel::MCModel( playlist_t *_p_playlist,  /* THEPL */
                   intf_thread_t *_p_intf,   /* main Qt p_intf */
                   playlist_item_t * p_root,
                   QObject *parent )         /* Basic Qt parent */
@@ -67,23 +67,24 @@ PLModel::PLModel( playlist_t *_p_playlist,  /* THEPL */
              this, processItemAppend( int, int ) );
     CONNECT( THEMIM, playlistItemRemoved( int ),
              this, processItemRemoval( int ) );
+
 }
 
-PLModel::~PLModel()
+MCModel::~MCModel()
 {
     delete rootItem;
 }
 
-Qt::DropActions PLModel::supportedDropActions() const
+Qt::DropActions MCModel::supportedDropActions() const
 {
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-Qt::ItemFlags PLModel::flags( const QModelIndex &index ) const
+Qt::ItemFlags MCModel::flags( const QModelIndex &index ) const
 {
     Qt::ItemFlags flags = QAbstractItemModel::flags( index );
 
-    const PLItem *item = index.isValid() ? getItem( index ) : rootItem;
+    const MCItem *item = index.isValid() ? getItem( index ) : rootItem;
 
     if( canEdit() )
     {
@@ -100,7 +101,7 @@ Qt::ItemFlags PLModel::flags( const QModelIndex &index ) const
     return flags;
 }
 
-QStringList PLModel::mimeTypes() const
+QStringList MCModel::mimeTypes() const
 {
     QStringList types;
     types << "vlc/qt-input-items";
@@ -110,13 +111,13 @@ QStringList PLModel::mimeTypes() const
 bool modelIndexLessThen( const QModelIndex &i1, const QModelIndex &i2 )
 {
     if( !i1.isValid() || !i2.isValid() ) return false;
-    PLItem *item1 = static_cast<PLItem*>( i1.internalPointer() );
-    PLItem *item2 = static_cast<PLItem*>( i2.internalPointer() );
+    MCItem *item1 = static_cast<MCItem*>( i1.internalPointer() );
+    MCItem *item2 = static_cast<MCItem*>( i2.internalPointer() );
     if( item1->hasSameParent( item2 ) ) return i1.row() < i2.row();
     else return *item1 < *item2;
 }
 
-QMimeData *PLModel::mimeData( const QModelIndexList &indexes ) const
+QMimeData *MCModel::mimeData( const QModelIndexList &indexes ) const
 {
     PlMimeData *plMimeData = new PlMimeData();
     QModelIndexList list;
@@ -128,31 +129,31 @@ QMimeData *PLModel::mimeData( const QModelIndexList &indexes ) const
 
     qSort(list.begin(), list.end(), modelIndexLessThen);
 
-    AbstractPLItem *item = NULL;
+    MCItem *item = NULL;
     foreach( const QModelIndex &index, list ) {
         if( item )
         {
-            AbstractPLItem *testee = getItem( index );
-            while( testee->parent() )
+            MCItem *testee = getItem( index );
+            while( testee->plitem_parent() )
             {
-                if( testee->parent() == item ||
-                    testee->parent() == item->parent() ) break;
-                testee = testee->parent();
+                if( testee->plitem_parent() == item ||
+                    testee->plitem_parent() == item->plitem_parent() ) break;
+                testee = testee->plitem_parent();
             }
-            if( testee->parent() == item ) continue;
+            if( testee->plitem_parent() == item ) continue;
             item = getItem( index );
         }
         else
             item = getItem( index );
 
-        plMimeData->appendItem( static_cast<PLItem*>(item)->inputItem() );
+        plMimeData->appendItem( static_cast<MCItem*>(item)->inputItem() );
     }
 
     return plMimeData;
 }
 
 /* Drop operation */
-bool PLModel::dropMimeData( const QMimeData *data, Qt::DropAction action,
+bool MCModel::dropMimeData( const QMimeData *data, Qt::DropAction action,
         int row, int, const QModelIndex &parent )
 {
     bool copy = action == Qt::CopyAction;
@@ -170,7 +171,7 @@ bool PLModel::dropMimeData( const QMimeData *data, Qt::DropAction action,
     return true;
 }
 
-void PLModel::dropAppendCopy( const PlMimeData *plMimeData, PLItem *target, int pos )
+void MCModel::dropAppendCopy( const PlMimeData *plMimeData, MCItem *target, int pos )
 {
     vlc_playlist_locker pl_lock ( THEPL );
 
@@ -190,10 +191,10 @@ void PLModel::dropAppendCopy( const PlMimeData *plMimeData, PLItem *target, int 
     }
 }
 
-void PLModel::dropMove( const PlMimeData * plMimeData, PLItem *target, int row )
+void MCModel::dropMove( const PlMimeData * plMimeData, MCItem *target, int row )
 {
     QList<input_item_t*> inputItems = plMimeData->inputItems();
-    QList<PLItem*> model_items;
+    QList<MCItem*> model_items;
     playlist_item_t **pp_items;
     pp_items = (playlist_item_t **)
                calloc( inputItems.count(), sizeof( playlist_item_t* ) );
@@ -221,13 +222,13 @@ void PLModel::dropMove( const PlMimeData * plMimeData, PLItem *target, int row )
             playlist_item_t *p_item = playlist_ItemGetByInput( p_playlist, p_input );
             if( !p_item ) continue;
 
-            PLItem *item = findByInputLocked( rootItem, p_input );
+            MCItem *item = findByInputLocked( rootItem, p_input );
             if( !item ) continue;
 
             /* Better not try to move a node into itself.
                Abort the whole operation in that case,
                because it is ambiguous. */
-            AbstractPLItem *climber = target;
+            MCItem *climber = target;
             while( climber )
             {
                 if( climber == item )
@@ -235,11 +236,11 @@ void PLModel::dropMove( const PlMimeData * plMimeData, PLItem *target, int row )
                     free( pp_items );
                     return;
                 }
-                climber = climber->parent();
+                climber = climber->plitem_parent();
             }
 
-            if( item->parent() == target &&
-                target->children.indexOf( item ) < new_pos )
+            if( item->plitem_parent() == target &&
+                target->plitem_children.indexOf( item ) < new_pos )
                 model_pos--;
 
             model_items.append( item );
@@ -256,55 +257,61 @@ void PLModel::dropMove( const PlMimeData * plMimeData, PLItem *target, int row )
         playlist_TreeMoveMany( p_playlist, i, pp_items, p_parent, new_pos );
     }
 
-    foreach( PLItem *item, model_items )
+    foreach( MCItem *item, model_items )
         takeItem( item );
 
     insertChildren( target, model_items, model_pos );
     free( pp_items );
 }
 
-void PLModel::activateItem( const QModelIndex &index )
+void MCModel::activateItem( MCItem* item )
 {
-    assert( index.isValid() );
-    const PLItem *item = getItem( index );
     assert( item );
 
     vlc_playlist_locker pl_lock( THEPL );
 
     playlist_item_t *p_item = playlist_ItemGetById( p_playlist, item->i_playlist_id );
-    activateItem( p_item );
+//    getPLModel()->appendItem(p_item, item->i_playlist_id);
 }
 
 /* Convenient overloaded private version of activateItem
  * Must be entered with PL lock */
-void PLModel::activateItem( playlist_item_t *p_item )
+void MCModel::activateItem( playlist_item_t *p_item )
 {
-    if( !p_item ) return;
-    playlist_item_t *p_parent = p_item;
-    while( p_parent )
-    {
-        if( p_parent->i_id == rootItem->id() ) break;
-        p_parent = p_parent->p_parent;
-    }
-    if( p_parent )
-        playlist_ViewPlay( p_playlist, p_parent, p_item );
+//    if( !p_item ) return;
+//    playlist_item_t *p_parent = p_item;
+//    while( p_parent )
+//    {
+//        if( p_parent->i_id == rootItem->id() ) break;
+//        p_parent = p_parent->p_parent;
+//    }
+//    if( p_parent )
+//        playlist_ViewPlay( p_playlist, p_parent, p_item );
 }
 
+void MCModel::exploreDir(MCItem *item)
+{
+    assert( item );
+    item->exploreDir();
+}
+
+void MCModel::activateItem( const QModelIndex &index )
+{ }
+
 /****************** Base model mandatory implementations *****************/
-QVariant PLModel::data( const QModelIndex &index, const int role ) const
+QVariant MCModel::data( const QModelIndex &index, const int role ) const
 {
     if( !index.isValid() )
         return QVariant();
 
     switch( role )
     {
-
         case Qt::FontRole:
             return customFont;
 
         case Qt::DisplayRole:
         {
-            PLItem *item = getItem( index );
+            MCItem *item = getItem( index );
             int metadata = columnToMeta( index.column() );
             if( metadata == COLUMN_END )
                 return QVariant();
@@ -345,17 +352,18 @@ QVariant PLModel::data( const QModelIndex &index, const int role ) const
             {
                 case COLUMN_TITLE:
                 {
-                    PLItem *item = getItem( index );
+                    //PLItem *item = getItem( index );
                     /* Used to segfault here because i_type wasn't always initialized */
-                    int idx = item->inputItem()->i_type;
-                    if( item->inputItem()->b_net && item->inputItem()->i_type == ITEM_TYPE_FILE )
-                        idx = ITEM_TYPE_STREAM;
-                    return QVariant( icons[idx] );
+                    //return QVariant( icons[item->inputItem()->i_type] );
+                    return getArtUrl(index);
                 }
                 case COLUMN_COVER:
+                {
                     /* !warn: changes tree item line height. Otherwise, override
                      * delegate's sizehint */
-                    return getArtPixmap( index, QSize(16,16) );
+                    //return getArtPixmap( index, QSize(16,16) );
+                    return getArtUrl(index);
+                }
                 default:
                     break;
             }
@@ -376,6 +384,78 @@ QVariant PLModel::data( const QModelIndex &index, const int role ) const
         case LEAF_NODE_ROLE:
             return QVariant( isLeaf( index ) );
 
+        case TITLE_ROLE:
+            return getMeta(index, COLUMN_TITLE);
+
+        case DURATION_ROLE:
+            return getMeta(index, COLUMN_DURATION);
+
+        case ARTIST_ROLE:
+            return getMeta(index, COLUMN_ARTIST);
+
+        case GENRE_ROLE:
+            return getMeta(index, COLUMN_GENRE);
+
+        case ALBUM_ROLE:
+            return getMeta(index, COLUMN_ALBUM);
+
+        case TRACK_NUMBER_ROLE:
+            return getMeta(index, COLUMN_TRACK_NUMBER);
+
+        case DESCRIPTION_ROLE:
+            return getMeta(index, COLUMN_DESCRIPTION);
+
+        case URI_ROLE:
+            return getMeta(index, COLUMN_URI);
+
+        case NUMBER_ROLE:
+            return getMeta(index, COLUMN_NUMBER);
+
+        case RATING_ROLE:
+            return getMeta(index, COLUMN_RATING);
+
+        case COVER_ROLE:
+            return input_item_GetArtworkURL(getItem(index)->inputItem());//getMeta(index, COLUMN_COVER);
+
+        case DISC_NUMBER_ROLE:
+            return getMeta(index, COLUMN_DISC_NUMBER);
+
+        case DATE_ROLE:
+            return getMeta(index, COLUMN_DATE);
+
+        case IS_MOVIE:
+            return QVariant( getItem(index)->isMovie() );
+
+        case FAKE_NAME:
+            return getItem(index)->getInfo(info_type::NAME);
+
+        case FAKE_URI:
+            return getItem(index)->getInfo(info_type::URI);
+
+        case FAKE_DURATION:
+            return getItem(index)->getInfo(info_type::DURATION);
+
+        case FAKE_COVER:
+            return getItem(index)->getInfo(info_type::COVER);
+
+        case FAKE_DATE:
+            return getItem(index)->getInfo(info_type::DATE);
+
+        case FAKE_ARTIST:
+            return getItem(index)->getInfo(info_type::ARTIST);
+
+        case FAKE_GENRE:
+            return getItem(index)->getInfo(info_type::GENRE);
+
+        case FAKE_NUM_OF_SUBELTS:
+            return getItem(index)->getInfo(info_type::NUM_OF_SUBELTS);
+
+        case FAKE_PERCENT_SEEN:
+            return getItem(index)->getInfo(info_type::PERCENT_SEEN);
+
+        case FAKE_NUM:
+            return getItem(index)->getInfo(info_type::NUM);
+
         default:
             break;
     }
@@ -383,12 +463,62 @@ QVariant PLModel::data( const QModelIndex &index, const int role ) const
     return QVariant();
 }
 
-bool PLModel::setData( const QModelIndex &index, const QVariant & value, int role )
+QHash<int, QByteArray> MCModel::roleNames() const {
+    QHash<int, QByteArray> roles;
+    roles[Qt::FontRole] = "font";
+    roles[Qt::DisplayRole] = "display";
+    roles[Qt::DecorationRole] = "decoration";
+    roles[Qt::BackgroundRole] = "background";
+    roles[CURRENT_ITEM_ROLE] = "current_item";
+    roles[CURRENT_ITEM_CHILD_ROLE] = "current_item_child";
+    roles[LEAF_NODE_ROLE] = "leaf_node";
+    roles[TITLE_ROLE] = "title";
+    roles[DURATION_ROLE] = "duration";
+    roles[ARTIST_ROLE] = "artist";
+    roles[GENRE_ROLE] = "genre";
+    roles[ALBUM_ROLE] = "album";
+    roles[TRACK_NUMBER_ROLE] = "track_number";
+    roles[DESCRIPTION_ROLE] = "description";
+    roles[URI_ROLE] = "uri";
+    roles[NUMBER_ROLE] = "number";
+    roles[RATING_ROLE] = "rating";
+    roles[COVER_ROLE] = "cover";
+    roles[DISC_NUMBER_ROLE] = "disc_number";
+    roles[DATE_ROLE] = "date";
+    roles[DOUBLE_CLICK] = "double_click";
+    roles[SINGLE_CLICK] = "single_click";
+    roles[IS_MOVIE] = "is_movie";
+    roles[FAKE_NAME] = "f_name";
+    roles[FAKE_URI] = "f_uri";
+    roles[FAKE_DURATION] = "f_duration";
+    roles[FAKE_COVER] = "f_cover";
+    roles[FAKE_DATE] = "f_date";
+    roles[FAKE_ARTIST] = "f_artist";
+    roles[FAKE_GENRE] = "f_genre";
+    roles[FAKE_NUM_OF_SUBELTS] = "f_num_of_subelts";
+    roles[FAKE_PERCENT_SEEN] = "f_percent_seen";
+    roles[FAKE_NUM] = "f_num";
+    return roles;
+
+    return roles;
+}
+
+bool MCModel::setData( const QModelIndex &index, const QVariant & value, int role )
 {
     switch( role )
     {
     case Qt::FontRole:
         customFont = value.value<QFont>();
+        return true;
+    // Trick to trigger activateItem()
+    case DOUBLE_CLICK :
+        activateItem(getItem(index));
+        return true;
+    // Trick to trigger displayInfo()
+    case SINGLE_CLICK :
+        if ( ! isLeaf( index ) )
+            exploreDir(getItem(index));
+
         return true;
     default:
         return VLCModel::setData( index, value, role );
@@ -396,7 +526,7 @@ bool PLModel::setData( const QModelIndex &index, const QVariant & value, int rol
 }
 
 /* Seek from current index toward the top and see if index is one of parent nodes */
-bool PLModel::isParent( const QModelIndex &index, const QModelIndex &current ) const
+bool MCModel::isParent( const QModelIndex &index, const QModelIndex &current ) const
 {
     if( !index.isValid() )
         return false;
@@ -410,7 +540,7 @@ bool PLModel::isParent( const QModelIndex &index, const QModelIndex &current ) c
     return isParent( index, current.parent() );
 }
 
-bool PLModel::isLeaf( const QModelIndex &index ) const
+bool MCModel::isLeaf( const QModelIndex &index ) const
 {
     bool b_isLeaf = false;
 
@@ -425,79 +555,79 @@ bool PLModel::isLeaf( const QModelIndex &index ) const
     return b_isLeaf;
 }
 
-PLItem* PLModel::getItem( const QModelIndex & index ) const
+MCItem* MCModel::getItem( const QModelIndex & index ) const
 {
-    PLItem *item = static_cast<PLItem *>( VLCModel::getItem( index ) );
+    MCItem *item = static_cast<MCItem *>( VLCModel::getItem( index ) );
     if ( item == NULL ) item = rootItem;
     return item;
 }
 
-QModelIndex PLModel::index( const int row, const int column, const QModelIndex &parent )
+QModelIndex MCModel::index( const int row, const int column, const QModelIndex &parent )
                   const
 {
-    PLItem *parentItem = parent.isValid() ? getItem( parent ) : rootItem;
+    MCItem *parentItem = parent.isValid() ? getItem( parent ) : rootItem;
 
-    PLItem *childItem = static_cast<PLItem*>(parentItem->child( row ));
+    MCItem *childItem = static_cast<MCItem*>(parentItem->child( row ));
     if( childItem )
         return createIndex( row, column, childItem );
     else
         return QModelIndex();
 }
 
-QModelIndex PLModel::indexByPLID( const int i_plid, const int c ) const
+QModelIndex MCModel::indexByPLID( const int i_plid, const int c ) const
 {
     return index( findByPLId( rootItem, i_plid ), c );
 }
 
-QModelIndex PLModel::indexByInputItem( const input_item_t *item, const int c ) const
+QModelIndex MCModel::indexByInputItem( const input_item_t *item, const int c ) const
 {
     return index( findByInput( rootItem, item ), c );
 }
 
-QModelIndex PLModel::rootIndex() const
+QModelIndex MCModel::rootIndex() const
 {
     return index( findByPLId( rootItem, rootItem->id() ), 0 );
 }
 
-bool PLModel::isTree() const
+bool MCModel::isTree() const
 {
     return ( ( rootItem && rootItem->id() != p_playlist->p_playing->i_id )
              || var_InheritBool( p_intf, "playlist-tree" ) );
 }
 
 /* Return the index of a given item */
-QModelIndex PLModel::index( PLItem *item, int column ) const
+QModelIndex MCModel::index( MCItem *item, int column ) const
 {
     if( !item ) return QModelIndex();
-    AbstractPLItem *parent = item->parent();
+    MCItem *parent = item->plitem_parent();
     if( parent )
         return createIndex( parent->lastIndexOf( item ),
                             column, item );
     return QModelIndex();
 }
 
-QModelIndex PLModel::currentIndex() const
+QModelIndex MCModel::currentIndex() const
 {
     input_thread_t *p_input_thread = THEMIM->getInput();
     if( !p_input_thread ) return QModelIndex();
-    PLItem *item = findByInput( rootItem, input_GetItem( p_input_thread ) );
+    MCItem *item = findByInput( rootItem, input_GetItem( p_input_thread ) );
     return index( item, 0 );
 }
 
-QModelIndex PLModel::parent( const QModelIndex &index ) const
+QModelIndex MCModel::parent( const QModelIndex &index ) const
 {
     if( !index.isValid() ) return QModelIndex();
 
-    PLItem *childItem = getItem( index );
+    MCItem *childItem = getItem( index );
     if( !childItem )
     {
         msg_Err( p_playlist, "Item not found" );
         return QModelIndex();
     }
 
-    PLItem *parentItem = static_cast<PLItem*>(childItem->parent());
+    MCItem *parentItem = static_cast<MCItem*>(childItem->plitem_parent());
     if( !parentItem || parentItem == rootItem ) return QModelIndex();
-    if( !parentItem->parent() )
+    if( !parentItem->plitem_parent() )
     {
         msg_Err( p_playlist, "No parent found, trying row 0. Please report this" );
         return createIndex( 0, 0, parentItem );
@@ -505,50 +635,37 @@ QModelIndex PLModel::parent( const QModelIndex &index ) const
     return createIndex(parentItem->row(), 0, parentItem);
 }
 
-int PLModel::rowCount( const QModelIndex &parent ) const
+int MCModel::rowCount( const QModelIndex &parent ) const
 {
-    PLItem *parentItem = parent.isValid() ? getItem( parent ) : rootItem;
+    MCItem *parentItem = parent.isValid() ? getItem( parent ) : rootItem;
     return parentItem->childCount();
 }
 
 /************************* Lookups *****************************/
-PLItem *PLModel::findByPLId( PLItem *root, int i_id ) const
+MCItem *MCModel::findByPLId( MCItem *root, int i_id ) const
 {
     if( !root ) return NULL;
 
     if( root->id() == i_id )
         return root;
 
-    /* traverse the tree (in depth first) iteratively to avoid stack overflow */
-
-    struct RemainingChildren {
-        QList<AbstractPLItem *>::const_iterator next;
-        QList<AbstractPLItem *>::const_iterator end;
-    };
-
-    QStack<RemainingChildren> stack;
-    if( root->childCount() )
-        stack.push( {root->children.cbegin(), root->children.cend()} );
-
-    while ( !stack.isEmpty() )
+    QList<MCItem *>::iterator it = root->plitem_children.begin();
+    while ( it != root->plitem_children.end() )
     {
-        RemainingChildren &remainingChildren = stack.top();
+        MCItem *item = static_cast<MCItem *>(*it);
 
-        PLItem *item = static_cast<PLItem *>( *remainingChildren.next );
-        if( item->id() == i_id )
-            return item;
-
-        if( ++remainingChildren.next == remainingChildren.end )
-            /* there are no more children at this depth level */
-            stack.pop();
-
-        if( item->childCount() )
-            stack.push( {item->children.cbegin(), item->children.cend()} );
+        if( item != NULL )
+        {
+            MCItem *childFound = findByPLId( item, i_id );
+            if( childFound )
+                return childFound;
+        }
+        ++it;
     }
     return NULL;
 }
 
-PLItem *PLModel::findByInput( PLItem *root, const input_item_t *input ) const
+MCItem *MCModel::findByInput( MCItem *root, const input_item_t *input ) const
 {
     int i_id;
     {
@@ -563,7 +680,7 @@ PLItem *PLModel::findByInput( PLItem *root, const input_item_t *input ) const
     return findByPLId( root, i_id );
 }
 
-PLItem *PLModel::findByInputLocked( PLItem *root, const input_item_t *input ) const
+MCItem *MCModel::findByInputLocked( MCItem *root, const input_item_t *input ) const
 {
     PL_ASSERT_LOCKED;
 
@@ -573,13 +690,13 @@ PLItem *PLModel::findByInputLocked( PLItem *root, const input_item_t *input ) co
     return findByPLId( root, item->i_id );
 }
 
-PLModel::pl_nodetype PLModel::getPLRootType() const
+MCModel::pl_nodetype MCModel::getPLRootType() const
 {
     vlc_playlist_locker pl_lock ( THEPL );
 
     /* can't rely on rootitem as it depends on view / rebuild() */
-    AbstractPLItem *plitem = rootItem;
-    while( plitem->parent() )plitem = plitem->parent();
+    MCItem *plitem = rootItem;
+    while( plitem->plitem_parent() )plitem = plitem->plitem_parent();
 
     if( plitem->id() == p_playlist->p_playing->i_id )
         return ROOTTYPE_CURRENT_PLAYING;
@@ -591,7 +708,7 @@ PLModel::pl_nodetype PLModel::getPLRootType() const
     return ROOTTYPE_OTHER;
 }
 
-bool PLModel::canEdit() const
+bool MCModel::canEdit() const
 {
     return ( getPLRootType() != ROOTTYPE_OTHER );
 }
@@ -599,43 +716,43 @@ bool PLModel::canEdit() const
 /************************* Updates handling *****************************/
 
 /**** Events processing ****/
-void PLModel::processInputItemUpdate( )
+void MCModel::processInputItemUpdate( )
 {
     input_thread_t *p_input = THEMIM->getInput();
     if( !p_input ) return;
 
-    PLItem *item = findByInput( rootItem, input_GetItem( p_input ) );
+    MCItem *item = findByInput( rootItem, input_GetItem( p_input ) );
     if( item ) emit currentIndexChanged( index( item, 0 ) );
 
     processInputItemUpdate( input_GetItem( p_input ) );
 }
 
-void PLModel::processInputItemUpdate( input_item_t *p_item )
+void MCModel::processInputItemUpdate( input_item_t *p_item )
 {
     if( !p_item ) return;
-    PLItem *item = findByInput( rootItem, p_item );
+    MCItem *item = findByInput( rootItem, p_item );
     if( item )
         updateTreeItem( item );
 }
 
-void PLModel::processItemRemoval( int i_pl_itemid )
+void MCModel::processItemRemoval( int i_pl_itemid )
 {
     if( i_pl_itemid <= 0 ) return;
     removeItem( findByPLId( rootItem, i_pl_itemid ) );
 }
 
-void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
+void MCModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
 {
     playlist_item_t *p_item = NULL;
-    PLItem *newItem = NULL;
+    MCItem *newItem = NULL;
     int pos;
 
     /* Find the Parent */
-    PLItem *nodeParentItem = findByPLId( rootItem, i_pl_itemidparent );
+    MCItem *nodeParentItem = findByPLId( rootItem, i_pl_itemidparent );
     if( !nodeParentItem ) return;
 
     /* Search for an already matching children */
-    foreach( AbstractPLItem *existing, nodeParentItem->children )
+    foreach( MCItem *existing, nodeParentItem->plitem_children )
         if( existing->id() == i_pl_itemid ) return;
 
     /* Find the child */
@@ -649,7 +766,7 @@ void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
         for( pos = p_item->p_parent->i_children - 1; pos >= 0; pos-- )
             if( p_item->p_parent->pp_children[pos] == p_item ) break;
 
-        newItem = new PLItem( p_item, nodeParentItem );
+        newItem = new MCItem( p_intf, p_item, nodeParentItem );
     }
 
     /* We insert the newItem (children) inside the parent */
@@ -663,7 +780,7 @@ void PLModel::processItemAppend( int i_pl_itemid, int i_pl_itemidparent )
     filter( latestSearch, index( rootItem, 0), false /*FIXME*/ );
 }
 
-void PLModel::rebuild( playlist_item_t *p_root )
+void MCModel::rebuild( playlist_item_t *p_root )
 {
     beginResetModel();
 
@@ -674,7 +791,7 @@ void PLModel::rebuild( playlist_item_t *p_root )
         if( p_root ) // Can be NULL
         {
             if ( rootItem ) delete rootItem;
-            rootItem = new PLItem( p_root );
+            rootItem = new MCItem( p_intf, p_root, NULL );
         }
         assert( rootItem );
         /* Recreate from root */
@@ -686,10 +803,10 @@ void PLModel::rebuild( playlist_item_t *p_root )
     if( p_root ) emit rootIndexChanged();
 }
 
-void PLModel::takeItem( PLItem *item )
+void MCModel::takeItem( MCItem *item )
 {
     assert( item );
-    PLItem *parent = static_cast<PLItem*>(item->parent());
+    MCItem *parent = static_cast<MCItem*>(item->plitem_parent());
     assert( parent );
     int i_index = parent->indexOf( item );
 
@@ -698,7 +815,7 @@ void PLModel::takeItem( PLItem *item )
     endRemoveRows();
 }
 
-void PLModel::insertChildren( PLItem *node, QList<PLItem*>& items, int i_pos )
+void MCModel::insertChildren( MCItem *node, QList<MCItem*>& items, int i_pos )
 {
     assert( node );
     int count = items.count();
@@ -706,20 +823,20 @@ void PLModel::insertChildren( PLItem *node, QList<PLItem*>& items, int i_pos )
     beginInsertRows( index( node, 0 ), i_pos, i_pos + count - 1 );
     for( int i = 0; i < count; i++ )
     {
-        node->children.insert( i_pos + i, items[i] );
+        node->plitem_children.insert( i_pos + i, items[i] );
         items[i]->parentItem = node;
     }
     endInsertRows();
 }
 
-void PLModel::removeItem( PLItem *item )
+void MCModel::removeItem( MCItem *item )
 {
     if( !item ) return;
 
-    if( item->parent() ) {
-        int i = item->parent()->indexOf( item );
-        beginRemoveRows( index( static_cast<PLItem*>(item->parent()), 0), i, i );
-        item->parent()->children.removeAt(i);
+    if( item->plitem_parent() ) {
+        int i = item->plitem_parent()->indexOf( item );
+        beginRemoveRows( index( static_cast<MCItem*>(item->plitem_parent()), 0), i, i );
+        item->plitem_parent()->plitem_children.removeAt(i);
         delete item;
         endRemoveRows();
     }
@@ -733,19 +850,21 @@ void PLModel::removeItem( PLItem *item )
 }
 
 /* This function must be entered WITH the playlist lock */
-void PLModel::updateChildren( PLItem *root )
+void MCModel::updateChildren( MCItem *root )
 {
     playlist_item_t *p_node = playlist_ItemGetById( p_playlist, root->id() );
     updateChildren( p_node, root );
 }
 
 /* This function must be entered WITH the playlist lock */
-void PLModel::updateChildren( playlist_item_t *p_node, PLItem *root )
+void MCModel::updateChildren( playlist_item_t *p_node, MCItem *root )
 {
     for( int i = 0; i < p_node->i_children ; i++ )
     {
         if( p_node->pp_children[i]->i_flags & PLAYLIST_DBL_FLAG ) continue;
-        PLItem *newItem =  new PLItem( p_node->pp_children[i], root );
+
+        MCItem *newItem;
+        newItem = new MCItem( p_intf, p_node->pp_children[i], root );
         root->appendChild( newItem );
         if( p_node->pp_children[i]->i_children != -1 )
             updateChildren( p_node->pp_children[i], newItem );
@@ -753,7 +872,7 @@ void PLModel::updateChildren( playlist_item_t *p_node, PLItem *root )
 }
 
 /* Function doesn't need playlist-lock, as we don't touch playlist_item_t stuff here*/
-void PLModel::updateTreeItem( PLItem *item )
+void MCModel::updateTreeItem( MCItem *item )
 {
     if( !item ) return;
     emit dataChanged( index( item, 0 ) , index( item, columnCount( QModelIndex() ) - 1 ) );
@@ -765,7 +884,7 @@ void PLModel::updateTreeItem( PLItem *item )
  * Deletion, don't delete items childrens if item is going to be
  * delete allready, so we remove childrens from selection-list.
  */
-void PLModel::doDelete( QModelIndexList selected )
+void MCModel::doDelete( QModelIndexList selected )
 {
     if( !canEdit() ) return;
 
@@ -776,9 +895,9 @@ void PLModel::doDelete( QModelIndexList selected )
 
         if( index.column() != 0 ) continue;
 
-        PLItem *item = getItem( index );
+        MCItem *item = getItem( index );
         if( item->childCount() )
-            recurseDelete( item->children, &selected );
+            recurseDelete( item->plitem_children, &selected );
 
         PL_LOCK;
         playlist_item_t *p_root = playlist_ItemGetById( p_playlist,
@@ -792,36 +911,36 @@ void PLModel::doDelete( QModelIndexList selected )
     }
 }
 
-void PLModel::recurseDelete( QList<AbstractPLItem*> children, QModelIndexList *fullList )
+void MCModel::recurseDelete( QList<MCItem*> children, QModelIndexList *fullList )
 {
     for( int i = children.count() - 1; i >= 0 ; i-- )
     {
-        PLItem *item = static_cast<PLItem *>(children[i]);
+        MCItem *item = static_cast<MCItem *>(children[i]);
         if( item->childCount() )
-            recurseDelete( item->children, fullList );
+            recurseDelete( item->plitem_children, fullList );
         fullList->removeAll( index( item, 0 ) );
     }
 }
 
 /******* Volume III: Sorting and searching ********/
-void PLModel::sort( const int column, Qt::SortOrder order )
+void MCModel::sort( const int column, Qt::SortOrder order )
 {
     sort( QModelIndex(), indexByPLID( rootItem->id(), 0 ) , column, order );
 }
 
-void PLModel::sort( QModelIndex caller, QModelIndex rootIndex, const int column, Qt::SortOrder order )
+void MCModel::sort( QModelIndex caller, QModelIndex rootIndex, const int column, Qt::SortOrder order )
 {
     msg_Dbg( p_intf, "Sorting by column %i, order %i", column, order );
 
     int meta = columnToMeta( column );
     if( meta == COLUMN_END || meta == COLUMN_COVER ) return;
 
-    PLItem *item = ( rootIndex.isValid() ) ? getItem( rootIndex )
+    MCItem *item = ( rootIndex.isValid() ) ? getItem( rootIndex )
                                            : rootItem;
     if( !item ) return;
 
     input_item_t* p_caller_item = caller.isValid()
-        ? static_cast<AbstractPLItem*>( caller.internalPointer() )->inputItem()
+        ? static_cast<MCItem*>( caller.internalPointer() )->inputItem()
         : NULL;
 
     int i_root_id = item->id();
@@ -867,7 +986,7 @@ void PLModel::sort( QModelIndex caller, QModelIndex rootIndex, const int column,
         emit currentIndexChanged( currentIndex() );
 }
 
-void PLModel::filter( const QString& search_text, const QModelIndex & idx, bool b_recursive )
+void MCModel::filter( const QString& search_text, const QModelIndex & idx, bool b_recursive )
 {
     latestSearch = search_text;
 
@@ -882,7 +1001,7 @@ void PLModel::filter( const QString& search_text, const QModelIndex & idx, bool 
                                    b_recursive );
         if( idx.isValid() )
         {
-            PLItem *searchRoot = getItem( idx );
+            MCItem *searchRoot = getItem( idx );
 
             beginRemoveRows( idx, 0, searchRoot->childCount() - 1 );
             searchRoot->clearChildren();
@@ -899,7 +1018,7 @@ void PLModel::filter( const QString& search_text, const QModelIndex & idx, bool 
     rebuild();
 }
 
-void PLModel::removeAll()
+void MCModel::removeAll()
 {
     if( rowCount() < 1 ) return;
 
@@ -912,7 +1031,7 @@ void PLModel::removeAll()
     doDelete(l);
 }
 
-void PLModel::createNode( QModelIndex index, QString name )
+void MCModel::createNode( QModelIndex index, QString name )
 {
     if( name.isEmpty() )
         return;
@@ -926,7 +1045,7 @@ void PLModel::createNode( QModelIndex index, QString name )
         playlist_NodeCreate( p_playlist, qtu( name ), p_item, PLAYLIST_END, 0 );
 }
 
-void PLModel::renameNode( QModelIndex index, QString name )
+void MCModel::renameNode( QModelIndex index, QString name )
 {
     if( name.isEmpty() || !index.isValid() ) return;
 
@@ -939,7 +1058,7 @@ void PLModel::renameNode( QModelIndex index, QString name )
     input_item_WriteMeta( VLC_OBJECT(p_playlist), p_input );
 }
 
-bool PLModel::action( QAction *action, const QModelIndexList &indexes )
+bool MCModel::action( QAction *action, const QModelIndexList &indexes )
 {
     QModelIndex index;
     actionsContainerType a = action->data().value<actionsContainerType>();
@@ -1027,9 +1146,9 @@ bool PLModel::action( QAction *action, const QModelIndexList &indexes )
     return false;
 }
 
-bool PLModel::isSupportedAction( actions action, const QModelIndex &index ) const
+bool MCModel::isSupportedAction( actions action, const QModelIndex &index ) const
 {
-    AbstractPLItem const* item = VLCModel::getItem( index );
+    MCItem const* item = VLCModel::getItem( index );
 
     switch ( action )
     {

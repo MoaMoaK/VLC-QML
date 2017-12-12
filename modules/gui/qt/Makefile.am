@@ -13,8 +13,8 @@ SUFFIXES += .ui .h .hpp .moc.cpp
 
 libqt_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
 	-I$(srcdir)/gui/qt -I$(builddir)/gui/qt
-libqt_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt)
-libqt_plugin_la_LIBADD = $(QT_LIBS) $(LIBS_qt) $(LIBM)
+libqt_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt) -DQT_QML_DEBUG $(MEDIALIBRARY_CFLAGS)
+libqt_plugin_la_LIBADD = $(QT_LIBS) $(LIBS_qt) $(LIBM) $(MEDIALIBRARY_LIBS)
 libqt_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(guidir)'
 if HAVE_DARWIN
 libqt_plugin_la_LDFLAGS += -Wl,-framework,Cocoa
@@ -65,6 +65,7 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/dialogs/sout.cpp gui/qt/dialogs/sout.hpp \
 	gui/qt/dialogs/convert.cpp gui/qt/dialogs/convert.hpp \
 	gui/qt/dialogs/help.cpp gui/qt/dialogs/help.hpp \
+	gui/qt/dialogs/about.cpp gui/qt/dialogs/about.hpp \
 	gui/qt/dialogs/gototime.cpp gui/qt/dialogs/gototime.hpp \
 	gui/qt/dialogs/toolbar.cpp gui/qt/dialogs/toolbar.hpp \
 	gui/qt/dialogs/open.cpp gui/qt/dialogs/open.hpp \
@@ -92,6 +93,8 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/controller.cpp gui/qt/components/controller.hpp \
 	gui/qt/components/controller_widget.cpp \
 	gui/qt/components/controller_widget.hpp \
+	gui/qt/components/video_overlay.cpp \
+	gui/qt/components/video_overlay.hpp \
 	gui/qt/components/epg/EPGChannels.cpp \
 	gui/qt/components/epg/EPGChannels.hpp \
 	gui/qt/components/epg/EPGItem.cpp \
@@ -102,18 +105,41 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/epg/EPGView.cpp gui/qt/components/epg/EPGView.hpp \
 	gui/qt/components/epg/EPGWidget.cpp \
 	gui/qt/components/epg/EPGWidget.hpp \
+	gui/qt/components/mediacenter/excallback.hpp \
+	gui/qt/components/mediacenter/vlcstyle.cpp \
+	gui/qt/components/mediacenter/vlcstyle.hpp \
+	gui/qt/components/mediacenter/mcmedialib.cpp \
+	gui/qt/components/mediacenter/mcmedialib.hpp \
+	gui/qt/components/mediacenter/mlalbum.cpp \
+	gui/qt/components/mediacenter/mlalbum.hpp \
+	gui/qt/components/mediacenter/mlalbumtrack.cpp \
+	gui/qt/components/mediacenter/mlalbumtrack.hpp \
+	gui/qt/components/mediacenter/mlitem.cpp \
+	gui/qt/components/mediacenter/mlitem.hpp \
+	gui/qt/components/mediacenter/mlmovie.cpp \
+	gui/qt/components/mediacenter/mlmovie.hpp \
+	gui/qt/components/mediacenter/mlserie.cpp \
+	gui/qt/components/mediacenter/mlserie.hpp \
+	gui/qt/components/mediacenter/mlgenre.cpp \
+	gui/qt/components/mediacenter/mlgenre.hpp \
+	gui/qt/components/mediacenter/mlartist.cpp \
+	gui/qt/components/mediacenter/mlartist.hpp \
 	gui/qt/components/playlist/views.cpp \
 	gui/qt/components/playlist/views.hpp \
 	gui/qt/components/playlist/vlc_model.cpp \
 	gui/qt/components/playlist/vlc_model.hpp \
-	gui/qt/components/playlist/playlist_model.cpp \
-	gui/qt/components/playlist/playlist_model.hpp \
-	gui/qt/components/playlist/playlist_item.cpp \
-	gui/qt/components/playlist/playlist_item.hpp \
+	gui/qt/components/playlist/mediacenter_model.cpp \
+	gui/qt/components/playlist/mediacenter_model.hpp \
+	gui/qt/components/playlist/mediacenter_item.cpp \
+	gui/qt/components/playlist/mediacenter_item.hpp \
 	gui/qt/components/playlist/standardpanel.cpp \
 	gui/qt/components/playlist/standardpanel.hpp \
 	gui/qt/components/playlist/playlist.cpp \
 	gui/qt/components/playlist/playlist.hpp \
+	gui/qt/components/playlist/plmodel.cpp \
+	gui/qt/components/playlist/plmodel.hpp \
+	gui/qt/components/playlist/plitem.cpp \
+	gui/qt/components/playlist/plitem.hpp \
 	gui/qt/components/playlist/selector.cpp \
 	gui/qt/components/playlist/selector.hpp \
 	gui/qt/components/playlist/sorting.h \
@@ -122,6 +148,8 @@ libqt_plugin_la_SOURCES = \
 	gui/qt/components/sout/sout_widgets.cpp \
 	gui/qt/components/sout/sout_widgets.hpp \
 	gui/qt/components/sout/profiles.hpp \
+	gui/qt/components/utils/mlitemmodel.hpp \
+	gui/qt/components/utils/mlitemmodel.cpp \
 	gui/qt/util/animators.cpp gui/qt/util/animators.hpp \
 	gui/qt/util/input_slider.cpp gui/qt/util/input_slider.hpp \
 	gui/qt/util/timetooltip.cpp gui/qt/util/timetooltip.hpp \
@@ -186,6 +214,7 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/dialogs/sout.moc.cpp \
 	gui/qt/dialogs/convert.moc.cpp \
 	gui/qt/dialogs/help.moc.cpp \
+	gui/qt/dialogs/about.moc.cpp \
 	gui/qt/dialogs/gototime.moc.cpp \
 	gui/qt/dialogs/toolbar.moc.cpp \
 	gui/qt/dialogs/open.moc.cpp \
@@ -205,19 +234,29 @@ nodist_libqt_plugin_la_SOURCES = \
 	gui/qt/components/interface_widgets.moc.cpp \
 	gui/qt/components/controller.moc.cpp \
 	gui/qt/components/controller_widget.moc.cpp \
+	gui/qt/components/video_overlay.moc.cpp \
 	gui/qt/components/epg/EPGChannels.moc.cpp \
 	gui/qt/components/epg/EPGProgram.moc.cpp \
 	gui/qt/components/epg/EPGRuler.moc.cpp \
 	gui/qt/components/epg/EPGView.moc.cpp \
 	gui/qt/components/epg/EPGWidget.moc.cpp \
+	gui/qt/components/mediacenter/mcmedialib.moc.cpp \
+	gui/qt/components/mediacenter/mlalbum.moc.cpp \
+	gui/qt/components/mediacenter/mlalbumtrack.moc.cpp \
+	gui/qt/components/mediacenter/mlartist.moc.cpp \
+	gui/qt/components/mediacenter/mlgenre.moc.cpp \
+	gui/qt/components/mediacenter/mlitem.moc.cpp \
 	gui/qt/components/playlist/views.moc.cpp \
 	gui/qt/components/playlist/vlc_model.moc.cpp \
-	gui/qt/components/playlist/playlist_model.moc.cpp \
+	gui/qt/components/playlist/mediacenter_model.moc.cpp \
+	gui/qt/components/playlist/mediacenter_item.moc.cpp \
 	gui/qt/components/playlist/playlist.moc.cpp \
+	gui/qt/components/playlist/plmodel.moc.cpp \
 	gui/qt/components/playlist/standardpanel.moc.cpp \
 	gui/qt/components/playlist/selector.moc.cpp \
 	gui/qt/components/sout/profile_selector.moc.cpp \
 	gui/qt/components/sout/sout_widgets.moc.cpp \
+	gui/qt/components/utils/mlitemmodel.moc.cpp \
 	gui/qt/util/animators.moc.cpp \
 	gui/qt/util/input_slider.moc.cpp \
 	gui/qt/util/timetooltip.moc.cpp \
@@ -255,6 +294,7 @@ nodist_libqt_plugin_la_SOURCES += \
 	gui/qt/ui/streampanel.h \
 	gui/qt/ui/messages_panel.h \
 	gui/qt/ui/about.h \
+	gui/qt/ui/help.h \
 	gui/qt/ui/update.h \
 	gui/qt/ui/fingerprintdialog.h \
 	gui/qt/ui/sout.h
@@ -294,6 +334,7 @@ libqt_plugin_la_UI = \
 	gui/qt/ui/streampanel.ui \
 	gui/qt/ui/messages_panel.ui \
 	gui/qt/ui/about.ui \
+	gui/qt/ui/help.ui \
 	gui/qt/ui/update.ui \
 	gui/qt/ui/sout.ui \
 	gui/qt/ui/vlm.ui \
@@ -440,7 +481,35 @@ libqt_plugin_la_RES = \
 	gui/qt/pixmaps/update.svg \
 	gui/qt/pixmaps/valid.svg \
 	gui/qt/pixmaps/search_clear.svg \
-	gui/qt/pixmaps/lock.svg
+	gui/qt/pixmaps/lock.svg \
+	gui/qt/qml/help.qml \
+	gui/qt/qml/about.qml \
+	gui/qt/qml/MainInterface.qml \
+	gui/qt/qml/SubBannerSources.qml \
+	gui/qt/qml/BannerSources.qml \
+	gui/qt/qml/mediacenter/MCDisplay.qml \
+	gui/qt/qml/mediacenter/MusicAlbumsDisplay.qml \
+	gui/qt/qml/mediacenter/MusicAlbumsGridExpandDelegate.qml \
+	gui/qt/qml/mediacenter/MusicArtistsDisplay.qml \
+	gui/qt/qml/mediacenter/MusicGenresDisplay.qml \
+	gui/qt/qml/mediacenter/MusicTracksDisplay.qml \
+	gui/qt/qml/mediacenter/Presentation.qml \
+	gui/qt/qml/utils/ToolTipArea.qml \
+	gui/qt/qml/utils/GridItem.qml \
+	gui/qt/qml/utils/ListItem.qml \
+	gui/qt/qml/utils/ListExpandItem.qml \
+	gui/qt/qml/utils/MLItem.qml \
+	gui/qt/qml/utils/HorizontalRule.qml \
+	gui/qt/qml/utils/ArtistCover.qml \
+	gui/qt/qml/utils/GenreCover.qml \
+	gui/qt/qml/utils/ExpandGridView.qml \
+	gui/qt/qml/utils/ExpandGridViewRow.qml \
+	gui/qt/qml/utils/TracksDisplay.qml \
+	gui/qt/qml/utils/AlbumsDisplay.qml \
+	gui/qt/qml/playlist/PLItem.qml \
+	gui/qt/qml/playlist/PlaylistGrouped.qml \
+	gui/qt/qml/playlist/PlaylistListView.qml \
+	gui/qt/qml/playlist/PLDisplay.qml
 EXTRA_DIST += gui/qt/vlc.qrc $(libqt_plugin_la_RES)
 
 nodist_libqt_plugin_la_SOURCES += gui/qt/resources.cpp

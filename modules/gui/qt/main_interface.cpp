@@ -27,8 +27,6 @@
 # include "config.h"
 #endif
 
-#include "qt.hpp"
-
 #include "main_interface.hpp"
 #include "input_manager.hpp"                    // Creation
 #include "actions_manager.hpp"                  // killInstance
@@ -42,6 +40,7 @@
 #include "components/playlist/playlist.hpp"     // plWidget
 #include "dialogs/firstrun.hpp"                 // First Run
 #include "dialogs/playlist.hpp"                 // PlaylistDialog
+#include "components/playlist/standardpanel.hpp"
 
 #include "menus.hpp"                            // Menu creation
 #include "recents.hpp"                          // RecentItems when DnD
@@ -160,9 +159,9 @@ MainInterface::MainInterface( intf_thread_t *_p_intf ) : QVLCMW( _p_intf )
     /************
      * Menu Bar *
      ************/
-    VLCMenuBar::createMenuBar( this, p_intf );
-    CONNECT( THEMIM->getIM(), voutListChanged( vout_thread_t **, int ),
-             THEDP, destroyPopupMenu() );
+//    VLCMenuBar::createMenuBar( this, p_intf );
+//    CONNECT( THEMIM->getIM(), voutListChanged( vout_thread_t **, int ),
+//             THEDP, destroyPopupMenu() );
 
     createMainWidget( settings );
 
@@ -662,7 +661,7 @@ inline void MainInterface::showTab( QWidget *widget )
         /* Playlist -> Video */
         if( playlistWidget == stackCentralOldWidget && widget == videoWidget )
         {
-            playlistWidget->artContainer->removeWidget( videoWidget );
+            playlistWidget->mainView->getVideoOverlay()->setVideo( videoWidget );
             videoWidget->show(); videoWidget->raise();
             stackCentralW->addWidget( videoWidget );
         }
@@ -672,7 +671,7 @@ inline void MainInterface::showTab( QWidget *widget )
         {
             /* In rare case when video is started before the interface */
             if( playlistWidget != NULL )
-                playlistWidget->artContainer->removeWidget( videoWidget );
+                playlistWidget->mainView->getVideoOverlay()->setVideo( videoWidget );
             videoWidget->show(); videoWidget->raise();
             stackCentralW->addWidget( videoWidget );
             stackCentralW->setCurrentWidget( videoWidget );
@@ -696,8 +695,7 @@ inline void MainInterface::showTab( QWidget *widget )
     if( videoWidget && THEMIM->getIM()->hasVideo() &&
         videoWidget == stackCentralOldWidget && widget == playlistWidget )
     {
-        playlistWidget->artContainer->addWidget( videoWidget );
-        playlistWidget->artContainer->setCurrentWidget( videoWidget );
+        playlistWidget->mainView->getVideoOverlay()->setVideo( videoWidget );
     }
 }
 
@@ -784,9 +782,9 @@ void MainInterface::releaseVideoSlot( void )
     if( stackCentralW->currentWidget() == videoWidget )
         restoreStackOldWidget();
     else if( playlistWidget &&
-             playlistWidget->artContainer->currentWidget() == videoWidget )
+               playlistWidget->mainView->getVideoOverlay()->getVideo() == videoWidget )
     {
-        playlistWidget->artContainer->setCurrentIndex( 0 );
+//        playlistWidget->mainView->getVideoOverlay()->setCurrentIndex( 0 );
         stackCentralW->addWidget( videoWidget );
     }
 
@@ -848,7 +846,7 @@ void MainInterface::setVideoSize( unsigned int w, unsigned int h )
 
 void MainInterface::videoSizeChanged( int w, int h )
 {
-    if( !playlistWidget || playlistWidget->artContainer->currentWidget() != videoWidget )
+    if( !playlistWidget || playlistWidget->mainView->getVideoOverlay()->getVideo() != videoWidget )
         resizeStack( w, h );
 }
 
@@ -879,7 +877,7 @@ void MainInterface::setVideoFullScreen( bool fs )
         }
 
         /* */
-        if( playlistWidget != NULL && playlistWidget->artContainer->currentWidget() == videoWidget )
+        if( playlistWidget != NULL && playlistWidget->mainView->getVideoOverlay()->getVideo() == videoWidget )
         {
             showTab( videoWidget );
         }
@@ -1191,8 +1189,14 @@ int MainInterface::getControlsVisibilityStatus()
 
 StandardPLPanel *MainInterface::getPlaylistView()
 {
-    if( !playlistWidget ) return NULL;
-    else return playlistWidget->mainView;
+    if( !playlistWidget )
+    {
+        return NULL;
+    }
+    else
+    {
+        return playlistWidget->mainView;
+    }
 }
 
 void MainInterface::setStatusBarVisibility( bool b_visible )
@@ -1648,11 +1652,19 @@ void MainInterface::closeEvent( QCloseEvent *e )
 
 bool MainInterface::eventFilter( QObject *obj, QEvent *event )
 {
-    if ( event->type() == MainInterface::ToolbarsNeedRebuild ) {
+    if ( event->type() == MainInterface::ToolbarsNeedRebuild )
+    {
         event->accept();
         recreateToolbars();
         return true;
-    } else {
+    }
+    else if ( event->type() == QEvent::Resize )
+    {
+        PlaylistDialog::getInstance(p_intf)->exportPlaylistWidget()->mainView->getVideoOverlay()->updatePosition();
+        return true;
+    }
+    else
+    {
         return QObject::eventFilter( obj, event );
     }
 }
