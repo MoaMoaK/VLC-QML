@@ -2,6 +2,7 @@
 
 #include "components/mediacenter/mlitem.hpp"
 #include "components/mediacenter/mlalbum.hpp"
+#include "components/mediacenter/mlartist.hpp"
 #include "components/mediacenter/mlalbumtrack.hpp"
 
 
@@ -126,6 +127,56 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
             return QVariant();
     }
 
+    // Artists
+    case GET_ARTIST_ID :
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getId() );
+        else
+            return QVariant();
+    }
+    case GET_ARTIST_NAME :
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getName() );
+        else
+            return QVariant();
+    }
+    case GET_ARTIST_SHORT_BIO :
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getShortBio() );
+        else
+            return QVariant();
+    }
+    case GET_ARTIST_ALBUMS :
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue<MLItemModel*>( ml_artist->getAlbums() );
+        else
+            return QVariant();
+    }
+    case GET_ARTIST_COVER :
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getCover() );
+        else
+            return QVariant();
+    }
+    case GET_ARTIST_NB_ALBUMS :
+    {
+        MLArtist* ml_artist = dynamic_cast<MLArtist*>(ml_item);
+        if (ml_artist != NULL)
+            return QVariant::fromValue( ml_artist->getNbAlbums() );
+        else
+            return QVariant();
+    }
+
     // Tracks
     case GET_TRACK_TITLE :
     {
@@ -181,6 +232,14 @@ QHash<int, QByteArray> MLItemModel::roleNames() const
     roles[GET_ALBUM_ARTISTS] = "album_artists";
     roles[GET_ALBUM_NB_TRACKS] = "album_nb_tracks";
     roles[GET_ALBUM_DURATION] = "album_duration";
+
+    // Artists
+    roles[GET_ARTIST_ID] = "artist_id";
+    roles[GET_ARTIST_NAME] = "artist_name";
+    roles[GET_ARTIST_SHORT_BIO] = "artist_short_bio";
+    roles[GET_ARTIST_ALBUMS] = "artist_albums";
+    roles[GET_ARTIST_COVER] = "artist_cover";
+    roles[GET_ARTIST_NB_ALBUMS] = "artist_nb_albums";
 
     // Tracks
     roles[GET_TRACK_TITLE] = "track_title";
