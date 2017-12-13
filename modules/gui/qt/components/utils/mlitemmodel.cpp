@@ -1,6 +1,7 @@
 #include "mlitemmodel.hpp"
 
 #include "components/mediacenter/mlitem.hpp"
+#include "components/mediacenter/mlalbumtrack.hpp"
 
 
 MLItemModel::MLItemModel(const QList<MLItem *> *item, QObject *parent):
@@ -42,6 +43,40 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
     MLItem * ml_item = getItem(index);
     switch (role)
     {
+    // Tracks
+    case GET_TRACK_TITLE :
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getTitle() );
+        else
+            return QVariant();
+    }
+    case GET_TRACK_COVER :
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getCover() );
+        else
+            return QVariant();
+    }
+    case GET_TRACK_NUMBER :
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getTrackNumber() );
+        else
+            return QVariant();
+    }
+    case GET_TRACK_DURATION :
+    {
+        MLAlbumTrack* ml_track = dynamic_cast<MLAlbumTrack*>(ml_item);
+        if (ml_track != NULL)
+            return QVariant::fromValue( ml_track->getDuration() );
+        else
+            return QVariant();
+    }
+
     default :
         return QVariant();
     }
@@ -51,6 +86,12 @@ QVariant MLItemModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> MLItemModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
+
+    // Tracks
+    roles[GET_TRACK_TITLE] = "track_title";
+    roles[GET_TRACK_COVER] = "track_cover";
+    roles[GET_TRACK_NUMBER] = "track_number";
+    roles[GET_TRACK_DURATION] = "track_duration";
 
     return roles;
 }
