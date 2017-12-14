@@ -31,7 +31,7 @@
 #include "qt.hpp"
 #include "sorting.h"
 
-#include "playlist_item.hpp"
+#include "mediacenter_item.hpp"
 
 #include <vlc_input.h>
 
@@ -153,11 +153,13 @@ protected:
     virtual bool isCurrent( const QModelIndex &index ) const;
     virtual bool isParent( const QModelIndex &index, const QModelIndex &current ) const = 0;
     virtual bool isLeaf( const QModelIndex &index ) const = 0;
-    virtual AbstractPLItem *getItem( const QModelIndex & index ) const;
+    virtual MCItem *getItem( const QModelIndex & index ) const;
 
     QIcon icons[ITEM_TYPE_NUMBER];
 
     intf_thread_t *p_intf;
+
+    MCModel* plmodel;
 };
 
 Q_DECLARE_METATYPE(VLCModelSubInterface::actionsContainerType)
