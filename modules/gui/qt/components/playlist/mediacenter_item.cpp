@@ -38,13 +38,13 @@
 
 void MCItem::clearChildren()
 {
-    qDeleteAll( children );
-    children.clear();
+    qDeleteAll( plitem_children );
+    plitem_children.clear();
 }
 
 void MCItem::removeChild( MCItem *item )
 {
-    children.removeOne( item );
+    plitem_children.removeOne( item );
     delete item;
 }
 
@@ -81,8 +81,8 @@ MCItem::MCItem( playlist_item_t * p_item )
 MCItem::~MCItem()
 {
     input_item_Release( p_input );
-    qDeleteAll( children );
-    children.clear();
+    qDeleteAll( plitem_children );
+    plitem_children.clear();
 }
 
 int MCItem::id() const
@@ -92,9 +92,9 @@ int MCItem::id() const
 
 void MCItem::takeChildAt( int index )
 {
-    MCItem *child = children[index];
+    MCItem *child = plitem_children[index];
     child->parentItem = NULL;
-    children.removeAt( index );
+    plitem_children.removeAt( index );
 }
 
 /* This function is used to get one's parent's row number in the model */
