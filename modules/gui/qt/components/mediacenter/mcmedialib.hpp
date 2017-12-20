@@ -63,6 +63,7 @@ class MCMediaLib : public QObject
 public:
     MCMediaLib(
         intf_thread_t *_p_intf,
+        QQuickWidget* _qml_item,
         PLModel* _pl_model,
         QObject *parent = nullptr
     );
@@ -93,6 +94,7 @@ private:
     void retrieveSeries();
 
     intf_thread_t *p_intf;
+    QQuickWidget *qmlItem;
     PLModel* pl_model;
 
     bool m_gridView;
@@ -117,6 +119,7 @@ private:
 
     void sortCurrent();
 
+    void invokeQML(const char *func );
 };
 
 
