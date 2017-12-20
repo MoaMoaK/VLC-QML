@@ -32,6 +32,7 @@
 #include "sorting.h"
 
 #include "mediacenter_item.hpp"
+#include "plmodel.hpp"
 
 #include <vlc_input.h>
 
@@ -140,6 +141,9 @@ public:
     static QString getMeta( const QModelIndex & index, int meta );
     static QPixmap getArtPixmap( const QModelIndex & index, const QSize & size );
 
+    void setPLModel( PLModel* _plmodel ) { plmodel = _plmodel; }
+    PLModel* getPLModel( ) { return plmodel; }
+
 public slots:
     /* slots handlers */
     void ensureArtRequested( const QModelIndex &index ) Q_DECL_OVERRIDE;
@@ -159,7 +163,7 @@ protected:
 
     intf_thread_t *p_intf;
 
-    MCModel* plmodel;
+    PLModel* plmodel;
 };
 
 Q_DECLARE_METATYPE(VLCModelSubInterface::actionsContainerType)
