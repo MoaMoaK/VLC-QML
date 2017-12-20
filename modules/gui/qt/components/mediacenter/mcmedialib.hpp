@@ -12,6 +12,7 @@
 #include <qt5/QtQuick/QQuickItem>
 #include <qt5/QtCore/QMetaObject>
 #include <qt5/QtCore/QMetaMethod>
+#include <qt5/QtQml/QQmlEngine>
 
 #include "qt.hpp"
 #include "mlalbum.hpp"
