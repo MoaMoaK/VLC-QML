@@ -15,6 +15,7 @@
 #include <qt5/QtQml/QQmlEngine>
 
 #include "qt.hpp"
+#include "input_manager.hpp"
 #include "mlalbum.hpp"
 #include "mlmovie.hpp"
 #include "mlserie.hpp"

@@ -28,7 +28,6 @@
 
 #include <vlc_intf_strings.h>
 
-#include "qt.hpp"
 #include "dialogs_provider.hpp"
 #include "input_manager.hpp" /* Load Subtitles */
 #include "menus.hpp"
@@ -96,9 +95,6 @@ DialogsProvider::~DialogsProvider()
     MediaInfoDialog::killInstance();
     MessagesDialog::killInstance();
     BookmarksDialog::killInstance();
-#ifdef ENABLE_VLM
-    VLMDialog::killInstance();
-#endif
     HelpDialog::killInstance();
 #ifdef UPDATE_CHECK
     UpdateDialog::killInstance();

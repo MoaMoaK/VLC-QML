@@ -30,11 +30,35 @@
 
 #include "qt.hpp"
 
-#include <QList>
-#include <QString>
+#include <qt5/QtCore/QList>
+#include <qt5/QtCore/QString>
+#include <qt5/QtCore/QObject>
 
-class MCItem
+enum playlist_item_type {
+    MOVIE,
+    MUSIC,
+    OTHER
+};
+
+enum info_type {
+    NAME,
+    URI,
+    DURATION,
+    COVER,
+    DATE,
+    ARTIST,
+    GENRE,
+    NUM_OF_SUBELTS,
+    PERCENT_SEEN,
+    NUM
+};
+
+
+
+class MCItem : public QObject
 {
+    Q_OBJECT
+
     friend class MLItem; /* super ugly glue stuff */
     friend class VLCModel;
     friend class MCModel;
@@ -45,35 +69,48 @@ public:
     bool hasSameParent( MCItem *other ) { return plitem_parent() == other->plitem_parent(); }
     bool operator< ( MCItem& );
 
+    MCItem( playlist_item_t *, MCItem *p_parent );
+
+    Q_INVOKABLE QString getTitle() const;
+    QVariant getInfo(info_type infoName);
+
+    static void staticUpdateType(vlc_event_t const *p_event, void *user_data);
+    void updateType();
+
+    bool isMovie() { return itemType == MOVIE; }
+
+
 protected:
     int id() const;
     int childCount() const { return plitem_children.count(); }
     int indexOf( MCItem *item ) const { return plitem_children.indexOf( item ); }
     int lastIndexOf( MCItem *item ) const { return plitem_children.lastIndexOf( item ); }
-    MCItem *plitem_parent() { return parentItem; }
     input_item_t *inputItem() { return p_input; }
+    MCItem *plitem_parent() { return parentItem; }
     void insertChild( MCItem *item, int pos = -1 ) { plitem_children.insert( pos, item ); }
     void appendChild( MCItem *item ) { insertChild( item, plitem_children.count() ); }
-    MCItem *child( int id ) const { return plitem_children.value( id ); }
     void removeChild( MCItem *item );
+    MCItem *child( int id ) const { return plitem_children.value( id ); }
     void clearChildren();
     QString getURI() const;
-    QString getTitle() const;
     bool readOnly() const;
 
     QList<MCItem *> plitem_children;
     MCItem *parentItem;
 
+    playlist_item_type itemType;
+
 private:
-    MCItem( playlist_item_t *, MCItem *parent );
     int row();
     void takeChildAt( int );
 
     MCItem( playlist_item_t * );
     void init( playlist_item_t *, MCItem * );
     int i_playlist_id;
+    playlist_item_type guessItemType();
     int i_flags;
     input_item_t *p_input;
+    playlist_item_t *plitem;
 };
 
 #endif

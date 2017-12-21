@@ -26,7 +26,6 @@
 
 #include "dialogs/playlist.hpp"
 
-#include "components/playlist/playlist.hpp"
 
 #include "util/qt_dirs.hpp"
 

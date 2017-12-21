@@ -108,6 +108,17 @@ QPixmap VLCModel::getArtPixmap( const QModelIndex & index, const QSize & size )
     return artPix;
 }
 
+QString VLCModel::getArtUrl( const QModelIndex & index )
+{
+    QString artUrl = index.sibling( index.row(),
+                     VLCModel::columnFromMeta(COLUMN_COVER) ).data().toString();
+    if (artUrl.isEmpty())
+    {
+        artUrl = "qrc:///noart.png";
+    }
+    return artUrl;
+}
+
 QVariant VLCModel::headerData( int section, Qt::Orientation orientation,
                               int role ) const
 {

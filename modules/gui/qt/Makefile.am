@@ -13,7 +13,7 @@ SUFFIXES += .ui .h .hpp .moc.cpp
 
 libqt_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) \
 	-I$(srcdir)/gui/qt -I$(builddir)/gui/qt
-libqt_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt) $(MEDIALIBRARY_CFLAGS)
+libqt_plugin_la_CXXFLAGS = $(AM_CXXFLAGS) $(QT_CFLAGS) $(CXXFLAGS_qt) -DQT_QML_DEBUG $(MEDIALIBRARY_CFLAGS)
 libqt_plugin_la_LIBADD = $(QT_LIBS) $(LIBS_qt) $(LIBM) $(MEDIALIBRARY_LIBS)
 libqt_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(guidir)'
 if HAVE_DARWIN
@@ -291,6 +291,7 @@ nodist_libqt_plugin_la_SOURCES += \
 	gui/qt/ui/streampanel.h \
 	gui/qt/ui/messages_panel.h \
 	gui/qt/ui/about.h \
+	gui/qt/ui/help.h \
 	gui/qt/ui/update.h \
 	gui/qt/ui/fingerprintdialog.h \
 	gui/qt/ui/sout.h
@@ -330,6 +331,7 @@ libqt_plugin_la_UI = \
 	gui/qt/ui/streampanel.ui \
 	gui/qt/ui/messages_panel.ui \
 	gui/qt/ui/about.ui \
+	gui/qt/ui/help.ui \
 	gui/qt/ui/update.ui \
 	gui/qt/ui/sout.ui \
 	gui/qt/ui/vlm.ui \
@@ -494,11 +496,13 @@ libqt_plugin_la_RES = \
 	gui/qt/qml/utils/ListItem.qml \
 	gui/qt/qml/utils/ListExpandItem.qml \
 	gui/qt/qml/utils/MLItem.qml \
+	gui/qt/qml/utils/HorizontalRule.qml \
 	gui/qt/qml/utils/ArtistCover.qml \
 	gui/qt/qml/utils/GenreCover.qml \
 	gui/qt/qml/utils/ExpandGridView.qml \
 	gui/qt/qml/utils/ExpandGridViewRow.qml \
 	gui/qt/qml/utils/TracksDisplay.qml \
+	gui/qt/qml/utils/AlbumsDisplay.qml \
 	gui/qt/qml/playlist/PLItem.qml \
 	gui/qt/qml/playlist/PlaylistGrouped.qml \
 	gui/qt/qml/playlist/PlaylistListView.qml \

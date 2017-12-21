@@ -299,7 +299,6 @@ QVariant MCModel::data( const QModelIndex &index, const int role ) const
 
     switch( role )
     {
-
         case Qt::FontRole:
             return customFont;
 
@@ -346,17 +345,17 @@ QVariant MCModel::data( const QModelIndex &index, const int role ) const
             {
                 case COLUMN_TITLE:
                 {
-                    MCItem *item = getItem( index );
+                    //PLItem *item = getItem( index );
                     /* Used to segfault here because i_type wasn't always initialized */
-                    int idx = item->inputItem()->i_type;
-                    if( item->inputItem()->b_net && item->inputItem()->i_type == ITEM_TYPE_FILE )
-                        idx = ITEM_TYPE_STREAM;
-                    return QVariant( icons[idx] );
+                    //return QVariant( icons[item->inputItem()->i_type] );
+                    return getArtUrl(index);
                 }
                 case COLUMN_COVER:
                     /* !warn: changes tree item line height. Otherwise, override
                      * delegate's sizehint */
-                    return getArtPixmap( index, QSize(16,16) );
+                    //return getArtPixmap( index, QSize(16,16) );
+                    return getArtUrl(index);
+                }
                 default:
                     break;
             }
@@ -377,11 +376,123 @@ QVariant MCModel::data( const QModelIndex &index, const int role ) const
         case LEAF_NODE_ROLE:
             return QVariant( isLeaf( index ) );
 
+        case TITLE_ROLE:
+            return getMeta(index, COLUMN_TITLE);
+
+        case DURATION_ROLE:
+            return getMeta(index, COLUMN_DURATION);
+
+        case ARTIST_ROLE:
+            return getMeta(index, COLUMN_ARTIST);
+
+        case GENRE_ROLE:
+            return getMeta(index, COLUMN_GENRE);
+
+        case ALBUM_ROLE:
+            return getMeta(index, COLUMN_ALBUM);
+
+        case TRACK_NUMBER_ROLE:
+            return getMeta(index, COLUMN_TRACK_NUMBER);
+
+        case DESCRIPTION_ROLE:
+            return getMeta(index, COLUMN_DESCRIPTION);
+
+        case URI_ROLE:
+            return getMeta(index, COLUMN_URI);
+
+        case NUMBER_ROLE:
+            return getMeta(index, COLUMN_NUMBER);
+
+        case RATING_ROLE:
+            return getMeta(index, COLUMN_RATING);
+
+        case COVER_ROLE:
+            return input_item_GetArtworkURL(getItem(index)->inputItem());//getMeta(index, COLUMN_COVER);
+
+        case DISC_NUMBER_ROLE:
+            return getMeta(index, COLUMN_DISC_NUMBER);
+
+        case DATE_ROLE:
+            return getMeta(index, COLUMN_DATE);
+
+        case IS_MOVIE:
+            return QVariant( getItem(index)->isMovie() );
+
+        case FAKE_NAME:
+            return getItem(index)->getInfo(info_type::NAME);
+
+        case FAKE_URI:
+            return getItem(index)->getInfo(info_type::URI);
+
+        case FAKE_DURATION:
+            return getItem(index)->getInfo(info_type::DURATION);
+
+        case FAKE_COVER:
+            return getItem(index)->getInfo(info_type::COVER);
+
+        case FAKE_DATE:
+            return getItem(index)->getInfo(info_type::DATE);
+
+        case FAKE_ARTIST:
+            return getItem(index)->getInfo(info_type::ARTIST);
+
+        case FAKE_GENRE:
+            return getItem(index)->getInfo(info_type::GENRE);
+
+        case FAKE_NUM_OF_SUBELTS:
+            return getItem(index)->getInfo(info_type::NUM_OF_SUBELTS);
+
+        case FAKE_PERCENT_SEEN:
+            return getItem(index)->getInfo(info_type::PERCENT_SEEN);
+
+        case FAKE_NUM:
+            return getItem(index)->getInfo(info_type::NUM);
+
         default:
             break;
     }
 
     return QVariant();
+}
+
+QHash<int, QByteArray> MCModel::roleNames() const {
+    QHash<int, QByteArray> roles;
+    roles[Qt::FontRole] = "font";
+    roles[Qt::DisplayRole] = "display";
+    roles[Qt::DecorationRole] = "decoration";
+    roles[Qt::BackgroundRole] = "background";
+    roles[CURRENT_ITEM_ROLE] = "current_item";
+    roles[CURRENT_ITEM_CHILD_ROLE] = "current_item_child";
+    roles[LEAF_NODE_ROLE] = "leaf_node";
+    roles[TITLE_ROLE] = "title";
+    roles[DURATION_ROLE] = "duration";
+    roles[ARTIST_ROLE] = "artist";
+    roles[GENRE_ROLE] = "genre";
+    roles[ALBUM_ROLE] = "album";
+    roles[TRACK_NUMBER_ROLE] = "track_number";
+    roles[DESCRIPTION_ROLE] = "description";
+    roles[URI_ROLE] = "uri";
+    roles[NUMBER_ROLE] = "number";
+    roles[RATING_ROLE] = "rating";
+    roles[COVER_ROLE] = "cover";
+    roles[DISC_NUMBER_ROLE] = "disc_number";
+    roles[DATE_ROLE] = "date";
+    roles[DOUBLE_CLICK] = "double_click";
+    roles[SINGLE_CLICK] = "single_click";
+    roles[IS_MOVIE] = "is_movie";
+    roles[FAKE_NAME] = "f_name";
+    roles[FAKE_URI] = "f_uri";
+    roles[FAKE_DURATION] = "f_duration";
+    roles[FAKE_COVER] = "f_cover";
+    roles[FAKE_DATE] = "f_date";
+    roles[FAKE_ARTIST] = "f_artist";
+    roles[FAKE_GENRE] = "f_genre";
+    roles[FAKE_NUM_OF_SUBELTS] = "f_num_of_subelts";
+    roles[FAKE_PERCENT_SEEN] = "f_percent_seen";
+    roles[FAKE_NUM] = "f_num";
+    return roles;
+
+    return roles;
 }
 
 bool MCModel::setData( const QModelIndex &index, const QVariant & value, int role )
@@ -390,6 +501,16 @@ bool MCModel::setData( const QModelIndex &index, const QVariant & value, int rol
     {
     case Qt::FontRole:
         customFont = value.value<QFont>();
+        return true;
+    // Trick to trigger activateItem()
+    case DOUBLE_CLICK :
+        activateItem(getItem(index));
+        return true;
+    // Trick to trigger displayInfo()
+    case SINGLE_CLICK :
+        if ( ! isLeaf( index ) )
+            exploreDir(getItem(index));
+
         return true;
     default:
         return VLCModel::setData( index, value, role );

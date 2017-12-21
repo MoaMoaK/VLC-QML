@@ -58,9 +58,35 @@ public:
     virtual ~VLCModelSubInterface();
     enum nodeRole
     {
-      CURRENT_ITEM_ROLE = Qt::UserRole,
-      CURRENT_ITEM_CHILD_ROLE,
-      LEAF_NODE_ROLE, /* FIXME: same as index().child() ? */
+        CURRENT_ITEM_ROLE = Qt::UserRole,
+        CURRENT_ITEM_CHILD_ROLE,
+        LEAF_NODE_ROLE, /* FIXME: same as index().child() ? */
+        TITLE_ROLE,
+        DURATION_ROLE,
+        ARTIST_ROLE,
+        GENRE_ROLE,
+        ALBUM_ROLE,
+        TRACK_NUMBER_ROLE,
+        DESCRIPTION_ROLE,
+        URI_ROLE,
+        NUMBER_ROLE,
+        RATING_ROLE,
+        COVER_ROLE,
+        DISC_NUMBER_ROLE,
+        DATE_ROLE,
+        DOUBLE_CLICK,
+        SINGLE_CLICK,
+        IS_MOVIE,
+        FAKE_NAME,
+        FAKE_URI,
+        FAKE_DURATION,
+        FAKE_COVER,
+        FAKE_DATE,
+        FAKE_ARTIST,
+        FAKE_GENRE,
+        FAKE_NUM_OF_SUBELTS,
+        FAKE_PERCENT_SEEN,
+        FAKE_NUM
     };
     virtual void rebuild( playlist_item_t * p = NULL ) = 0;
     virtual void doDelete( QModelIndexList ) = 0;
@@ -121,6 +147,7 @@ public:
 class VLCModel : public QAbstractItemModel, public VLCModelSubInterface
 {
     Q_OBJECT
+
 public:
     VLCModel( intf_thread_t *_p_intf, QObject *parent = 0 );
     virtual ~VLCModel();
@@ -140,6 +167,7 @@ public:
     static int metaToColumn( int meta );
     static QString getMeta( const QModelIndex & index, int meta );
     static QPixmap getArtPixmap( const QModelIndex & index, const QSize & size );
+    static QString getArtUrl( const QModelIndex & index );
 
     void setPLModel( PLModel* _plmodel ) { plmodel = _plmodel; }
     PLModel* getPLModel( ) { return plmodel; }

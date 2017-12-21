@@ -71,6 +71,7 @@ private:
 
     intf_thread_t *p_intf;
 
+
 protected:
     PlaylistWidget( intf_thread_t *_p_i, QWidget * );
     void dropEvent( QDropEvent *) Q_DECL_OVERRIDE;

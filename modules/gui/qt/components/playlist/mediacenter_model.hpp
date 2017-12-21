@@ -33,6 +33,8 @@
 #include <vlc_playlist.h>
 #include "vlc_model.hpp"
 #include "mediacenter_item.hpp"
+#include "dialogs/playlist.hpp"
+#include "standardpanel.hpp"
 
 #include <QObject>
 #include <QEvent>
@@ -42,6 +44,9 @@
 #include <QVariant>
 #include <QModelIndex>
 #include <QAction>
+#include <QHash>
+#include <QByteArray>
+#include <QString>
 
 class MCItem;
 class PlMimeData;
@@ -119,6 +124,8 @@ protected:
     virtual bool isLeaf( const QModelIndex &index ) const Q_DECL_OVERRIDE;
     virtual MCItem *getItem( const QModelIndex & index ) const Q_DECL_OVERRIDE;
 
+    QHash<int, QByteArray> roleNames() const;
+
 private:
     /* General */
     MCItem *rootItem;
@@ -161,6 +168,7 @@ private:
     /* */
     QString latestSearch;
     QFont   customFont;
+
 
 private slots:
     void processInputItemUpdate( input_item_t *);

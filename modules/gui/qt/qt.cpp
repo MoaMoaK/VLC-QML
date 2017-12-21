@@ -345,6 +345,7 @@ static bool active = false;
  *****************************************************************************/
 
 static void *ThreadPlatform( void *, char * );
+char* getQmljsdebuggerOpt(intf_thread_t *p_intf);
 
 static void *Thread( void *data )
 {
@@ -515,6 +516,20 @@ static void *ThreadPlatform( void *obj, char *platform_name )
     int argc = 0;
 
     argv[argc++] = vlc_name;
+
+    /* H4CK to get QMLJSDebug running with correct port */
+    char* qmlJsDebugOpt = getQmljsdebuggerOpt(p_intf);
+    if (qmlJsDebugOpt)
+    {
+        fprintf(stderr, "[H4CK QMLJSDEBUG]: add QApp param : %s \n", qmlJsDebugOpt);
+        argv[argc++] = qmlJsDebugOpt;
+    }
+//    else
+//    {
+//        fprintf(stderr, "[H4CK QMLJSDEBUG]: add QApp param : %s \n", "-qmljsdebugger=port:55000,block,services:DebugMessages,QmlDebugger,V8Debugger,QmlInspector");
+//        argv[argc++] = "-qmljsdebugger=port:55000,block,services:DebugMessages,QmlDebugger,V8Debugger,QmlInspector";
+//    }
+
     if( platform_name != NULL )
     {
         argv[argc++] = platform_parm;
@@ -746,7 +761,6 @@ static int WindowOpen( vout_window_t *p_wnd, const vout_window_cfg_t *cfg )
     if( !p_mi->getVideo( p_wnd, cfg->width, cfg->height, cfg->is_fullscreen ) )
         return VLC_EGENERIC;
 
-    p_wnd->info.has_double_click = true;
     p_wnd->control = WindowControl;
     p_wnd->sys = (vout_window_sys_t*)p_mi;
     return VLC_SUCCESS;
@@ -786,4 +800,12 @@ static void WindowClose( vout_window_t *p_wnd )
     }
     msg_Dbg (p_wnd, "releasing video...");
     p_mi->releaseVideo();
+}
+
+
+/* H4CK DEBUG to get the port of running qmljsdebugger via env var */
+char* getQmljsdebuggerOpt(intf_thread_t *p_intf)
+{
+    fprintf(stderr, "[H4CK QMLJSDEBUG]: read vlc var from qt.cpp : %s \n", var_InheritString(p_intf, "qt_qmljsdebug"));
+    return var_InheritString(p_intf, "qt_qmljsdebug");
 }

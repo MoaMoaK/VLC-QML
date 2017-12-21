@@ -177,9 +177,11 @@
         <file alias="SubBannerSources.qml">qml/SubBannerSources.qml</file>
     </qresource>
     <qresource prefix="/utils">
+        <file alias="AlbumsDisplay.qml">qml/utils/AlbumsDisplay.qml</file>
         <file alias="ArtistCover.qml">qml/utils/ArtistCover.qml</file>
         <file alias="ExpandGridView.qml">qml/utils/ExpandGridView.qml</file>
         <file alias="ExpandGridViewRow.qml">qml/utils/ExpandGridViewRow.qml</file>
+        <file alias="HorizontalRule.qml">qml/utils/HorizontalRule.qml</file>
         <file alias="TracksDisplay.qml">qml/utils/TracksDisplay.qml</file>
         <file alias="GenreCover.qml">qml/utils/GenreCover.qml</file>
         <file alias="GridItem.qml">qml/utils/GridItem.qml</file>

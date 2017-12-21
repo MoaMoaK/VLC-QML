@@ -29,7 +29,10 @@
 #include <assert.h>
 
 #include "qt.hpp"
+#include "vlc_es.h"
 #include "mediacenter_item.hpp"
+#include "standardpanel.hpp"
+#include "dialogs/playlist.hpp"
 #include <vlc_input_item.h>
 
 /*************************************************************************
@@ -48,6 +51,43 @@ void MCItem::removeChild( MCItem *item )
     delete item;
 }
 
+void MCItem::updateType()
+{
+    itemType = guessItemType();
+}
+
+void MCItem::staticUpdateType(const vlc_event_t *p_event,
+                              void *user_data)
+{
+    MCItem * item = reinterpret_cast<MCItem*> (user_data) ;
+    if (item)
+        item->updateType();
+}
+
+playlist_item_type MCItem::guessItemType()
+{
+    input_item_t *input = inputItem();
+    playlist_item_type res = OTHER;
+    if (input)
+    {
+        es_format_t **es = input->es;
+        int nb_es = input->i_es;
+        if (es)
+        {
+            for (int i=0 ; i<nb_es ; i++)
+            {
+                es_format_category_e cat = es[i]->i_cat;
+                if (cat == VIDEO_ES)
+                    res = MOVIE;
+                else if (cat == AUDIO_ES && res != MOVIE)
+                    res = MUSIC;
+            }
+        }
+    }
+
+    return res;
+}
+
 /*
    Playlist item is just a wrapper, an abstraction of the playlist_item
    in order to be managed by PLModel
@@ -62,6 +102,10 @@ void MCItem::init( playlist_item_t *_playlist_item, MCItem *p_parent )
     p_input = _playlist_item->p_input;
     i_flags = _playlist_item->i_flags;
     input_item_Hold( p_input );
+    updateType();
+    vlc_event_attach(&(inputItem()->event_manager),
+                     vlc_InputItemPreparseEnded,
+                     staticUpdateType, this);
 }
 
 /*
@@ -83,6 +127,10 @@ MCItem::~MCItem()
     input_item_Release( p_input );
     qDeleteAll( plitem_children );
     plitem_children.clear();
+
+    vlc_event_detach(&(inputItem()->event_manager),
+                     vlc_InputItemPreparseEnded,
+                     staticUpdateType, this);
 }
 
 int MCItem::id() const
@@ -147,6 +195,48 @@ QString MCItem::getTitle() const
     free(fb_name);
     return title;
 }
+
+QVariant MCItem::getInfo(info_type infoName)
+{
+    switch (infoName)
+    {
+    case NAME:
+        return QVariant("This is the title");
+        break;
+    case URI:
+        return QVariant("/home/moamoak/Vidéos/KUNG FURY Official Movie.mp4");
+        break;
+    case DURATION:
+        return QVariant(3205);
+        break;
+    case COVER:
+        return QVariant("/home/moamoak/Téléchargements/vikings.jpg");
+        break;
+    case DATE:
+        return QVariant("01/01/1970");
+        break;
+    case ARTIST:
+        return QVariant("The Artist");
+        break;
+    case GENRE:
+        return QVariant("The Genre");
+        break;
+    case NUM_OF_SUBELTS:
+        return QVariant(5);
+        break;
+    case PERCENT_SEEN:
+        return QVariant(0.85);
+        break;
+    case NUM:
+        return QVariant(2);
+        break;
+    default:
+        return QVariant();
+        break;
+    }
+}
+
+
 
 bool MCItem::readOnly() const
 {
